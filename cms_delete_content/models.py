@@ -28,7 +28,7 @@ class WebsitePublishedMixin(models.AbstractModel):
     @api.multi
     def _compute_cms_delete_confirm_url(self):
         for item in self:
-            item.cms_delete_url = \
+            item.cms_delete_confirm_url = \
                 '/cms/{}/{}/delete/confirm'.format(item._name, item.id)
 
     # customize this per-model
