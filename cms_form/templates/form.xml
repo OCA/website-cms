@@ -1,0 +1,180 @@
+<?xml version="1.0" encoding="utf-8"?>
+<odoo>
+
+<template id="form_wrapper" name="CMS form wrapper">
+
+  <t t-call="website.layout">
+    <t t-set="title" t-value="form.form_title" />
+    <div id="wrap" t-att-class="form.form_wrapper_css_klass">
+        <div class="container">
+          <h2>
+            <span class="form_title" t-esc="form.form_title" />
+          </h2>
+          <t t-raw="form.form_render()" />
+        </div>
+    </div>
+  </t>
+
+</template>
+
+<!-- TODO: add non-horizontal form template -->
+
+<template id="form_horizontal_field_wrapper" name="CMS form field wrapper horiz form">
+    <div t-attf-class="form-group form-field field-#{fname} #{field['required'] and 'field-required' or ''} #{errors.get(fname) and 'has-error' or ''}">
+      <label class="col-md-3 col-sm-4 control-label"
+             t-att-for="fname" t-esc="field['string']">Name</label>
+      <div class="col-md-9 col-sm-8">
+        <t t-call="#{ widget.get('key') or 'cms_form.field_widget_char'}" />
+        <t t-if="field.get('help')">
+            <t t-call="cms_form.form_field_help_block" />
+        </t>
+      </div>
+    </div>
+</template>
+
+
+<template id="form_field_help_block" name="CMS form field help block">
+    <p class="help-block" t-raw="field['help']">
+      <!-- use `raw` to allow injecting html stuff here -->
+    </p>
+</template>
+
+
+<template id="base_form" name="CMS form template">
+
+  <form t-att-action="form.form_action" t-att-method="form.form_method"
+        t-attf-class="form-horizontal #{form.form_css_klass}"
+        enctype="multipart/form-data">
+
+    <input type="hidden" name="csrf_token" t-att-value="form.o_request.csrf_token()"/>
+
+    <t t-set="form_fields" t-value="form.form_fields()" />
+    <t t-foreach="form_fields.iterkeys()" t-as="fname">
+      <t t-call="cms_form.form_horizontal_field_wrapper">
+        <t t-set="field" t-value="form_fields[fname]" />
+        <t t-set="widget" t-value="field.get('widget', {})" />
+      </t>
+    </t>
+    <div class="form-group form-controls">
+       <div class="col-sm-9 col-sm-offset-3">
+         <a class="btn btn-default"
+            t-att-href="form.request.referrer or form.main_object and form.main_object.website_url">Cancel</a>
+         <button type="submit" class="btn btn-primary">Submit</button>
+       </div>
+     </div>
+  </form>
+
+</template>
+
+
+<template id="field_widget_char" name="CMS form text field widget">
+
+  <input type="text"
+         t-attf-class="form-control #{widget.get('css_klass', '')}"
+         t-att-name="fname"
+         t-att-value="form_data.get(fname)"
+         t-att-required="field['required'] and '1' or None"
+         t-att-data-params="widget.get('params')"
+         />
+
+</template>
+
+
+<template id="field_widget_m2o" name="CMS form m2o field widget">
+
+  <select t-attf-class="form-control #{widget.get('css_klass', '')}"
+          t-att-name="fname"
+          t-att-required="field['required'] and '1' or None"
+          t-att-data-params="widget.get('params')">
+    <option value="">Select...</option>
+    <t t-set="comodel" t-value="form.env[field['relation']]" />
+    <t t-set="domain" t-value="field.get('domain', [])" />
+    <t t-set="option_items" t-value="comodel.search(domain)" />
+    <t t-foreach="option_items or []" t-as="opt_item">
+     <option t-att-value="opt_item.id"
+             t-att-selected="opt_item.id == form_data.get(fname)">
+         <t t-esc="opt_item.name"/>
+     </option>
+    </t>
+  </select>
+
+</template>
+
+
+<template id="field_widget_x2m" name="CMS form x2m field widget">
+
+  <input type="text" t-att-id="fname" t-att-name="fname"
+         t-attf-class="form-control js_select2_m2m_widget #{widget.get('css_klass', '')}"
+         t-attf-data-init-value="#{form_data.get(fname)}" t-att-value="fname"
+         t-att-data-model="field['relation']"
+         data-display_name="name" data-fields='["name"]'
+         t-att-data-domain="field['domain'] or []"
+        />
+
+</template>
+
+
+<template id="field_widget_date" name="CMS form date field widget">
+
+  <div class="input-group">
+    <input t-att-name="fname" t-att-id="fname"
+           t-attf-class="form-control js_datepicker #{widget.get('css_klass', '')}"
+           type="text" data-date-format="YYYY-MM-DD" placeholder="YYYY-MM-DD"
+           t-att-value="form_data.get(fname)"/>
+    <span class="input-group-addon">
+      <span class="fa fa-calendar"></span>
+    </span>
+  </div>
+
+</template>
+
+
+<template id="field_widget_text" name="CMS form text field widget">
+
+    <textarea t-att-name="fname" t-att-id="fname"
+              t-attf-class="form-control js_datepicker #{widget.get('css_klass', '')}"
+              t-esc="form_data.get(fname)" />
+
+</template>
+
+
+
+<template id="field_widget_text" name="CMS form text field widget">
+
+    <textarea t-att-name="fname" t-att-id="fname"
+              t-attf-class="form-control js_datepicker #{widget.get('css_klass', '')}"
+              t-esc="form_data.get(fname)" />
+
+</template>
+
+
+<template id="field_widget_image" name="CMS form image field widget">
+  <div class="image-widget-wrapper">
+    <input
+        type="file" capture="camera" accept="image/*"
+        t-att-id="fname"
+        t-att-name="fname"
+        class="form-control"
+        />
+    <t t-if="form_data.get(fname)">
+      <t t-set="prefix" t-value="fname"/>
+      <img class="img img-responsive" t-att-src="form_data.get(fname, {}).get('value')" />
+      <div t-attf-id="#{prefix}_keepbox" class="keepbox text-center">
+        <div class="form-group">
+          <label class="checkbox inline" t-attf-for="#{prefix}_keepcheck_yes">
+            <input type="radio" t-attf-id="#{prefix}_keepcheck_yes" t-attf-name="#{prefix}_keepcheck" checked="1" value="yes"/>
+            keep submitted
+          </label>
+          <label class="checkbox inline" t-attf-for="#{prefix}_keepcheck_no">
+            <input type="radio" t-attf-id="#{prefix}_keepcheck_no" t-attf-name="#{prefix}_keepcheck" value="no"/>
+            replace submitted
+          </label>
+        </div>
+      </div>
+    </t>
+  </div>
+</template>
+
+
+
+</odoo>
