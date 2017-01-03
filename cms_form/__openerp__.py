@@ -10,6 +10,8 @@
     'license': 'AGPL-3',
     'author': 'Simone Orsi,Odoo Community Association (OCA)',
     'depends': [
+        'website',
+        'cms_status_message',
     ],
     'data': [
         'security/cms_form.xml',
