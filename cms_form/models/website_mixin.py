@@ -1,0 +1,24 @@
+# -*- coding: utf-8 -*-
+# Copyright 2017 Camptocamp SA
+# License AGPL-3.0 or later (http://www.gnu.org/licenses/agpl)
+from openerp import api, fields, models
+
+
+class WebsitePublishedMixin(models.AbstractModel):
+    _inherit = "website.published.mixin"
+
+    @property
+    def cms_add_url(self):
+        return '/cms/{}/create'.format(self._name)
+
+    cms_edit_url = fields.Char(
+        string='CMS edit URL',
+        compute='_compute_cms_edit_url',
+        readonly=True,
+    )
+
+    @api.multi
+    def _compute_cms_edit_url(self):
+        for item in self:
+            item.cms_edit_url = \
+                '/cms/{}/{}/edit'.format(item._name, item.id)
