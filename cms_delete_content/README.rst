@@ -8,10 +8,68 @@ CMS delete content
 
 Basic features for deleting content via frontend.
 
+Features
+========
+
+* generic controllers for delete confirmation and delete
+
+    * `/cms/<string:model>/<int:model_id>/delete/confirm`
+    * `/cms/<string:model>/<int:model_id>/delete`
+
+* generic template for asking delete confirmation
+* new fields and parameters on `website.published.mixin` to handle delete links and redirects
+* register your own custom delete confirmation view per-model
+
+    * you can provide a custom delete confirmation view for you model by using a proper id, like: `cms_delete_content.my_model` where as `my_model` matches `my.model` model.
+
+* use `cms_status_message` to show confirmation message for deletion
+
+
 Usage
 =====
 
-TODO
+Delete button and behavior
+--------------------------
+
+To bring the user to delete confirmation page do this in your template::
+
+    <a class="btn btn-danger" t-att-href="object.cms_delete_confirm_url">Delete</a>
+
+This will lead the user to the delete confirmation page, where the user has 2 options:
+
+    * confirm deletion: does a post request to delete controller, accessible directly via `object.cms_delete_url`
+    * cancel deletion: bring back to `object.website_url` if present or to HTTP referrer
+
+After deletion the user land on `model.cms_after_delete_url` where `model` is your current model of course.
+
+Customization
+-------------
+
+To provide your own deletetion controllers, do this::
+
+    from openerp.addons.cms_delete_content.controllers import DeleteMixin
+    from openerp import http
+
+    class CustomDeleteController(http.Controller, DeleteMixin):
+        """Controller for handling model deletion."""
+
+        @http.route(
+            '/projects/<model("project.project"):main_object>/delete/confirm',
+            type='http', auth="user", website=True)
+        def delete_confirm(self, main_object, **kwargs):
+            return self.handle_delete_confirm(main_object._name, main_object.id, **kwargs)
+
+        @http.route(
+            '/projects/<model("project.project"):main_object>/delete',
+            type='http', auth="user", website=True, methods=['POST'])
+        def delete(self, main_object, **kwargs):
+            return self.handle_delete(main_object._name, main_object.id, **kwargs)
+
+Then, you can override
+
+* `_compute_cms_delete_confirm_url` method to change the default delete confirmation url. In this case: `/projects/project.slug-1/delete/confirm`
+* `_compute_cms_delete_url` method to change the default delete url. In this case: `/projects/project.slug-1/delete`.
+* `cms_after_delete_url` parameter to provide a different url to redirect to after deletion. In this case: `/projects`
 
 Bug Tracker
 ===========

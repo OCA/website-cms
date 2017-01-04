@@ -6,7 +6,7 @@
     'name': 'CMS delete content',
     'summary': """
         Basic features for handling content deletion via frontend.""",
-    'version': '9.1.0',
+    'version': '9.0.1.0.0',
     'license': 'AGPL-3',
     'author': 'Camptocamp SA,Odoo Community Association (OCA)',
     'depends': [

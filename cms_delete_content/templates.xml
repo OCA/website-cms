@@ -10,10 +10,8 @@
                         <input type="hidden" name="csrf_token" t-att-value="request.csrf_token()"/>
                         <button type="submit" name="confirm"
                                 class="btn btn-danger" title="Click here to delete this item" value="confirm">Confirm</button>
+                        <a class="btn btn-default ml16" title="Cancel" t-att-href="cancel_delete_url">Cancel</a>
                     </form>
-                    <a class="btn btn-default" title="Cancel" t-att-href="cancel_delete_url">
-                        Cancel
-                    </a>
                 </section>
             </div>
         </t>
