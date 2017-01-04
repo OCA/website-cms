@@ -55,6 +55,15 @@
         <t t-set="widget" t-value="field.get('widget', {})" />
       </t>
     </t>
+    <div class="col-sm-9 col-sm-offset-3 above-controls">
+        <!-- you can style required fields like this:
+            `form .form-group.field-required label.control-label::after{ content: '*'}`
+            You'll get the symbol here, with proper legend
+        -->
+        <div class="form-group field-required">
+            <p class="field-required-legend"><label class="control-label"></label> Required fields</p>
+        </div>
+    </div>
     <div class="form-group form-controls">
        <div class="col-sm-9 col-sm-offset-3">
          <a class="btn btn-default"
