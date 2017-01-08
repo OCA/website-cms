@@ -4,11 +4,10 @@
 
 from openerp import models
 from openerp import _
-from openerp.tools.mimetypes import guess_mimetype
+from ..utils import DEFAULT_LOADERS, DEFAULT_EXTRACTORS
+from ..import widgets
 
-import json
 import inspect
-import base64
 import types
 import werkzeug
 from collections import OrderedDict
@@ -28,106 +27,6 @@ IGNORED_FORM_FIELDS = [
     'website_message_ids',
     'website_published',
 ] + models.MAGIC_COLUMNS
-
-
-def m2o_to_form(form, record, fname, value, **req_values):
-    # important: return False if no value
-    # otherwise you will compare an empty recordset with an id
-    # in a select input in form widget template.
-    if isinstance(value, basestring) and value.isdigit():
-        # number as string
-        return int(value)
-    elif isinstance(value, models.BaseModel):
-        return value and value.id or None
-    return None
-
-
-def x2many_to_form(form, record, fname, value,
-                   display_field='display_name', **req_values):
-    value = [{'id': x.id, 'name': x[display_field]} for x in value or []]
-    value = json.dumps(value)
-    return value
-
-
-def binary_to_form(form, record, fname, value, **req_values):
-    _value = {
-        # 'value': '',
-        # 'raw_value': '',
-        # 'mimetype': '',
-    }
-    if value:
-        mimetype = guess_mimetype(value.decode('base64'))
-        _value = {
-            'value': value,
-            'raw_value': value,
-            'mimetype': mimetype,
-        }
-        if mimetype.startswith('image/'):
-            _value['value'] = 'data:{};base64,{}'.format(mimetype, value)
-    return _value
-
-
-def form_to_integer(form, fname, value, **req_values):
-    try:
-        return int(value)
-    except (ValueError, TypeError):
-        return 0
-
-
-def form_to_float(form, fname, value, **req_values):
-    try:
-        return float(value)
-    except (ValueError, TypeError):
-        return 0.0
-
-
-def form_to_x2many(form, fname, value, **req_values):
-    _value = False
-    if value:
-        ids = [int(rec_id) for rec_id in value.split(',')]
-        _value = [(6, False, ids)]
-    return _value
-
-
-def form_to_binary(form, fname, value, **req_values):
-    _value = False
-    if req_values.get(fname + '_keepcheck') == 'yes':
-        # prevent discarding image
-        req_values.pop(fname, None)
-        req_values.pop(fname + '_keepcheck')
-        return None
-    if value:
-        if hasattr(value, 'read'):
-            file_content = value.read()
-            _value = base64.encodestring(file_content)
-        else:
-            _value = value.split(',')[-1]
-    return _value
-
-
-def form_to_date(form, fname, value, **req_values):
-    if not value:
-        # make sure we do not return empty string which breaks the ORM
-        return False
-    return value
-
-
-DEFAULT_LOADERS = {
-    'many2one': m2o_to_form,
-    'one2many': x2many_to_form,
-    'many2many': x2many_to_form,
-    'binary': binary_to_form,
-}
-DEFAULT_EXTRACTORS = {
-    'integer': form_to_integer,
-    'float': form_to_float,
-    'many2one': form_to_integer,
-    'one2many': form_to_x2many,
-    'many2many': form_to_x2many,
-    'binary': form_to_binary,
-    'date': form_to_date,
-    'datetime': form_to_date,
-}
 
 
 class CMSFormMixin(models.AbstractModel):
@@ -159,8 +58,6 @@ class CMSFormMixin(models.AbstractModel):
     _form_loaders = DEFAULT_LOADERS
     # ignore this fields default
     __form_fields_ignore = IGNORED_FORM_FIELDS
-    # internal flag for successful form
-    __form_success = False
 
     def form_init(self, request, main_object=None, **kw):
         """Initalize a form instance.
@@ -176,6 +73,9 @@ class CMSFormMixin(models.AbstractModel):
         for k, v in kw.iteritems():
             if not inspect.ismethod(getattr(self, '_form_' + k)):
                 setattr(self, '_form_' + k, v)
+
+    # internal flag for successful form
+    __form_success = False
 
     @property
     def form_success(self):
@@ -204,7 +104,7 @@ class CMSFormMixin(models.AbstractModel):
         elif self.request.method.upper() == 'POST':
             if self.main_object:
                 return 'write'
-            return 'creates'
+            return 'create'
         return 'base'
 
     @property
@@ -248,7 +148,7 @@ class CMSFormMixin(models.AbstractModel):
         # remove non-stored fields to exclude computed
         _all_fields = {k: v for k, v in _all_fields.iteritems() if v['store']}
         # update fields attributes
-        self._form_update_fields_attributes(_all_fields)
+        self.form_update_fields_attributes(_all_fields)
         # update fields order
         if self._form_fields_order:
             _sorted_all_fields = OrderedDict()
@@ -257,7 +157,7 @@ class CMSFormMixin(models.AbstractModel):
             _all_fields = _sorted_all_fields
         return _all_fields
 
-    def _form_update_fields_attributes(self, _fields):
+    def form_update_fields_attributes(self, _fields):
         """Manipulate fields attributes."""
         for fname in self._form_required_fields:
             # be defensive here since we can remove fields via blacklist
@@ -272,7 +172,7 @@ class CMSFormMixin(models.AbstractModel):
             if v['type'] == 'binary'
         }
 
-    def _form_get_request_values(self):
+    def form_get_request_values(self):
         # normal fields
         values = {
             k: v for k, v in self.request.form.iteritems()
@@ -293,7 +193,7 @@ class CMSFormMixin(models.AbstractModel):
         2. request parameters (only parameters matching form fields names)
         """
         main_object = main_object or self.main_object
-        request_values = request_values or self._form_get_request_values()
+        request_values = request_values or self.form_get_request_values()
         defaults = request_values.copy()
         form_fields = self.form_fields()
         for fname, field in form_fields.iteritems():
@@ -327,7 +227,7 @@ class CMSFormMixin(models.AbstractModel):
 
     def form_extract_values(self, **request_values):
         """Extract values from request form."""
-        request_values = request_values or self._form_get_request_values()
+        request_values = request_values or self.form_get_request_values()
         values = {}
         for fname, field in self.form_fields().iteritems():
             value = request_values.get(fname)
@@ -353,41 +253,6 @@ class CMSFormMixin(models.AbstractModel):
         return values
 
 
-DEFAULT_WIDGETS = {
-    # fname or field_type : {
-    #      # key of a qweb template
-    #     'key': 'cms_form.widget_fname',
-    #      # css_klass
-    #      'css_klass': 'extra css klasses',
-    #      # extra params for particular widgets, JSON compatible
-    #     'params': {
-    #         'a': 1,
-    #     },
-    # }
-    'many2one': {
-        'key': 'cms_form.field_widget_m2o',
-    },
-    'one2many': {
-        'key': 'cms_form.field_widget_x2m',
-    },
-    'many2many': {
-        'key': 'cms_form.field_widget_x2m',
-    },
-    'date': {
-        'key': 'cms_form.field_widget_date',
-    },
-    'text': {
-        'key': 'cms_form.field_widget_text',
-    },
-    # TODO: we expect an image field to be named "image"
-    # but we should handle normal file fields and image fields properly.
-    # We should have an 'image' field type...
-    'image': {
-        'key': 'cms_form.field_widget_image',
-    },
-}
-
-
 class CMSForm(models.AbstractModel):
     _name = 'cms.form'
     _inherit = 'cms.form.mixin'
@@ -402,10 +267,7 @@ class CMSForm(models.AbstractModel):
     # extra css klasses for just the form element
     _form_extra_css_klass = ''
     _form_validators = {}
-    _form_widgets = DEFAULT_WIDGETS
-    # internal flag for turning on redirection
-    __form_redirect = False
-    __form_render_values = {}
+    _form_widgets = widgets.DEFAULT_WIDGETS
 
     @property
     def form_title(self):
@@ -420,6 +282,9 @@ class CMSForm(models.AbstractModel):
                 title += ' ' + self.form_model._description
         return title
 
+    # internal flag for turning on redirection
+    __form_redirect = False
+
     @property
     def form_redirect(self):
         return self.__form_redirect
@@ -427,6 +292,8 @@ class CMSForm(models.AbstractModel):
     @form_redirect.setter
     def form_redirect(self, value):
         self.__form_redirect = value
+
+    __form_render_values = {}
 
     @property
     def form_render_values(self):
@@ -522,7 +389,7 @@ class CMSForm(models.AbstractModel):
             })
         return render_values
 
-    def _form_check_empty_field(self, field, value):
+    def form_check_empty_field(self, field, value):
         if isinstance(value, werkzeug.datastructures.FileStorage):
             # file field w/ no content
             return not bool(value.content_length)
@@ -531,14 +398,14 @@ class CMSForm(models.AbstractModel):
     def form_validate(self, request_values=None):
         errors = {}
         errors_message = {}
-        request_values = request_values or self._form_get_request_values()
+        request_values = request_values or self.form_get_request_values()
 
         missing = False
         for fname, field in self.form_fields().iteritems():
             value = request_values.get(fname)
             error = False
             if field['required'] \
-                    and self._form_check_empty_field(field, value):
+                    and self.form_check_empty_field(field, value):
                 errors[fname] = 'missing'
                 missing = True
             # 1nd lookup for a default type validator
@@ -561,11 +428,12 @@ class CMSForm(models.AbstractModel):
             self.o_request.website.add_status_message(msg, mtype='danger')
         return errors, errors_message
 
-    def _form_update_fields_attributes(self, _fields):
+    def form_update_fields_attributes(self, _fields):
         """Override to add widgets."""
-        super(CMSForm, self)._form_update_fields_attributes(_fields)
+        super(CMSForm, self).form_update_fields_attributes(_fields)
         for fname, field in _fields.iteritems():
-            field['widget'] = {}
+            field['widget'] = widgets.CharWidget(self, fname, field)
             for key in (field['type'], fname):
                 if key in self._form_widgets:
-                    field['widget'] = self._form_widgets[key]
+                    widget = self._form_widgets[key]
+                    field['widget'] = widget(self, fname, field)

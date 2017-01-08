@@ -17,6 +17,7 @@
         'security/cms_form.xml',
         'templates/assets.xml',
         'templates/form.xml',
+        'templates/widgets.xml',
     ],
     'demo': [
     ],

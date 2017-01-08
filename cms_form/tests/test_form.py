@@ -178,6 +178,8 @@ class TestForm(TransactionCase):
             'a_char': 'Foo',
             'a_number': '10',
             'a_float': '5',
+            'a_many2one': '',
+            'a_many2many': '',
         }
         request = fake_request(form_data=data)
         required = (
