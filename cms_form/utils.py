@@ -7,6 +7,7 @@ from openerp.tools.mimetypes import guess_mimetype
 
 import json
 import base64
+import werkzeug
 
 
 def m2o_to_form(form, record, fname, value, **req_values):
@@ -35,7 +36,12 @@ def binary_to_form(form, record, fname, value, **req_values):
         # 'mimetype': '',
     }
     if value:
-        mimetype = guess_mimetype(value.decode('base64'))
+        if isinstance(value, werkzeug.datastructures.FileStorage):
+            # value from request, we cannot set a value for input field
+            value = ''
+            mimetype = ''
+        else:
+            mimetype = guess_mimetype(value.decode('base64'))
         _value = {
             'value': value,
             'raw_value': value,
@@ -96,6 +102,8 @@ DEFAULT_LOADERS = {
     'one2many': x2many_to_form,
     'many2many': x2many_to_form,
     'binary': binary_to_form,
+    # TODO: use a specific field type for images
+    'image': binary_to_form,
 }
 DEFAULT_EXTRACTORS = {
     'integer': form_to_integer,

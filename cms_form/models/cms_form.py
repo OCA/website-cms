@@ -206,8 +206,9 @@ class CMSFormMixin(models.AbstractModel):
                 value = main_object[fname]
             # maybe a POST request with new values: override item value
             value = request_values.get(fname, value)
-            # 1nd lookup for a default type handler
-            value_handler = self._form_loaders.get(field['type'], None)
+            # 1nd lookup for a default type / name handler
+            value_handler = self._form_loaders.get(
+                field['type'], self._form_loaders.get(fname, None))
             if value_handler:
                 value = value_handler(
                     self, main_object, fname, value, **request_values)
@@ -234,8 +235,9 @@ class CMSFormMixin(models.AbstractModel):
         values = {}
         for fname, field in self.form_fields().iteritems():
             value = request_values.get(fname)
-            # 1nd lookup for a default type handler
-            value_handler = self._form_extractors.get(field['type'], None)
+            # 1nd lookup for a default type or name handler
+            value_handler = self._form_extractors.get(
+                field['type'], self._form_extractors.get(fname, None))
             # 2nd lookup for a specific type handler
             value_handler = getattr(
                 self, '_form_extract_' + field['type'], value_handler)
@@ -393,10 +395,16 @@ class CMSForm(models.AbstractModel):
             })
         return render_values
 
-    def form_check_empty_field(self, field, value):
+    def form_check_empty_field(self, fname, field, value, **req_values):
         if isinstance(value, werkzeug.datastructures.FileStorage):
+            has_value = bool(value.filename)
+            if not has_value and req_values.get(fname + '_keepcheck') == 'yes':
+                # no value, but we want to preserve existing one
+                return False
             # file field w/ no content
-            return not bool(value.content_length)
+            # TODO: this is not working sometime...
+            # return not bool(value.content_length)
+            return not has_value
         return value in (False, '')
 
     def form_validate(self, request_values=None):
@@ -409,7 +417,8 @@ class CMSForm(models.AbstractModel):
             value = request_values.get(fname)
             error = False
             if field['required'] \
-                    and self.form_check_empty_field(field, value):
+                    and self.form_check_empty_field(
+                        fname, field, value, **request_values):
                 errors[fname] = 'missing'
                 missing = True
             # 1nd lookup for a default type validator
