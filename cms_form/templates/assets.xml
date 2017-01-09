@@ -5,6 +5,7 @@
 
 		<xpath expr="." position="inside">
 			<script type="text/javascript" src="/cms_form/static/src/js/select2widgets.js"></script>
+			<script type="text/javascript" src="/cms_form/static/src/js/date_widget.js"></script>
 		</xpath>
 
 

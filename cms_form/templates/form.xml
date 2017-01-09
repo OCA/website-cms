@@ -43,8 +43,7 @@
 <template id="base_form" name="CMS form template">
 
   <form t-att-action="form.form_action" t-att-method="form.form_method"
-        t-attf-class="form-horizontal #{form.form_css_klass}"
-        enctype="multipart/form-data">
+        t-attf-class="form-horizontal #{form.form_css_klass}">
 
     <input type="hidden" name="csrf_token" t-att-value="form.o_request.csrf_token()"/>
 

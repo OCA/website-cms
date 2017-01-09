@@ -6,8 +6,8 @@
 
   <input type="text"
          t-attf-class="form-control #{widget.css_klass}"
-         t-att-name="fname"
-         t-att-value="form_data.get(fname)"
+         t-att-name="widget.fname"
+         t-att-value="widget.field_value"
          t-att-required="widget.field['required'] and '1' or None"
          t-att-data-params="widget.data"
          />
@@ -18,16 +18,16 @@
 <template id="field_widget_m2o" name="CMS form m2o field widget">
 
   <select t-attf-class="form-control #{widget.css_klass}"
-          t-att-name="fname"
+          t-att-name="widget.fname"
           t-att-required="widget.field['required'] and '1' or None"
           t-att-data-params="widget.data">
     <option value="">Select...</option>
-    <t t-set="comodel" t-value="form.env[widget.field['relation']]" />
+    <t t-set="comodel" t-value="widget.env[widget.field['relation']]" />
     <t t-set="domain" t-value="widget.field.get('domain', [])" />
     <t t-set="option_items" t-value="comodel.search(domain)" />
     <t t-foreach="option_items or []" t-as="opt_item">
      <option t-att-value="opt_item.id"
-             t-att-selected="opt_item.id == form_data.get(fname)">
+             t-att-selected="opt_item.id == widget.field_value">
          <t t-esc="opt_item.name"/>
      </option>
     </t>
@@ -38,9 +38,9 @@
 
 <template id="field_widget_x2m" name="CMS form x2m field widget">
 
-  <input type="text" t-att-id="fname" t-att-name="fname"
+  <input type="text" t-att-id="fname" t-att-name="widget.fname"
          t-attf-class="form-control js_select2_m2m_widget #{widget.css_klass}"
-         t-attf-data-init-value="#{form_data.get(fname)}" t-att-value="fname"
+         t-attf-data-init-value="#{widget.field_value}" t-att-value="fname"
          t-att-data-model="widget.field['relation']"
          data-display_name="name" data-fields='["name"]'
          t-att-data-domain="widget.field['domain'] or []"
@@ -52,10 +52,10 @@
 <template id="field_widget_date" name="CMS form date field widget">
 
   <div class="input-group">
-    <input t-att-name="fname" t-att-id="fname"
+    <input t-att-name="widget.fname" t-att-id="fname"
            t-attf-class="form-control js_datepicker #{widget.css_klass}"
            type="text" data-date-format="YYYY-MM-DD" placeholder="YYYY-MM-DD"
-           t-att-value="form_data.get(fname)"/>
+           t-att-value="widget.field_value"/>
     <span class="input-group-addon">
       <span class="fa fa-calendar"></span>
     </span>
@@ -66,9 +66,9 @@
 
 <template id="field_widget_text" name="CMS form text field widget">
 
-    <textarea t-att-name="fname" t-att-id="fname"
+    <textarea t-att-name="widget.fname" t-att-id="fname"
               t-attf-class="form-control js_datepicker #{widget.css_klass}"
-              t-esc="form_data.get(fname)" />
+              t-esc="widget.field_value" />
 
 </template>
 
@@ -76,9 +76,9 @@
 
 <template id="field_widget_text" name="CMS form text field widget">
 
-    <textarea t-att-name="fname" t-att-id="fname"
+    <textarea t-att-name="widget.fname" t-att-id="fname"
               t-attf-class="form-control js_datepicker #{widget.css_klass}"
-              t-esc="form_data.get(fname)" />
+              t-esc="widget.field_value" />
 
 </template>
 
@@ -88,12 +88,12 @@
     <input
         type="file" capture="camera" accept="image/*"
         t-att-id="fname"
-        t-att-name="fname"
+        t-att-name="widget.fname"
         class="form-control"
         />
-    <t t-if="form_data.get(fname)">
+    <t t-if="widget.field_value">
       <t t-set="prefix" t-value="fname"/>
-      <img class="img img-responsive" t-att-src="form_data.get(fname, {}).get('value')" />
+      <img class="img img-responsive" t-att-src="widget.form_data.get(fname, {}).get('value')" />
       <div t-attf-id="#{prefix}_keepbox" class="keepbox text-center">
         <div class="form-group">
           <label class="checkbox inline" t-attf-for="#{prefix}_keepcheck_yes">

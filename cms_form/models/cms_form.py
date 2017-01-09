@@ -59,6 +59,8 @@ class CMSFormMixin(models.AbstractModel):
     # ignore this fields default
     __form_fields_ignore = IGNORED_FORM_FIELDS
 
+    main_object = None
+
     def form_init(self, request, main_object=None, **kw):
         """Initalize a form instance.
 

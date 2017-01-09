@@ -10,14 +10,14 @@ class Widget(object):
 
     def __init__(self, form, fname, field):
         self.form = form
+        self.form_values = form.form_render_values
         self.fname = fname
         self.field = field
+        self.field_value = self.form_values.get('form_data', {}).get(fname)
         self.env = form.env
 
     def render(self):
-        values = self.form.form_render_values
-        values['widget'] = self
-        return self.env.ref(self.key).render(values)
+        return self.env.ref(self.key).render({'widget': self})
 
 
 class CharWidget(Widget):

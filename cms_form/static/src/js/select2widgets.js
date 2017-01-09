@@ -1,4 +1,4 @@
-odoo.define('theme_fluxdocs.select2widgets', function (require) {
+odoo.define('cms_form.select2widgets', function (require) {
     'use strict';
 
     var Model = require('web.Model');

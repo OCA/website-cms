@@ -103,6 +103,8 @@ DEFAULT_EXTRACTORS = {
     'many2one': form_to_integer,
     'one2many': form_to_x2many,
     'many2many': form_to_x2many,
+    # TODO: use a specific field type for images
+    'image': form_to_binary,
     'binary': form_to_binary,
     'date': form_to_date,
     'datetime': form_to_date,
