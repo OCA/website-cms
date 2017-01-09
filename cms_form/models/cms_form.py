@@ -63,7 +63,8 @@ class CMSFormMixin(models.AbstractModel):
         """Initalize a form instance.
 
         @param request: an odoo-wrapped werkeug request
-        @parm kw: pass any override for `_form_` attributes
+        @param main_object: current model instance if any
+        @param kw: pass any override for `_form_` attributes
             ie: `fields_attributes` -> `_form_fields_attributes`
         """
         self.o_request = request  # odoo wrapped request
@@ -382,6 +383,7 @@ class CMSForm(models.AbstractModel):
             self.form_success = True
             self.form_redirect = True
         else:
+            self.form_success = False
             render_values.update({
                 'errors': errors,
                 'errors_message': errors_message,
