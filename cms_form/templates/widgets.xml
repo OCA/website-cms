@@ -98,11 +98,11 @@
         <div class="form-group">
           <label class="checkbox inline" t-attf-for="#{prefix}_keepcheck_yes">
             <input type="radio" t-attf-id="#{prefix}_keepcheck_yes" t-attf-name="#{prefix}_keepcheck" checked="1" value="yes"/>
-            keep submitted
+            Keep current image
           </label>
           <label class="checkbox inline" t-attf-for="#{prefix}_keepcheck_no">
             <input type="radio" t-attf-id="#{prefix}_keepcheck_no" t-attf-name="#{prefix}_keepcheck" value="no"/>
-            replace submitted
+            Replace current image
           </label>
         </div>
       </div>

@@ -282,9 +282,9 @@ class CMSForm(models.AbstractModel):
                 rec_field = rec_field.name
             title = _('Edit "%s"') % rec_field
         else:
-            title = _('Create')
+            title = _('Create %s')
             if self.form_model._description:
-                title += ' ' + self.form_model._description
+                title = _('Create %s') % self.form_model._description
         return title
 
     # internal flag for turning on redirection
