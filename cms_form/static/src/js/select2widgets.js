@@ -20,6 +20,7 @@ odoo.define('cms_form.select2widgets', function (require) {
             var lastsearch = [];
             $input.select2({
                 multiple: true,
+                tags: true,
                 tokenSeparators: [",", " ", "_"],
                 formatResult: function(term) {
                     if (term.isNew) {
@@ -67,7 +68,7 @@ odoo.define('cms_form.select2widgets', function (require) {
                     });
                     element.val('');
                     callback(data);
-                },
+                }
             });
         });
 

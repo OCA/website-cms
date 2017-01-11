@@ -38,9 +38,11 @@
 
 <template id="field_widget_x2m" name="CMS form x2m field widget">
 
+  <!-- NOTE: `t-att-value` is really important here
+  since without it `initSelection` function for select2 does not work-->
   <input type="text" t-att-id="fname" t-att-name="widget.fname"
          t-attf-class="form-control js_select2_m2m_widget #{widget.css_klass}"
-         t-attf-data-init-value="#{widget.field_value}" t-att-value="fname"
+         t-attf-data-init-value="#{widget.field_value}" t-att-value="widget.field_value or widget.fname"
          t-att-data-model="widget.field['relation']"
          data-display_name="name" data-fields='["name"]'
          t-att-data-domain="widget.field['domain'] or []"

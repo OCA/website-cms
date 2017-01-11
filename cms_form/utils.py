@@ -10,6 +10,10 @@ import base64
 import werkzeug
 
 
+def ids_from_input(value):
+    return [int(rec_id) for rec_id in value.split(',') if rec_id.isdigit()]
+
+
 def m2o_to_form(form, record, fname, value, **req_values):
     # important: return False if no value
     # otherwise you will compare an empty recordset with an id
@@ -24,7 +28,12 @@ def m2o_to_form(form, record, fname, value, **req_values):
 
 def x2many_to_form(form, record, fname, value,
                    display_field='display_name', **req_values):
-    value = [{'id': x.id, 'name': x[display_field]} for x in value or []]
+    if value == record[fname]:
+        # value from record
+        value = [{'id': x.id, 'name': x[display_field]} for x in value or []]
+    elif isinstance(value, basestring) and value == req_values.get(fname):
+        # value from request
+        value = record[fname].browse(ids_from_input(value)).read(['name'])
     value = json.dumps(value)
     return value
 
@@ -69,8 +78,7 @@ def form_to_float(form, fname, value, **req_values):
 def form_to_x2many(form, fname, value, **req_values):
     _value = False
     if value:
-        ids = [int(rec_id) for rec_id in value.split(',')]
-        _value = [(6, False, ids)]
+        _value = [(6, False, ids_from_input(value))]
     return _value
 
 
