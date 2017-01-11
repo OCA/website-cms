@@ -81,6 +81,9 @@ def form_to_x2many(form, fname, value, **req_values):
     _value = False
     if value:
         _value = [(6, False, ids_from_input(value))]
+    else:
+        # wipe them
+        _value = [(5, )]
     return _value
 
 
