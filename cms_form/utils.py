@@ -28,7 +28,9 @@ def m2o_to_form(form, record, fname, value, **req_values):
 
 def x2many_to_form(form, record, fname, value,
                    display_field='display_name', **req_values):
-    if value == record[fname]:
+    if not value:
+        return json.dumps([])
+    if record and value == record[fname]:
         # value from record
         value = [{'id': x.id, 'name': x[display_field]} for x in value or []]
     elif isinstance(value, basestring) and value == req_values.get(fname):
