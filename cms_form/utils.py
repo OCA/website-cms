@@ -35,7 +35,8 @@ def x2many_to_form(form, record, fname, value,
         value = [{'id': x.id, 'name': x[display_field]} for x in value or []]
     elif isinstance(value, basestring) and value == req_values.get(fname):
         # value from request
-        value = record[fname].browse(ids_from_input(value)).read(['name'])
+        value = form.form_model[fname].browse(
+            ids_from_input(value)).read(['name'])
     value = json.dumps(value)
     return value
 
