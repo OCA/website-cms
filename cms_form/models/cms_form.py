@@ -283,8 +283,11 @@ class CMSForm(models.AbstractModel):
             title = _('Edit "%s"') % rec_field
         else:
             title = _('Create %s')
-            if self.form_model._description:
-                title = _('Create %s') % self.form_model._description
+            if self._form_model:
+                model = self.env['ir.model'].search(
+                    [('model', '=', self._form_model)])
+                name = model and model.name or ''
+                title = _('Create %s') % name
         return title
 
     # internal flag for turning on redirection
