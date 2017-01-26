@@ -39,12 +39,14 @@ class FormControllerMixin(object):
         })
         return kw
 
-    def _can_create(self, main_object):
+    def _can_create(self, model, raise_exception=True):
         """Override this to protect the view or the item by raising errors."""
-        return main_object.check_access_rights('create', raise_exception=False)
+        return request.env[model].check_access_rights(
+            'create', raise_exception=raise_exception)
 
-    def _can_edit(self, main_object):
-        return main_object.check_access_rights('write', raise_exception=False)
+    def _can_edit(self, main_object, raise_exception=True):
+        return main_object.check_access_rights(
+            'write', raise_exception=raise_exception)
 
     def get_form(self, model, main_object=None, **kw):
         """Retrieve form for given model or object and initialize it."""
@@ -64,6 +66,10 @@ class FormControllerMixin(object):
         main_object = None
         if model_id:
             main_object = request.env[model].browse(model_id)
+        if main_object:
+            self._can_edit(main_object)
+        else:
+            self._can_create(model)
         form = self.get_form(model, main_object=main_object)
         form.form_process()
         if form.form_success and form.form_redirect:
