@@ -29,11 +29,21 @@ odoo.define('cms_form.select2widgets', function (require) {
                         return _.escape(term.text);
                     }
                 },
-                query: function(query) {
+                query: function(options) {
+                    var domain = [];
+                    if (options.term){
+                        domain.push([
+                          $input.data('search_field') || 'name', 'ilike', '%' + options.term + '%'
+                        ])
+                    }
+                    // TODO: use data.CompundDomain to build domain
+                    // ATM it's just in backend assets
+                    // and requires both data.js and pyeval.js
+                    domain = _.union(domain, $input.data('domain'));
                     ajax.jsonRpc("/web/dataset/call_kw", 'call', {
                         model: $input.data('model'),
                         method: 'search_read',
-                        args: [$input.data('domain')],
+                        args: [domain],
                         kwargs: {
                             fields: $input.data('fields'),
                             context: base.get_context()
@@ -53,7 +63,7 @@ odoo.define('cms_form.select2widgets', function (require) {
                                 isNew: false
                             });
                         });
-                        query.callback(res);
+                        options.callback(res);
                     });
                 },
                 // Default tags from the input value
@@ -68,7 +78,7 @@ odoo.define('cms_form.select2widgets', function (require) {
                     });
                     element.val('');
                     callback(data);
-                }
+                },
             });
         });
 
