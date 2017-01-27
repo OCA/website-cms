@@ -4,8 +4,7 @@
 
 {
     'name': 'CMS status message',
-    'summary': """
-        Basic status messages for your CMS system""",
+    'summary': """Basic status messages for your CMS system""",
     'version': '9.0.1.0.0',
     'license': 'AGPL-3',
     'author': 'Camptocamp SA,Odoo Community Association (OCA)',
@@ -13,6 +12,6 @@
         'website',
     ],
     'data': [
-        'templates.xml',
+        'templates/status_message.xml',
     ],
 }

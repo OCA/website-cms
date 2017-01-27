@@ -21,16 +21,6 @@ You can add several messages: they will be displayed one after another.
 Usage
 =====
 
-Add status message to layout::
-
-    <template id="add_status_message" inherit_id="website.layout" name="Add status message">
-
-        <xpath expr="//div[@id='wrapwrap']/main/*" position="before">
-            <t t-call="cms_status_message.status_message" />
-        </xpath>
-
-    </template>
-
 Set a message::
 
     msg = _('My important message.')
@@ -40,10 +30,10 @@ Set a message::
 By default the message type is `info`.
 The title (the label at the beginning of the message) matches the message type:
 
-    * 'info': 'Info'
-    * 'success': 'Success'
-    * 'danger': 'Error'
-    * 'warning': 'Warning'
+* 'info': 'Info'
+* 'success': 'Success'
+* 'danger': 'Error'
+* 'warning': 'Warning'
 
 
 You can change message parameters::
@@ -55,6 +45,12 @@ You can change message parameters::
 Messages will be displayed like this:
 
 |preview|
+
+Customize appereance
+--------------------
+
+By default the alert box is added on top of `<main />` content.
+If you want to customize this behavior just override or disable `cms_status_message.add_status_message` template.
 
 
 Bug Tracker
