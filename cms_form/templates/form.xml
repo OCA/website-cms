@@ -46,7 +46,9 @@
         t-attf-class="form-horizontal #{form.form_css_klass}"
         enctype="multipart/form-data">
 
-    <input type="hidden" name="csrf_token" t-att-value="form.o_request.csrf_token()"/>
+    <t t-if="form.form_method == 'POST'">
+        <input type="hidden" name="csrf_token" t-att-value="form.o_request.csrf_token()"/>
+    </t>
 
     <t t-set="form_fields" t-value="form.form_fields()" />
     <t t-foreach="form_fields.iterkeys()" t-as="fname">
@@ -73,6 +75,31 @@
      </div>
   </form>
 
+</template>
+
+
+<template id="search_form_wrapper" name="CMS search form wrapper"
+          inherit_id="cms_form.form_wrapper" primary="True">
+
+  <xpath expr="//t[@t-raw]" position="after">
+    <t t-call="#{ form.form_search_results_template }" />
+  </xpath>
+
+</template>
+
+
+<template id="search_form" name="CMS search form"
+          inherit_id="cms_form.base_form" primary="True">
+
+  <xpath expr="//div[contains(@class, 'above-controls')]//div[contains(@class, 'field-required')]" position="replace" />
+
+</template>
+
+
+<template id="search_results" name="CMS form search results">
+  <t t-foreach="form.form_search_results" t-as="item">
+    <h3 t-field="item.name" />
+  </t>
 </template>
 
 

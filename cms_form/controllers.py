@@ -48,11 +48,14 @@ class FormControllerMixin(object):
         return main_object.check_access_rights(
             'write', raise_exception=raise_exception)
 
+    def form_model_key(self, model):
+        return 'cms.form.' + model
+
     def get_form(self, model, main_object=None, **kw):
         """Retrieve form for given model or object and initialize it."""
-        model_form_key = 'cms.form.' + model
-        if model_form_key in request.env:
-            form = request.env[model_form_key].new()
+        form_model_key = self.form_model_key(model)
+        if form_model_key in request.env:
+            form = request.env[form_model_key].new()
         else:
             # init a base form
             # TODO: use a flag in the model to enable this
@@ -62,14 +65,17 @@ class FormControllerMixin(object):
         form.form_init(request, main_object=main_object)
         return form
 
-    def make_response(self, model, model_id=None, **kw):
-        main_object = None
-        if model_id:
-            main_object = request.env[model].browse(model_id)
+    def check_permission(self, model, main_object):
         if main_object:
             self._can_edit(main_object)
         else:
             self._can_create(model)
+
+    def make_response(self, model, model_id=None, **kw):
+        main_object = None
+        if model_id:
+            main_object = request.env[model].browse(model_id)
+        self.check_permission(model, main_object)
         form = self.get_form(model, main_object=main_object)
         form.form_process()
         if form.form_success and form.form_redirect:
@@ -95,3 +101,23 @@ class CMSFormController(http.Controller, FormControllerMixin):
         """Handle a `form` route.
         """
         return self.make_response(model, model_id=model_id, **kw)
+
+
+class CMSSearchFormController(http.Controller, FormControllerMixin):
+    """CMS form controller."""
+
+    template = 'cms_form.search_form_wrapper'
+
+    @http.route([
+        '/cms/<string:model>/search',
+    ], type='http', auth='public', website=True)
+    def cms_form(self, model, **kw):
+        """Handle a search `form` route.
+        """
+        return self.make_response(model, **kw)
+
+    def form_model_key(self, model):
+        return 'cms.form.search.' + model
+
+    def check_permission(self, model, main_object):
+        pass
