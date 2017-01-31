@@ -26,17 +26,26 @@
       <div class="col-md-9 col-sm-8">
         <t t-raw="widget.render()"/>
         <t t-if="field.get('help')">
-            <t t-call="cms_form.form_field_help_block" />
+            <t t-call="cms_form.base_form_field_help_block" />
         </t>
       </div>
     </div>
 </template>
 
 
-<template id="form_field_help_block" name="CMS form field help block">
+<template id="base_form_field_help_block" name="CMS form field help block">
     <p class="help-block" t-raw="field['help']">
       <!-- use `raw` to allow injecting html stuff here -->
     </p>
+</template>
+
+<template id="base_form_fields" name="CMS form fields">
+    <t t-foreach="form_fields.iterkeys()" t-as="fname">
+      <t t-call="cms_form.form_horizontal_field_wrapper">
+        <t t-set="field" t-value="form_fields[fname]" />
+        <t t-set="widget" t-value="field['widget']" />
+      </t>
+    </t>
 </template>
 
 
@@ -51,20 +60,19 @@
     </t>
 
     <t t-set="form_fields" t-value="form.form_fields()" />
-    <t t-foreach="form_fields.iterkeys()" t-as="fname">
-      <t t-call="cms_form.form_horizontal_field_wrapper">
-        <t t-set="field" t-value="form_fields[fname]" />
-        <t t-set="widget" t-value="field['widget']" />
-      </t>
-    </t>
+
+    <t t-call="#{ form.form_fields_template }" />
+
     <div class="col-sm-9 col-sm-offset-3 above-controls">
         <!-- you can style required fields like this:
             `form .form-group.field-required label.control-label::after{ content: '*'}`
             You'll get the symbol here, with proper legend
         -->
-        <div class="form-group field-required">
-            <p class="field-required-legend"><label class="control-label"></label> Required fields</p>
-        </div>
+        <t t-if="form.form_mode != 'search'">
+            <div class="form-group field-required">
+                <p class="field-required-legend"><label class="control-label"></label> Required fields</p>
+            </div>
+        </t>
     </div>
     <div class="form-group form-controls">
        <div class="col-sm-9 col-sm-offset-3">
@@ -91,7 +99,6 @@
 <template id="search_form" name="CMS search form"
           inherit_id="cms_form.base_form" primary="True">
 
-  <xpath expr="//div[contains(@class, 'above-controls')]//div[contains(@class, 'field-required')]" position="replace" />
   <xpath expr="//div[contains(@class, 'form-controls')]" position="replace">
     <div class="form-group form-controls">
        <div class="col-sm-9 col-sm-offset-3">
