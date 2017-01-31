@@ -56,11 +56,12 @@
 <template id="field_widget_date" name="CMS form date field widget">
 
   <div class="input-group">
+    <!-- TODO: show date in user locale and convert value server side -->
     <input t-att-name="widget.fname" t-att-id="fname"
            t-attf-class="form-control js_datepicker #{widget.css_klass}"
-           type="text" data-date-format="YYYY-MM-DD" placeholder="YYYY-MM-DD"
+           type="text" data-format="yy-mm-dd" placeholder="YYYY-MM-DD"
            t-att-value="widget.field_value"/>
-    <span class="input-group-addon">
+    <span class="input-group-addon js_datepicker_trigger">
       <span class="fa fa-calendar"></span>
     </span>
   </div>
