@@ -45,6 +45,7 @@
          t-attf-data-init-value="#{widget.field_value}" t-att-value="widget.field_value or widget.fname"
          t-att-data-model="widget.field['relation']"
          data-display_name="name" data-fields='["name"]'
+         t-att-placeholder="widget.field['string'] + '...'"
          t-att-data-domain="widget.field['domain'] or []"
         />
 

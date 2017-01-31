@@ -20,7 +20,7 @@ def m2o_to_form(form, record, fname, value, **req_values):
     # in a select input in form widget template.
     if isinstance(value, basestring) and value.isdigit():
         # number as string
-        return int(value)
+        return int(value) > 0 and int(value)
     elif isinstance(value, models.BaseModel):
         return value and value.id or None
     return None
@@ -81,11 +81,14 @@ def form_to_float(form, fname, value, **req_values):
 
 def form_to_x2many(form, fname, value, **req_values):
     _value = False
-    if value:
-        _value = [(6, False, ids_from_input(value))]
+    if form._form_extract_value_mode == 'write':
+        if value:
+            _value = [(6, False, ids_from_input(value))]
+        else:
+            # wipe them
+            _value = [(5, )]
     else:
-        # wipe them
-        _value = [(5, )]
+        _value = value and ids_from_input(value) or []
     return _value
 
 

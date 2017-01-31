@@ -98,7 +98,8 @@
 
 <template id="search_results" name="CMS form search results">
   <t t-foreach="form.form_search_results" t-as="item">
-    <h3 t-field="item.name" />
+    <h3 class="item-name"><a t-att-href="item.website_url" t-field="item.name" /></h3>
+    <p class="item-description" t-field="item.website_description"></p>
   </t>
 </template>
 

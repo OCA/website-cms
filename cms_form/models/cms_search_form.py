@@ -15,6 +15,7 @@ class CMSFormSearch(models.AbstractModel):
     form_action = ''
     form_method = 'GET'
     _form_mode = 'search'
+    _form_extract_value_mode = 'read'
     # show results if no query has been submitted?
     _form_show_results_no_submit = 1
     __form_search_results = []
@@ -67,6 +68,9 @@ class CMSFormSearch(models.AbstractModel):
             value = search_values.get(fname)
             if value is None:
                 continue
+            if field['type'] in ('many2one', ) and value < 1:
+                # we need an existing ID here ( > 0)
+                continue
             # TODO: find the way to properly handle this
             operator = '='
             if field['type'] in ('char', 'text'):
@@ -75,7 +79,12 @@ class CMSFormSearch(models.AbstractModel):
             elif field['type'] in ('integer', 'float', 'many2one'):
                 operator = '='
             elif field['type'] in ('one2many', 'many2many'):
+                if not value:
+                    continue
                 operator = 'in'
+            elif field['type'] in ('many2one', ) and not value:
+                # we need an existing ID here ( > 0)
+                continue
             leaf = (fname, operator, value)
             domain.append(leaf)
         return domain

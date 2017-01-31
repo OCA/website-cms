@@ -65,6 +65,12 @@ class CMSFormMixin(models.AbstractModel):
     _form_loaders = DEFAULT_LOADERS
     # handlers to extract values from request
     _form_extractors = DEFAULT_EXTRACTORS
+    # extract values mode
+    # This param can be used to alter value format
+    # when extracting values from request.
+    # eg: in write mode you can get on a m2m [(6, 0, [1,2,3])]
+    # while in read mode you can get just the ids [1,2,3]
+    _form_extract_value_mode = 'write'
     # ignore this fields default
     __form_fields_ignore = IGNORED_FORM_FIELDS
     # current edit object if any
