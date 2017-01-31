@@ -170,8 +170,7 @@ class CMSFormMixin(models.AbstractModel):
             _all_whitelisted[fname] = _all_fields[fname]
         _all_fields = _all_whitelisted or _all_fields
         # remove unwanted fields
-        for fname in self.__form_fields_ignore:
-            _all_fields.pop(fname, None)
+        self._remove_unwanted(_all_fields)
         # remove non-stored fields to exclude computed
         _all_fields = {k: v for k, v in _all_fields.iteritems() if v['store']}
         # update fields attributes
@@ -183,6 +182,10 @@ class CMSFormMixin(models.AbstractModel):
                 _sorted_all_fields[fname] = _all_fields[fname]
             _all_fields = _sorted_all_fields
         return _all_fields
+
+    def _remove_unwanted(self, _all_fields):
+        for fname in self.__form_fields_ignore:
+            _all_fields.pop(fname, None)
 
     def form_update_fields_attributes(self, _fields):
         """Manipulate fields attributes."""
@@ -251,11 +254,11 @@ class CMSFormMixin(models.AbstractModel):
                     main_object, fname, value, **request_values)
             defaults[fname] = value
         if main_object:
+            # TODO: still needed?
             # add `has_*` flags for file fields
             # so in templates we really know if a file field is valued.
             for fname in self.form_file_fields.iterkeys():
                 defaults['has_' + fname] = bool(main_object[fname])
-        print defaults
         return defaults
 
     def form_extract_values(self, **request_values):
