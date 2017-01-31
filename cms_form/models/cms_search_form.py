@@ -117,6 +117,8 @@ class CMSFormSearch(models.AbstractModel):
             elif field['type'] in ('many2one', ) and not value:
                 # we need an existing ID here ( > 0)
                 continue
+            elif field['type'] in ('boolean', ):
+                value = value == 'on' and True
             leaf = (fname, operator, value)
             domain.append(leaf)
         return domain

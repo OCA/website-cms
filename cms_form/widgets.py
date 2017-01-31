@@ -44,6 +44,10 @@ class ImageWidget(Widget):
     key = 'cms_form.field_widget_image'
 
 
+class BooleanWidget(Widget):
+    key = 'cms_form.field_widget_boolean'
+
+
 DEFAULT_WIDGETS = {
     'many2one': M2OWidget,
     'one2many': X2MWidget,
@@ -54,4 +58,5 @@ DEFAULT_WIDGETS = {
     # but we should handle normal file fields and image fields properly.
     # We should have an 'image' field type...
     'image': ImageWidget,
+    'boolean': BooleanWidget,
 }

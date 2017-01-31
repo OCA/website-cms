@@ -10,6 +10,7 @@
          t-att-value="widget.field_value"
          t-att-required="widget.field['required'] and '1' or None"
          t-att-data-params="widget.data"
+         t-att-placeholder="widget.field['string'] + '...'"
          />
 
 </template>
@@ -70,18 +71,19 @@
 <template id="field_widget_text" name="CMS form text field widget">
 
     <textarea t-att-name="widget.fname" t-att-id="fname"
-              t-attf-class="form-control js_datepicker #{widget.css_klass}"
+              t-attf-class="form-control #{widget.css_klass}"
               t-esc="widget.field_value" />
 
 </template>
 
 
+<template id="field_widget_boolean" name="CMS form boolean field widget">
 
-<template id="field_widget_text" name="CMS form text field widget">
-
-    <textarea t-att-name="widget.fname" t-att-id="fname"
-              t-attf-class="form-control js_datepicker #{widget.css_klass}"
-              t-esc="widget.field_value" />
+    <input type="checkbox"
+           t-att-name="widget.fname" t-att-id="fname"
+           t-att-checked="widget.field_value == 'on' or None"
+           t-attf-class="form-control #{widget.css_klass}"
+           />
 
 </template>
 
