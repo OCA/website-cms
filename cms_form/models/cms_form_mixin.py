@@ -114,13 +114,11 @@ class CMSFormMixin(models.AbstractModel):
 
     @property
     def form_title(self):
-        # TODO
-        return 'Form title'
+        return ''
 
     @property
     def form_description(self):
-        # TODO
-        return 'Form description'
+        return ''
 
     @property
     def form_mode(self):

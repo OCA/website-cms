@@ -7,9 +7,12 @@
     <t t-set="title" t-value="form.form_title" />
     <div id="wrap" t-att-class="form.form_wrapper_css_klass">
         <div class="container">
-          <h2>
-            <span class="form_title" t-esc="form.form_title" />
-          </h2>
+          <t t-if="form.form_title">
+            <h2><span class="form_title" t-esc="form.form_title" /></h2>
+          </t>
+          <t t-if="form.form_description">
+            <p class="form_description" t-esc="form.form_description" />
+          </t>
           <t t-raw="form.form_render()" />
         </div>
     </div>
