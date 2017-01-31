@@ -18,13 +18,17 @@ class CMSFormSearch(models.AbstractModel):
     _form_extract_value_mode = 'read'
     # show results if no query has been submitted?
     _form_show_results_no_submit = 1
-    __form_search_results = []
+    _form_results_per_page = 10
+    # sort by this param, defaults to model's `_order`
+    _form_results_orderby = ''
 
     def form_update_fields_attributes(self, _fields):
         """No field should be mandatory."""
         super(CMSFormSearch, self).form_update_fields_attributes(_fields)
         for fname, field in _fields.iteritems():
             field['required'] = False
+
+    __form_search_results = {}
 
     @property
     def form_search_results(self):
@@ -45,18 +49,45 @@ class CMSFormSearch(models.AbstractModel):
         return title
 
     def form_process_GET(self, render_values):
-        self.form_search_results = self.form_search()
+        self.form_search(render_values)
         return render_values
 
-    def form_search(self):
+    def form_search(self, render_values):
         """Produce search results."""
         search_values = self.form_extract_values()
         if not search_values and not self._form_show_results_no_submit:
             return []
         domain = self.form_search_domain(search_values)
-        results = self.form_model.search(domain)
-        print domain, results
-        return results
+        count = self.form_model.search_count(domain)
+        page = render_values.get('extra_args', {}).get('page', 0)
+        url = render_values.get('extra_args', {}).get('pager_url', '')
+        if self._form_model:
+            url = self.form_model.cms_search_url
+        pager = self._form_results_pager(count=count, page=page, url=url)
+        order = self._form_results_orderby or None
+        results = self.form_model.search(
+            domain,
+            limit=self._form_results_per_page,
+            offset=pager['offset'],
+            order=order
+        )
+        self.form_search_results = {
+            'results': results,
+            'count': count,
+            'pager': pager,
+        }
+
+    def _form_results_pager(self, count=None, page=0, url=''):
+        count = count or self.form_results_count
+        pager = self.o_request.website.pager
+        return pager(
+            url=url,
+            total=count,
+            page=page,
+            step=self._form_results_per_page,
+            scope=self._form_results_per_page,
+            # url_args=url_args
+        )
 
     def form_search_domain(self, search_values):
         """Build search domain.

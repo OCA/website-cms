@@ -9,7 +9,11 @@ class WebsitePublishedMixin(models.AbstractModel):
 
     @property
     def cms_add_url(self):
-        return '/cms/{}/create'.format(self._name)
+        return '/cms/form/create/{}'.format(self._name)
+
+    @property
+    def cms_search_url(self):
+        return '/cms/form/search/{}'.format(self._name)
 
     cms_edit_url = fields.Char(
         string='CMS edit URL',

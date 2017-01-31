@@ -92,15 +92,27 @@
           inherit_id="cms_form.base_form" primary="True">
 
   <xpath expr="//div[contains(@class, 'above-controls')]//div[contains(@class, 'field-required')]" position="replace" />
+  <xpath expr="//div[contains(@class, 'form-controls')]" position="replace">
+    <div class="form-group form-controls">
+       <div class="col-sm-9 col-sm-offset-3">
+         <button type="submit" class="btn btn-primary">Search</button>
+       </div>
+     </div>
+  </xpath>
 
 </template>
 
 
 <template id="search_results" name="CMS form search results">
-  <t t-foreach="form.form_search_results" t-as="item">
+  <t t-foreach="form.form_search_results['results']" t-as="item">
     <h3 class="item-name"><a t-att-href="item.website_url" t-field="item.name" /></h3>
     <p class="item-description" t-field="item.website_description"></p>
   </t>
+  <div class="text-center mb32">
+    <t t-call="website.pager">
+    <t t-set="pager" t-value="form.form_search_results['pager']" />
+    </t>
+  </div>
 </template>
 
 

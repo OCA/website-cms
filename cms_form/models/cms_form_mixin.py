@@ -309,8 +309,9 @@ class CMSFormMixin(models.AbstractModel):
         values.update(kw)
         return self.env.ref(self.form_template).render(values)
 
-    def form_process(self):
+    def form_process(self, **kw):
         render_values = self.form_render_values
+        render_values.update(kw)
         render_values['form_data'] = self.form_load_defaults()
         handler = getattr(self, 'form_process_' + self.request.method.upper())
         render_values.update(handler(render_values))
