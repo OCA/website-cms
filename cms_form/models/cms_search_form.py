@@ -79,7 +79,7 @@ class CMSFormSearch(models.AbstractModel):
 
     def _form_results_pager(self, count=None, page=0, url='', url_args=None):
         url_args = url_args or self.request.args.to_dict()
-        count = count or self.form_results_count
+        count = count
         pager = self.o_request.website.pager
         return pager(
             url=url,
