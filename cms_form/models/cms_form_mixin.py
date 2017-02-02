@@ -205,9 +205,12 @@ class CMSFormMixin(models.AbstractModel):
         }
 
     def form_get_request_values(self):
+        # on POST requests values are in `form` attr
+        # on GET requests values are in `args` attr
+        _values = self.request.args or self.request.form
         # normal fields
         values = {
-            k: v for k, v in self.request.args.iteritems()
+            k: v for k, v in _values.iteritems()
             if k not in ('csrf_token', )
         }
         # file fields
