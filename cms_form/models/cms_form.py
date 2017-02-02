@@ -91,7 +91,7 @@ class CMSForm(models.AbstractModel):
         # error message for empty required fields
         if missing and self.o_request.website:
             msg = self.form_msg_error_missing
-            self.o_request.website.add_status_message(msg, mtype='danger')
+            self.o_request.website.add_status_message(msg, type_='danger')
         return errors, errors_message
 
     def form_create_or_update(self):
