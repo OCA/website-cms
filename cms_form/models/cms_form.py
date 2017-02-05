@@ -5,12 +5,25 @@
 from openerp import models
 from openerp import _
 
+import werkzeug
+
 
 class CMSForm(models.AbstractModel):
     _name = 'cms.form'
     _inherit = 'cms.form.mixin'
 
     _form_validators = {}
+
+    # internal flag for successful form
+    __form_success = False
+
+    @property
+    def form_success(self):
+        return self.__form_success
+
+    @form_success.setter
+    def form_success(self, value):
+        self.__form_success = value
 
     @property
     def form_title(self):
@@ -59,6 +72,19 @@ class CMSForm(models.AbstractModel):
             if 'website_url' in main_object:
                 return main_object.website_url
         return '/'
+
+    def form_check_empty_field(self, fname, field, value, **req_values):
+        """Return True if passed field value is really empty."""
+        if isinstance(value, werkzeug.datastructures.FileStorage):
+            has_value = bool(value.filename)
+            if not has_value and req_values.get(fname + '_keepcheck') == 'yes':
+                # no value, but we want to preserve existing one
+                return False
+            # file field w/ no content
+            # TODO: this is not working sometime...
+            # return not bool(value.content_length)
+            return not has_value
+        return value in (False, '')
 
     def form_validate(self, request_values=None):
         errors = {}

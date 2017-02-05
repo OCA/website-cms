@@ -7,8 +7,6 @@ from ..utils import DEFAULT_LOADERS, DEFAULT_EXTRACTORS
 from ..import widgets
 
 import inspect
-import types
-import werkzeug
 from collections import OrderedDict
 
 
@@ -79,10 +77,12 @@ class CMSFormMixin(models.AbstractModel):
 
     @property
     def main_object(self):
+        """Current main object."""
         return self.__form_main_object
 
     @main_object.setter
     def main_object(self, value):
+        """Current main object setter."""
         self.__form_main_object = value
 
     def form_init(self, request, main_object=None, **kw):
@@ -93,24 +93,15 @@ class CMSFormMixin(models.AbstractModel):
         @param kw: pass any override for `_form_` attributes
             ie: `fields_attributes` -> `_form_fields_attributes`
         """
-        self.o_request = request  # odoo wrapped request
-        self.request = request.httprequest  # werkzeug request, the "real" one
-        self.main_object = main_object
+        form = self.new()
+        form.o_request = request  # odoo wrapped request
+        form.request = request.httprequest  # werkzeug request, the "real" one
+        form.main_object = main_object
         # override `_form_` parameters
         for k, v in kw.iteritems():
-            if not inspect.ismethod(getattr(self, '_form_' + k)):
-                setattr(self, '_form_' + k, v)
-
-    # internal flag for successful form
-    __form_success = False
-
-    @property
-    def form_success(self):
-        return self.__form_success
-
-    @form_success.setter
-    def form_success(self, value):
-        self.__form_success = value
+            if not inspect.ismethod(getattr(form, '_form_' + k)):
+                setattr(form, '_form_' + k, v)
+        return form
 
     @property
     def form_title(self):
@@ -168,7 +159,7 @@ class CMSFormMixin(models.AbstractModel):
             _all_whitelisted[fname] = _all_fields[fname]
         _all_fields = _all_whitelisted or _all_fields
         # remove unwanted fields
-        self._remove_unwanted(_all_fields)
+        self._form_remove_uwanted(_all_fields)
         # remove non-stored fields to exclude computed
         _all_fields = {k: v for k, v in _all_fields.iteritems() if v['store']}
         # update fields attributes
@@ -181,7 +172,8 @@ class CMSFormMixin(models.AbstractModel):
             _all_fields = _sorted_all_fields
         return _all_fields
 
-    def _remove_unwanted(self, _all_fields):
+    def _form_remove_uwanted(self, _all_fields):
+        """Remove fields from form fields."""
         for fname in self.__form_fields_ignore:
             _all_fields.pop(fname, None)
 
@@ -205,6 +197,7 @@ class CMSFormMixin(models.AbstractModel):
         }
 
     def form_get_request_values(self):
+        """Retrieve fields values from current request."""
         # on POST requests values are in `form` attr
         # on GET requests values are in `args` attr
         _values = self.request.args or self.request.form
@@ -238,29 +231,38 @@ class CMSFormMixin(models.AbstractModel):
                 value = main_object[fname]
             # maybe a POST request with new values: override item value
             value = request_values.get(fname, value)
-            # 1nd lookup for a default type / name handler
-            value_handler = self._form_loaders.get(
-                field['type'], self._form_loaders.get(fname, None))
-            if value_handler:
-                value = value_handler(
+            loader = self.form_get_loader(
+                fname, field,
+                main_object=main_object, value=value, **request_values)
+            if loader:
+                value = loader(
                     self, main_object, fname, value, **request_values)
-            # 2nd lookup for a specific type handler
-            value_handler = getattr(
-                self, '_form_load_' + field['type'], value_handler)
-            # 3rd lookup and override by named handler if any
-            value_handler = getattr(
-                self, '_form_load_' + fname, value_handler)
-            if value_handler and isinstance(value_handler, types.MethodType):
-                value = value_handler(
-                    main_object, fname, value, **request_values)
             defaults[fname] = value
-        if main_object:
-            # TODO: still needed?
-            # add `has_*` flags for file fields
-            # so in templates we really know if a file field is valued.
-            for fname in self.form_file_fields.iterkeys():
-                defaults['has_' + fname] = bool(main_object[fname])
         return defaults
+
+    def form_get_loader(self, fname, field,
+                        main_object=None, value=None, **req_values):
+        """Retrieve form value loader.
+
+        :param fname: field name
+        :param field: field description as `fields_get`
+        :param main_object: current main object if any
+        :param value: current field value if any
+        :param req_values: custom request valuess
+        """
+        # 1nd lookup for a default type / name loader
+        loader = self._form_loaders.get(
+            field['type'], self._form_loaders.get(fname, None))
+        if loader:
+            value = loader(
+                self, main_object, fname, value, **req_values)
+        # 2nd lookup for a specific type loader method
+        loader = getattr(
+            self, '_form_load_' + field['type'], loader)
+        # 3rd lookup and override by named loader if any
+        loader = getattr(
+            self, '_form_load_' + fname, loader)
+        return loader
 
     def form_extract_values(self, **request_values):
         """Extract values from request form."""
@@ -268,17 +270,10 @@ class CMSFormMixin(models.AbstractModel):
         values = {}
         for fname, field in self.form_fields().iteritems():
             value = request_values.get(fname)
-            # 1nd lookup for a default type or name handler
-            value_handler = self._form_extractors.get(
-                field['type'], self._form_extractors.get(fname, None))
-            # 2nd lookup for a specific type handler
-            value_handler = getattr(
-                self, '_form_extract_' + field['type'], value_handler)
-            # 3rd lookup and override by named handler if any
-            value_handler = getattr(
-                self, '_form_extract_' + fname, value_handler)
-            if value_handler:
-                value = value_handler(self, fname, value, **request_values)
+            extractor = self.form_get_extractor(
+                fname, field, value=value, **request_values)
+            if extractor:
+                value = extractor(self, fname, value, **request_values)
             if value is None:
                 # we assume we do not want to override the field value.
                 # a tipical example is an image field.
@@ -290,10 +285,30 @@ class CMSFormMixin(models.AbstractModel):
             values[fname] = value
         return values
 
+    def form_get_extractor(self, fname, field, value=None, **req_values):
+        """Retrieve form value extractor.
+
+        :param fname: field name
+        :param field: field description as `fields_get`
+        :param value: current field value if any
+        :param req_values: custom request valuess
+        """
+        # 1nd lookup for a default type or name handler
+        extractor = self._form_extractors.get(
+            field['type'], self._form_extractors.get(fname, None))
+        # 2nd lookup for a specific type handler
+        extractor = getattr(
+            self, '_form_extract_' + field['type'], extractor)
+        # 3rd lookup and override by named handler if any
+        extractor = getattr(
+            self, '_form_extract_' + fname, extractor)
+        return extractor
+
     __form_render_values = {}
 
     @property
     def form_render_values(self):
+        """Values used to render the form."""
         if not self.__form_render_values:
             # default render values
             self.__form_render_values = {
@@ -310,11 +325,27 @@ class CMSFormMixin(models.AbstractModel):
         self.__form_render_values = value
 
     def form_render(self, **kw):
+        """Renders form template declared in `form_template`.
+
+        To render the form simply do:
+
+            <t t-raw="form.form_render()" />
+        """
         values = self.form_render_values.copy()
         values.update(kw)
         return self.env.ref(self.form_template).render(values)
 
     def form_process(self, **kw):
+        """Process current request.
+
+        :param kw: inject custom / extra rendering values.
+
+        Lookup correct request handler by request method
+        and call it with rendering values.
+        The handler can perform any action (like creating objects)
+        and then return final rendering form values
+        and store them into `form_render_values`.
+        """
         render_values = self.form_render_values
         render_values.update(kw)
         render_values['form_data'] = self.form_load_defaults()
@@ -323,10 +354,27 @@ class CMSFormMixin(models.AbstractModel):
         self.form_render_values = render_values
 
     def form_process_GET(self, render_values):
+        """Process GET requests."""
         return render_values
+
+    def form_process_POST(self, render_values):
+        """Process POST requests."""
+        raise NotImplementedError()
 
     @property
     def form_wrapper_css_klass(self):
+        """Return form wrapper css klass.
+
+        By default the form markup in wrapped
+        into a `cms_form_wrapper` element.
+        You can use this set of klasses to customize form styles.
+
+        Included by default:
+        * `cms_form_wrapper` marker
+        * form model name normalized (res.partner -> res_partner)
+        * `_form_wrapper_extra_css_klass` extra klasses from form attribute
+        * `mode_` + form mode (ie: 'mode_write')
+        """
         return ' '.join([
             'cms_form_wrapper',
             self._form_model.replace('.', '_').lower(),
@@ -336,16 +384,8 @@ class CMSFormMixin(models.AbstractModel):
 
     @property
     def form_css_klass(self):
-        return self._form_extra_css_klass
+        """Return `<form />` element css klasses.
 
-    def form_check_empty_field(self, fname, field, value, **req_values):
-        if isinstance(value, werkzeug.datastructures.FileStorage):
-            has_value = bool(value.filename)
-            if not has_value and req_values.get(fname + '_keepcheck') == 'yes':
-                # no value, but we want to preserve existing one
-                return False
-            # file field w/ no content
-            # TODO: this is not working sometime...
-            # return not bool(value.content_length)
-            return not has_value
-        return value in (False, '')
+        By default you can provide extra klasses via `_form_extra_css_klass`.
+        """
+        return self._form_extra_css_klass
