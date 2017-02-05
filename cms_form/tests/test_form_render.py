@@ -3,13 +3,41 @@
 # License AGPL-3.0 or later (http://www.gnu.org/licenses/agpl).
 
 # from .common import fake_request
-from .common import FormTestCase
+from .common import FormRenderTestCase
 
 
-class TestRender(FormTestCase):
+class TestRender(FormRenderTestCase):
 
-    def test_render(self):
+    def test_render_form_attrs(self):
         form = self.get_form('cms.form.test_fields')
         html = form.form_render()
-        # TODO: test with html parsing
-        self.assertTrue('<form' in html)
+        node = self.to_xml_node(html)[0]
+        self.assertEqual(node.tag, 'form')
+        expected_attrs = {
+            'enctype': 'multipart/form-data',
+            'method': 'POST',
+            'class': 'form-horizontal'
+        }
+        self.assert_match_attrs(node.attrib, expected_attrs)
+
+    def test_render_form_fields(self):
+        form = self.get_form('cms.form.test_fields')
+        html = form.form_render()
+        node = self.to_xml_node(html)[0]
+        expected_fields = (
+            'csrf_token',
+            'a_char',
+            'a_float',
+            'a_number',
+            'a_many2one',
+            'a_many2many',
+            'a_one2many',
+        )
+        self.assertEqual(
+            len(node[0].xpath('//input')), len(expected_fields)
+        )
+        self.assert_match_inputs(node, expected_fields)
+
+    def test_field_attrs(self):
+        # TODO
+        pass
