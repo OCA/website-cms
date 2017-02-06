@@ -55,15 +55,14 @@ class FormControllerMixin(object):
         """Retrieve form for given model or object and initialize it."""
         form_model_key = self.form_model_key(model)
         if form_model_key in request.env:
-            form = request.env[form_model_key].new()
+            form = request.env[form_model_key]
         else:
             # init a base form
             # TODO: use a flag in the model to enable this
             # like website_form does
-            form = request.env['cms.form'].new()
+            form = request.env['cms.form']
             form._form_model = model
-        form.form_init(request, main_object=main_object)
-        return form
+        return form.form_init(request, main_object=main_object)
 
     def check_permission(self, model, main_object):
         if main_object:
@@ -78,7 +77,9 @@ class FormControllerMixin(object):
         self.check_permission(model, main_object)
         form = self.get_form(model, main_object=main_object)
         form.form_process(extra_args=kw)
-        if form.form_success and form.form_redirect:
+        # search forms do not need these attrs
+        if getattr(form, 'form_success', None) \
+                and getattr(form, 'form_redirect', None):
             # anything went fine, redirect to next url
             return werkzeug.utils.redirect(form.form_next_url())
         # render form wrapper
