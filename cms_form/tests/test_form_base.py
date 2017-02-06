@@ -4,6 +4,7 @@
 
 from .common import fake_request
 from .common import FormTestCase
+from .. import utils
 
 from openerp import http
 from werkzeug.wrappers import Request
@@ -83,6 +84,70 @@ class TestFormBase(FormTestCase):
         self.assertTrue(fields['name']['required'])
         # this one is forced to required in our custom form
         self.assertTrue(fields['country_id']['required'])
+
+    def test_get_loader(self):
+        form = self.get_form('cms.form.test_fields')
+        expected = {
+            'a_char': None,
+            'a_number': None,
+            'a_float': None,
+            'a_many2one': utils.m2o_to_form,
+            'a_one2many': utils.x2many_to_form,
+            'a_many2many': utils.x2many_to_form,
+        }
+        fields = form.form_fields()
+        for fname, loader in expected.iteritems():
+            self.assertEqual(
+                loader, form.form_get_loader(fname, fields[fname])
+            )
+
+        def custom_loader(*pa, **ka):
+            return pa, ka
+
+        # by type
+        form._form_load_char = custom_loader
+        form._form_load_integer = custom_loader
+        form._form_load_float = custom_loader
+        # by name
+        form._form_load_a_many2many = custom_loader
+
+        for fname in ('a_char', 'a_number', 'a_float', 'a_many2many'):
+            self.assertEqual(
+                custom_loader,
+                form.form_get_loader(fname, fields[fname])
+            )
+
+    def test_get_extractor(self):
+        form = self.get_form('cms.form.test_fields')
+        expected = {
+            'a_char': None,
+            'a_number': utils.form_to_integer,
+            'a_float': utils.form_to_float,
+            'a_many2one': utils.form_to_integer,
+            'a_one2many': utils.form_to_x2many,
+            'a_many2many': utils.form_to_x2many,
+        }
+        fields = form.form_fields()
+        for fname, loader in expected.iteritems():
+            self.assertEqual(
+                loader, form.form_get_extractor(fname, fields[fname])
+            )
+
+        def custom_extractor(*pa, **ka):
+            return pa, ka
+
+        # by type
+        form._form_extract_char = custom_extractor
+        form._form_extract_integer = custom_extractor
+        form._form_extract_float = custom_extractor
+        # by name
+        form._form_extract_a_many2many = custom_extractor
+
+        for fname in ('a_char', 'a_number', 'a_float', 'a_many2many'):
+            self.assertEqual(
+                custom_extractor,
+                form.form_get_extractor(fname, fields[fname])
+            )
 
     def test_load_defaults(self):
         form = self.get_form('cms.form.test_partner')
