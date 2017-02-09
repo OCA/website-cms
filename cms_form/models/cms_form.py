@@ -120,9 +120,17 @@ class CMSForm(models.AbstractModel):
             self.o_request.website.add_status_message(msg, type_='danger')
         return errors, errors_message
 
+    def form_before_create_or_update(self, values):
+        pass
+
+    def form_after_create_or_update(self, values):
+        pass
+
     def form_create_or_update(self):
-        write_values = self.form_extract_values()
         # TODO: purge fields that are not in model schema
+        write_values = self.form_extract_values()
+        # pre hook
+        self.form_before_create_or_update(write_values)
         if self.main_object:
             self.main_object.write(write_values)
             msg = self.form_msg_success_updated
@@ -131,6 +139,8 @@ class CMSForm(models.AbstractModel):
             msg = self.form_msg_success_created
         if msg and self.o_request.website:
             self.o_request.website.add_status_message(msg)
+        # post hook
+        self.form_after_create_or_update(write_values)
         return self.main_object
 
     def form_process_POST(self, render_values):
