@@ -3,6 +3,7 @@
 # License AGPL-3.0 or later (http://www.gnu.org/licenses/agpl).
 
 from openerp import models
+from openerp import exceptions
 from openerp import _
 
 import werkzeug
@@ -146,13 +147,33 @@ class CMSForm(models.AbstractModel):
     def form_process_POST(self, render_values):
         errors, errors_message = self.form_validate()
         if not errors:
-            self.form_create_or_update()
-            self.form_success = True
-            self.form_redirect = True
-        else:
-            self.form_success = False
-            render_values.update({
-                'errors': errors,
-                'errors_message': errors_message,
-            })
+            try:
+                self.form_create_or_update()
+                self.form_success = True
+                self.form_redirect = True
+                return render_values
+            except exceptions.ValidationError as err:
+                # sounds like there's no way to validate fields
+                # before calling write or create,
+                # hence we are forced to do it here.
+                errors['_validation'] = True
+                # err message can be something like
+                # u'Error while validating constraint\n
+                #    \nEnd Date cannot be set before Start Date.\nNone'
+                errors_message['_validation'] = '<br />'.join([
+                    x for x in err.name.replace('None', '').split('\n')
+                    if x.strip()
+                ])
+
+        self.form_success = False
+        # handle ORM validation error
+        if errors.get('_validation'):
+            msg = errors_message['_validation']
+            if msg and self.o_request.website:
+                self.o_request.website.add_status_message(
+                    msg, type_='danger', title=None)
+        render_values.update({
+            'errors': errors,
+            'errors_message': errors_message,
+        })
         return render_values
