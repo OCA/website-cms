@@ -80,8 +80,10 @@ class HTMLCase(HttpCase):
             self.assertEqual(msg.attrib['role'], 'alert')
             self.assertEqual(msg.attrib['class'],
                              'alert alert-info alert-dismissible')
-            self.assertEqual(msg.find_class('msg')[0].text, 'oh yeah!')
-            self.assertEqual(msg.find_class('title')[0].text, 'Info')
+            self.assertEqual(
+                msg.find_class('msg')[0].text.strip(), 'oh yeah!')
+            self.assertEqual(
+                msg.find_class('title')[0].text_content().strip(), 'Info')
 
     def test_message_render_types(self):
         with self.mock_assets() as assets:
@@ -105,8 +107,10 @@ class HTMLCase(HttpCase):
                 self.assertEqual(el.attrib['role'], 'alert')
                 klass = 'alert alert-{} alert-dismissible'.format(type_)
                 self.assertEqual(el.attrib['class'], klass)
-                self.assertEqual(el.find_class('msg')[0].text, msg)
-                self.assertEqual(el.find_class('title')[0].text, title)
+                self.assertEqual(
+                    el.find_class('msg')[0].text.strip(), msg)
+                self.assertEqual(
+                    el.find_class('title')[0].text_content().strip(), title)
 
     def test_message_render_no_title(self):
         with self.mock_assets() as assets:
@@ -119,7 +123,7 @@ class HTMLCase(HttpCase):
             html_ = self.html_get_doc('/')
             msg = html_.find_class('alert')[0]
             self.assertEqual(
-                msg.find_class('msg')[0].text, 'no title pls!')
+                msg.find_class('msg')[0].text.strip(), 'no title pls!')
             self.assertFalse(msg.find_class('title'))
 
     def test_message_render_dismissible(self):
