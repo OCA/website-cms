@@ -12,14 +12,24 @@
                       <span t-translation="off" aria-hidden="true" class="fa fa-remove"></span>
                     </button>
                 </t>
-                <t t-if="msg['title']">
-                    <strong class="title" t-esc="msg['title']" />
-                </t>
-                <span class="msg" t-esc="msg['msg']" />
+                <t t-call="cms_status_message.message_wrapper" />
               </div>
             </t>
           </div>
         </t>
+    </template>
+
+    <template id="message_wrapper" name="CMS status_message wrapper">
+        <div class="msg-wrapper row">
+            <t t-if="msg['title']">
+                <div class="title col-md-3">
+                    <strong t-esc="msg['title']" />
+                </div>
+            </t>
+            <div t-attf-class="msg #{msg['title'] and 'col-md-9' or 'col-md-12'}">
+                <t t-raw="msg['msg']" />
+            </div>
+        </div>
     </template>
 
     <template id="add_status_message" inherit_id="website.layout" name="Add status message">
