@@ -67,5 +67,5 @@ class FormRenderTestCase(TransactionCase, FormRenderMixin):
 
 class FormHttpTestCase(HttpCase, FormRenderMixin):
 
-    def html_get_doc(self, url):
+    def html_get(self, url):
         return html.document_fromstring(self.url_open(url, timeout=30).read())

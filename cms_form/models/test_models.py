@@ -9,6 +9,7 @@ from openerp import tools
 testing = tools.config.get('test_enable')
 
 if testing:
+
     class TestPartnerForm(models.AbstractModel):
         """A test model form."""
 

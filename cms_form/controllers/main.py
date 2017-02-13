@@ -55,14 +55,19 @@ class FormControllerMixin(object):
         """Retrieve form for given model or object and initialize it."""
         form_model_key = self.form_model_key(model)
         if form_model_key in request.env:
-            form = request.env[form_model_key]
+            form = request.env[form_model_key].form_init(
+                request, main_object=main_object)
         else:
             # init a base form
             # TODO: use a flag in the model to enable this
+            # for models that do not have a specific form registered
             # like website_form does
-            form = request.env['cms.form']
-            form._form_model = model
-        return form.form_init(request, main_object=main_object)
+            form = request.env['cms.form'].form_init(
+                request,
+                main_object=main_object,
+                model=model,
+                model_fields=['name', ])
+        return form
 
     def check_permission(self, model, main_object):
         if main_object:
@@ -86,7 +91,7 @@ class FormControllerMixin(object):
         values = self.get_render_values(main_object, **kw)
         values['form'] = form
         return request.website.render(
-            self.get_template(main_object, **kw),
+            self.get_template(form, **kw),
             values,
         )
 

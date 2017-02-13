@@ -79,8 +79,7 @@
     </div>
     <div class="form-group form-controls">
        <div class="col-sm-9 col-sm-offset-3">
-         <a class="btn btn-default"
-            t-att-href="form.request.referrer or form.main_object and form.main_object.website_url">Cancel</a>
+         <a class="btn btn-default" t-att-href="form.form_cancel_url()">Cancel</a>
          <button type="submit" class="btn btn-primary">Submit</button>
        </div>
      </div>

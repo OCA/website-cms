@@ -114,14 +114,11 @@ class CMSFormMixin(models.AbstractModel):
     @property
     def form_mode(self):
         if self._form_mode:
+            # forced mode
             return self._form_mode
-        if self.request.method.upper() == 'GET':
-            return 'read'
-        elif self.request.method.upper() == 'POST':
-            if self.main_object:
-                return 'write'
-            return 'create'
-        return 'base'
+        if self.main_object:
+            return 'edit'
+        return 'create'
 
     @property
     def form_model(self):
@@ -375,12 +372,13 @@ class CMSFormMixin(models.AbstractModel):
         * `_form_wrapper_extra_css_klass` extra klasses from form attribute
         * `mode_` + form mode (ie: 'mode_write')
         """
-        return ' '.join([
+        parts = [
             'cms_form_wrapper',
             self._form_model.replace('.', '_').lower(),
             self._form_wrapper_extra_css_klass,
             'mode_' + self.form_mode,
-        ])
+        ]
+        return ' '.join([x.strip() for x in parts if x.strip()])
 
     @property
     def form_css_klass(self):

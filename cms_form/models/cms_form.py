@@ -68,11 +68,18 @@ class CMSForm(models.AbstractModel):
         return _('Some required fields are empty.')
 
     def form_next_url(self, main_object=None):
+        """URL to redirect to after successful form submission."""
         main_object = main_object or self.main_object
-        if main_object:
-            if 'website_url' in main_object:
-                return main_object.website_url
+        if main_object and 'website_url' in main_object:
+            return main_object.website_url
         return '/'
+
+    def form_cancel_url(self, main_object=None):
+        """URL to redirect to after click on "cancel" button."""
+        main_object = main_object or self.main_object
+        if main_object and 'website_url' in main_object:
+            return main_object.website_url
+        return self.request.referrer or '/'
 
     def form_check_empty_field(self, fname, field, value, **req_values):
         """Return True if passed field value is really empty."""
