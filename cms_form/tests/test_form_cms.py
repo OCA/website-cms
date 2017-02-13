@@ -37,7 +37,7 @@ class TestCMSForm(FormTestCase):
         }
         request = fake_request(form_data=data, method='POST')
         form = self.get_form(
-            'cms.form.test_partner',
+            'cms.form.res.partner',
             req=request,
             required_fields=('name', ))
         main_object = form.form_create_or_update()
@@ -51,7 +51,7 @@ class TestCMSForm(FormTestCase):
         }
         request = fake_request(form_data=data, method='POST')
         form = self.get_form(
-            'cms.form.test_partner',
+            'cms.form.res.partner',
             req=request,
             required_fields=('name', ))
         main_object = form.form_create_or_update()

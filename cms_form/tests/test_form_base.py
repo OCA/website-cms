@@ -32,7 +32,7 @@ class TestFormBase(FormTestCase):
             self.assertEqual(getattr(form, '_form_' + k), v)
 
     def test_fields_load(self):
-        form = self.get_form('cms.form.test_partner')
+        form = self.get_form('cms.form.res.partner')
         fields = form.form_fields()
         self.assertEqual(len(fields), 3)
         self.assertTrue('name' in fields.keys())
@@ -41,7 +41,7 @@ class TestFormBase(FormTestCase):
 
         # whitelist
         form = self.get_form(
-            'cms.form.test_partner',
+            'cms.form.res.partner',
             fields_whitelist=('name', ))
         fields = form.form_fields()
         self.assertEqual(len(fields), 1)
@@ -51,7 +51,7 @@ class TestFormBase(FormTestCase):
 
         # blacklist
         form = self.get_form(
-            'cms.form.test_partner',
+            'cms.form.res.partner',
             fields_blacklist=('country_id', ))
         fields = form.form_fields()
         self.assertEqual(len(fields), 2)
@@ -61,7 +61,7 @@ class TestFormBase(FormTestCase):
 
     def test_fields_order(self):
         form = self.get_form(
-            'cms.form.test_partner',
+            'cms.form.res.partner',
             fields_order=['name', 'custom', 'country_id', ])
         fields = form.form_fields()
         self.assertEqual(fields.keys()[0], 'name')
@@ -70,7 +70,7 @@ class TestFormBase(FormTestCase):
 
         # change order
         form = self.get_form(
-            'cms.form.test_partner',
+            'cms.form.res.partner',
             fields_order=['country_id', 'name', 'custom'])
         fields = form.form_fields()
         self.assertEqual(fields.keys()[0], 'country_id')
@@ -78,7 +78,7 @@ class TestFormBase(FormTestCase):
         self.assertEqual(fields.keys()[2], 'custom')
 
     def test_fields_attributes(self):
-        form = self.get_form('cms.form.test_partner')
+        form = self.get_form('cms.form.res.partner')
         fields = form.form_fields()
         # this one is required in partner model
         self.assertTrue(fields['name']['required'])
@@ -150,7 +150,7 @@ class TestFormBase(FormTestCase):
             )
 
     def test_load_defaults(self):
-        form = self.get_form('cms.form.test_partner')
+        form = self.get_form('cms.form.res.partner')
         # create mode, no main_object
         main_object = None
         defaults = form.form_load_defaults(main_object)
@@ -182,7 +182,7 @@ class TestFormBase(FormTestCase):
             'custom': 'yay!'
         }
         request = fake_request(form_data=data)
-        form = self.get_form('cms.form.test_partner', req=request)
+        form = self.get_form('cms.form.res.partner', req=request)
         defaults = form.form_load_defaults(main_object)
         for k, v in data.iteritems():
             self.assertEqual(defaults[k], v)

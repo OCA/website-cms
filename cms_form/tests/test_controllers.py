@@ -2,7 +2,7 @@
 # Copyright 2016 Simone Orsi
 # License AGPL-3.0 or later (http://www.gnu.org/licenses/agpl).
 
-# from .common import fake_request
+from .common import fake_request
 from .common import FormHttpTestCase
 from ..controllers import main
 import mock
@@ -23,20 +23,42 @@ class TestControllers(FormHttpTestCase):
     def mock_assets(self):
         """Mocks some stuff like request."""
         with mock.patch('%s.request' % IMPORT) as request:
+            faked = fake_request()
             request.session = self.session
             request.env = self.env
+            request.httprequest = faked.httprequest
             yield {
                 'request': request,
             }
 
     def test_get_form(self):
         with self.mock_assets():
+            # we do not have a specific form for res.groups
+            # and cms form is not enabled on partner model
+            with self.assertRaises(NotImplementedError):
+                form = self.form_controller.get_form('res.groups')
+
+            # but we have one for res.partner
             form = self.form_controller.get_form('res.partner')
-            self.assertTrue(form)
+            self.assertTrue(
+                isinstance(form, self.env['cms.form.res.partner'].__class__)
+            )
             self.assertEqual(form._form_model, 'res.partner')
+            self.assertEqual(form.form_mode, 'create')
+            self.assertTrue(form)
+
+            # we have a specific form here
+            form = self.form_search_controller.get_form('res.partner')
+            self.assertTrue(
+                isinstance(form,
+                           self.env['cms.form.search.res.partner'].__class__)
+            )
+            self.assertEqual(form._form_model, 'res.partner')
+            self.assertEqual(form.form_mode, 'search')
 
     def _check_route(self, url, model, mode):
         """Check default markup for form and form wrapper."""
+        # with self.mock_assets():
         dom = self.html_get(url)
         # test wrapper klass
         wrapper_node = dom.find_class('cms_form_wrapper')[0]

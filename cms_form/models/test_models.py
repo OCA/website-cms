@@ -13,7 +13,7 @@ if testing:
     class TestPartnerForm(models.AbstractModel):
         """A test model form."""
 
-        _name = 'cms.form.test_partner'
+        _name = 'cms.form.res.partner'
         _inherit = 'cms.form'
         _form_model = 'res.partner'
         _form_model_fields = ('name', 'country_id')
@@ -26,7 +26,7 @@ if testing:
             return req_values.get('custom', 'oh yeah!')
 
     class TestSearchPartnerForm(models.AbstractModel):
-        """A test model form."""
+        """A test model search form."""
 
         _name = 'cms.form.search.res.partner'
         _inherit = 'cms.form.search'

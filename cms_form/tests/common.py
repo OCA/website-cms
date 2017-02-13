@@ -17,16 +17,20 @@ def fake_request(form_data=None, query_string=None,
     data = urllib.urlencode(form_data or {})
     query_string = query_string or ''
     content_type = content_type or 'application/x-www-form-urlencoded'
-    req = Request.from_values(
+    # werkzeug request
+    w_req = Request.from_values(
         query_string=query_string,
         content_length=len(data),
         input_stream=StringIO(data),
         content_type=content_type,
         method=method)
-    req.session = mock.MagicMock()
-    o_req = http.HttpRequest(req)
+    w_req.session = mock.MagicMock()
+    # odoo request
+    o_req = http.HttpRequest(w_req)
     o_req.website = mock.MagicMock()
     o_req.csrf_token = mock.MagicMock()
+    o_req.httprequest = w_req
+    o_req.__testing__ = True
     return o_req
 
 

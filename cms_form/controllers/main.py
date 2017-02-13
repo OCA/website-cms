@@ -1,6 +1,6 @@
 # -*- coding: utf-8 -*-
 
-from openerp import http
+from openerp import http, _
 from openerp.http import request
 import werkzeug
 # from werkzeug.exceptions import NotFound
@@ -58,15 +58,12 @@ class FormControllerMixin(object):
             form = request.env[form_model_key].form_init(
                 request, main_object=main_object)
         else:
-            # init a base form
-            # TODO: use a flag in the model to enable this
-            # for models that do not have a specific form registered
-            # like website_form does
-            form = request.env['cms.form'].form_init(
-                request,
-                main_object=main_object,
-                model=model,
-                model_fields=['name', ])
+            # TODO: enable form by default?
+            # How? with a flag on ir.model.model?
+            # And which fields to include automatically?
+            raise NotImplementedError(
+                _('%s model has no CMS form registered.') % model
+            )
         return form
 
     def check_permission(self, model, main_object):
@@ -90,7 +87,7 @@ class FormControllerMixin(object):
         # render form wrapper
         values = self.get_render_values(main_object, **kw)
         values['form'] = form
-        return request.website.render(
+        return request.render(
             self.get_template(form, **kw),
             values,
         )
