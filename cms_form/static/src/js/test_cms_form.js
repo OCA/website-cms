@@ -1,4 +1,4 @@
-/* Copyright 2016 OCA/oscar@vauxoo.com
+/* Copyright 2017 OCA/oscar@vauxoo.com
  * License AGPL-3.0 or later (http://www.gnu.org/licenses/agpl). */
 odoo.define("website_cms.tour", function (require) {
     "use strict";

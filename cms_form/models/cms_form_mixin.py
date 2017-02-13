@@ -1,5 +1,5 @@
 # -*- coding: utf-8 -*-
-# Copyright 2016 Simone Orsi
+# Copyright 2017 Simone Orsi
 # License AGPL-3.0 or later (http://www.gnu.org/licenses/agpl).
 
 from openerp import models, tools
@@ -363,7 +363,7 @@ class CMSFormMixin(models.AbstractModel):
     def form_wrapper_css_klass(self):
         """Return form wrapper css klass.
 
-        By default the form markup in wrapped
+        By default the form markup is wrapped
         into a `cms_form_wrapper` element.
         You can use this set of klasses to customize form styles.
 
