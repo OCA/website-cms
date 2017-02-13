@@ -57,3 +57,11 @@ class TestCMSForm(FormTestCase):
         main_object = form.form_create_or_update()
         self.assertEqual(main_object.name, data['name'])
         self.assertEqual(main_object.country_id.id, data['country_id'])
+
+    def test_create_or_update_with_errors(self):
+        request = fake_request(form_data={}, method='POST')
+        form = self.get_form(
+            'cms.form.res.partner',
+            req=request)
+        values = form.form_process_POST({})
+        self.assertTrue('_integrity' in values['errors'])

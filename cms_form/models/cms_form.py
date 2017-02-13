@@ -7,6 +7,7 @@ from openerp import exceptions
 from openerp import _
 
 import werkzeug
+from psycopg2 import IntegrityError
 
 
 class CMSForm(models.AbstractModel):
@@ -171,11 +172,19 @@ class CMSForm(models.AbstractModel):
                     x for x in err.name.replace('None', '').split('\n')
                     if x.strip()
                 ])
+            except IntegrityError as err:
+                errors['_integrity'] = True
+                errors_message['_integrity'] = '<br />'.join([
+                    x for x in err.message.replace('None', '').split('\n')
+                    if x.strip()
+                ])
 
         self.form_success = False
         # handle ORM validation error
-        if errors.get('_validation'):
-            msg = errors_message['_validation']
+        orm_error = errors.get('_validation') or errors.get('_integrity')
+        if orm_error:
+            msg = errors_message.get('_validation') \
+                or errors_message.get('_integrity')
             if msg and self.o_request.website:
                 self.o_request.website.add_status_message(
                     msg, type_='danger', title=None)

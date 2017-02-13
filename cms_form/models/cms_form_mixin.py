@@ -123,7 +123,7 @@ class CMSFormMixin(models.AbstractModel):
     @property
     def form_model(self):
         return self.env[self._form_model]
-
+    
     def form_fields(self):
         """Retrieve form fields ready to be used.
 
