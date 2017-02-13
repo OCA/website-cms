@@ -2,7 +2,7 @@
 # Copyright 2016 Simone Orsi
 # License AGPL-3.0 or later (http://www.gnu.org/licenses/agpl).
 
-from openerp import models
+from openerp import models, tools
 from ..utils import DEFAULT_LOADERS, DEFAULT_EXTRACTORS
 from ..import widgets
 
@@ -123,7 +123,8 @@ class CMSFormMixin(models.AbstractModel):
     @property
     def form_model(self):
         return self.env[self._form_model]
-    
+
+    @tools.ormcache('self')
     def form_fields(self):
         """Retrieve form fields ready to be used.
 
