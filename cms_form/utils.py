@@ -72,6 +72,12 @@ def form_to_integer(form, fname, value, **req_values):
         return 0
 
 
+def form_to_m2o(form, fname, value, **req_values):
+    val = form_to_integer(form, fname, value, **req_values)
+    # we don't want m2o value do be < 1
+    return val > 0 and val or None
+
+
 def form_to_float(form, fname, value, **req_values):
     try:
         return float(value)
@@ -126,7 +132,7 @@ DEFAULT_LOADERS = {
 DEFAULT_EXTRACTORS = {
     'integer': form_to_integer,
     'float': form_to_float,
-    'many2one': form_to_integer,
+    'many2one': form_to_m2o,
     'one2many': form_to_x2many,
     'many2many': form_to_x2many,
     # TODO: use a specific field type for images

@@ -4,6 +4,7 @@
 
 from .common import fake_request
 from .common import FormTestCase
+import mock
 
 
 class TestCMSForm(FormTestCase):
@@ -65,3 +66,30 @@ class TestCMSForm(FormTestCase):
             req=request)
         values = form.form_process_POST({})
         self.assertTrue('_integrity' in values['errors'])
+
+    def test_purge_non_model_fields(self):
+        data = {
+            'name': 'Johnny Glamour',
+            'custom': 'Remove me from write and create, tnx!'
+        }
+        request = fake_request(form_data=data, method='POST')
+        form = self.get_form(
+            'cms.form.res.partner',
+            req=request)
+        to_patch = \
+            'openerp.addons.cms_form.models.cms_form.CMSForm._form_create'
+        with mock.patch(to_patch) as patched:
+            form.form_create_or_update()
+            patched.assert_called_with({'name': 'Johnny Glamour'})
+
+        main_object = self.env['res.partner'].create({'name': 'Update Me'})
+        request = fake_request(form_data=data, method='POST')
+        form = self.get_form(
+            'cms.form.res.partner',
+            main_object=main_object,
+            req=request)
+        to_patch = \
+            'openerp.addons.cms_form.models.cms_form.CMSForm._form_write'
+        with mock.patch(to_patch) as patched:
+            form.form_create_or_update()
+            patched.assert_called_with({'name': 'Johnny Glamour'})

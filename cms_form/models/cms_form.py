@@ -135,16 +135,32 @@ class CMSForm(models.AbstractModel):
     def form_after_create_or_update(self, values):
         pass
 
+    def _form_purge_non_model_fields(self, values):
+        """Purge fields that are not in `form_model` schema."""
+        _model_fields = self.form_model.fields_get(
+            self._form_model_fields,
+            attributes=self._form_fields_attributes).keys()
+        submitted_keys = values.keys()
+        for fname in submitted_keys:
+            if fname not in _model_fields:
+                values.pop(fname)
+
+    def _form_write(self, values):
+        self.main_object.write(values)
+
+    def _form_create(self, values):
+        self.main_object = self.form_model.create(values)
+
     def form_create_or_update(self):
-        # TODO: purge fields that are not in model schema
         write_values = self.form_extract_values()
+        self._form_purge_non_model_fields(write_values)
         # pre hook
         self.form_before_create_or_update(write_values)
         if self.main_object:
-            self.main_object.write(write_values)
+            self._form_write(write_values)
             msg = self.form_msg_success_updated
         else:
-            self.main_object = self.form_model.create(write_values)
+            self._form_create(write_values)
             msg = self.form_msg_success_created
         if msg and self.o_request.website:
             self.o_request.website.add_status_message(msg)
@@ -153,6 +169,7 @@ class CMSForm(models.AbstractModel):
         return self.main_object
 
     def form_process_POST(self, render_values):
+        """Process POST requests."""
         errors, errors_message = self.form_validate()
         if not errors:
             try:

@@ -123,7 +123,7 @@ class TestFormBase(FormTestCase):
             'a_char': None,
             'a_number': utils.form_to_integer,
             'a_float': utils.form_to_float,
-            'a_many2one': utils.form_to_integer,
+            'a_many2one': utils.form_to_m2o,
             'a_one2many': utils.form_to_x2many,
             'a_many2many': utils.form_to_x2many,
         }
