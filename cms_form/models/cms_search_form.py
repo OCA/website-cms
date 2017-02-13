@@ -62,7 +62,7 @@ class CMSFormSearch(models.AbstractModel):
         page = render_values.get('extra_args', {}).get('page', 0)
         url = render_values.get('extra_args', {}).get('pager_url', '')
         if self._form_model:
-            url = self.form_model.cms_search_url
+            url = getattr(self.form_model, 'cms_search_url', url)
         pager = self._form_results_pager(count=count, page=page, url=url)
         order = self._form_results_orderby or None
         results = self.form_model.search(
@@ -77,11 +77,13 @@ class CMSFormSearch(models.AbstractModel):
             'pager': pager,
         }
 
+    def pager(self, **kw):
+        return self.env['website'].pager(**kw)
+
     def _form_results_pager(self, count=None, page=0, url='', url_args=None):
         url_args = url_args or self.request.args.to_dict()
         count = count
-        pager = self.o_request.website.pager
-        return pager(
+        return self.pager(
             url=url,
             total=count,
             page=page,

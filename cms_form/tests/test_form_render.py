@@ -39,5 +39,5 @@ class TestRender(FormRenderTestCase):
         self.assert_match_inputs(node, expected_fields)
 
     def test_field_attrs(self):
-        # TODO
+        # TODO: test all fields rendering
         pass

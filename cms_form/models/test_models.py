@@ -24,6 +24,26 @@ if testing:
                 self, form, main_object, fname, value, **req_values):
             return req_values.get('custom', 'oh yeah!')
 
+    class TestSearchPartnerForm(models.AbstractModel):
+        """A test model form."""
+
+        _name = 'cms.form.search.res.partner'
+        _inherit = 'cms.form.search'
+        _form_model = 'res.partner'
+        _form_model_fields = ('name', 'country_id')
+
+        def form_search_domain(self, search_values):
+            """Force domain to include only test-created records."""
+            domain = super(
+                TestSearchPartnerForm, self
+            ).form_search_domain(search_values)
+            # we use this attr in tests to limit search results
+            # to test records' scope
+            include_only_ids = getattr(self, 'test_record_ids', [])
+            if include_only_ids:
+                domain.append(('id', 'in', include_only_ids))
+            return domain
+
     class TestFieldsForm(models.AbstractModel):
         """A test model form."""
 
