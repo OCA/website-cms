@@ -72,13 +72,14 @@ class FormControllerMixin(object):
         else:
             self._can_create(model)
 
-    def make_response(self, model, model_id=None, **kw):
+    def make_response(self, model, model_id=None, page=0, **kw):
         main_object = None
         if model_id:
             main_object = request.env[model].browse(model_id)
         self.check_permission(model, main_object)
         form = self.get_form(model, main_object=main_object)
-        form.form_process(extra_args=kw)
+        # pass only specific extra args, to not pollute form render values
+        form.form_process(extra_args={'page': page})
         # search forms do not need these attrs
         if getattr(form, 'form_success', None) \
                 and getattr(form, 'form_redirect', None):

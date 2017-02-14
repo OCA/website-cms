@@ -3,6 +3,11 @@
 # License AGPL-3.0 or later (http://www.gnu.org/licenses/agpl).
 
 
+# TODO: should we make widget abstract models?
+# It might be worth to add a `cms.form.widget` base klass
+# and define one klass per each kind of widget
+# as ir.qweb does for rendering fields.
+
 class Widget(object):
     key = ''
     css_klass = ''
