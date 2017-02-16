@@ -20,10 +20,10 @@ odoo.define("cms_form_example.tour", function (require) {
                     $('input[name="name"]').val('Demo Partner');
                     $('input[name="custom"]').val('Demo custom message here!');
                     $('select[name="country_id"] option').each(function(){
-                        if (this.text == 'Italy') {
+                        if (this.text === 'Italy') {
                             $('select[name="country_id"]').val(this.value);
                         }
-                    })
+                    });
                 },
             },
             {
