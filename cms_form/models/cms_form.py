@@ -129,21 +129,23 @@ class CMSForm(models.AbstractModel):
             self.o_request.website.add_status_message(msg, type_='danger')
         return errors, errors_message
 
-    def form_before_create_or_update(self, values):
+    def form_before_create_or_update(self, values, extra_values):
         pass
 
-    def form_after_create_or_update(self, values):
+    def form_after_create_or_update(self, values, extra_values):
         pass
 
     def _form_purge_non_model_fields(self, values):
-        """Purge fields that are not in `form_model` schema."""
+        """Purge fields that are not in `form_model` schema and return them."""
+        extra_values = {}
         _model_fields = self.form_model.fields_get(
             self._form_model_fields,
             attributes=self._form_fields_attributes).keys()
         submitted_keys = values.keys()
         for fname in submitted_keys:
             if fname not in _model_fields:
-                values.pop(fname)
+                extra_values[fname] = values.pop(fname)
+        return extra_values
 
     def _form_write(self, values):
         self.main_object.write(values)
@@ -153,9 +155,9 @@ class CMSForm(models.AbstractModel):
 
     def form_create_or_update(self):
         write_values = self.form_extract_values()
-        self._form_purge_non_model_fields(write_values)
+        extra_values = self._form_purge_non_model_fields(write_values)
         # pre hook
-        self.form_before_create_or_update(write_values)
+        self.form_before_create_or_update(write_values, extra_values)
         if self.main_object:
             self._form_write(write_values)
             msg = self.form_msg_success_updated
@@ -165,7 +167,7 @@ class CMSForm(models.AbstractModel):
         if msg and self.o_request.website:
             self.o_request.website.add_status_message(msg)
         # post hook
-        self.form_after_create_or_update(write_values)
+        self.form_after_create_or_update(write_values, extra_values)
         return self.main_object
 
     def form_process_POST(self, render_values):

@@ -8,7 +8,7 @@
         Basic content type form""",
     'version': '9.1.0a1',
     'license': 'AGPL-3',
-    'author': 'Simone Orsi,Odoo Community Association (OCA)',
+    'author': 'Camptocamp SA, Odoo Community Association (OCA)',
     'depends': [
         'website',
         'cms_status_message',

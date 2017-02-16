@@ -20,4 +20,14 @@ class ExamplePartnerForm(models.AbstractModel):
 
     def _form_load_custom(
             self, form, main_object, fname, value, **req_values):
+        """Load a custom default for the field 'custom'."""
         return req_values.get('custom', 'oh yeah!')
+
+
+class PartnerSearchForm(models.AbstractModel):
+    """Partner model search form."""
+
+    _name = 'cms.form.search.res.partner'
+    _inherit = 'cms.form.search'
+    _form_model = 'res.partner'
+    _form_model_fields = ('name', 'country_id', )
