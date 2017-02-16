@@ -18,6 +18,7 @@ Create / Edit form
 
 Just inherit from `cms.form` to add a form for your model. Quick example for partner:
 
+.. code-block:: python
 
     class PartnerForm(models.AbstractModel):
 
@@ -58,7 +59,9 @@ Form with extra control fields
 
 Imagine you want to notify the partner after its creation but only if you really need it.
 
-The form above can be extended with extra fields that are not part of the `_form_model` schema.
+The form above can be extended with extra fields that are not part of the `_form_model` schema:
+
+.. code-block:: python
 
     class PartnerForm(models.AbstractModel):
 
@@ -83,6 +86,8 @@ Search form
 -----------
 
 Just inherit from `cms.form.search` to add a form for your model. Quick example for partner:
+
+.. code-block:: python
 
     class PartnerSearchForm(models.AbstractModel):
         """Partner model search form."""
