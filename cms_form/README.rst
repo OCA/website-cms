@@ -10,6 +10,20 @@ Basic website contents form framework. Allows to define front-end forms for ever
 If you are tired of re-defining every time an edit form or a search form for your odoo website,
 this is the module you are looking for.
 
+Features
+========
+
+* automated form generation (create, write, search)
+* automated route generation (create, write, search)
+* automated functions based on fields' type:
+    * widget rendering
+    * field value load (from existing instance or from request)
+    * field value extraction (from request)
+    * field value write (to existing instance)
+* highly customizable
+* works with every odoo model
+* works also without any model
+
 Usage
 =====
 
