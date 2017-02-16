@@ -16,7 +16,6 @@ Features
 * automatic form generation (create, write, search)
 * automatic route generation (create, write, search)
 * automatic machinery based on fields' type:
-
     * widget rendering
     * field value load (from existing instance or from request)
     * field value extraction (from request)
@@ -25,6 +24,10 @@ Features
 * highly customizable
 * works with every odoo model
 * works also without any model
+* add handy attributes to models inheriting from ``website.published.mixin``:
+    * ``cms_add_url``: lead to create form view. By default ``/cms/form/create/my.model``
+    * ``cms_edit_url``: lead to edit form view. By default ``/cms/form/edit/my.model/model_id``
+    * ``cms_search_url``: lead to search form view. By default ``/cms/form/search/my.model``
 
 Usage
 =====
@@ -129,9 +132,13 @@ Known issues / Roadmap
 ======================
 
 * add more tests, especially per each widget and type of field
+* provide better widgets for image and file fields in general
+* o2m fields: to be tested at all
 * move widgets to abstract models too (?)
 * add easy way to switch from horizontal to vertical form
 * provide more examples
+* x2x fields: allow sub-items creation
+* handle api onchanges
 
 
 Bug Tracker

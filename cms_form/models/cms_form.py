@@ -96,6 +96,7 @@ class CMSForm(models.AbstractModel):
         return value in (False, '')
 
     def form_validate(self, request_values=None):
+        """Validate submitted values."""
         errors = {}
         errors_message = {}
         request_values = request_values or self.form_get_request_values()
@@ -109,14 +110,7 @@ class CMSForm(models.AbstractModel):
                         fname, field, value, **request_values):
                 errors[fname] = 'missing'
                 missing = True
-            # 1nd lookup for a default type validator
-            validator = self._form_validators.get(field['type'], None)
-            # 2nd lookup for a specific type validator
-            validator = getattr(
-                self, '_form_validate_' + field['type'], validator)
-            # 3rd lookup and override by named validator if any
-            validator = getattr(
-                self, '_form_validate_' + fname, validator)
+            validator = self.form_get_validator(fname, field)
             if validator:
                 error, error_msg = validator(value, **request_values)
             if error:
@@ -129,10 +123,24 @@ class CMSForm(models.AbstractModel):
             self.o_request.website.add_status_message(msg, type_='danger')
         return errors, errors_message
 
+    def form_get_validator(self, fname, field):
+        """Retrieve field validator."""
+        # 1nd lookup for a default type validator
+        validator = self._form_validators.get(field['type'], None)
+        # 2nd lookup for a specific type validator
+        validator = getattr(
+            self, '_form_validate_' + field['type'], validator)
+        # 3rd lookup and override by named validator if any
+        validator = getattr(
+            self, '_form_validate_' + fname, validator)
+        return validator
+
     def form_before_create_or_update(self, values, extra_values):
+        """Pre create/update hook."""
         pass
 
     def form_after_create_or_update(self, values, extra_values):
+        """Post create/update hook."""
         pass
 
     def _form_purge_non_model_fields(self, values):
@@ -148,12 +156,15 @@ class CMSForm(models.AbstractModel):
         return extra_values
 
     def _form_write(self, values):
+        """Just write on the main object."""
         self.main_object.write(values)
 
     def _form_create(self, values):
+        """Just create the main object."""
         self.main_object = self.form_model.create(values)
 
     def form_create_or_update(self):
+        """Prepare values and create or update main_object."""
         write_values = self.form_extract_values()
         extra_values = self._form_purge_non_model_fields(write_values)
         # pre hook

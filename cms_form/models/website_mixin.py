@@ -25,4 +25,4 @@ class WebsitePublishedMixin(models.AbstractModel):
     def _compute_cms_edit_url(self):
         for item in self:
             item.cms_edit_url = \
-                '/cms/{}/{}/edit'.format(item._name, item.id)
+                '/cms/form/edit/{}/{}'.format(item._name, item.id)

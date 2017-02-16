@@ -32,6 +32,7 @@ class CMSFormSearch(models.AbstractModel):
 
     @property
     def form_search_results(self):
+        """Return search results."""
         return self.__form_search_results
 
     @form_search_results.setter
@@ -81,6 +82,7 @@ class CMSFormSearch(models.AbstractModel):
         return self.env['website'].pager(**kw)
 
     def _form_results_pager(self, count=None, page=0, url='', url_args=None):
+        """Prepare pager for current search."""
         url_args = url_args or self.request.args.to_dict()
         count = count
         return self.pager(

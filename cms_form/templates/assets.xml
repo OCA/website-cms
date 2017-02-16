@@ -6,7 +6,6 @@
 		<xpath expr="." position="inside">
 			<link rel="stylesheet" type="text/css" href="/cms_form/static/src/less/cms_form.less" />
 			<script type="text/javascript" src="/cms_form/static/src/js/select2widgets.js"></script>
-			<script type="text/javascript" src="/cms_form/static/src/js/select2widgets.js"></script>
 			<script type="text/javascript" src="/cms_form/static/src/js/date_widget.js"></script>
 		</xpath>
 
