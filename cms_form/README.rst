@@ -13,13 +13,15 @@ this is the module you are looking for.
 Features
 ========
 
-* automated form generation (create, write, search)
-* automated route generation (create, write, search)
-* automated functions based on fields' type:
+* automatic form generation (create, write, search)
+* automatic route generation (create, write, search)
+* automatic machinery based on fields' type:
+
     * widget rendering
     * field value load (from existing instance or from request)
     * field value extraction (from request)
     * field value write (to existing instance)
+
 * highly customizable
 * works with every odoo model
 * works also without any model
