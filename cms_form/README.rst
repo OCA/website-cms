@@ -32,7 +32,7 @@ Usage
 Create / Edit form
 ------------------
 
-Just inherit from `cms.form` to add a form for your model. Quick example for partner:
+Just inherit from ``cms.form`` to add a form for your model. Quick example for partner:
 
 .. code-block:: python
 
@@ -47,8 +47,8 @@ Just inherit from `cms.form` to add a form for your model. Quick example for par
 
 In this case you'll have form with the following characteristics:
 
-* works with res.partner model
-* have only `name` and `country_id` fields
+* works with ``res.partner`` model
+* have only ``name`` and ``country_id`` fields
 * both fields are required (is not possible to submit the form w/out one of those values)
 
 Here's the result:
@@ -58,16 +58,16 @@ Here's the result:
 
 The form will be automatically available on these routes:
 
-* `/cms/form/create/res.partner` to create new partners
-* `/cms/form/edit/res.partner/1` edit existing partners (partner id=1 in this case)
+* ``/cms/form/create/res.partner`` to create new partners
+* ``/cms/form/edit/res.partner/1`` edit existing partners (partner id=1 in this case)
 
-NOTE: default generic routes work if the form's name is `cms.form.` + model name, like `cms.form.res.partner`.
+NOTE: default generic routes work if the form's name is ``cms.form.`` + model name, like ``cms.form.res.partner``.
 If you want you can easily define your own controller and give your form a different name,
-and have more elegant routes like `/partner/edit/partner-slug-1`.
-Take a look at `cms_form_example`.
+and have more elegant routes like ```/partner/edit/partner-slug-1``.
+Take a look at `cms_form_example <../cms_form_example>`_.
 
 By default, the form is rendered as an horizontal twitter bootstrap form, but you can provide your own templates of course.
-By default, fields are ordered by their order in the model's schema. You can tweak it using `_form_fields_order`.
+By default, fields are ordered by their order in the model's schema. You can tweak it using ``_form_fields_order``.
 
 
 Form with extra control fields
@@ -75,7 +75,7 @@ Form with extra control fields
 
 Imagine you want to notify the partner after its creation but only if you really need it.
 
-The form above can be extended with extra fields that are not part of the `_form_model` schema:
+The form above can be extended with extra fields that are not part of the ``_form_model`` schema:
 
 .. code-block:: python
 
@@ -93,15 +93,15 @@ The form above can be extended with extra fields that are not part of the `_form
             if extra_values.get('notify_partner'):
                 # do what you want here...
 
-`notifiy_partner` will be included into the form but it will be discarded on create and write.
+``notifiy_partner`` will be included into the form but it will be discarded on create and write.
 Nevertheless you can use it as a control flag before and after the record has been created or updated
-using the hook `form_after_create_or_update`, as you see in this example.
+using the hook ``form_after_create_or_update``, as you see in this example.
 
 
 Search form
 -----------
 
-Just inherit from `cms.form.search` to add a form for your model. Quick example for partner:
+Just inherit from ``cms.form.search`` to add a form for your model. Quick example for partner:
 
 .. code-block:: python
 
@@ -116,12 +116,12 @@ Just inherit from `cms.form.search` to add a form for your model. Quick example 
 
 |preview_search|
 
-The form will be automatically available at: `/cms/form/search/res.partner`.
+The form will be automatically available at: ``/cms/form/search/res.partner``.
 
-NOTE: default generic routes work if the form's name is `cms.form.search` + model name, like `cms.form.search.res.partner`.
+NOTE: default generic routes work if the form's name is ```cms.form.search`` + model name, like ``cms.form.search.res.partner``.
 If you want you can easily define your own controller and give your form a different name,
-and have more elegant routes like `/partners`.
-Take a look at `cms_form_example`.
+and have more elegant routes like ``/partners``.
+Take a look at `cms_form_example <../cms_form_example>`_.
 
 
 Known issues / Roadmap
@@ -129,6 +129,7 @@ Known issues / Roadmap
 
 * add more tests, especially per each widget and type of field
 * move widgets to abstract models too (?)
+* add easy way to switch from horizontal to vertical form
 * provide more examples
 
 
@@ -143,10 +144,10 @@ help us smashing it by providing a detailed and welcomed feedback.
 Credits
 =======
 
-Images
-------
+Sponsor
+-------
 
-* Odoo Community Association: `Icon <https://github.com/OCA/maintainer-tools/blob/master/template/module/static/description/icon.svg>`_.
+* `Fluxdock.io <https://fluxdock.io>`_.
 
 Contributors
 ------------
