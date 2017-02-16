@@ -112,6 +112,7 @@ Just inherit from ``cms.form.search`` to add a form for your model. Quick exampl
         _inherit = 'cms.form.search'
         _form_model = 'res.partner'
         _form_model_fields = ('name', 'country_id', )
+        _form_fields_order = ('country_id', 'name', )
 
 
 |preview_search|
