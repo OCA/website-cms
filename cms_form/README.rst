@@ -153,5 +153,5 @@ promote its widespread use.
 To contribute to this module, please visit https://odoo-community.org.
 
 .. |preview_create| image:: ./images/cms_form_example_create_partner.png
-.. |preview_edit| image:: ./images/cms_form_example_edi_partner.png
+.. |preview_edit| image:: ./images/cms_form_example_edit_partner.png
 .. |preview_search| image:: ./images/cms_form_example_search.png
