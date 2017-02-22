@@ -77,16 +77,22 @@
             </div>
         </t>
     </div>
-    <div class="form-group form-controls">
-       <div class="col-sm-9 col-sm-offset-3">
-         <a class="btn btn-default" t-att-href="form.form_cancel_url()">Cancel</a>
-         <button type="submit" class="btn btn-primary">Submit</button>
-       </div>
-     </div>
+    <t t-call="#{ form.form_buttons_template }" />
+
   </form>
 
 </template>
 
+<template id="base_form_buttons" name="CMS base form buttons">
+
+  <div class="form-group form-controls">
+    <div class="col-sm-9 col-sm-offset-3">
+      <a class="btn btn-default" t-att-href="form.form_cancel_url()">Cancel</a>
+      <button type="submit" class="btn btn-primary">Submit</button>
+    </div>
+  </div>
+
+</template>
 
 <template id="search_form_wrapper" name="CMS search form wrapper"
           inherit_id="cms_form.form_wrapper" primary="True">
@@ -98,8 +104,8 @@
 </template>
 
 
-<template id="search_form" name="CMS search form"
-          inherit_id="cms_form.base_form" primary="True">
+<template id="search_form_buttons" name="CMS search form buttons"
+          inherit_id="cms_form.base_form_buttons" primary="True">
 
   <xpath expr="//div[contains(@class, 'form-controls')]" position="replace">
     <div class="form-group form-controls">

@@ -34,6 +34,7 @@ class CMSFormMixin(models.AbstractModel):
     # template to render the form
     form_template = 'cms_form.base_form'
     form_fields_template = 'cms_form.base_form_fields'
+    form_buttons_template = 'cms_form.base_form_buttons'
     form_action = ''
     form_method = 'POST'
     _form_mode = ''

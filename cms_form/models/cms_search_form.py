@@ -10,7 +10,7 @@ class CMSFormSearch(models.AbstractModel):
     _name = 'cms.form.search'
     _inherit = 'cms.form.mixin'
 
-    form_template = 'cms_form.search_form'
+    form_buttons_template = 'cms_form.search_form_buttons'
     form_search_results_template = 'cms_form.search_results'
     form_action = ''
     form_method = 'GET'
@@ -57,7 +57,7 @@ class CMSFormSearch(models.AbstractModel):
         """Produce search results."""
         search_values = self.form_extract_values()
         if not search_values and not self._form_show_results_no_submit:
-            return []
+            return self.form_search_results
         domain = self.form_search_domain(search_values)
         count = self.form_model.search_count(domain)
         page = render_values.get('extra_args', {}).get('page', 0)
@@ -77,6 +77,7 @@ class CMSFormSearch(models.AbstractModel):
             'count': count,
             'pager': pager,
         }
+        return self.form_search_results
 
     def pager(self, **kw):
         return self.env['website'].pager(**kw)
