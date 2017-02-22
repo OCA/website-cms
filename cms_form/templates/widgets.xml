@@ -22,7 +22,7 @@
           t-att-name="widget.fname"
           t-att-required="widget.field['required'] and '1' or None"
           t-att-data-params="widget.data">
-    <option value="">Select...</option>
+    <option value=""><t t-esc="widget.field['string'] + '...'" /></option>
     <t t-set="comodel" t-value="widget.env[widget.field['relation']]" />
     <t t-set="domain" t-value="widget.field.get('domain', [])" />
     <t t-set="option_items" t-value="comodel.search(domain)" />
