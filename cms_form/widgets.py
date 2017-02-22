@@ -11,15 +11,15 @@
 class Widget(object):
     key = ''
     css_klass = ''
-    data = {}
 
-    def __init__(self, form, fname, field):
+    def __init__(self, form, fname, field, data=None):
         self.form = form
         self.form_values = form.form_render_values
         self.fname = fname
         self.field = field
         self.field_value = self.form_values.get('form_data', {}).get(fname)
         self.env = form.env
+        self.data = data or {}
 
     def render(self):
         return self.env.ref(self.key).render({'widget': self})
