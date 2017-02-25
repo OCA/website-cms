@@ -10,6 +10,12 @@ This repository includes advanced CMS features for the Odoo website builder:
 * Different content for translations
 
 [//]: # (addons)
+Available addons
+----------------
+addon | version | summary
+--- | --- | ---
+[cms_status_message](cms_status_message/) | 9.0.1.0.0 | Basic status messages for your CMS system
+
 [//]: # (end addons)
 
 Translation Status

@@ -4,30 +4,35 @@
 
 from openerp import models
 from openerp import fields
+from openerp import tools
+
+testing = tools.config.get('test_enable')
 
 
-class ExamplePartnerForm(models.AbstractModel):
-    """A test model form."""
+if not testing:
+    # prevent these forms to be registered when running tests
 
-    _name = 'cms.form.res.partner'
-    _inherit = 'cms.form'
-    _form_model = 'res.partner'
-    _form_model_fields = ('name', 'country_id')
-    _form_required_fields = ('name', )
-    _form_fields_order = ('name', 'country_id')
+    class ExamplePartnerForm(models.AbstractModel):
+        """A test model form."""
 
-    custom = fields.Char()
+        _name = 'cms.form.res.partner'
+        _inherit = 'cms.form'
+        _form_model = 'res.partner'
+        _form_model_fields = ('name', 'country_id')
+        _form_required_fields = ('name', )
+        _form_fields_order = ('name', 'country_id')
 
-    def _form_load_custom(
-            self, form, main_object, fname, value, **req_values):
-        """Load a custom default for the field 'custom'."""
-        return req_values.get('custom', 'oh yeah!')
+        custom = fields.Char()
 
+        def _form_load_custom(
+                self, form, main_object, fname, value, **req_values):
+            """Load a custom default for the field 'custom'."""
+            return req_values.get('custom', 'oh yeah!')
 
-class PartnerSearchForm(models.AbstractModel):
-    """Partner model search form."""
+    class PartnerSearchForm(models.AbstractModel):
+        """Partner model search form."""
 
-    _name = 'cms.form.search.res.partner'
-    _inherit = 'cms.form.search'
-    _form_model = 'res.partner'
-    _form_model_fields = ('name', 'country_id', )
+        _name = 'cms.form.search.res.partner'
+        _inherit = 'cms.form.search'
+        _form_model = 'res.partner'
+        _form_model_fields = ('name', 'country_id', )
