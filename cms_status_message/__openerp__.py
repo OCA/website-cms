@@ -12,6 +12,10 @@
         'website',
     ],
     'data': [
+        'templates/assets.xml',
         'templates/status_message.xml',
+    ],
+    'qweb': [
+        'static/src/xml/*.xml'
     ],
 }
