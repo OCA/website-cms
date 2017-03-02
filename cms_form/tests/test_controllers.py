@@ -2,11 +2,12 @@
 # Copyright 2017 Simone Orsi
 # License AGPL-3.0 or later (http://www.gnu.org/licenses/agpl).
 
-from .common import fake_request
-from .common import FormHttpTestCase
-from ..controllers import main
-import mock
 from contextlib import contextmanager
+import mock
+
+from .common import fake_request, FormHttpTestCase
+from ..controllers import main
+
 
 IMPORT = 'openerp.addons.cms_form.controllers.main'
 

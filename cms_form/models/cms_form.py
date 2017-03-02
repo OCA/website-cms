@@ -2,12 +2,10 @@
 # Copyright 2017 Simone Orsi
 # License AGPL-3.0 or later (http://www.gnu.org/licenses/agpl).
 
-from openerp import models
-from openerp import exceptions
-from openerp import _
-
 import werkzeug
 from psycopg2 import IntegrityError
+
+from openerp import models, exceptions, _
 
 
 class CMSForm(models.AbstractModel):

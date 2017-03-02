@@ -2,14 +2,14 @@
 # Copyright 2017 Simone Orsi
 # License AGPL-3.0 or later (http://www.gnu.org/licenses/agpl).
 
-from openerp.tests.common import TransactionCase
-from openerp.tests.common import HttpCase
-from openerp import http
+from cStringIO import StringIO
+from lxml import html
 from werkzeug.wrappers import Request
 import mock
-from cStringIO import StringIO
 import urllib
-from lxml import html
+
+from openerp import http
+from openerp.tests.common import TransactionCase, HttpCase
 
 
 def fake_request(form_data=None, query_string=None,
