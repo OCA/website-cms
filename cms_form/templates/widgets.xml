@@ -23,10 +23,7 @@
           t-att-required="widget.field['required'] and '1' or None"
           t-att-data-params="widget.data">
     <option value=""><t t-esc="widget.field['string'] + '...'" /></option>
-    <t t-set="comodel" t-value="widget.env[widget.field['relation']]" />
-    <t t-set="domain" t-value="widget.field.get('domain', [])" />
-    <t t-set="option_items" t-value="comodel.search(domain)" />
-    <t t-foreach="option_items or []" t-as="opt_item">
+    <t t-foreach="widget.option_items" t-as="opt_item">
      <option t-att-value="opt_item.id"
              t-att-selected="opt_item.id == widget.field_value">
          <t t-esc="opt_item.name"/>

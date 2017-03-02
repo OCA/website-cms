@@ -32,6 +32,15 @@ class CharWidget(Widget):
 class M2OWidget(Widget):
     key = 'cms_form.field_widget_m2o'
 
+    def __init__(self, form, fname, field, data=None):
+        super(M2OWidget, self).__init__(form, fname, field, data=data)
+        self.comodel = self.env[self.field['relation']]
+        self.domain = self.field.get('domain', [])
+
+    @property
+    def option_items(self):
+        return self.comodel.search(self.domain)
+
 
 class X2MWidget(Widget):
     key = 'cms_form.field_widget_x2m'
