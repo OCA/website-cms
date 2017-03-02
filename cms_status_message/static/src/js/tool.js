@@ -7,8 +7,22 @@ odoo.define('cms_status_message.tool', function (require) {
     var core = require('web.core');
     var qweb = core.qweb;
     var ajax = require('web.ajax');
-    ajax.loadXML('/cms_status_message/static/src/xml/status_message.xml', qweb);
 
+    // load existing qweb templates
+    ajax.jsonRpc('/web/dataset/call', 'call', {
+        'model': 'ir.ui.view',
+        'method': 'read_template',
+        'args': ['cms_status_message.message_listing_wrapper']
+    }).done(function (data) {
+        qweb.add_template(data);
+    });
+    ajax.jsonRpc('/web/dataset/call', 'call', {
+        'model': 'ir.ui.view',
+        'method': 'read_template',
+        'args': ['cms_status_message.message_wrapper']
+    }).done(function (data) {
+        qweb.add_template(data);
+    });
 
     var MessageTool = {
         add_message: function add_message (msg, options) {
@@ -29,7 +43,7 @@ odoo.define('cms_status_message.tool', function (require) {
             $.extend(status_message, msg);
             // render it
             var result = qweb.render(
-                'cms_status_message.show_message',
+                'cms_status_message.message_listing_wrapper',
                 {status_message: [status_message]}
             );
             if(selector){
