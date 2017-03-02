@@ -1,0 +1,35 @@
+<?xml version="1.0" encoding="utf-8" ?>
+
+<templates id="qweb_templates" xml:space="preserve">
+
+  <t t-name="cms_status_message.show_message">
+    <t t-if="status_message">
+      <div class="container-fluid status_message">
+        <t t-foreach="status_message" t-as="msg">
+          <div t-attf-class="alert alert-#{msg['type']} #{msg['dismissible'] and 'alert-dismissible' or ''}" role="alert">
+            <t t-if="msg['dismissible']">
+                <button type="button" class="close" data-dismiss="alert" aria-label="Close">
+                  <span t-translation="off" aria-hidden="true" class="fa fa-remove"></span>
+                </button>
+            </t>
+            <t t-call="cms_status_message.message_wrapper" />
+          </div>
+        </t>
+      </div>
+    </t>
+  </t>
+
+  <t t-name="cms_status_message.message_wrapper">
+    <div class="msg-wrapper row">
+      <t t-if="msg['title']">
+        <div class="title col-md-3">
+          <strong t-esc="msg['title']" />
+        </div>
+      </t>
+      <div t-attf-class="msg #{msg['title'] and 'col-md-9' or 'col-md-12'}">
+        <t t-raw="msg['msg']" />
+      </div>
+    </div>
+  </t>
+
+</templates>
