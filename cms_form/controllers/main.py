@@ -1,9 +1,9 @@
 # -*- coding: utf-8 -*-
 
+import werkzeug
+
 from openerp import http, _
 from openerp.http import request
-import werkzeug
-# from werkzeug.exceptions import NotFound
 
 
 class FormControllerMixin(object):

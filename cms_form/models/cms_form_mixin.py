@@ -2,12 +2,13 @@
 # Copyright 2017 Simone Orsi
 # License AGPL-3.0 or later (http://www.gnu.org/licenses/agpl).
 
-from openerp import models
-from ..utils import DEFAULT_LOADERS, DEFAULT_EXTRACTORS
-from ..import widgets
-
 import inspect
 from collections import OrderedDict
+
+from openerp import models
+
+from .. import widgets
+from ..utils import DEFAULT_LOADERS, DEFAULT_EXTRACTORS
 
 
 IGNORED_FORM_FIELDS = [

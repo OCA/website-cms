@@ -2,12 +2,12 @@
 # Copyright 2017 Simone Orsi
 # License AGPL-3.0 or later (http://www.gnu.org/licenses/agpl).
 
-from openerp import models
-from openerp.tools.mimetypes import guess_mimetype
-
 import json
 import base64
 import werkzeug
+
+from openerp import models
+from openerp.tools.mimetypes import guess_mimetype
 
 
 def ids_from_input(value):

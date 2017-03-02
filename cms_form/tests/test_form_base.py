@@ -2,12 +2,12 @@
 # Copyright 2017 Simone Orsi
 # License AGPL-3.0 or later (http://www.gnu.org/licenses/agpl).
 
-from .common import fake_request
-from .common import FormTestCase
-from .. import utils
+from werkzeug.wrappers import Request
 
 from openerp import http
-from werkzeug.wrappers import Request
+
+from .common import fake_request, FormTestCase
+from .. import utils
 
 
 class TestFormBase(FormTestCase):

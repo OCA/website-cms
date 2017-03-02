@@ -2,9 +2,7 @@
 # Copyright 2017 Simone Orsi
 # License AGPL-3.0 or later (http://www.gnu.org/licenses/agpl).
 
-from openerp import models
-from openerp import fields
-from openerp import tools
+from openerp import fields, models, tools
 
 testing = tools.config.get('test_enable')
 
