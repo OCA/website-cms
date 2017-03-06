@@ -53,6 +53,12 @@ class DateWidget(Widget):
 class TextWidget(Widget):
     key = 'cms_form.field_widget_text'
 
+    def __init__(self, form, fname, field, data=None, maxlength=None):
+        super(TextWidget, self).__init__(
+            form, fname, field, data=data
+        )
+        self.maxlength = maxlength
+
 
 class ImageWidget(Widget):
     key = 'cms_form.field_widget_image'

@@ -70,7 +70,13 @@
 
     <textarea t-att-name="widget.fname" t-att-id="fname"
               t-attf-class="form-control #{widget.css_klass}"
-              t-esc="widget.field_value" />
+              t-esc="widget.field_value"
+              t-att-maxlength="widget.maxlength" />
+    <t t-if="widget.maxlength">
+        <input type="text" size="3" readonly="1" t-ignore="1"
+               t-attf-name="#{widget.fname}_counter"
+               class="form-control text-counter" />
+    </t>
 
 </template>
 
