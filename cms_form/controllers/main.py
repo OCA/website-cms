@@ -51,8 +51,15 @@ class FormControllerMixin(object):
 
     def _can_edit(self, main_object, raise_exception=True):
         """Check that current user can edit given main object."""
-        return main_object.check_access_rights(
-            'write', raise_exception=raise_exception)
+        try:
+            main_object.check_access_rights('write')
+            main_object.check_access_rule('write')
+            can = True
+        except Exception:
+            if raise_exception:
+                raise
+            can = False
+        return can
 
     def form_model_key(self, model):
         """Return a valid form model."""
