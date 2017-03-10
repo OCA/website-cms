@@ -1,7 +1,8 @@
 # -*- coding: utf-8 -*-
-# Copyright 2017 Camptocamp SA
+# Copyright 2017 Camptocamp
 # License AGPL-3.0 or later (http://www.gnu.org/licenses/agpl)
-from openerp import api, fields, models
+
+from openerp import api, fields, models, _
 
 
 class WebsitePublishedMixin(models.AbstractModel):
@@ -17,7 +18,7 @@ class WebsitePublishedMixin(models.AbstractModel):
     def _compute_cms_delete_url(self):
         for item in self:
             item.cms_delete_url = \
-                '/cms/{}/{}/delete'.format(item._name, item.id)
+                '/cms/delete/{}/{}'.format(item._name, item.id)
 
     cms_delete_confirm_url = fields.Char(
         string='CMS delete confirm URL',
@@ -29,7 +30,17 @@ class WebsitePublishedMixin(models.AbstractModel):
     def _compute_cms_delete_confirm_url(self):
         for item in self:
             item.cms_delete_confirm_url = \
-                '/cms/{}/{}/delete/confirm'.format(item._name, item.id)
+                '/cms/delete/{}/{}/confirm'.format(item._name, item.id)
 
     # customize this per-model
     cms_after_delete_url = '/'
+
+    @api.multi
+    def msg_content_delete_confirm(self):
+        self.ensure_one()
+        return _('Are you sure you want to delete this item?')
+
+    @api.multi
+    def msg_content_deleted(self):
+        self.ensure_one()
+        return _('%s deleted.') % self._description
