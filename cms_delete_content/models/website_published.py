@@ -18,7 +18,7 @@ class WebsitePublishedMixin(models.AbstractModel):
     def _compute_cms_delete_url(self):
         for item in self:
             item.cms_delete_url = \
-                '/cms/delete/{}/{}'.format(item._name, item.id)
+                u'/cms/delete/{}/{}'.format(item._name, item.id)
 
     cms_delete_confirm_url = fields.Char(
         string='CMS delete confirm URL',
@@ -30,7 +30,7 @@ class WebsitePublishedMixin(models.AbstractModel):
     def _compute_cms_delete_confirm_url(self):
         for item in self:
             item.cms_delete_confirm_url = \
-                '/cms/delete/{}/{}/confirm'.format(item._name, item.id)
+                u'/cms/delete/{}/{}/confirm'.format(item._name, item.id)
 
     # customize this per-model
     cms_after_delete_url = '/'
