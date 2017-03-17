@@ -56,7 +56,7 @@ class CMSFormMixin(models.AbstractModel):
     _form_fields_attributes = [
         'type', 'string', 'domain',
         'required', 'readonly', 'relation',
-        'store', 'help',
+        'store', 'help', 'selection',
     ]
     # include only these fields
     _form_fields_whitelist = ()

@@ -42,6 +42,17 @@ class M2OWidget(Widget):
         return self.comodel.search(self.domain)
 
 
+class SelectionWidget(Widget):
+    key = 'cms_form.field_widget_selection'
+
+    @property
+    def option_items(self):
+        return [
+            {'value': x[0], 'label': x[1]}
+            for x in self.field['selection']
+        ]
+
+
 class X2MWidget(Widget):
     key = 'cms_form.field_widget_x2m'
 
@@ -79,4 +90,5 @@ DEFAULT_WIDGETS = {
     # We should have an 'image' field type...
     'image': ImageWidget,
     'boolean': BooleanWidget,
+    'selection': SelectionWidget,
 }
