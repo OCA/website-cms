@@ -78,6 +78,12 @@ class ImageWidget(Widget):
 class BooleanWidget(Widget):
     key = 'cms_form.field_widget_boolean'
 
+    true_values = ('on', True, 'true', 1, '1')
+
+    def __init__(self, form, fname, field, data=None):
+        super(BooleanWidget, self).__init__(form, fname, field, data=data)
+        self.field_value = self.field_value in self.true_values
+
 
 DEFAULT_WIDGETS = {
     'many2one': M2OWidget,
