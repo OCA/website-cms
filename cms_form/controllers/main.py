@@ -87,10 +87,6 @@ class FormControllerMixin(object):
         else:
             self._can_create(model)
 
-    def get_main_object(self, model, model_id):
-        """Return main_object for given ``model`` and ``model_id``."""
-        return request.env[model].browse(model_id)
-
     def make_response(self, model, model_id=None, page=0, **kw):
         """Prepare and return form response.
 
@@ -110,7 +106,7 @@ class FormControllerMixin(object):
         """
         main_object = None
         if model_id:
-            main_object = self.get_main_object(model, model_id)
+            main_object = request.env[model].browse(model_id)
         self.check_permission(model, main_object)
         form = self.get_form(model, main_object=main_object)
         # pass only specific extra args, to not pollute form render values

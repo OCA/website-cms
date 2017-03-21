@@ -24,12 +24,25 @@
           t-att-data-params="widget.data">
     <option value=""><t t-esc="widget.field['string'] + '...'" /></option>
     <t t-foreach="widget.option_items" t-as="opt_item">
-     <option t-att-value="opt_item.id"
+      <option t-att-value="opt_item.id"
              t-att-selected="opt_item.id == widget.field_value">
-         <t t-esc="opt_item.name"/>
-     </option>
+        <t t-esc="opt_item.name"/>
+      </option>
     </t>
   </select>
+
+</template>
+
+
+<template id="field_widget_selection" name="CMS form selection field widget"
+    inherit_id="cms_form.field_widget_m2o" primary="True">
+
+    <xpath expr="//t[@t-foreach]/option" position="replace">
+      <option t-att-value="opt_item['value']"
+             t-att-selected="opt_item['value'] == widget.field_value">
+        <t t-esc="opt_item['label']"/>
+      </option>
+    </xpath>
 
 </template>
 
@@ -85,7 +98,7 @@
 
     <input type="checkbox"
            t-att-name="widget.fname" t-att-id="fname"
-           t-att-checked="widget.field_value == 'on' or None"
+           t-att-checked="widget.field_value or None"
            t-attf-class="form-control #{widget.css_klass}"
            />
 

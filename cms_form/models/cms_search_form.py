@@ -95,10 +95,7 @@ class CMSFormSearch(models.AbstractModel):
         )
 
     def form_search_domain(self, search_values):
-        """Build search domain.
-
-        TODO...
-        """
+        """Build search domain."""
         domain = []
         for fname, field in self.form_fields().iteritems():
             value = search_values.get(fname)
@@ -107,7 +104,8 @@ class CMSFormSearch(models.AbstractModel):
             if field['type'] in ('many2one', ) and value < 1:
                 # we need an existing ID here ( > 0)
                 continue
-            # TODO: find the way to properly handle this
+            # TODO: find the way to properly handle this.
+            # It would be nice to guess leafs in a clever way.
             operator = '='
             if field['type'] in ('char', 'text'):
                 operator = 'ilike'

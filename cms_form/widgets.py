@@ -2,11 +2,13 @@
 # Copyright 2017 Simone Orsi
 # License AGPL-3.0 or later (http://www.gnu.org/licenses/agpl).
 
+from .utils import TRUE_VALUES
 
 # TODO: should we make widget abstract models?
 # It might be worth to add a `cms.form.widget` base klass
 # and define one klass per each kind of widget
 # as ir.qweb does for rendering fields.
+
 
 class Widget(object):
     key = ''
@@ -42,6 +44,17 @@ class M2OWidget(Widget):
         return self.comodel.search(self.domain)
 
 
+class SelectionWidget(Widget):
+    key = 'cms_form.field_widget_selection'
+
+    @property
+    def option_items(self):
+        return [
+            {'value': x[0], 'label': x[1]}
+            for x in self.field['selection']
+        ]
+
+
 class X2MWidget(Widget):
     key = 'cms_form.field_widget_x2m'
 
@@ -67,6 +80,10 @@ class ImageWidget(Widget):
 class BooleanWidget(Widget):
     key = 'cms_form.field_widget_boolean'
 
+    def __init__(self, form, fname, field, data=None):
+        super(BooleanWidget, self).__init__(form, fname, field, data=data)
+        self.field_value = self.field_value in TRUE_VALUES
+
 
 DEFAULT_WIDGETS = {
     'many2one': M2OWidget,
@@ -79,4 +96,5 @@ DEFAULT_WIDGETS = {
     # We should have an 'image' field type...
     'image': ImageWidget,
     'boolean': BooleanWidget,
+    'selection': SelectionWidget,
 }

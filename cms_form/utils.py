@@ -121,6 +121,13 @@ def form_to_date(form, fname, value, **req_values):
     return value
 
 
+TRUE_VALUES = ('on', 'yes', 'ok', 'true', True, 1, '1', )
+
+
+def form_to_bool(form, fname, value, **req_values):
+    return value in TRUE_VALUES
+
+
 DEFAULT_LOADERS = {
     'many2one': m2o_to_form,
     'one2many': x2many_to_form,
@@ -140,4 +147,5 @@ DEFAULT_EXTRACTORS = {
     'binary': form_to_binary,
     'date': form_to_date,
     'datetime': form_to_date,
+    'boolean': form_to_bool,
 }

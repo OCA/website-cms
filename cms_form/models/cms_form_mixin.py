@@ -56,7 +56,7 @@ class CMSFormMixin(models.AbstractModel):
     _form_fields_attributes = [
         'type', 'string', 'domain',
         'required', 'readonly', 'relation',
-        'store', 'help',
+        'store', 'help', 'selection',
     ]
     # include only these fields
     _form_fields_whitelist = ()
@@ -279,7 +279,7 @@ class CMSFormMixin(models.AbstractModel):
                 value = extractor(self, fname, value, **request_values)
             if value is None:
                 # we assume we do not want to override the field value.
-                # a tipical example is an image field.
+                # a typical example is an image field.
                 # If you have an existing image
                 # you cannot set the default value on the file input
                 # for standard HTML security restrictions.

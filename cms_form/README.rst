@@ -96,7 +96,7 @@ The form above can be extended with extra fields that are not part of the ``_for
             if extra_values.get('notify_partner'):
                 # do what you want here...
 
-``notifiy_partner`` will be included into the form but it will be discarded on create and write.
+``notify_partner`` will be included into the form but it will be discarded on create and write.
 Nevertheless you can use it as a control flag before and after the record has been created or updated
 using the hook ``form_after_create_or_update``, as you see in this example.
 
@@ -134,7 +134,8 @@ Known issues / Roadmap
 * add more tests, especially per each widget and type of field
 * provide better widgets for image and file fields in general
 * o2m fields: to be tested at all
-* move widgets to abstract models too (?)
+* move widgets to abstract models too
+* search form: generate default search domain in a clever way
 * add easy way to switch from horizontal to vertical form
 * provide more examples
 * x2x fields: allow sub-items creation
