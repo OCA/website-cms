@@ -21,11 +21,16 @@ You can add several messages: they will be displayed one after another.
 Usage
 =====
 
-Set a message::
+Python code
+-----------
 
-    msg = _('My important message.')
-    if request.website:
-        request.website.add_status_message(msg)
+Set a message:
+
+```python
+msg = _('My important message.')
+if request.website:
+    request.website.add_status_message(msg)
+```
 
 By default the message type is `info`.
 The title (the label at the beginning of the message) matches the message type:
@@ -36,15 +41,55 @@ The title (the label at the beginning of the message) matches the message type:
 * 'warning': 'Warning'
 
 
-You can change message parameters::
+You can change message parameters:
 
-    msg = _('Watch out!')
-    if request.website:
-        request.website.add_status_message(msg, mtype='warning', mtitle='Oh no')
+```python
+msg = _('Watch out!')
+if request.website:
+    request.website.add_status_message(msg, mtype='warning', mtitle='Oh no')
+```
 
 Messages will be displayed like this:
 
 |preview|
+
+Javascript code
+---------------
+
+Dependencies:
+
+```javascript
+
+var msg_tool = require('cms_status_message.tool');
+var core = require('web.core');
+var _t = core._t;
+```
+
+Inject a custom message on the fly:
+
+```javascript
+msg = {
+    'msg': _t('Item unpublished.'),
+    'title': _t('Warning'),
+    'type': 'warning'
+}
+// wipe existing
+$('.status_message').remove();
+
+// inject new
+$(msg_tool.render_messages(msg))
+    .hide()
+    .prependTo('main')
+    .fadeIn('slow');
+```
+
+Add a status message to the session, useful if you want to show the message only after a redirect:
+
+```javascript
+var msg =  _t('Contratulations! You made it!.');
+var options = {'title': _('My title'), 'dismissible': false};
+msg_tool.add_message(msg, options);
+```
 
 Customize appereance
 --------------------
