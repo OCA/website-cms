@@ -12,6 +12,7 @@
         'website',
     ],
     'data': [
+        'templates/assets.xml',
         'templates/status_message.xml',
     ],
 }
