@@ -2,11 +2,13 @@
 # Copyright 2017 Simone Orsi
 # License AGPL-3.0 or later (http://www.gnu.org/licenses/agpl).
 
+from .utils import TRUE_VALUES
 
 # TODO: should we make widget abstract models?
 # It might be worth to add a `cms.form.widget` base klass
 # and define one klass per each kind of widget
 # as ir.qweb does for rendering fields.
+
 
 class Widget(object):
     key = ''
@@ -78,11 +80,9 @@ class ImageWidget(Widget):
 class BooleanWidget(Widget):
     key = 'cms_form.field_widget_boolean'
 
-    true_values = ('on', True, 'true', 1, '1')
-
     def __init__(self, form, fname, field, data=None):
         super(BooleanWidget, self).__init__(form, fname, field, data=data)
-        self.field_value = self.field_value in self.true_values
+        self.field_value = self.field_value in TRUE_VALUES
 
 
 DEFAULT_WIDGETS = {
