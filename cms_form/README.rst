@@ -128,6 +128,44 @@ and have more elegant routes like ``/partners``.
 Take a look at `cms_form_example <../cms_form_example>`_.
 
 
+Master / slave fields
+---------------------
+
+A typical use case nowadays: you want to show/hide fields based on other fields' values.
+For the simplest cases you don't have to write a single line of JS. You can do it like this:
+
+.. code-block:: python
+
+    class PartnerForm(models.AbstractModel):
+
+        _name = 'cms.form.res.partner'
+        _inherit = 'cms.form'
+        _form_model = 'res.partner'
+        _form_model_fields = ('name', 'type', 'foo')
+
+        def _form_master_slave_info(self):
+            info = self._super._form_master_slave_info()
+            info.update({
+                # master field
+                'type':{
+                    # actions
+                    'hide': {
+                        # slave field: action values
+                        'foo': ('contact', ),
+                    },
+                    'show': {
+                        'foo': ('address', 'invoice', ),
+                    }
+                },
+            })
+            return info
+
+Here we declared that:
+
+* when `type` field is equal to `contact` -> hide `foo` field
+* when `type` field is equal to `address` or `invoice` -> show `foo` field
+
+
 Known issues / Roadmap
 ======================
 
@@ -140,6 +178,7 @@ Known issues / Roadmap
 * provide more examples
 * x2x fields: allow sub-items creation
 * handle api onchanges
+* support python expressions into master/slave rules
 
 
 Bug Tracker

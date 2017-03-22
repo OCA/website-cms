@@ -3,12 +3,13 @@
 # License AGPL-3.0 or later (http://www.gnu.org/licenses/agpl).
 
 import inspect
+import json
 from collections import OrderedDict
 
 from openerp import models
 
 from .. import widgets
-from ..utils import DEFAULT_LOADERS, DEFAULT_EXTRACTORS
+from ..utils import DEFAULT_LOADERS, DEFAULT_EXTRACTORS, data_merge
 
 
 IGNORED_FORM_FIELDS = [
@@ -393,3 +394,41 @@ class CMSFormMixin(models.AbstractModel):
         By default you can provide extra klasses via `_form_extra_css_klass`.
         """
         return self._form_extra_css_klass
+
+    def form_json_info(self):
+        info = {}
+        info.update({
+            'master_slave': self._form_master_slave_info()
+        })
+        return json.dumps(info)
+
+    def _form_master_slave_info(self):
+        """Return info about master/slave fields JSON compatible.
+
+        # TODO: support pyeval expressions in JS
+
+        Eg: {
+            'field_master1': {
+                'hide': {
+                    # field to hide: values
+                    # TODO: support pyeval expressions
+                    'field_slave1': (master_value1, ),
+                },
+                'show': {
+                    # field to show: pyeval expr
+                    'field_slave1': (master_value2, ),
+                },
+            }
+        }
+        """
+        return {}
+
+    def _form_info_merge(self, info, tomerge):
+        """Merge info dictionaries.
+
+        Practical example:
+        when inheriting forms you can add extra rules for the same master field
+        so if you don't want to override info completely
+        you can use this method to merge them properly.
+        """
+        return data_merge(info, tomerge)

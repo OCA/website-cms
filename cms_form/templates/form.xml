@@ -55,6 +55,7 @@
 <template id="base_form" name="CMS form template">
 
   <form t-att-action="form.form_action" t-att-method="form.form_method"
+        t-att-data-form="form.form_json_info()"
         t-attf-class="form-horizontal #{form.form_css_klass}"
         enctype="multipart/form-data">
 
