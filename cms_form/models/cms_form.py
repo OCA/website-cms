@@ -78,6 +78,9 @@ class CMSForm(models.AbstractModel):
 
     def form_cancel_url(self, main_object=None):
         """URL to redirect to after click on "cancel" button."""
+        if self.request.args.get('redirect'):
+            # redirect overridden
+            return self.request.args.get('redirect')
         main_object = main_object or self.main_object
         if main_object and 'website_url' in main_object:
             return main_object.website_url
