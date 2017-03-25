@@ -10,6 +10,7 @@ This repository includes advanced CMS features for the Odoo website builder:
 * Different content for translations
 
 [//]: # (addons)
+
 Available addons
 ----------------
 addon | version | summary
