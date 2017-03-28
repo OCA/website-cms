@@ -15,6 +15,7 @@ Available addons
 ----------------
 addon | version | summary
 --- | --- | ---
+[cms_delete_content](cms_delete_content/) | 9.0.1.0.0 | Basic features for handling content deletion via frontend.
 [cms_status_message](cms_status_message/) | 9.0.1.0.0 | Basic status messages for your CMS system
 
 [//]: # (end addons)
