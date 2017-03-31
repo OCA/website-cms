@@ -48,7 +48,7 @@ msgstr "Abbrechen"
 #: code:addons/odoo/external-src/website-cms/cms_form/models/cms_form.py:41
 #, python-format
 msgid "Create %s"
-msgstr "Anlegen %s"
+msgstr "%s anlegen"
 
 #. module: cms_form
 #: model:ir.model.fields,field_description:cms_form.field_cms_form_display_name
