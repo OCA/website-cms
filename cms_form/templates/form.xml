@@ -37,9 +37,10 @@
 
 
 <template id="base_form_field_help_block" name="CMS form field help block">
-    <p class="help-block" t-raw="field['help']">
+    <div class="help-block">
       <!-- use `raw` to allow injecting html stuff here -->
-    </p>
+      <t t-raw="field['help']" />
+    </div>
 </template>
 
 <template id="base_form_fields" name="CMS form fields">
