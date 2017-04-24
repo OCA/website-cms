@@ -1,0 +1,137 @@
+<?xml version="1.0" encoding="utf-8"?>
+<odoo>
+
+
+<template id="field_widget_char" name="CMS form text field widget">
+
+  <input type="text"
+         t-attf-class="form-control #{widget.css_klass}"
+         t-att-name="widget.fname"
+         t-att-value="widget.field_value"
+         t-att-required="widget.field['required'] and '1' or None"
+         t-att-data-params="widget.data"
+         t-att-placeholder="widget.field['string'] + '...'"
+         />
+
+</template>
+
+
+<template id="field_widget_m2o" name="CMS form m2o field widget">
+
+  <select t-attf-class="form-control #{widget.css_klass}"
+          t-att-name="widget.fname"
+          t-att-required="widget.field['required'] and '1' or None"
+          t-att-data-params="widget.data">
+    <option value=""><t t-esc="widget.field['string'] + '...'" /></option>
+    <t t-foreach="widget.option_items" t-as="opt_item">
+      <option t-att-value="opt_item.id"
+             t-att-selected="opt_item.id == widget.field_value">
+        <t t-esc="opt_item.name"/>
+      </option>
+    </t>
+  </select>
+
+</template>
+
+
+<template id="field_widget_selection" name="CMS form selection field widget"
+    inherit_id="cms_form.field_widget_m2o" primary="True">
+
+    <xpath expr="//t[@t-foreach]/option" position="replace">
+      <option t-att-value="opt_item['value']"
+             t-att-selected="opt_item['value'] == widget.field_value">
+        <t t-esc="opt_item['label']"/>
+      </option>
+    </xpath>
+
+</template>
+
+
+<template id="field_widget_x2m" name="CMS form x2m field widget">
+
+  <!-- NOTE: `t-att-value` is really important here
+  since without it `initSelection` function for select2 does not work-->
+  <input type="text" t-att-id="fname" t-att-name="widget.fname"
+         t-attf-class="form-control js_select2_m2m_widget #{widget.css_klass}"
+         t-attf-data-init-value="#{widget.field_value}" t-att-value="widget.field_value or widget.fname"
+         t-att-data-model="widget.field['relation']"
+         data-display_name="name" data-fields='["name"]'
+         t-att-placeholder="widget.field['string'] + '...'"
+         t-att-data-domain="widget.field['domain'] or []"
+        />
+
+</template>
+
+
+<template id="field_widget_date" name="CMS form date field widget">
+
+  <div class="input-group">
+    <!-- TODO: show date in user locale and convert value server side -->
+    <input t-att-name="widget.fname" t-att-id="fname"
+           t-attf-class="form-control js_datepicker #{widget.css_klass}"
+           type="text" data-format="yy-mm-dd" placeholder="YYYY-MM-DD"
+           t-att-value="widget.field_value"/>
+    <span class="input-group-addon js_datepicker_trigger">
+      <span class="fa fa-calendar"></span>
+    </span>
+  </div>
+
+</template>
+
+
+<template id="field_widget_text" name="CMS form text field widget">
+
+    <textarea t-att-name="widget.fname" t-att-id="fname"
+              t-attf-class="form-control #{widget.css_klass}"
+              t-esc="widget.field_value"
+              t-att-maxlength="widget.maxlength" />
+    <t t-if="widget.maxlength">
+        <input type="text" size="3" readonly="1" t-ignore="1"
+               t-attf-name="#{widget.fname}_counter"
+               class="form-control text-counter" />
+    </t>
+
+</template>
+
+
+<template id="field_widget_boolean" name="CMS form boolean field widget">
+
+    <input type="checkbox"
+           t-att-name="widget.fname" t-att-id="fname"
+           t-att-checked="widget.field_value or None"
+           t-attf-class="form-control #{widget.css_klass}"
+           />
+
+</template>
+
+
+<template id="field_widget_image" name="CMS form image field widget">
+  <div class="image-widget-wrapper">
+    <input
+        type="file" capture="camera" accept="image/*"
+        t-att-id="fname"
+        t-att-name="widget.fname"
+        class="form-control"
+        />
+    <t t-if="widget.field_value">
+      <t t-set="prefix" t-value="fname"/>
+      <img class="img img-responsive" t-att-src="widget.form_data.get(fname, {}).get('value')" />
+      <div t-attf-id="#{prefix}_keepbox" class="keepbox text-center">
+        <div class="form-group">
+          <label class="checkbox inline" t-attf-for="#{prefix}_keepcheck_yes">
+            <input type="radio" t-attf-id="#{prefix}_keepcheck_yes" t-attf-name="#{prefix}_keepcheck" checked="1" value="yes"/>
+            Keep current image
+          </label>
+          <label class="checkbox inline" t-attf-for="#{prefix}_keepcheck_no">
+            <input type="radio" t-attf-id="#{prefix}_keepcheck_no" t-attf-name="#{prefix}_keepcheck" value="no"/>
+            Replace current image
+          </label>
+        </div>
+      </div>
+    </t>
+  </div>
+</template>
+
+
+
+</odoo>

@@ -1,0 +1,44 @@
+# Translation of Odoo Server.
+# This file contains the translation of the following modules:
+#	* cms_status_message
+#
+msgid ""
+msgstr ""
+"Project-Id-Version: Odoo Server 9.0c\n"
+"Report-Msgid-Bugs-To: \n"
+"POT-Creation-Date: 2017-01-13 09:26+0000\n"
+"PO-Revision-Date: 2017-01-13 09:26+0000\n"
+"Last-Translator: <>\n"
+"Language-Team: \n"
+"MIME-Version: 1.0\n"
+"Content-Type: text/plain; charset=UTF-8\n"
+"Content-Transfer-Encoding: \n"
+"Plural-Forms: \n"
+
+#. module: cms_status_message
+#: code:addons/cms_status_message/models.py:18
+#: code:addons/external-src/website-cms/cms_status_message/models.py:18
+#, python-format
+msgid "Error"
+msgstr "Errore"
+
+#. module: cms_status_message
+#: code:addons/cms_status_message/models.py:16
+#: code:addons/external-src/website-cms/cms_status_message/models.py:16
+#, python-format
+msgid "Info"
+msgstr "Info"
+
+#. module: cms_status_message
+#: code:addons/cms_status_message/models.py:17
+#: code:addons/external-src/website-cms/cms_status_message/models.py:17
+#, python-format
+msgid "Success"
+msgstr "Ok"
+
+#. module: cms_status_message
+#: code:addons/cms_status_message/models.py:19
+#: code:addons/external-src/website-cms/cms_status_message/models.py:19
+#, python-format
+msgid "Warning"
+msgstr "Attenzione"

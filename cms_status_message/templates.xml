@@ -1,0 +1,21 @@
+<?xml version="1.0" encoding="utf-8" ?>
+<odoo>
+
+    <template id="status_message" name="CMS status_message">
+        <t t-set="status_message" t-value="website.get_status_message()" />
+        <t t-if="status_message">
+          <div class="container-fluid status_message">
+            <t t-foreach="status_message" t-as="msg">
+              <div t-attf-class="alert alert-#{msg['type']} alert-dismissible" role="alert">
+                <button type="button" class="close" data-dismiss="alert" aria-label="Close">
+                  <span t-translation="off" aria-hidden="true" class="fa fa-remove"></span>
+                </button>
+                <strong t-esc="msg['title']" />
+                <t t-esc="msg['msg']" />
+              </div>
+            </t>
+          </div>
+        </t>
+    </template>
+
+</odoo>
