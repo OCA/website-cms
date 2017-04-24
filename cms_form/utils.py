@@ -6,8 +6,8 @@ import json
 import base64
 import werkzeug
 
-from openerp import models
-from openerp.tools.mimetypes import guess_mimetype
+from odoo import models
+from odoo.tools.mimetypes import guess_mimetype
 
 
 def ids_from_input(value):

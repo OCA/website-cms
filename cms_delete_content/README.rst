@@ -47,8 +47,8 @@ Customization
 
 To provide your own deletetion controllers, do this::
 
-    from openerp.addons.cms_delete_content.controllers import DeleteMixin
-    from openerp import http
+    from odoo.addons.cms_delete_content.controllers import DeleteMixin
+    from odoo import http
 
     class CustomDeleteController(http.Controller, DeleteMixin):
         """Controller for handling model deletion."""

@@ -77,7 +77,7 @@ class TestCMSForm(FormTestCase):
             'cms.form.res.partner',
             req=request)
         to_patch = \
-            'openerp.addons.cms_form.models.cms_form.CMSForm._form_create'
+            'odoo.addons.cms_form.models.cms_form.CMSForm._form_create'
         with mock.patch(to_patch) as patched:
             form.form_create_or_update()
             patched.assert_called_with({'name': 'Johnny Glamour'})
@@ -89,7 +89,7 @@ class TestCMSForm(FormTestCase):
             main_object=main_object,
             req=request)
         to_patch = \
-            'openerp.addons.cms_form.models.cms_form.CMSForm._form_write'
+            'odoo.addons.cms_form.models.cms_form.CMSForm._form_write'
         with mock.patch(to_patch) as patched:
             form.form_create_or_update()
             patched.assert_called_with({'name': 'Johnny Glamour'})

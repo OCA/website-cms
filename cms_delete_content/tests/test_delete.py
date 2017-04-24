@@ -8,10 +8,10 @@ import mock
 import json
 from contextlib import contextmanager
 
-from openerp.tests.common import HttpCase
+from odoo.tests.common import HttpCase
 from ..controllers import main
 
-IMPORT = 'openerp.addons.cms_delete_content.controllers.main'
+IMPORT = 'odoo.addons.cms_delete_content.controllers.main'
 
 
 class TestDelete(HttpCase):

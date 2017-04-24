@@ -2,8 +2,8 @@
 # Copyright 2017 Camptocamp
 # License AGPL-3.0 or later (http://www.gnu.org/licenses/agpl)
 
-from openerp import http
-from openerp.http import request
+from odoo import http
+from odoo.http import request
 import json
 
 

@@ -1,6 +1,6 @@
 # -*- coding: utf-8 -*-
 
-from openerp import models, tools
+from odoo import models, tools
 
 testing = tools.config.get('test_enable')
 
