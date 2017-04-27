@@ -204,7 +204,12 @@ class CMSFormMixin(models.AbstractModel):
         """Retrieve fields values from current request."""
         # on POST requests values are in `form` attr
         # on GET requests values are in `args` attr
-        _values = self.request.args or self.request.form
+        _values = self.request.form
+        if not _values:
+            # make sure to give precedence to form attribute
+            # since you might get some extra params (like ?redirect)
+            # and this will make the form machinery miss all the fields
+            _values = self.request.args
         # normal fields
         values = {
             k: v for k, v in _values.iteritems()
