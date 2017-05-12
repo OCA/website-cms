@@ -27,7 +27,7 @@ odoo.define('cms_form.master_slave', function (require) {
           $.each(slaves, function(action, mapping){
             var handler = self.handlers[action];
             if (handler) {
-              $master_input.on('change', function(){ handler($master_input, mapping) }).trigger('change');
+              $master_input.on('change', function(){ handler($(this), mapping) }).trigger('change');
             }
           })
         })
@@ -35,7 +35,6 @@ odoo.define('cms_form.master_slave', function (require) {
       // TODO: merge these functions (only difference is "show()" vs "hide()")
       handle_hide: function($input, mapping){
         $.each(mapping, function(slave_fname, values){
-          console.log($input.val(), slave_fname, values);
           if ($.inArray($input.val(), values) >= 0) {
             $('[name="' + slave_fname +'"]').closest('.form-group').hide();
           }
@@ -43,7 +42,6 @@ odoo.define('cms_form.master_slave', function (require) {
       },
       handle_show: function($input, mapping){
         $.each(mapping, function(slave_fname, values){
-          console.log($input.val(), slave_fname, values);
           if ($.inArray($input.val(), values) >= 0) {
             $('[name="' + slave_fname +'"]').closest('.form-group').show();
           }
