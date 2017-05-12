@@ -55,6 +55,10 @@ class SelectionWidget(Widget):
         ]
 
 
+class RadioSelectionWidget(SelectionWidget):
+    key = 'cms_form.field_widget_radio_selection'
+
+
 class X2MWidget(Widget):
     key = 'cms_form.field_widget_x2m'
 

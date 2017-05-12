@@ -47,6 +47,26 @@
 </template>
 
 
+<template id="field_widget_radio_selection" name="CMS form selection field radio widget">
+
+  <div t-attf-class="radio-select #{widget.css_klass}">
+    <t t-foreach="widget.option_items" t-as="opt_item">
+      <div class="radio">
+        <label t-attf-for="#{widget.fname}_#{opt_item_index}">
+          <input type="radio"
+                 t-att-name="widget.fname"
+                 t-attf-id="#{widget.fname}_#{opt_item_index}"
+                 t-att-value="opt_item['value']"
+                 t-att-checked="opt_item['value'] == widget.field_value" />
+          <span t-esc="opt_item['label']" />
+        </label>
+      </div>
+    </t>
+  </div>
+
+</template>
+
+
 <template id="field_widget_x2m" name="CMS form x2m field widget">
 
   <!-- NOTE: `t-att-value` is really important here
