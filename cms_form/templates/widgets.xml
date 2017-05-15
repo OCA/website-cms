@@ -51,7 +51,7 @@
 
   <div t-attf-class="radio-select #{widget.css_klass}">
     <t t-foreach="widget.option_items" t-as="opt_item">
-      <div class="radio">
+      <div class="radio option-item">
         <label t-attf-for="#{widget.fname}_#{opt_item_index}">
           <input type="radio"
                  t-att-name="widget.fname"
