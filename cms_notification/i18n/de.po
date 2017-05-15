@@ -1,0 +1,138 @@
+# Translation of Odoo Server.
+# This file contains the translation of the following modules:
+#	* cms_notification
+#
+msgid ""
+msgstr ""
+"Project-Id-Version: Odoo Server 9.0c\n"
+"Report-Msgid-Bugs-To: \n"
+"POT-Creation-Date: 2017-05-16 06:34+0000\n"
+"PO-Revision-Date: 2017-05-16 06:34+0000\n"
+"Last-Translator: <>\n"
+"Language-Team: \n"
+"MIME-Version: 1.0\n"
+"Content-Type: text/plain; charset=UTF-8\n"
+"Content-Transfer-Encoding: \n"
+"Plural-Forms: \n"
+
+#. module: cms_notification
+#: model:ir.model,name:cms_notification.model_cms_notification_listing
+msgid "CMS notification"
+msgstr "CMS notification"
+
+#. module: cms_notification
+#: model:ir.model,name:cms_notification.model_cms_notification_panel_form
+msgid "CMS notification control panel"
+msgstr "CMS notification control panel"
+
+#. module: cms_notification
+#: code:addons/cms_notification/models/notification_panel_form.py:34
+#: code:addons/odoo/external-src/website-cms/cms_notification/models/notification_panel_form.py:34
+#, python-format
+msgid "Changes applied."
+msgstr "Änderungen wurden übernommen."
+
+#. module: cms_notification
+#: model:ir.model.fields,field_description:cms_notification.field_partner_notification_conf_create_uid
+msgid "Created by"
+msgstr "Angelegt von"
+
+#. module: cms_notification
+#: model:ir.model.fields,field_description:cms_notification.field_partner_notification_conf_create_date
+msgid "Created on"
+msgstr "Angelegt am"
+
+#. module: cms_notification
+#: model:ir.model.fields,field_description:cms_notification.field_cms_notification_listing_display_name
+#: model:ir.model.fields,field_description:cms_notification.field_cms_notification_panel_form_display_name
+#: model:ir.model.fields,field_description:cms_notification.field_partner_notification_conf_display_name
+msgid "Display Name"
+msgstr "Anzeigename"
+
+#. module: cms_notification
+#: model:ir.model.fields,field_description:cms_notification.field_partner_notification_conf_enabled
+msgid "Enabled"
+msgstr "Aktivieren"
+
+#. module: cms_notification
+#: model:ir.ui.view,arch_db:cms_notification.notify_email_help_none
+msgid "I don't want to get notification emails."
+msgstr "Ich möchte keine Benachrichtigungen erhalten."
+
+#. module: cms_notification
+#: model:ir.model.fields,field_description:cms_notification.field_cms_notification_listing_id
+#: model:ir.model.fields,field_description:cms_notification.field_cms_notification_panel_form_id
+#: model:ir.model.fields,field_description:cms_notification.field_partner_notification_conf_id
+msgid "ID"
+msgstr "ID"
+
+#. module: cms_notification
+#: model:ir.model.fields,help:cms_notification.field_mail_message_subtype_cms_type
+msgid "If active, this message subtype will be visible in users' notifications control panel."
+msgstr "If active, this message subtype will be visible in users' notifications control panel."
+
+#. module: cms_notification
+#: model:ir.model.fields,field_description:cms_notification.field_cms_notification_listing___last_update
+#: model:ir.model.fields,field_description:cms_notification.field_cms_notification_panel_form___last_update
+#: model:ir.model.fields,field_description:cms_notification.field_partner_notification_conf___last_update
+msgid "Last Modified on"
+msgstr "Zuletzt geändert am"
+
+#. module: cms_notification
+#: model:ir.model.fields,field_description:cms_notification.field_partner_notification_conf_write_uid
+msgid "Last Updated by"
+msgstr "Zuletzt aktualisiert durch"
+
+#. module: cms_notification
+#: model:ir.model.fields,field_description:cms_notification.field_partner_notification_conf_write_date
+msgid "Last Updated on"
+msgstr "Zuletzt aktualisiert am"
+
+#. module: cms_notification
+#: model:ir.model,name:cms_notification.model_mail_message_subtype
+msgid "Message subtypes"
+msgstr "Nachrichten-Subtyp"
+
+#. module: cms_notification
+#: code:addons/cms_notification/models/notification_listing.py:24
+#: code:addons/odoo/external-src/website-cms/cms_notification/models/notification_listing.py:24
+#, python-format
+msgid "My notifications"
+msgstr "Meine Benachrichtigungen"
+
+#. module: cms_notification
+#: code:addons/cms_notification/models/notification_panel_form.py:26
+#: code:addons/odoo/external-src/website-cms/cms_notification/models/notification_panel_form.py:26
+#, python-format
+msgid "Notification settings."
+msgstr "Benachrichtigungseinstellungen."
+
+#. module: cms_notification
+#: model:ir.model.fields,field_description:cms_notification.field_partner_notification_conf_subtype_id
+msgid "Notification type"
+msgstr "Notification type"
+
+#. module: cms_notification
+#: model:ir.model.fields,field_description:cms_notification.field_partner_notification_conf_partner_id
+msgid "Partner"
+msgstr "Partner"
+
+#. module: cms_notification
+#: model:ir.model,name:cms_notification.model_partner_notification_conf
+msgid "Partner notification configuration"
+msgstr "Partner notification configuration"
+
+#. module: cms_notification
+#: model:ir.model.fields,field_description:cms_notification.field_mail_message_subtype_cms_type
+msgid "Visible in CMS control panel"
+msgstr "Visible in CMS control panel"
+
+#. module: cms_notification
+#: model:ir.ui.view,arch_db:cms_notification.notify_email_help_digest
+msgid "You will receive a summary of the notification in the chosen frequency."
+msgstr "Sie erhalten eine Übersicht der Benachrichtigungen entsprechend der gewählten Häufigkeit."
+
+#. module: cms_notification
+#: model:ir.ui.view,arch_db:cms_notification.notify_email_help_always
+msgid "You will receive an email for every notification."
+msgstr "Sie erhalten eine Email für jede Benachrichtigung."
