@@ -60,6 +60,12 @@
                  t-att-checked="opt_item['value'] == widget.field_value" />
           <span t-esc="opt_item['label']" />
         </label>
+        <t t-if="opt_item.get('help')">
+            <div class="help-block" t-raw="opt_item.get('help')" />
+        </t>
+        <t t-if="widget.options_help.get(opt_item['value'])">
+            <div class="help-block" t-raw="widget.options_help.get(opt_item['value'])" />
+        </t>
       </div>
     </t>
   </div>

@@ -53,6 +53,13 @@ class CMSFormMixin(models.AbstractModel):
     _form_fields_order = []
     # quickly force required fields
     _form_required_fields = ()
+    # mark some fields as "sub".
+    # For usability reasons you might want to move some fields
+    # inside the widget of another field.
+    # If you mark a field as "sub" this field
+    # won't be included into fields' list as usual
+    # but you can still find it in `form_fields` value.
+    _form_sub_fields = ()
     # fields' attributes to load
     _form_fields_attributes = [
         'type', 'string', 'domain',
@@ -186,6 +193,8 @@ class CMSFormMixin(models.AbstractModel):
         for fname, field in _fields.iteritems():
             if fname in self._form_required_fields:
                 _fields[fname]['required'] = True
+            if fname in self._form_sub_fields:
+                _fields[fname]['subfield'] = True
             field['widget'] = widgets.CharWidget(self, fname, field)
             for key in (field['type'], fname):
                 if key in self._form_widgets:

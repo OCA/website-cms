@@ -14,7 +14,7 @@ class Widget(object):
     key = ''
     css_klass = ''
 
-    def __init__(self, form, fname, field, data=None):
+    def __init__(self, form, fname, field, data=None, subwidgets=None):
         self.form = form
         self.form_values = form.form_render_values
         self.fname = fname
@@ -22,6 +22,7 @@ class Widget(object):
         self.field_value = self.form_values.get('form_data', {}).get(fname)
         self.env = form.env
         self.data = data or {}
+        self.subwidgets = subwidgets or {}
 
     def render(self):
         return self.env.ref(self.key).render({'widget': self})
@@ -34,7 +35,7 @@ class CharWidget(Widget):
 class M2OWidget(Widget):
     key = 'cms_form.field_widget_m2o'
 
-    def __init__(self, form, fname, field, data=None):
+    def __init__(self, form, fname, field, data=None, subwidgets=None):
         super(M2OWidget, self).__init__(form, fname, field, data=data)
         self.comodel = self.env[self.field['relation']]
         self.domain = self.field.get('domain', [])
@@ -57,6 +58,15 @@ class SelectionWidget(Widget):
 
 class RadioSelectionWidget(SelectionWidget):
     key = 'cms_form.field_widget_radio_selection'
+    # you can define help message per each options
+    # opt value: help msg (can be html too)
+    options_help = {}
+
+    def __init__(self, form, fname, field,
+                 data=None, subwidgets=None, options_help=None):
+        super(RadioSelectionWidget, self).__init__(
+            form, fname, field, data=data, subwidgets=subwidgets)
+        self.option_help = options_help or {}
 
 
 class X2MWidget(Widget):
