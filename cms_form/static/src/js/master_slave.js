@@ -14,11 +14,18 @@ odoo.define('cms_form.master_slave', function (require) {
       selector: ".cms_form_wrapper form",
       start: function (editable_mode) {
         this.data = this.$el.data('form');
+        this.setup_handlers();
+        this.load_master_slave();
+      },
+      setup_handlers: function(){
         this.handlers = {
           'hide': $.proxy(this.handle_hide, this),
-          'show': $.proxy(this.handle_show, this)
+          'show': $.proxy(this.handle_show, this),
+          'readonly': $.proxy(this.handle_readonly, this),
+          'no_readonly': $.proxy(this.handle_no_readonly, this),
+          'required': $.proxy(this.handle_required, this),
+          'no_required': $.proxy(this.handle_no_required, this)
         };
-        this.load_master_slave();
       },
       load_master_slave: function(){
         var self = this;
@@ -27,12 +34,14 @@ odoo.define('cms_form.master_slave', function (require) {
           $.each(slaves, function(action, mapping){
             var handler = self.handlers[action];
             if (handler) {
-              $master_input.on('change', function(){ handler($(this), mapping) }).trigger('change');
+              $master_input.on('change', function(){
+                handler($(this), mapping) }
+              ).filter(':selected,:checked,[type=text]').trigger('change'); // trigger change only for specific inputs
             }
           })
         })
       },
-      // TODO: merge these functions (only difference is "show()" vs "hide()")
+      // TODO: merge these functions as they are pretty much equals
       handle_hide: function($input, mapping){
         $.each(mapping, function(slave_fname, values){
           if ($.inArray($input.val(), values) >= 0) {
@@ -44,6 +53,34 @@ odoo.define('cms_form.master_slave', function (require) {
         $.each(mapping, function(slave_fname, values){
           if ($.inArray($input.val(), values) >= 0) {
             $('[name="' + slave_fname +'"]').closest('.form-group').show();
+          }
+        });
+      },
+      handle_readonly: function($input, mapping){
+        $.each(mapping, function(slave_fname, values){
+          if ($.inArray($input.val(), values) >= 0) {
+            $('[name="' + slave_fname +'"]').attr('disabled', 'disabled');
+          }
+        });
+      },
+      handle_no_readonly: function($input, mapping){
+        $.each(mapping, function(slave_fname, values){
+          if ($.inArray($input.val(), values) >= 0) {
+            $('[name="' + slave_fname +'"]').attr('disabled', null);
+          }
+        });
+      },
+      handle_required: function($input, mapping){
+        $.each(mapping, function(slave_fname, values){
+          if ($.inArray($input.val(), values) >= 0) {
+            $('[name="' + slave_fname +'"]').attr('required', 'required');
+          }
+        });
+      },
+      handle_no_required: function($input, mapping){
+        $.each(mapping, function(slave_fname, values){
+          if ($.inArray($input.val(), values) >= 0) {
+            $('[name="' + slave_fname +'"]').attr('required', null);
           }
         });
       }
