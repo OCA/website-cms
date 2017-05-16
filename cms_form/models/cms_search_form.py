@@ -13,6 +13,9 @@ class CMSFormSearch(models.AbstractModel):
     form_search_results_template = 'cms_form.search_results'
     form_action = ''
     form_method = 'GET'
+    # you might want to just list items based on a predefined query
+    # if this flag is false the search form won't be rendered
+    form_show_search_form = True
     _form_mode = 'search'
     _form_extract_value_mode = 'read'
     # show results if no query has been submitted?

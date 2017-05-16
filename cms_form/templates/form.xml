@@ -101,7 +101,10 @@
 <template id="search_form_wrapper" name="CMS search form wrapper"
           inherit_id="cms_form.form_wrapper" primary="True">
 
-  <xpath expr="//t[@t-raw]" position="after">
+  <xpath expr="//t[@t-raw]" position="replace">
+    <t t-if="form.form_show_search_form">
+      <t t-raw="form.form_render()" />
+    </t>
     <t t-call="#{ form.form_search_results_template }" />
   </xpath>
 
@@ -124,8 +127,19 @@
 
 <template id="search_results" name="CMS form search results">
   <t t-foreach="form.form_search_results['results']" t-as="item">
-    <h3 class="item-name"><a t-att-href="item.website_url" t-field="item.name" /></h3>
-    <p class="item-description" t-field="item.website_description"></p>
+    <div t-attf-id="list_item_#{item.id}" class="list_item" t-attf-data-item='{"id": #{item.id}}'>
+      <h3 class="item-name">
+        <t t-if="'website_url' in item">
+          <a t-att-href="item.website_url" t-field="item.display_name" />
+        </t>
+        <t t-if="'website_url' not in item">
+          <span t-field="item.display_name" />
+        </t>
+      </h3>
+      <t t-if="'website_description' in item">
+        <p class="item-description" t-field="item.website_description"></p>
+      </t>
+    </div>
   </t>
   <div class="text-center mb32">
     <t t-call="website.pager">
