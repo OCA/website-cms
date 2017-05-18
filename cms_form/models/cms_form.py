@@ -213,6 +213,17 @@ class CMSForm(models.AbstractModel):
                     if x.strip()
                 ])
 
+        # TODO: how to handle validation error on create?
+        # If you use @api.constrains to validate fields' value
+        # the check happens only AFTER the record has been created.
+        # So, on the 1st submit the record is created
+        # and the user is not aware of it since it gets redirected to the form
+        # with errors highlighted. He corrects the error and submit again.
+        # If no errors, he gets redirected to the new record, ANOTHER record.
+        # In the end: we get 2 duplicated objects :(
+        # To avoid this beforehand we need validation on JS side +
+        # pre-validation (where possible) before create or write.
+
         self.form_success = False
         # handle ORM validation error
         orm_error = errors.get('_validation') or errors.get('_integrity')
