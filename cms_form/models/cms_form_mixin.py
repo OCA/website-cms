@@ -395,6 +395,7 @@ class CMSFormMixin(models.AbstractModel):
         """
         parts = [
             'cms_form_wrapper',
+            self._name.replace('.', '_').lower(),
             self._form_model.replace('.', '_').lower(),
             self._form_wrapper_extra_css_klass,
             'mode_' + self.form_mode,
