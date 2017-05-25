@@ -190,18 +190,27 @@ class CMSFormMixin(models.AbstractModel):
                 _fields[fname]['required'] = True
             if fname in self._form_sub_fields:
                 _fields[fname]['subfield'] = True
-            widget_model = self.form_get_widget(fname, field)
-            _fields[fname]['widget'] = self.env[widget_model].widget_init(
-                self, fname, field,
-            )
+            _fields[fname]['widget'] = self.form_get_widget(fname, field)
 
-    def form_get_widget(self, fname, field, main_object=None):
+    @property
+    def form_widgets(self):
+        """Return a mapping between field name and widget model."""
+        return {}
+
+    def form_get_widget_model(self, fname, field):
+        """Retrieve widget model name."""
         widget_model = 'cms.form.widget.char'
         for key in (field['type'], fname):
             model_key = 'cms.form.widget.' + key
             if model_key in self.env:
                 widget_model = model_key
-        return widget_model
+        return self.form_widgets.get(fname, widget_model)
+
+    def form_get_widget(self, fname, field):
+        """Retrieve and initialize widget."""
+        return self.env[self.form_get_widget_model(fname, field)].widget_init(
+            self, fname, field,
+        )
 
     @property
     def form_file_fields(self):
