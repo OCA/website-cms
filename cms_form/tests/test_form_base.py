@@ -87,14 +87,14 @@ class TestFormBase(FormTestCase):
 
     def test_get_loader(self):
         form = self.get_form('cms.form.test_fields')
-        expected = {
-            'a_char': None,
-            'a_number': None,
-            'a_float': None,
-            'a_many2one': utils.m2o_to_form,
-            'a_one2many': utils.x2many_to_form,
-            'a_many2many': utils.x2many_to_form,
-        }
+        expected = {}.fromkeys((
+            'a_char',
+            'a_number',
+            'a_float',
+            'a_many2one',
+            'a_one2many',
+            'a_many2many',
+        ), None)
         fields = form.form_fields()
         for fname, loader in expected.iteritems():
             self.assertEqual(
@@ -119,14 +119,14 @@ class TestFormBase(FormTestCase):
 
     def test_get_extractor(self):
         form = self.get_form('cms.form.test_fields')
-        expected = {
-            'a_char': None,
-            'a_number': utils.form_to_integer,
-            'a_float': utils.form_to_float,
-            'a_many2one': utils.form_to_m2o,
-            'a_one2many': utils.form_to_x2many,
-            'a_many2many': utils.form_to_x2many,
-        }
+        expected = {}.fromkeys((
+            'a_char',
+            'a_number',
+            'a_float',
+            'a_many2one',
+            'a_one2many',
+            'a_many2many',
+        ), None)
         fields = form.form_fields()
         for fname, loader in expected.iteritems():
             self.assertEqual(
@@ -150,10 +150,10 @@ class TestFormBase(FormTestCase):
             )
 
     def test_load_defaults(self):
-        form = self.get_form('cms.form.res.partner')
         # create mode, no main_object
         main_object = None
-        defaults = form.form_load_defaults(main_object)
+        form = self.get_form('cms.form.res.partner', main_object=main_object)
+        defaults = form.form_load_defaults()
         expected = {
             'name': None,
             'country_id': None,
@@ -166,7 +166,8 @@ class TestFormBase(FormTestCase):
         main_object = self.env['res.partner'].new({})
         main_object.name = 'John Wayne'
         main_object.country_id = 5
-        defaults = form.form_load_defaults(main_object)
+        form = self.get_form('cms.form.res.partner', main_object=main_object)
+        defaults = form.form_load_defaults()
         expected = {
             'name': 'John Wayne',
             'country_id': 5,
@@ -182,8 +183,9 @@ class TestFormBase(FormTestCase):
             'custom': 'yay!'
         }
         request = fake_request(form_data=data)
-        form = self.get_form('cms.form.res.partner', req=request)
-        defaults = form.form_load_defaults(main_object)
+        form = self.get_form(
+            'cms.form.res.partner', req=request, main_object=main_object)
+        defaults = form.form_load_defaults()
         for k, v in data.iteritems():
             self.assertEqual(defaults[k], v)
 

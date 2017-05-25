@@ -8,8 +8,7 @@ from collections import OrderedDict
 
 from openerp import models, tools
 
-from .. import widgets
-from ..utils import DEFAULT_LOADERS, DEFAULT_EXTRACTORS, data_merge
+from ..utils import data_merge
 
 
 IGNORED_FORM_FIELDS = [
@@ -44,7 +43,6 @@ class CMSFormMixin(models.AbstractModel):
     _form_wrapper_extra_css_klass = ''
     # extra css klasses for just the form element
     _form_extra_css_klass = ''
-    _form_widgets = widgets.DEFAULT_WIDGETS
     # model tied to this form
     _form_model = ''
     # model's fields to load
@@ -70,10 +68,6 @@ class CMSFormMixin(models.AbstractModel):
     _form_fields_whitelist = ()
     # exclude these fields
     _form_fields_blacklist = ()
-    # handlers to load values from existing item or simple defaults
-    _form_loaders = DEFAULT_LOADERS
-    # handlers to extract values from request
-    _form_extractors = DEFAULT_EXTRACTORS
     # extract values mode
     # This param can be used to alter value format
     # when extracting values from request.
@@ -196,11 +190,18 @@ class CMSFormMixin(models.AbstractModel):
                 _fields[fname]['required'] = True
             if fname in self._form_sub_fields:
                 _fields[fname]['subfield'] = True
-            field['widget'] = widgets.CharWidget(self, fname, field)
-            for key in (field['type'], fname):
-                if key in self._form_widgets:
-                    widget = self._form_widgets[key]
-                    field['widget'] = widget(self, fname, field)
+            widget_model = self.form_get_widget(fname, field)
+            _fields[fname]['widget'] = self.env[widget_model].widget_init(
+                self, fname, field,
+            )
+
+    def form_get_widget(self, fname, field, main_object=None):
+        widget_model = 'cms.form.widget.char'
+        for key in (field['type'], fname):
+            model_key = 'cms.form.widget.' + key
+            if model_key in self.env:
+                widget_model = model_key
+        return widget_model
 
     @property
     def form_file_fields(self):
@@ -244,18 +245,13 @@ class CMSFormMixin(models.AbstractModel):
         defaults = request_values.copy()
         form_fields = self.form_fields()
         for fname, field in form_fields.iteritems():
-            value = None
-            # we could have form-only fields (like `custom` in test form below)
-            if main_object and fname in main_object:
-                value = main_object[fname]
-            # maybe a POST request with new values: override item value
-            value = request_values.get(fname, value)
+            value = field['widget'].w_load(**request_values)
+            # override via specific form loader when needed
             loader = self.form_get_loader(
                 fname, field,
                 main_object=main_object, value=value, **request_values)
             if loader:
-                value = loader(
-                    self, main_object, fname, value, **request_values)
+                value = loader(fname, field, value, **request_values)
             defaults[fname] = value
         return defaults
 
@@ -269,15 +265,9 @@ class CMSFormMixin(models.AbstractModel):
         :param value: current field value if any
         :param req_values: custom request valuess
         """
-        # 1nd lookup for a default type / name loader
-        loader = self._form_loaders.get(
-            field['type'], self._form_loaders.get(fname, None))
-        if loader:
-            value = loader(
-                self, main_object, fname, value, **req_values)
-        # 2nd lookup for a specific type loader method
+        # lookup for a specific type loader method
         loader = getattr(
-            self, '_form_load_' + field['type'], loader)
+            self, '_form_load_' + field['type'], None)
         # 3rd lookup and override by named loader if any
         loader = getattr(
             self, '_form_load_' + fname, loader)
@@ -288,7 +278,8 @@ class CMSFormMixin(models.AbstractModel):
         request_values = request_values or self.form_get_request_values()
         values = {}
         for fname, field in self.form_fields().iteritems():
-            value = request_values.get(fname)
+            value = field['widget'].w_extract(**request_values)
+            # override via specific form extractor when needed
             extractor = self.form_get_extractor(
                 fname, field, value=value, **request_values)
             if extractor:
@@ -312,12 +303,9 @@ class CMSFormMixin(models.AbstractModel):
         :param value: current field value if any
         :param req_values: custom request valuess
         """
-        # 1nd lookup for a default type or name handler
-        extractor = self._form_extractors.get(
-            field['type'], self._form_extractors.get(fname, None))
-        # 2nd lookup for a specific type handler
+        # lookup for a specific type handler
         extractor = getattr(
-            self, '_form_extract_' + field['type'], extractor)
+            self, '_form_extract_' + field['type'], None)
         # 3rd lookup and override by named handler if any
         extractor = getattr(
             self, '_form_extract_' + fname, extractor)

@@ -33,7 +33,7 @@ class TestRender(FormRenderTestCase):
             'a_one2many',
         )
         self.assertEqual(
-            len(node[0].xpath('//input')), len(expected_fields)
+            len(node[0].xpath('//input|//select')), len(expected_fields)
         )
         self.assert_match_inputs(node, expected_fields)
 

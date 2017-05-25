@@ -50,7 +50,8 @@ class FormRenderMixin(FormTestMixin):
         return html.fragments_fromstring(html_)
 
     def find_input_name(self, node, name):
-        return node.xpath('//input[@name="{}"]'.format(name))
+        return node.xpath(
+            '(//input|//select|//textarea)[@name="{}"]'.format(name))
 
     def assert_match_attrs(self, value, expected):
         for k, v in expected.iteritems():

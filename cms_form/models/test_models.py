@@ -20,7 +20,7 @@ if testing:
         custom = fields.Char()
 
         def _form_load_custom(
-                self, form, main_object, fname, value, **req_values):
+                self, main_object, fname, value, **req_values):
             return req_values.get('custom', 'oh yeah!')
 
     class TestSearchPartnerForm(models.AbstractModel):
@@ -57,12 +57,15 @@ if testing:
         a_one2many = fields.Char()
         a_many2many = fields.Char()
 
-        def form_fields(self):
-            _fields = super(TestFieldsForm, self).form_fields()
+        def _form_fields(self):
+            _fields = super(TestFieldsForm, self)._form_fields()
             # fake fields' types
             _fields['a_many2one']['type'] = 'many2one'
+            _fields['a_many2one']['relation'] = 'res.partner'
             _fields['a_many2many']['type'] = 'many2many'
+            _fields['a_many2many']['relation'] = 'res.partner'
             _fields['a_one2many']['type'] = 'one2many'
+            _fields['a_one2many']['relation'] = 'res.partner'
             return _fields
 
         def _form_validate_a_float(self, value, **request_values):
