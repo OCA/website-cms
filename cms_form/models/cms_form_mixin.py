@@ -6,7 +6,7 @@ import inspect
 import json
 from collections import OrderedDict
 
-from openerp import models
+from openerp import models, tools
 
 from .. import widgets
 from ..utils import DEFAULT_LOADERS, DEFAULT_EXTRACTORS, data_merge
@@ -134,11 +134,14 @@ class CMSFormMixin(models.AbstractModel):
     def form_model(self):
         return self.env[self._form_model]
 
-    # TODO: cache fields per form instance?
-    # if we do it we must take into account
-    # some fields attributes (like widgets)
-    # that may vary on a per-request base.
     def form_fields(self):
+        _fields = self._form_fields()
+        # update fields attributes
+        self.form_update_fields_attributes(_fields)
+        return _fields
+
+    @tools.cache('self')
+    def _form_fields(self):
         """Retrieve form fields ready to be used.
 
         Fields lookup:
@@ -173,8 +176,6 @@ class CMSFormMixin(models.AbstractModel):
         self._form_remove_uwanted(_all_fields)
         # remove non-stored fields to exclude computed
         _all_fields = {k: v for k, v in _all_fields.iteritems() if v['store']}
-        # update fields attributes
-        self.form_update_fields_attributes(_all_fields)
         # update fields order
         if self._form_fields_order:
             _sorted_all_fields = OrderedDict()
