@@ -305,18 +305,13 @@ class ImageWidget(models.AbstractModel):
     _inherit = 'cms.form.widget.binary.mixin'
     _w_template = 'cms_form.field_widget_image'
 
-    def widget_init(self, form, fname, field, **kw):
-        widget = super(ImageWidget, self).widget_init(form, fname, field, **kw)
-        widget.w_field_value = self.w_form_data.get(fname, {}).get('value')
-        return widget
-
 
 class BooleanWidget(models.AbstractModel):
     _name = 'cms.form.widget.boolean'
     _inherit = 'cms.form.widget.mixin'
     _w_template = 'cms_form.field_widget_boolean'
 
-    w_true_values = ('on', 'yes', 'ok', 'true', True, 1, '1', )
+    w_true_values = utils.TRUE_VALUES
 
     def widget_init(self, form, fname, field, **kw):
         widget = super(BooleanWidget, self).widget_init(
@@ -327,7 +322,4 @@ class BooleanWidget(models.AbstractModel):
 
     def w_extract(self, **req_values):
         value = super(BinaryWidget, self).w_extract(**req_values)
-        return self.form_to_bool(value, **req_values)
-
-    def form_to_bool(self, value, **req_values):
-        return value in self.w_true_values
+        return utils.string_to_bool(value, true_values=self.w_true_values)

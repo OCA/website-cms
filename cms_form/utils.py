@@ -25,6 +25,13 @@ def safe_to_date(value, **kw):
     return value
 
 
+TRUE_VALUES = ('on', 'yes', 'ok', 'true', True, 1, '1', )
+
+
+def string_to_bool(value, true_values=TRUE_VALUES):
+    return value in true_values
+
+
 # DEFAULT_LOADERS = {
 #     'many2one': m2o_to_form,
 #     'one2many': x2many_to_form,
