@@ -3,9 +3,9 @@
 # License AGPL-3.0 or later (http://www.gnu.org/licenses/agpl).
 
 from openerp import fields, models, tools
+import os
 
-testing = tools.config.get('test_enable')
-
+testing = tools.config.get('test_enable') or os.environ.get('ODOO_TEST_ENABLE')
 
 if testing:
     class TestPartnerForm(models.AbstractModel):

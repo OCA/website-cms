@@ -65,7 +65,8 @@ class TestControllers(FormHttpTestCase):
         wrapper_node = dom.find_class('cms_form_wrapper')[0]
         expected_attrs = {
             'class':
-                'cms_form_wrapper {model} mode_{mode}'.format(
+                'cms_form_wrapper {form_model} {model} mode_{mode}'.format(
+                    form_model='cms_form_res_partner',
                     model=model.replace('.', '_'),
                     mode=mode
                 )
