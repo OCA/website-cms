@@ -20,7 +20,7 @@ class Widget(models.AbstractModel):
     _w_css_klass = ''
 
     def widget_init(self, form, fname, field,
-                    data=None, subwidgets=None, template='', css_klass=''):
+                    data=None, subfields=None, template='', css_klass=''):
         widget = self.new()
         widget.w_form = form
         widget.w_record = form.main_object
@@ -30,7 +30,7 @@ class Widget(models.AbstractModel):
         widget.w_field_value = widget.w_form_values.get(
             'form_data', {}).get(fname)
         widget.w_data = data or {}
-        widget.w_subwidgets = subwidgets or {}
+        widget.w_subfields = subfields or field.get('subfields', {})
         widget._w_template = template or self._w_template
         widget._w_css_klass = css_klass or self._w_css_klass
         return widget
@@ -63,6 +63,9 @@ class Widget(models.AbstractModel):
     def w_ids_from_input(self, value):
         """Convert list of ids from form input."""
         return [int(rec_id) for rec_id in value.split(',') if rec_id.isdigit()]
+
+    def w_subfields_by_value(self, value='_all'):
+        return self.w_subfields.get(value, {})
 
 
 class CharWidget(models.AbstractModel):
@@ -317,9 +320,9 @@ class BooleanWidget(models.AbstractModel):
         widget = super(BooleanWidget, self).widget_init(
             form, fname, field, **kw)
         widget.w_true_values = kw.get('true_values', self.w_true_values)
-        widget.w_field_value = self.w_field_value in self.w_true_values
+        widget.w_field_value = widget.w_field_value in self.w_true_values
         return widget
 
     def w_extract(self, **req_values):
-        value = super(BinaryWidget, self).w_extract(**req_values)
+        value = super(BooleanWidget, self).w_extract(**req_values)
         return utils.string_to_bool(value, true_values=self.w_true_values)

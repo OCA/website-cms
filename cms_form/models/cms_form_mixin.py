@@ -57,7 +57,14 @@ class CMSFormMixin(models.AbstractModel):
     # If you mark a field as "sub" this field
     # won't be included into fields' list as usual
     # but you can still find it in `form_fields` value.
-    _form_sub_fields = ()
+    _form_sub_fields = {
+        # 'mainfield': {
+        #     # loaded for a specific value
+        #     'mainfield_value': ('subfield1', 'subfield2'),
+        #     # loaded for all values
+        #     '_all': ('subfield3', ),
+        # }
+    }
     # fields' attributes to load
     _form_fields_attributes = [
         'type', 'string', 'domain',
@@ -176,7 +183,23 @@ class CMSFormMixin(models.AbstractModel):
             for fname in self._form_fields_order:
                 _sorted_all_fields[fname] = _all_fields[fname]
             _all_fields = _sorted_all_fields
+        # compute subfields and remove them from all fields if any
+        self._form_prepare_subfields(_all_fields)
         return _all_fields
+
+    def _form_prepare_subfields(self, _all_fields):
+        """Add subfields to related main fields."""
+        # TODO: test this
+        for mainfield, subfields in self._form_sub_fields.iteritems():
+            if mainfield in _all_fields:
+                _subfields = {}
+                for val, subs in subfields.iteritems():
+                    _subfields[val] = {}
+                    for sub in subs:
+                        if sub in _all_fields:
+                            _subfields[val][sub] = _all_fields[sub]
+                            _all_fields[sub]['is_subfield'] = True
+                _all_fields[mainfield]['subfields'] = _subfields
 
     def _form_remove_uwanted(self, _all_fields):
         """Remove fields from form fields."""
@@ -188,8 +211,6 @@ class CMSFormMixin(models.AbstractModel):
         for fname, field in _fields.iteritems():
             if fname in self._form_required_fields:
                 _fields[fname]['required'] = True
-            if fname in self._form_sub_fields:
-                _fields[fname]['subfield'] = True
             _fields[fname]['widget'] = self.form_get_widget(fname, field)
 
     @property

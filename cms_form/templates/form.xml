@@ -45,7 +45,7 @@
 
 <template id="base_form_fields" name="CMS form fields">
     <t t-foreach="form_fields.iterkeys()" t-as="fname">
-      <t t-if="not form_fields[fname].get('subfield')">
+      <t t-if="not form_fields[fname].get('is_subfield')">
         <t t-call="cms_form.form_horizontal_field_wrapper">
           <t t-set="field" t-value="form_fields[fname]" />
           <t t-set="widget" t-value="field['widget']" />
