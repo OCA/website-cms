@@ -48,10 +48,10 @@ class Widget(models.AbstractModel):
 
     def w_load(self, **req_values):
         """Load value for current field in current request."""
-        value = None
+        value = self.w_field.get('_default')
         # we could have form-only fields (like `custom` in test form below)
         if self.w_record and self.w_fname in self.w_record:
-            value = self.w_record[self.w_fname]
+            value = self.w_record[self.w_fname] or value
         # maybe a POST request with new values: override item value
         value = req_values.get(self.w_fname, value)
         return value
@@ -120,6 +120,8 @@ class M2OWidget(models.AbstractModel):
             return int(value) > 0 and int(value)
         elif isinstance(value, models.BaseModel):
             return value and value.id or None
+        elif isinstance(value, int):
+            return value
         return None
 
     def w_extract(self, **req_values):

@@ -159,8 +159,16 @@ class CMSFormMixin(models.AbstractModel):
             _model_fields = self.form_model.fields_get(
                 self._form_model_fields,
                 attributes=self._form_fields_attributes)
+            # inject defaults
+            defaults = self.form_model.default_get(self._form_model_fields)
+            for k, v in defaults.iteritems():
+                print k, v
+                _model_fields[k]['_default'] = v
         # load form fields
         _form_fields = self.fields_get(attributes=self._form_fields_attributes)
+        # inject defaults
+        for k, v in self.default_get(_form_fields.keys()).iteritems():
+            _form_fields[k]['_default'] = v
         _all_fields.update(_model_fields)
         # form fields override model fields
         _all_fields.update(_form_fields)
