@@ -1,13 +1,13 @@
 # -*- coding: utf-8 -*-
-# Copyright 2017 Camptocamp
-# License AGPL-3.0 or later (http://www.gnu.org/licenses/agpl).
+# Copyright 2017 Simone Orsi
+# License LGPL-3.0 or later (http://www.gnu.org/licenses/lgpl).
 
 {
     'name': 'CMS delete content',
     'summary': """
         Basic features for handling content deletion via frontend.""",
     'version': '9.0.1.0.0',
-    'license': 'AGPL-3',
+    'license': 'LGPL-3',
     'author': 'Camptocamp,Odoo Community Association (OCA)',
     'depends': [
         'website',
