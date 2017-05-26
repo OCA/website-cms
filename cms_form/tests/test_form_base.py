@@ -1,13 +1,13 @@
 # -*- coding: utf-8 -*-
 # Copyright 2017 Simone Orsi
-# License AGPL-3.0 or later (http://www.gnu.org/licenses/agpl).
+# License LGPL-3.0 or later (http://www.gnu.org/licenses/lgpl.html).
+
 
 from werkzeug.wrappers import Request
 
 from openerp import http
 
 from .common import fake_request, FormTestCase
-from .. import utils
 
 
 class TestFormBase(FormTestCase):

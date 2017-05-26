@@ -1,13 +1,13 @@
 # -*- coding: utf-8 -*-
 # Copyright 2017 Simone Orsi
-# License AGPL-3.0 or later (http://www.gnu.org/licenses/agpl).
+# License LGPL-3.0 or later (http://www.gnu.org/licenses/lgpl.html).
 
 {
     'name': 'CMS Form',
     'summary': """
         Basic content type form""",
     'version': '9.0.1.0.0',
-    'license': 'AGPL-3',
+    'license': 'LGPL-3',
     'author': 'Camptocamp SA, Odoo Community Association (OCA)',
     'depends': [
         'website',
