@@ -1,6 +1,7 @@
 # -*- coding: utf-8 -*-
-# © 2017 Camptocamp SA
-# License AGPL-3.0 or later (http://www.gnu.org/licenses/agpl.html).
+# Copyright 2017 Simone Orsi
+# License LGPL-3.0 or later (http://www.gnu.org/licenses/lgpl).
+
 from openerp import models, api, _
 from openerp.http import request
 
