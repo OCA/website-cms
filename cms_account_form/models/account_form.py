@@ -46,47 +46,6 @@ class PartnerForm(models.AbstractModel):
     def form_msg_success_updated(self):
         return _('Profile updated.')
 
-    @property
-    def help_texts(self):
-        texts = {
-            'image': _(
-                'This field holds the your logo, '
-                'limited to 1024x1024px, square aspect ratio.'
-            ),
-        }
-        return texts
-
-    # @property
-    # def field_label_overrides(self):
-    #     texts = {
-    #         'image': _('Company logo'),
-    #         'name': _('Company name'),
-    #         'street2': _('Street / No.'),
-    #         'website_short_description': _('Claim'),
-    #         'category_id': _('Industries'),
-    #     }
-    #     return texts
-
-    def form_update_fields_attributes(self, _fields):
-        """Override to add help messages."""
-        super(PartnerForm, self).form_update_fields_attributes(_fields)
-
-        # add extra help texts
-        for fname, help_text in self.help_texts.iteritems():
-            if help_text.startswith('_xmlid:'):
-                tmpl = self.env.ref(
-                    help_text[len('_xmlid:'):], raise_if_not_found=False)
-                if not tmpl:
-                    continue
-                help_text = tmpl.render({
-                    'form_field': _fields[fname],
-                })
-            _fields[fname]['help'] = help_text
-
-        # # update some labels
-        # for fname, label in self.field_label_overrides.iteritems():
-        #     _fields[fname]['string'] = label
-
     def form_validate_email(self, value, **req_values):
         error, message = None, None
         if value and not validate_email(value):

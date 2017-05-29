@@ -1,0 +1,15 @@
+<odoo>
+
+
+<record model="ir.rule" id="user_can_edit_partner">
+  <field name="name">Portal user can write its partner record</field>
+  <field name="model_id" ref="base.model_res_partner"/>
+  <field name="perm_read" eval="False"/>
+  <field name="perm_write" eval="True"/>
+  <field name="perm_create" eval="False"/>
+  <field name="perm_unlink" eval="False"/>
+  <field name="groups" eval="[(4, ref('base.group_portal'))]"/>
+  <field name="domain_force">[('id', '=', user.partner_id.id)]</field>
+</record>
+
+</odoo>

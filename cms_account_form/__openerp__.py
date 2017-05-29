@@ -13,5 +13,6 @@
         'website_portal',
     ],
     'data': [
+        'record_rules.xml',
     ],
 }
