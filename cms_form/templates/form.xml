@@ -1,0 +1,156 @@
+<?xml version="1.0" encoding="utf-8"?>
+<!--
+Copyright 2017 Simone Orsi
+License LGPL-3.0 or later (http://www.gnu.org/licenses/lgpl.html).
+-->
+<odoo>
+
+<template id="form_wrapper" name="CMS form wrapper">
+
+  <t t-call="website.layout">
+    <t t-set="title" t-value="form.form_title" />
+    <div id="wrap" t-att-class="form.form_wrapper_css_klass">
+        <div class="container">
+          <t t-if="form.form_title">
+            <h2><span class="form_title" t-esc="form.form_title" /></h2>
+          </t>
+          <t t-if="form.form_description">
+            <p class="form_description" t-esc="form.form_description" />
+          </t>
+          <t t-raw="form.form_render()" />
+        </div>
+    </div>
+  </t>
+
+</template>
+
+<!-- TODO: add non-horizontal form template -->
+
+<template id="form_horizontal_field_wrapper" name="CMS form field wrapper horiz form">
+    <div t-attf-class="form-group form-field field-#{fname} #{field['required'] and 'field-required' or ''} #{errors.get(fname) and 'has-error' or ''}">
+      <label class="col-md-3 col-sm-4 control-label"
+             t-att-for="fname" t-esc="field['string']">Name</label>
+      <div class="col-md-9 col-sm-8">
+        <t t-raw="widget.render()"/>
+        <t t-if="field.get('help')">
+            <t t-call="cms_form.base_form_field_help_block" />
+        </t>
+      </div>
+    </div>
+</template>
+
+
+<template id="base_form_field_help_block" name="CMS form field help block">
+    <div class="help-block">
+      <!-- use `raw` to allow injecting html stuff here -->
+      <t t-raw="field['help']" />
+    </div>
+</template>
+
+<template id="base_form_fields" name="CMS form fields">
+    <t t-foreach="form_fields.iterkeys()" t-as="fname">
+      <t t-if="not form_fields[fname].get('is_subfield')">
+        <t t-call="cms_form.form_horizontal_field_wrapper">
+          <t t-set="field" t-value="form_fields[fname]" />
+          <t t-set="widget" t-value="field['widget']" />
+        </t>
+      </t>
+    </t>
+</template>
+
+
+<template id="base_form" name="CMS form template">
+
+  <form t-att-action="form.form_action" t-att-method="form.form_method"
+        t-att-data-form="form.form_json_info()"
+        t-attf-class="form-horizontal #{form.form_css_klass}"
+        enctype="multipart/form-data">
+
+    <t t-if="form.form_method == 'POST'">
+        <input type="hidden" name="csrf_token" t-att-value="form.o_request.csrf_token()"/>
+    </t>
+
+    <t t-set="form_fields" t-value="form.form_fields()" />
+
+    <t t-call="#{ form.form_fields_template }" />
+
+    <div class="col-sm-9 col-sm-offset-3 above-controls">
+        <!-- you can style required fields like this:
+            `form .form-group.field-required label.control-label::after{ content: '*'}`
+            You'll get the symbol here, with proper legend
+        -->
+        <t t-if="form.form_mode != 'search'">
+            <div class="form-group field-required">
+                <p class="field-required-legend"><label class="control-label"></label> Required fields</p>
+            </div>
+        </t>
+    </div>
+    <t t-call="#{ form.form_buttons_template }" />
+
+  </form>
+
+</template>
+
+<template id="base_form_buttons" name="CMS base form buttons">
+
+  <div class="form-group form-controls">
+    <div class="col-sm-9 col-sm-offset-3">
+      <a class="btn btn-default" t-att-href="form.form_cancel_url()">Cancel</a>
+      <button type="submit" class="btn btn-primary">Submit</button>
+    </div>
+  </div>
+
+</template>
+
+<template id="search_form_wrapper" name="CMS search form wrapper"
+          inherit_id="cms_form.form_wrapper" primary="True">
+
+  <xpath expr="//t[@t-raw]" position="replace">
+    <t t-if="form.form_show_search_form">
+      <t t-raw="form.form_render()" />
+    </t>
+    <t t-call="#{ form.form_search_results_template }" />
+  </xpath>
+
+</template>
+
+
+<template id="search_form_buttons" name="CMS search form buttons"
+          inherit_id="cms_form.base_form_buttons" primary="True">
+
+  <xpath expr="//div[contains(@class, 'form-controls')]" position="replace">
+    <div class="form-group form-controls">
+       <div class="col-sm-9 col-sm-offset-3">
+         <button type="submit" class="btn btn-primary">Search</button>
+       </div>
+     </div>
+  </xpath>
+
+</template>
+
+
+<template id="search_results" name="CMS form search results">
+  <t t-foreach="form.form_search_results['results']" t-as="item">
+    <div t-attf-id="list_item_#{item.id}" class="list_item" t-attf-data-item='{"id": #{item.id}}'>
+      <h3 class="item-name">
+        <t t-if="'website_url' in item">
+          <a t-att-href="item.website_url" t-field="item.display_name" />
+        </t>
+        <t t-if="'website_url' not in item">
+          <span t-field="item.display_name" />
+        </t>
+      </h3>
+      <t t-if="'website_description' in item">
+        <p class="item-description" t-field="item.website_description"></p>
+      </t>
+    </div>
+  </t>
+  <div class="text-center mb32">
+    <t t-call="website.pager">
+    <t t-set="pager" t-value="form.form_search_results['pager']" />
+    </t>
+  </div>
+</template>
+
+
+</odoo>
