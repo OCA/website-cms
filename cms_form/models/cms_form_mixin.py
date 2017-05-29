@@ -162,7 +162,6 @@ class CMSFormMixin(models.AbstractModel):
             # inject defaults
             defaults = self.form_model.default_get(self._form_model_fields)
             for k, v in defaults.iteritems():
-                print k, v
                 _model_fields[k]['_default'] = v
         # load form fields
         _form_fields = self.fields_get(attributes=self._form_fields_attributes)
