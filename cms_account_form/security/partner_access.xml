@@ -1,0 +1,42 @@
+<?xml version="1.0" encoding="utf-8"?>
+<!--
+Copyright 2017 Simone Orsi
+License LGPL-3.0 or later (http://www.gnu.org/licenses/lgpl.html).
+-->
+
+<odoo>
+
+  <!-- This rule is limited by record rule -->
+  <record model="ir.model.access" id="access_user_can_edit_partner">
+    <field name="name">Portal user can write its partner record</field>
+    <field name="model_id" ref="base.model_res_partner"/>
+    <field name="perm_read" eval="1"/>
+    <field name="perm_create" eval="0"/>
+    <field name="perm_write" eval="1"/>
+    <field name="perm_unlink" eval="0"/>
+    <field name="group_id" ref="base.group_portal" />
+</record>
+
+  <!-- This rule is limited by record rule -->
+  <record model="ir.model.access" id="access_portal_user_partner_category">
+    <field name="name">Portal user can read categories</field>
+    <field name="model_id" ref="base.model_res_partner_category"/>
+    <field name="perm_read" eval="1"/>
+    <field name="perm_create" eval="0"/>
+    <field name="perm_write" eval="0"/>
+    <field name="perm_unlink" eval="0"/>
+    <field name="group_id" ref="base.group_portal" />
+  </record>
+
+  <record model="ir.rule" id="rule_user_can_edit_partner">
+    <field name="name">Portal user can write its partner record</field>
+    <field name="model_id" ref="base.model_res_partner"/>
+    <field name="perm_read" eval="True"/>
+    <field name="perm_write" eval="True"/>
+    <field name="perm_create" eval="False"/>
+    <field name="perm_unlink" eval="False"/>
+    <field name="groups" eval="[(4, ref('base.group_portal'))]"/>
+    <field name="domain_force">[('id', '=', user.partner_id.id)]</field>
+  </record>
+
+</odoo>

@@ -17,10 +17,10 @@ except ImportError:
 class PartnerForm(models.AbstractModel):
     """Partner model form."""
 
-    _name = 'cms.form.res.partner'
+    _name = 'cms.form.my.account'
     _inherit = 'cms.form'
     _form_model = 'res.partner'
-    _form_fields_order = (
+    _form_model_fields = (
         'image',
         'name',
         'street',
@@ -33,6 +33,7 @@ class PartnerForm(models.AbstractModel):
         'website_short_description',
         'category_id',
     )
+    _form_fields_order = _form_model_fields
     _form_required_fields = (
         "name", "street", "zip", "city",
         "country_id", "phone", "email"
@@ -45,6 +46,27 @@ class PartnerForm(models.AbstractModel):
     @property
     def form_msg_success_updated(self):
         return _('Profile updated.')
+
+    def form_next_url(self, main_object=None):
+        if self.request.args.get('redirect'):
+            # redirect overridden
+            return self.request.args.get('redirect')
+        return '/my/home'
+
+    @property
+    def field_label_overrides(self):
+        texts = {
+            'website_short_description': _('Short description'),
+            'category_id': _('Categories'),
+        }
+        return texts
+
+    def form_update_fields_attributes(self, _fields):
+        """Override to add help messages."""
+        super(PartnerForm, self).form_update_fields_attributes(_fields)
+        # update some labels
+        for fname, label in self.field_label_overrides.iteritems():
+            _fields[fname]['string'] = label
 
     def form_validate_email(self, value, **req_values):
         error, message = None, None

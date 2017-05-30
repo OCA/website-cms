@@ -13,8 +13,12 @@ class MyAccount(website_account, FormControllerMixin):
 
     @http.route(['/my/account'], type='http', auth="user", website=True)
     def details(self, **kw):
-        """Handle partner form."""
+        """Replace with cms form."""
         model = 'res.partner'
         user = request.env['res.users'].browse(request.uid)
         partner = user.partner_id
         return self.make_response(model, model_id=partner.id, **kw)
+
+    def form_model_key(self, model):
+        """Return a valid form model."""
+        return 'cms.form.my.account'

@@ -13,6 +13,6 @@
         'website_portal',
     ],
     'data': [
-        'record_rules.xml',
+        'security/partner_access.xml',
     ],
 }
