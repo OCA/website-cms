@@ -181,14 +181,15 @@ class X2MWidget(models.AbstractModel):
     def x2many_to_form(self, value, **req_values):
         if not value:
             return json.dumps([])
-        # FIXME: this check can compare pears and apples
-        # because the value might come from the request
-        # and we compare objects to strings or list of strings
-        if self.w_record and value == self.w_record[self.w_fname]:
+
+        if (isinstance(value, list) and
+                isinstance(value[0], tuple)):
+            value = value[0][-1]
+        if self.w_record and value == self.w_record[self.w_fname].ids:
             # value from record
             value = [
                 {'id': x.id, 'name': x[self.w_diplay_field]}
-                for x in value or []
+                for x in self.w_comodel.browse(value) or []
             ]
         elif (isinstance(value, basestring) and
                 value == req_values.get(self.w_fname)):
