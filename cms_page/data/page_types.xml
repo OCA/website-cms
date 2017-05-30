@@ -1,0 +1,15 @@
+<?xml version="1.0" encoding="utf-8"?>
+
+<odoo noupdate="1">
+
+<record id="page_type_page" model="cms.page.type">
+    <field name="name">Page</field>
+    <field name="default" eval="1" />
+</record>
+
+
+<record id="page_type_news" model="cms.page.type">
+    <field name="name">News</field>
+</record>
+
+</odoo>

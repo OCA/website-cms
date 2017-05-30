@@ -1,0 +1,195 @@
+<?xml version="1.0" encoding="utf-8"?>
+
+<odoo>
+
+<record id="cms_page_form" model="ir.ui.view">
+  <field name="name">CMS Page form</field>
+  <field name="model">cms.page</field>
+  <field name="arch" type="xml">
+    <form string="Page">
+
+      <div class="oe_button_box" name="button_box">
+        <button
+          class="oe_stat_button"
+          name="open_children"
+          type="object"
+          icon="fa-list"
+          string="Children"
+          />
+        <button
+          class="oe_stat_button"
+          name="open_media"
+          type="object"
+          icon="fa-file-video-o"
+          string="Media"
+          />
+        <button
+          class="oe_stat_button"
+          name="website_publish_button"
+          type="object" icon="fa-globe">
+            <field name="website_published" widget="website_button"/>
+        </button>
+        <button
+          class="oe_stat_button"
+          name="update_published"
+          type="object" icon="fa-globe"
+          string="Publish / Unpublish now!">
+        </button>
+      </div>
+
+      <group col="8">
+        <group string="Main data" name="main_1" colspan="4">
+          <field name="parent_id" colspan="2" context="{'include_path':1}" />
+          <field name="name" colspan="2" />
+          <field name="description" colspan="2" />
+          <field name="view_id" colspan="1"
+                 options="{'no_open': True, 'no_create': True}"
+                 attrs="{'invisible': [('redirect_to_id','!=',False)]}" />
+          <field name="type_id" colspan="1"
+                 attrs="{'invisible': [('redirect_to_id','!=',False)]}" />
+        </group>
+        <group string="Misc" name="main_2" colspan="4">
+          <field name="nav_include" colspan="2" />
+          <field name="redirect_to_id" colspan="2"
+                 context="{'include_path':1, 'default_source': 'cms.page,' + str(active_id)}" />
+          <field name="default_view_item_id" colspan="2"
+                 context="{'include_path':1}"
+                 attrs="{'invisible': [('redirect_to_id','!=',False)]}" />
+          <field name="tag_ids" colspan="2" widget="many2many_tags" />
+        </group>
+      </group>
+
+      <group col="8"
+             attrs="{'invisible': [('redirect_to_id','!=',False)]}">
+        <group name="children_defaults" colspan="4"
+               string="Children defaults">
+          <field name="sub_page_type_id" colspan="2"
+                 options="{'no_open': True, 'no_create': True}" />
+          <field name="sub_page_view_id" colspan="2"
+                 options="{'no_open': True, 'no_create': True}" />
+        </group>
+      </group>
+
+      <notebook attrs="{'invisible': [('redirect_to_id','!=',False)]}">
+
+        <page name="html-stuff" string="Page content">
+          <group name="html">
+            <field name="body" widget="html" />
+          </group>
+        </page>
+
+        <page name="images" string="Images">
+          <group>
+            <field name="image" colspan="2"
+                   widget="image"
+                   options='{"preview_image": "image_thumb"}'
+                   />
+          </group>
+        </page>
+
+        <page name="related-pages" string="Related pages">
+          <field name="related_ids" nolabel="1">
+            <tree>
+              <field name="name" />
+              <field name="type_id" />
+              <field name="nav_include" />
+              <field name="website_published" />
+            </tree>
+          </field>
+        </page>
+
+        <page name="history" string="History">
+          <label for="create_uid" string="Created on"/>
+          <div name="creation_div">
+            <field name="create_uid" readonly="1" class="oe_inline"/> on
+            <field name="create_date" readonly="1" class="oe_inline"/>
+          </div>
+          <label for="published_date" string="Published on"/>
+          <div name="publish_div">
+            <field name="published_uid" readonly="1" class="oe_inline"/> on
+            <field name="published_date" class="oe_inline"/>
+          </div>
+        </page>
+
+        <page name="listing" string="Listing">
+          <group name="main_listing">
+            <field name="list_types_ids" />
+          </group>
+        </page>
+
+        <page name="permission-stuff" string="Permissions">
+          <group name="permissions">
+            <field name="view_group_ids" />
+          </group>
+        </page>
+
+      </notebook>
+
+    </form>
+  </field>
+</record>
+
+
+<record id="cms_page_tree" model="ir.ui.view">
+  <field name="name">CMS Page tree</field>
+  <field name="model">cms.page</field>
+  <field name="arch" type="xml">
+    <tree string="Pages">
+      <field name="sequence" widget="handle" />
+      <field name="path" />
+      <field name="name" />
+      <field name="type_id" />
+      <field name="view_id" />
+      <field name="nav_include" />
+      <field name="website_published" />
+    </tree>
+  </field>
+</record>
+
+
+<record id="page_search" model="ir.ui.view" >
+  <field name="name">CMS Page search</field>
+  <field name="model">cms.page</field>
+  <field name="arch" type="xml">
+
+    <search string="Search page">
+      <field name="name" />
+      <field name="parent_id" />
+      <field name="path" />
+      <field name="type_id" />
+      <field name="nav_include" />
+      <field name="website_published" />
+
+      <group expand="0" string="Filter">
+
+        <filter
+          name="only_main"
+          string="Only main"
+          icon="terp-personal"
+          domain="[('parent_id','=',False)]"
+          />
+
+      </group>
+
+      <group expand="0" string="Group By">
+
+        <filter
+          string='Parent'
+          domain="[]"
+          context="{'group_by' : 'parent_id'}"
+          />
+
+        <filter
+          string='Published'
+          domain="[]"
+          context="{'group_by' : 'website_published'}"
+          />
+
+      </group>
+
+    </search>
+
+  </field>
+</record>
+
+</odoo>

@@ -1,0 +1,103 @@
+<?xml version="1.0" encoding="utf-8"?>
+
+<odoo>
+
+<record model="ir.actions.act_window" id="action_cms_pages">
+  <field name="name">Pages</field>
+  <field name="res_model">cms.page</field>
+  <field name="view_type">form</field>
+  <field name="view_mode">tree,form</field>
+  <field name="context">{'search_default_only_main':1}</field>
+  <field name="help" type="html">
+    <p class="oe_view_nocontent_create">
+        Click to manage CMS pages.
+    </p>
+  </field>
+</record>
+
+<record model="ir.actions.act_window" id="action_cms_redirects">
+  <field name="name">Redirects</field>
+  <field name="res_model">cms.redirect</field>
+  <field name="view_type">form</field>
+  <field name="view_mode">tree,form</field>
+  <field name="help" type="html">
+    <p class="oe_view_nocontent_create">
+        Click to manage CMS redirects.
+    </p>
+  </field>
+</record>
+
+<record model="ir.actions.act_window" id="action_cms_media" >
+    <field name="name">Media</field>
+    <field name="type">ir.actions.act_window</field>
+    <field name="res_model">cms.media</field>
+    <field name="view_type">form</field>
+    <field name="view_id" eval="False"/>
+    <field name="help" type="html">
+        <p class="oe_view_nocontent_create">
+            Click here to create new documents.
+        </p>
+        <p>
+            Also you will find here all the related documents and download it by clicking on any individual document.
+        </p>
+    </field>
+</record>
+
+<record model="ir.actions.act_window" id="action_cms_media_categ" >
+    <field name="name">Media categories</field>
+    <field name="type">ir.actions.act_window</field>
+    <field name="res_model">cms.media.category</field>
+    <field name="view_type">form</field>
+    <field name="view_id" eval="False"/>
+    <field name="help" type="html">
+        <p class="oe_view_nocontent_create">
+            Click here to create new categories.
+        </p>
+    </field>
+</record>
+
+
+<menuitem
+  name="CMS Admin"
+  id="menu_cms_root"
+  sequence="100"
+  groups="cms_page.cms_manager"
+  />
+
+<menuitem
+  id="menu_pages"
+  parent="menu_cms_root"
+  name="Pages"
+  action="action_cms_pages"
+  sequence="10"
+  groups="cms_page.cms_manager"
+  />
+
+<menuitem
+  id="menu_redirects"
+  parent="menu_cms_root"
+  name="Redirects"
+  action="action_cms_redirects"
+  sequence="20"
+  groups="cms_page.cms_manager"
+  />
+
+<menuitem
+  id="menu_media"
+  parent="menu_cms_root"
+  name="Media"
+  action="action_cms_media"
+  sequence="20"
+  groups="cms_page.cms_manager"
+  />
+
+<menuitem
+  id="menu_media_categ"
+  parent="menu_cms_root"
+  name="Media Categories"
+  action="action_cms_media_categ"
+  sequence="20"
+  groups="cms_page.cms_media_category_manager"
+  />
+
+</odoo>

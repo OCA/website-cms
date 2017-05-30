@@ -1,0 +1,56 @@
+<?xml version="1.0" encoding="utf-8"?>
+
+<odoo>
+
+  <template id="page_default_content" name="Page default content">
+    <t t-if="show_name">
+      <h1 id="object_name"
+         t-field="main_object.name"
+         t-att-contenteditable="editable and 'true' or None"
+         />
+    </t>
+
+    <t t-if="show_description and main_object.description">
+      <h2 id="object_description" class="description" t-field="main_object.description" />
+    </t>
+
+    <div id="object_body"
+         t-field="main_object.body"
+         class="oe_structure"
+         />
+  </template>
+
+
+  <template id="page_default" name="Page default">
+    <t t-call="website.layout">
+      <div class="container">
+        <t t-call="cms_page.page_default_content">
+          <t t-set="show_name" t-value="False" />
+          <t t-set="show_description" t-value="False" />
+        </t>
+      </div>
+    </t>
+  </template>
+
+
+  <template id="page_default_with_description" name="Page default with title and description">
+    <t t-call="website.layout">
+      <div class="container">
+        <t t-call="cms_page.page_default_content">
+          <t t-set="show_name" t-value="True" />
+          <t t-set="show_description" t-value="True" />
+        </t>
+      </div>
+    </t>
+  </template>
+
+  <!-- enable view for cms -->
+  <record id="cms_page.page_default" model="ir.ui.view">
+    <field name="cms_view" eval="1" />
+  </record>
+
+  <record id="cms_page.page_default_with_description" model="ir.ui.view">
+    <field name="cms_view" eval="1" />
+  </record>
+
+</odoo>
