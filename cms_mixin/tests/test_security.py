@@ -6,6 +6,8 @@ import openerp.tests.common as test_common
 from .base import BaseSecurityTestCase
 
 
+@test_common.at_install(False)
+@test_common.post_install(True)
 class TestSecurity(BaseSecurityTestCase, test_common.TransactionCase):
 
     @property

@@ -11,6 +11,8 @@ def dt_fromstring(dt):
     return datetime.strptime(dt, DEFAULT_SERVER_DATETIME_FORMAT)
 
 
+@test_common.at_install(False)
+@test_common.post_install(True)
 class TestCoremetadata(test_common.TransactionCase):
 
     def setUp(self):

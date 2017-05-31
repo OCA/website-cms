@@ -6,6 +6,8 @@ import openerp.tests.common as test_common
 from openerp import exceptions
 
 
+@test_common.at_install(False)
+@test_common.post_install(True)
 class TestParent(test_common.TransactionCase):
 
     @property
