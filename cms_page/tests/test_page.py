@@ -3,6 +3,8 @@
 from openerp.tests import common
 
 
+@common.at_install(False)
+@common.post_install(True)
 class TestPage(common.TransactionCase):
 
     at_install = False
