@@ -29,18 +29,12 @@ class IRUIView(models.Model):
         'CMS view?',
         help="This view will be available as a CMS view."
     )
-    # TODO: configure default view per type
-    # cms_default_type_ids = fields.Many2many()
-    # cms_sidebar = fields.Boolean(
-    #     'CMS sidebar?',
-    #     help="This view will be available as a CMS sidebar view."
-    # )
+    # TODO: limit availability of views to specific types
+    # cms_for_type_ids = fields.Many2many()
 
     @api.model
     def _prepare_qcontext(self):
         """Override to inject our custom rendering variables."""
         qcontext = super(IRUIView, self)._prepare_qcontext()
         qcontext['url_for'] = url_for
-        # qcontext['is_cms_manager'] = \
-        #     self.env.user.has_group('cms_page.cms_manager')
         return qcontext

@@ -22,6 +22,9 @@
         # security
         "security/cms_page_type.xml",
         # views
+        "view/cms_page.xml",
+        "view/menuitems.xml",
+        "view/website_menu.xml",
         # templates
         "templates/page.xml",
     ],

@@ -1,0 +1,153 @@
+<?xml version="1.0" encoding="utf-8"?>
+
+<odoo>
+
+<record id="cms_page_form" model="ir.ui.view">
+  <field name="name">CMS Page form</field>
+  <field name="model">cms.page</field>
+  <field name="arch" type="xml">
+    <form string="Page">
+
+      <div class="oe_button_box" name="button_box">
+        <button
+          class="oe_stat_button"
+          name="open_children"
+          type="object"
+          icon="fa-list"
+          string="Children"
+          />
+        <button
+          class="oe_stat_button"
+          name="website_publish_button"
+          type="object" icon="fa-globe">
+            <field name="website_published" widget="website_button"/>
+        </button>
+        <button
+          class="oe_stat_button"
+          name="toggle_published"
+          type="object" icon="fa-globe"
+          string="Publish / Unpublish now!">
+        </button>
+      </div>
+
+      <group col="8">
+        <group string="Main data" name="main_1" colspan="4">
+          <field name="parent_id" colspan="2" context="{'include_path':1}" />
+          <field name="name" colspan="2" />
+          <field name="description" colspan="2" />
+          <field name="view_id" colspan="1"
+                 options="{'no_open': True, 'no_create': True}" />
+          <field name="type_id" colspan="1" />
+        </group>
+        <group string="Misc" name="main_2" colspan="4">
+          <field name="nav_include" colspan="2" />
+          <field name="default_view_item_id" colspan="2"
+                 context="{'include_path':1}"
+                 attrs="{'invisible': [('redirect_to_id','!=',False)]}" />
+        </group>
+      </group>
+
+      <group col="8">
+        <group name="children_defaults" colspan="4"
+               string="Children defaults">
+          <field name="sub_page_type_id" colspan="2"
+                 options="{'no_open': True, 'no_create': True}" />
+          <field name="sub_page_view_id" colspan="2"
+                 options="{'no_open': True, 'no_create': True}" />
+        </group>
+      </group>
+
+      <notebook>
+
+        <page name="html-stuff" string="Page content">
+          <group name="html">
+            <field name="body" widget="html" />
+          </group>
+        </page>
+
+        <page name="history" string="History">
+          <label for="create_uid" string="Created on"/>
+          <div name="creation_div">
+            <field name="create_uid" readonly="1" class="oe_inline"/> on
+            <field name="create_date" readonly="1" class="oe_inline"/>
+          </div>
+          <label for="published_date" string="Published on"/>
+          <div name="publish_div">
+            <field name="published_uid" readonly="1" class="oe_inline"/> on
+            <field name="published_date" class="oe_inline"/>
+          </div>
+        </page>
+
+        <page name="manage-permissions" string="Permissions">
+          <group name="permissions">
+            <field name="read_group_ids" />
+            <field name="write_group_ids" />
+          </group>
+        </page>
+
+      </notebook>
+
+    </form>
+  </field>
+</record>
+
+
+<record id="cms_page_tree" model="ir.ui.view">
+  <field name="name">CMS Page tree</field>
+  <field name="model">cms.page</field>
+  <field name="arch" type="xml">
+    <tree string="Pages">
+      <field name="sequence" widget="handle" />
+      <field name="name" context="{'include_path': 1}"/>
+      <field name="type_id" />
+      <field name="view_id" />
+      <field name="website_published" />
+    </tree>
+  </field>
+</record>
+
+
+<record id="page_search" model="ir.ui.view" >
+  <field name="name">CMS Page search</field>
+  <field name="model">cms.page</field>
+  <field name="arch" type="xml">
+
+    <search string="Search page">
+      <field name="name" />
+      <field name="parent_id" />
+      <field name="type_id" />
+      <field name="website_published" />
+
+      <group expand="0" string="Filter">
+
+        <filter
+          name="only_main"
+          string="Only main"
+          icon="terp-personal"
+          domain="[('parent_id','=',False)]"
+          />
+
+      </group>
+
+      <group expand="0" string="Group By">
+
+        <filter
+          string='Parent'
+          domain="[]"
+          context="{'group_by' : 'parent_id'}"
+          />
+
+        <filter
+          string='Published'
+          domain="[]"
+          context="{'group_by' : 'website_published'}"
+          />
+
+      </group>
+
+    </search>
+
+  </field>
+</record>
+
+</odoo>

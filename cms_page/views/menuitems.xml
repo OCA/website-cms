@@ -1,0 +1,112 @@
+<?xml version="1.0" encoding="utf-8"?>
+
+<odoo>
+  <!--
+  Move CMS Admin menu to Website Admin menu:
+    Websites
+      Websites: tree view over website object
+      Content
+        Menus: tree view over website.menu groupby website_id by default
+        Pages: tree view over ir.ui.view with domain [('page', '=', True)]
+        Layouts: tree view over ir.ui.view with domain [('cms_view', '=', True)]
+        Contents: tree view over cms.page
+  -->
+
+  <record model="ir.actions.act_window" id="action_menu_websites">
+    <field name="name">Websites</field>
+    <field name="res_model">website</field>
+    <field name="view_type">form</field>
+    <field name="view_mode">tree,form</field>
+  </record>
+
+  <menuitem
+    id="websites"
+    parent="website.menu_website_configuration"
+    name="Websites"
+    sequence="10"
+    groups="base.group_configuration"
+    action="action_websites"
+    />
+
+  <menuitem
+    id="content"
+    parent="website.menu_website_configuration"
+    name="Content"
+    sequence="20"
+    groups="base.group_configuration"
+    action="action_websites"
+    />
+
+  <record model="ir.actions.act_window" id="action_menu_website_menu">
+    <field name="name">Menus</field>
+    <field name="res_model">website.menu</field>
+    <field name="view_type">form</field>
+    <field name="view_mode">tree,form</field>
+    <field name="context">{'search_default_my_websites':1}</field>
+  </record>
+
+  <menuitem
+    id="website_menu"
+    parent="content"
+    name="Websites"
+    sequence="20"
+    groups="base.group_configuration"
+    action="action_menu_website_menu"
+    />
+
+  <record model="ir.actions.act_window" id="action_menu_odoo_pages">
+    <field name="name">Odoo pages</field>
+    <field name="res_model">ir.ui.view</field>
+    <field name="view_type">form</field>
+    <field name="view_mode">tree,form</field>
+    <field name="domain">[('page', '=', True)]</field>
+  </record>
+
+  <menuitem
+    id="website_pages"
+    parent="content"
+    name="Odoo pages"
+    sequence="30"
+    groups="base.group_configuration"
+    action="action_menu_odoo_pages"
+    />
+
+  <record model="ir.actions.act_window" id="action_menu_layouts">
+    <field name="name">CMS Layouts</field>
+    <field name="res_model">ir.ui.view</field>
+    <field name="view_type">form</field>
+    <field name="view_mode">tree,form</field>
+    <field name="domain">[('cms_view', '=', True)]</field>
+  </record>
+
+  <menuitem
+    id="cms_layouts"
+    parent="content"
+    name="CMS Layouts"
+    sequence="40"
+    groups="base.group_configuration"
+    action="action_menu_layouts"
+    />
+
+  <record model="ir.actions.act_window" id="action_menu_cms_pages">
+    <field name="name">CMS Pages</field>
+    <field name="res_model">cms.page</field>
+    <field name="view_type">form</field>
+    <field name="view_mode">tree,form</field>
+    <field name="context">{'search_default_only_main':1}</field>
+    <field name="help" type="html">
+      <p class="oe_view_nocontent_create">
+          Click to manage CMS pages.
+      </p>
+    </field>
+  </record>
+
+  <menuitem
+    id="menu_pages"
+    parent="content"
+    name="CMS Pages"
+    action="action_cms_pages"
+    sequence="50"
+    />
+
+</odoo>

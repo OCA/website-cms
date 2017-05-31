@@ -1,0 +1,29 @@
+<?xml version="1.0" encoding="utf-8"?>
+
+<odoo>
+
+    <record id="menu_tree" model="ir.ui.view">
+      <field name="name">Website menu tree</field>
+      <field name="model">website.menu</field>
+      <field name="inherit_id" ref="website.menu_tree"/>
+      <field name="arch" type="xml">
+
+        <field name="url" position="after">
+          <field name="cms_page_id" />
+        </field>
+
+      </field>
+    </record>
+
+    <record id="menu_search" model="ir.ui.view">
+      <field name="name">Website menu search</field>
+      <field name="model">website.menu</field>
+      <field name="inherit_id" ref="website.menu_search"/>
+      <field name="arch" type="xml">
+        <field name="url" position="after">
+          <field name="cms_page_id" />
+        </field>
+      </field>
+    </record>
+
+</odoo>

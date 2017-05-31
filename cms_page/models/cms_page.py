@@ -2,7 +2,7 @@
 # Copyright 2017 Simone Orsi
 # License LGPL-3.0 or later (http://www.gnu.org/licenses/lgpl.html).
 
-from openerp import models, fields, api
+from openerp import models, fields, api, tools
 
 
 class CMSPage(models.Model):
@@ -81,3 +81,25 @@ class CMSPage(models.Model):
 
     def _open_children_context(self):
         return self._child_create_context()
+
+    @api.model
+    def get_translations(self):
+        """Return translations for this page."""
+        return self._get_translations(page_id=self.id)
+
+    @tools.ormcache('page_id')
+    def _get_translations(self, page_id=None):
+        """Return all available translations for a page.
+
+        We assume that a page is translated when the name is.
+        """
+        query = """
+            SELECT lang,value FROM ir_translation
+            WHERE res_id={page_id}
+            AND state='translated'
+            AND type='model'
+            AND name='cms.page,name'
+        """.format(page_id=page_id)
+        self.env.cr.execute(query)
+        res = self.env.cr.fetchall()
+        return dict(res)
