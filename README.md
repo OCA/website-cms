@@ -16,6 +16,8 @@ Available addons
 addon | version | summary
 --- | --- | ---
 [cms_delete_content](cms_delete_content/) | 9.0.1.0.0 | Basic features for handling content deletion via frontend.
+[cms_form](cms_form/) | 9.0.1.0.0 | Basic content type form
+[cms_form_example](cms_form_example/) | 9.0.1.0.0 | Basic content type form example
 [cms_status_message](cms_status_message/) | 9.0.1.0.0 | Basic status messages for your CMS system
 
 [//]: # (end addons)
