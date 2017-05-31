@@ -2,11 +2,8 @@
 # Copyright 2017 Simone Orsi
 # License LGPL-3.0 or later (http://www.gnu.org/licenses/lgpl).
 
-import json
-
 from openerp import http
 from openerp.http import request
-import werkzeug
 from werkzeug.exceptions import NotFound
 
 
