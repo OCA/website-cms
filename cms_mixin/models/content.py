@@ -3,7 +3,7 @@
 # License LGPL-3.0 or later (http://www.gnu.org/licenses/lgpl.html).
 
 
-from openerp import models, fields, api 
+from openerp import models, fields, api
 from openerp.addons.website.models.website import slug
 
 
