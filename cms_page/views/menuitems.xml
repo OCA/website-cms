@@ -25,7 +25,7 @@
     name="Websites"
     sequence="10"
     groups="base.group_configuration"
-    action="action_websites"
+    action="action_menu_websites"
     />
 
   <menuitem
@@ -34,7 +34,6 @@
     name="Content"
     sequence="20"
     groups="base.group_configuration"
-    action="action_websites"
     />
 
   <record model="ir.actions.act_window" id="action_menu_website_menu">
@@ -48,7 +47,7 @@
   <menuitem
     id="website_menu"
     parent="content"
-    name="Websites"
+    name="Menus"
     sequence="20"
     groups="base.group_configuration"
     action="action_menu_website_menu"
@@ -105,7 +104,7 @@
     id="menu_pages"
     parent="content"
     name="CMS Pages"
-    action="action_cms_pages"
+    action="action_menu_cms_pages"
     sequence="50"
     />
 
