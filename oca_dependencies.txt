@@ -1,1 +1,4 @@
+# include `mail_digest` for `cms_notification`
 social https://github.com/OCA/social 9.0
+# include `base_fontawesome` for `cms_notification`
+server-tools https://github.com/OCA/server-tools 9.0

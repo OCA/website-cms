@@ -11,6 +11,9 @@
     'depends': [
         'cms_form',
         'mail_digest',
+        # We need latest fontawesome resources.
+        # Use server-tools/9.0/base_fontawesome
+        'base_fontawesome',
     ],
     'data': [
         'views/mail_message_subtype_views.xml',
