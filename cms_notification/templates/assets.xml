@@ -14,11 +14,4 @@ License LGPL-3.0 or later (http://www.gnu.org/licenses/lgpl.html).
 
 	</template>
 
-	<template id="assets_common" inherit_id="web.assets_common">
-		<!-- upgrade fontawesome to include envelope-open icon -->
-		<xpath expr="link[@href='/web/static/lib/fontawesome/css/font-awesome.css']" position="replace">
-			<link rel="stylesheet" type="text/css" href="/cms_notification/static/lib/fontawesome-4.7.0/css/font-awesome.css" />
-		</xpath>
-	</template>
-
 </odoo>
