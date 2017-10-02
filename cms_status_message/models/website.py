@@ -2,8 +2,8 @@
 # Copyright 2017 Simone Orsi
 # License LGPL-3.0 or later (http://www.gnu.org/licenses/lgpl).
 
-from openerp import models, api, _
-from openerp.http import request
+from odoo import models, api, _
+from odoo.http import request
 
 
 class Website(models.Model):
