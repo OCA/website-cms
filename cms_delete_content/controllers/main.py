@@ -3,8 +3,8 @@
 # License LGPL-3.0 or later (http://www.gnu.org/licenses/lgpl).
 
 
-from openerp import http, _
-from openerp.http import request
+from odoo import http, _
+from odoo.http import request
 import json
 import werkzeug
 
