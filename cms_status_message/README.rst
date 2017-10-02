@@ -49,7 +49,7 @@ You can change message parameters:
 
     msg = _('Watch out!')
     if request.website:
-        request.website.add_status_message(msg, mtype='warning', mtitle='Oh no')
+        request.website.add_status_message(msg, type_='warning', title='Oh no')
 
 Messages will be displayed like this:
 
