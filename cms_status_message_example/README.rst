@@ -8,28 +8,12 @@ Cms Status Message Example
 
 Example module on what you can do with cms_status_message module.
 
-Installation
-============
-
-To install this module, you need to:
-
-Just install it.
-
-Configuration
-=============
-
-No special configuration required.
- 
 Usage
 =====
 
 Just go to the following url to see it in action :
 
     ./status-msg/test
-
-Known issues / Roadmap
-======================
-
 
 Bug Tracker
 ===========
@@ -50,7 +34,7 @@ Images
 Contributors
 ------------
 
-* Thierry Ducrest thierry.ducreset@camptocamp.ch
+* Thierry Ducrest thierry.ducrest@camptocamp.com
 
 Maintainer
 ----------

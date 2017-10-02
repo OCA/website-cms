@@ -5,8 +5,9 @@
 
     <t t-call="website.layout">
       <form method="get">
+        <p>Enter a message and submit the form. You'll see your message rendered as a status message.</p>
         <div>
-          <label for="name">Message</label>
+          <label for="message">Message</label>
           <input type="text" id="message" name="message"/>
         </div>
         <button type="submit">Test</button>
