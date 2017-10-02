@@ -12,8 +12,13 @@ Basic content type form example.
 Usage
 =====
 
-TODO
+Go on the website app of Odoo. Then you can reach the following pages:
 
+* /partners: shows you a nice form to search partners
+* /partners/add: shows you a nice form to add a new partner
+* /partners/$ID/edit: shows you a nice form to edit partner with matching $ID
+
+Pick up a partner form /partners page to see details for this partner.
 
 Bug Tracker
 ===========
