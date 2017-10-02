@@ -8,7 +8,7 @@
         Example module on what you can do with cms_status_message""",
     'version': '10.0.1.0.0',
     'license': 'AGPL-3',
-    'author': 'OCA,Odoo Community Association (OCA)',
+    'author': 'Camptocamp,Odoo Community Association (OCA)',
     'website': 'https://github.com/OCA/website-cms',
     'depends': [
     ],
