@@ -6,8 +6,8 @@ import json
 import werkzeug
 import base64
 
-from openerp.tools.mimetypes import guess_mimetype
-from openerp import models
+from odoo.tools.mimetypes import guess_mimetype
+from odoo import models
 
 from .. import utils
 

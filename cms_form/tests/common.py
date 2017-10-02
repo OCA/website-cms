@@ -9,8 +9,8 @@ from werkzeug.wrappers import Request
 import mock
 import urllib
 
-from openerp import http
-from openerp.tests.common import TransactionCase, HttpCase
+from odoo import http
+from odoo.tests.common import TransactionCase, HttpCase
 
 
 def fake_request(form_data=None, query_string=None,
