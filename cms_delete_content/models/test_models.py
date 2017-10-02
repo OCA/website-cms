@@ -2,7 +2,7 @@
 # Copyright 2017 Simone Orsi
 # License LGPL-3.0 or later (http://www.gnu.org/licenses/lgpl).
 
-from openerp import models, tools
+from odoo import models, tools
 
 testing = tools.config.get('test_enable')
 
