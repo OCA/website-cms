@@ -1,0 +1,68 @@
+language: python
+sudo: false
+cache: pip
+
+python:
+  - "3.5"
+
+addons:
+  apt:
+# only add the two lines below if you need wkhtmltopdf for your tests
+#    sources:
+#      - pov-wkhtmltopdf
+    packages:
+      - expect-dev  # provides unbuffer utility
+      - python-lxml  # because pip installation is slow
+      - python-simplejson
+      - python-serial
+      - python-yaml
+#      - wkhtmltopdf  # only add if needed and check the before_install section below
+
+# set up an X server to run wkhtmltopdf.
+#before_install:
+#  - "export DISPLAY=:911.0"
+#  - "sh -e /etc/init.d/xvfb start"
+
+env:
+  global:
+  - VERSION="11.0" TESTS="0" LINT_CHECK="0" TRANSIFEX="0"
+  - TRANSIFEX_USER='transbot@odoo-community.org'
+  # This line contains the encrypted transifex password
+  # To encrypt transifex password, install travis ruby utils with:
+  #   $ gem install travis --user-install
+  # and use:
+  #   $ travis encrypt TRANSIFEX_PASSWORD=your-password -r owner/project
+  - secure: "Kk+GKDcTNayEcBj7zJXndcerUeEnRi4LpYaUcGDc6K+rBrNROHMKoEBW3EWNwCGIxa+BhzZGVlCACMa9wpChilfKBfT1r+2WMnILCj6dQzku3elEi0g6DO8M5/L6i64iG3PUh05uB/nN4EFDeDJp76Roof3YpaMyBnU2Hr8Z7dnbYYcxVDTSXRnHf6lYMKbbbMjp6qTQlFZwrnqic0TdmgpGUZJFGwP+NWO01/S6VrY0s6GvQvcBvY6ZGNZdEGr9OFspAm6q00rAHXf1b/PG0Sc5vJoFtWr1AtdcL048D2oWll5CCa+jHaWVfUOjiIgEs2U86zr9XC8FWxb84jkNnamEZ/kmc37bhszIVxzv5afpAqbjNqfkJcfUoMFkbNvAQ99BpolATdYYLMNcvZNEU/EdenJM5hLA7eMGzBWJWrlMqQ1JP2rVsXsTCHN5ypyJg2R1CGbCU6plB6Hnvi+o/M2L230iuIOV5Gh3ybokh8q210nA6MjEwnSBFN9Ks0SiW6nmejKcWmUyDnWNV268+tMHMtbovKQgLx6F3OJoh+smigA2zMNHpuziTQq9WMoorpVaguP1NuoZQJypyl6/hnIpiEMExTvkVd4oAQ1Ml9Fb9GP9ySozkciCdfwbW/bLPe0MLjsacVSCGixfBAEn5/iir+CuCVB6TgX4tU1kh5Y="
+  # Use the following lines if you need to manually change the transifex project slug or/and the transifex organization.
+  # The default project slug is owner-repo_name-version (with dash in the version string).
+  # The default organization is the owner of the repo.
+  # The default fill up resources (TM) is True.
+  # The default team is 23907. https://www.transifex.com/organization/oca/team/23907/
+  # - TRANSIFEX_PROJECT_SLUG=
+  # - TRANSIFEX_ORGANIZATION=
+  # - TRANSIFEX_FILL_UP_RESOURCES=
+  # - TRANSIFEX_TEAM=
+
+  matrix:
+  - LINT_CHECK="1"
+  - TRANSIFEX="1"
+  - TESTS="1" ODOO_REPO="OCA/OCB"
+  - TESTS="1" ODOO_REPO="odoo/odoo"
+# either use the two lines above or the two below. Don't change the default if
+# it's not necessary (it is only necessary if modules in your repository can't
+# be installed in the same database. And you get a huge speed penalty in your
+# tests)
+#  - TESTS="1.0" ODOO_REPO="OCA/OCB" UNIT_TEST="1"
+#  - TESTS="1.0" ODOO_REPO="odoo/odoo" UNIT_TEST="1"
+
+
+install:
+  - git clone --depth=1 https://github.com/OCA/maintainer-quality-tools.git ${HOME}/maintainer-quality-tools
+  - export PATH=${HOME}/maintainer-quality-tools/travis:${PATH}
+  - travis_install_nightly
+
+script:
+  - travis_run_tests
+
+after_success:
+  - travis_after_tests_success
