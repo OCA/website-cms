@@ -2,9 +2,9 @@
 # Copyright 2017 Simone Orsi
 # License AGPL-3.0 or later (http://www.gnu.org/licenses/agpl).
 
-from openerp import http
-from openerp.addons.cms_form.controllers.main import SearchFormControllerMixin
-from openerp.addons.cms_form.controllers.main import FormControllerMixin
+from odoo import http
+from odoo.addons.cms_form.controllers.main import SearchFormControllerMixin
+from odoo.addons.cms_form.controllers.main import FormControllerMixin
 
 
 class PartnerFormController(http.Controller, FormControllerMixin):
