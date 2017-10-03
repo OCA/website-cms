@@ -14,6 +14,8 @@
         'cms_delete_content',
     ],
     'data': [
+        'data/examples.xml',
+        'templates/example.xml',
     ],
     'demo': [
     ],

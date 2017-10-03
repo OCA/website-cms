@@ -1,0 +1,24 @@
+<?xml version="1.0" encoding="utf-8" ?>
+<odoo>
+
+  <template id="list_examples" name="CMS Detele Content Example">
+
+    <t t-call="website.layout">
+      <div class="container">
+      
+        <h1>List of examples</h1>
+        <p>Click on the delete button to remove an item.</p>
+
+        <ul>
+          <li t-foreach="examples" t-as="example">
+            <span t-field="example.name"/> <a class="btn btn-danger cms_delete_confirm" t-att-href="example.cms_delete_confirm_url">Delete</a> 
+          </li>
+        </ul>
+
+      </div>
+    </t>
+
+  </template>
+
+</odoo>
+
