@@ -6,7 +6,6 @@ odoo.define('cms_delete_content.delete_confirm', function (require) {
     var core = require('web.core');
     var _t = core._t;
     var animation = require("web_editor.snippets.animation");
-    var $ = require("$");
 
     return animation.registry.countryDropdown = animation.Class.extend({
       selector: ".cms_delete_confirm",
