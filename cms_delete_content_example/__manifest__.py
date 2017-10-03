@@ -15,8 +15,7 @@
     ],
     'data': [
         'data/examples.xml',
+        'data/ir.model.access.csv',
         'templates/example.xml',
-    ],
-    'demo': [
     ],
 }
