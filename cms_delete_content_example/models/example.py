@@ -11,3 +11,7 @@ class ExampleModel(models.Model):
     _inherit = "website.published.mixin"
 
     name = fields.Char(string='Name', required=True)
+
+    @property
+    def cms_after_delete_url(self):
+        return '/list-delete-content-example'
