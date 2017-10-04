@@ -4,13 +4,14 @@
 
 from odoo import models, fields
 
+
 class ExampleModel(models.Model):
     """A test model"""
 
     _name = "cms.delete.content.example"
     _inherit = "website.published.mixin"
 
-    name = fields.Char(string='Name', required=True)
+    name = fields.Char(required=True)
 
     @property
     def cms_after_delete_url(self):
