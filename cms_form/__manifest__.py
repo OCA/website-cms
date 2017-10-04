@@ -21,5 +21,4 @@
     ],
     'demo': [
     ],
-    'installable': False,
 }
