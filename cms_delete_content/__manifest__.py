@@ -17,5 +17,5 @@
         'templates/assets.xml',
         'templates/delete_confirm.xml',
     ],
-    'installable': False,
+    'installable': True,
 }

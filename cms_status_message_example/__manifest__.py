@@ -15,5 +15,5 @@
     'data': [
         'templates/test_page.xml'
     ],
-    'installable': False,
+    'installable': True,
 }

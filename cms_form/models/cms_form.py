@@ -106,7 +106,7 @@ class CMSForm(models.AbstractModel):
         request_values = request_values or self.form_get_request_values()
 
         missing = False
-        for fname, field in self.form_fields().iteritems():
+        for fname, field in self.form_fields().items():
             value = request_values.get(fname)
             error = False
             if field['required'] \
@@ -150,10 +150,10 @@ class CMSForm(models.AbstractModel):
     def _form_purge_non_model_fields(self, values):
         """Purge fields that are not in `form_model` schema and return them."""
         extra_values = {}
-        _model_fields = self.form_model.fields_get(
+        _model_fields = list(self.form_model.fields_get(
             self._form_model_fields,
-            attributes=self._form_fields_attributes).keys()
-        submitted_keys = values.keys()
+            attributes=self._form_fields_attributes).keys())
+        submitted_keys = list(values.keys())
         for fname in submitted_keys:
             if fname not in _model_fields:
                 extra_values[fname] = values.pop(fname)

@@ -18,5 +18,5 @@
         'data/ir.model.access.csv',
         'templates/example.xml',
     ],
-    'installable': False,
+    'installable': True,
 }

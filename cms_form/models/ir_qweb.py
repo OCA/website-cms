@@ -123,8 +123,8 @@ class IRQweb(models.AbstractModel):
                 # make the nsmap an ast dict
                 keys = []
                 values = []
-                for key, value in options['nsmap'].items():
-                    if isinstance(key, basestring):
+                for key, value in list(options['nsmap'].items()):
+                    if isinstance(key, str):
                         keys.append(ast.Str(s=key))
                     elif key is None:
                         keys.append(ast.Name(id='None', ctx=ast.Load()))
