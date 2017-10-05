@@ -1,0 +1,19 @@
+<?xml version="1.0" encoding="utf-8" ?>
+<odoo>
+
+  <template id="cms_status_message_example.test_form_page" name="CMS status test page">
+
+    <t t-call="website.layout">
+      <form method="get">
+        <p>Enter a message and submit the form. You'll see your message rendered as a status message.</p>
+        <div>
+          <label for="message">Message</label>
+          <input type="text" id="message" name="message"/>
+        </div>
+        <button type="submit">Test</button>
+      </form>
+    </t>
+
+  </template>
+
+</odoo>
