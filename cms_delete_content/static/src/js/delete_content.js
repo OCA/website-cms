@@ -2,9 +2,9 @@ odoo.define('cms_delete_content.delete_confirm', function (require) {
     'use strict';
 
     var ajax = require('web.ajax'),
-        msg_tool = require('cms_status_message.tool');
-        core = require('web.core');
-        _t = core._t;
+        msg_tool = require('cms_status_message.tool'),
+        core = require('web.core'),
+        _t = core._t,
         sAnimation = require('website.content.snippets.animation');
 
     sAnimation.registry.cms_delete_confirm = sAnimation.Class.extend({
