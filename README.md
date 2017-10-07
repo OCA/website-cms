@@ -16,16 +16,11 @@ Available addons
 addon | version | summary
 --- | --- | ---
 [cms_delete_content](cms_delete_content/) | 10.0.1.0.0 | Basic features for handling content deletion via frontend.
+[cms_delete_content_example](cms_delete_content_example/) | 10.0.1.0.0 | Basic content to showcase the CMS delete content
+[cms_form](cms_form/) | 10.0.1.0.0 | Basic content type form
+[cms_form_example](cms_form_example/) | 10.0.1.0.0 | Basic content type form example
 [cms_status_message](cms_status_message/) | 10.0.1.0.0 | Basic status messages for your CMS system
 [cms_status_message_example](cms_status_message_example/) | 10.0.1.0.0 | Example module on what you can do with cms_status_message
-
-
-Unported addons
----------------
-addon | version | summary
---- | --- | ---
-[cms_form](cms_form/) | 9.0.1.0.0 (unported) | Basic content type form
-[cms_form_example](cms_form_example/) | 9.0.1.0.0 (unported) | Basic content type form example
 
 [//]: # (end addons)
 
