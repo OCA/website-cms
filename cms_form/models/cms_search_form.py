@@ -27,7 +27,7 @@ class CMSFormSearch(models.AbstractModel):
     def form_update_fields_attributes(self, _fields):
         """No field should be mandatory."""
         super(CMSFormSearch, self).form_update_fields_attributes(_fields)
-        for fname, field in _fields.iteritems():
+        for fname, field in _fields.items():
             field['required'] = False
 
     __form_search_results = {}
@@ -100,7 +100,7 @@ class CMSFormSearch(models.AbstractModel):
     def form_search_domain(self, search_values):
         """Build search domain."""
         domain = []
-        for fname, field in self.form_fields().iteritems():
+        for fname, field in self.form_fields().items():
             value = search_values.get(fname)
             if value is None:
                 continue

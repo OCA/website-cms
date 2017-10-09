@@ -67,7 +67,7 @@ def data_merge(a, b):
     # ## debug output
     # sys.stderr.write("DEBUG: %s to %s\n" %(b,a))
     try:
-        if a is None or isinstance(a, (str, unicode, int, long, float)):
+        if a is None or isinstance(a, (str, int, float)):
             # border case for first run or if a is a primitive
             a = b
         elif isinstance(a, list):
@@ -91,7 +91,7 @@ def data_merge(a, b):
                     'Cannot merge non-dict "%s" into dict "%s"' % (b, a))
         else:
             raise Exception('NOT IMPLEMENTED "%s" into "%s"' % (b, a))
-    except TypeError, e:
+    except TypeError as e:
         raise Exception(
             'TypeError "%s" in key "%s" '
             'when merging "%s" into "%s"' % (e, key, b, a))

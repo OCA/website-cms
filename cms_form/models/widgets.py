@@ -115,7 +115,7 @@ class M2OWidget(models.AbstractModel):
         # important: return False if no value
         # otherwise you will compare an empty recordset with an id
         # in a select input in form widget template.
-        if isinstance(value, basestring) and value.isdigit():
+        if isinstance(value, str) and value.isdigit():
             # number as string
             return int(value) > 0 and int(value)
         elif isinstance(value, models.BaseModel):
@@ -190,7 +190,7 @@ class X2MWidget(models.AbstractModel):
                 {'id': x.id, 'name': x[self.w_diplay_field]}
                 for x in value or []
             ]
-        elif (isinstance(value, basestring) and
+        elif (isinstance(value, str) and
                 value == req_values.get(self.w_fname)):
             # value from request
             # FIXME: the field could come from the form not the model!

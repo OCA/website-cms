@@ -32,7 +32,13 @@ class HTMLCase(HttpCase):
             }
 
     def html_get_doc(self, url):
-        return html.document_fromstring(self.url_open(url, timeout=30).read())
+        response = self.url_open(url, timeout=30)
+        if hasattr(response, 'read'):
+            # version < 11
+            content = response.read()
+        else:
+            content = response.content
+        return html.document_fromstring(content)
 
     def test_message_add_message(self):
         # we can add one or more messages
