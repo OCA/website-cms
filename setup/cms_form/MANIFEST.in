@@ -1,0 +1,1 @@
+global-include *.md *.rst *.py *.xml *.csv *.tmpl
