@@ -1,0 +1,94 @@
+<?xml version="1.0" encoding="utf-8" ?>
+<!--
+Copyright 2017 Simone Orsi
+License LGPL-3.0 or later (http://www.gnu.org/licenses/lgpl.html).
+-->
+<odoo>
+
+<template id="listing" name="CMS notification listing">
+  <t t-set="listing_items" t-value="form.form_search_results['results']" />
+  <div class="listing notification_listing">
+    <t t-if="not listing_items">
+      <t t-if="not no_results_template">
+        <div class="row list-item no-results text-muted">
+          <div class="col-md-12">
+            <h4 class="text-center">No notification.</h4>
+          </div>
+        </div>
+      </t>
+      <t t-if="no_results_template">
+        <t t-call="#{ no_results_template }" />
+      </t>
+    </t>
+    <t t-foreach="listing_items" t-as="item">
+      <t t-set="unread" t-value="item.is_unread()" />
+      <t t-set="status" t-value="'unread' if unread else 'read'" />
+      <t t-set="ref" t-value="item.ref_item_id" />
+      <t t-set="can_view_ref" t-value="form.check_view_permission(ref)" />
+      <div t-attf-id="item_#{item.id}"
+           t-attf-class="row list_item item_#{status}"
+           t-att-data-id="item.id"
+           t-att-data-status="status">
+        <!-- TODO -->
+        <!-- <div class="col-md-1 bulk_action">
+          <input type="checkbox" name="select" t-att-value="item.id" />
+        </div> -->
+        <div class="col-md-1 status">
+          <!-- we hide on demand via css -->
+          <a title="Mark as unread" class="mark_as mark_as_unread" href="#" data-action="mark_as_unread">
+            <i t-translation="off" class="fa fa-envelope-open-o" aria-hidden="true"></i>
+          </a>
+          <a title="Mark as read" class="mark_as mark_as_read" href="#" data-action="mark_as_read">
+            <i t-translation="off" class="fa fa-envelope-o" aria-hidden="true"></i>
+          </a>
+        </div>
+        <div class="col-md-11 content">
+          <div class="item-details">
+            <div class="date pull-right">
+              <span t-field="item.create_date" t-field-options='{"format": "d MMMM y"}'/>
+            </div>
+            <p class="subject">
+              <a title="Mark as unread" class="mark_as mark_as_unread" href="#" data-action="mark_as_unread" t-field="item.subject" />
+              <a title="Mark as read" class="mark_as mark_as_read" href="#" data-action="mark_as_read" t-field="item.subject" />
+            </p>
+            <!-- TODO: show related res too? show only body or related res?
+            Maybe we could delegate this to customize_show options.
+            -->
+            <div class="body" t-field="item.body"/>
+            <!-- TODO: does it makes sense?
+            Maybe is better to completely exclude messages
+            attached to items that are not accessible anymore...
+            Still, reading the message could be useful.
+            -->
+            <t t-if="ref and can_view_ref">
+              <div class="ref">
+                <t t-if="'website_url' in ref">
+                  <a class="ref_link" t-att-href="ref.website_url">
+                    <span class="view_related_label">View related</span>
+                    <span t-translation="off" class="model_name" t-esc="item.ref_model_id.name" />
+                    <span class="ref_item" t-translation="off" t-esc="item.ref_item_id.display_name" />
+                  </a>
+                </t>
+                <t t-if="'website_url' not in ref">
+                  <span class="ref_no_link">
+                    <span class="view_attached_label">Attached to</span>
+                    <span t-translation="off" class="model_name" t-esc="item.ref_model_id.name" />:
+                    <span class="ref_item" t-translation="off" t-esc="item.ref_item_id.display_name" />
+                  </span>
+                </t>
+              </div>
+            </t>
+          </div>
+        </div>
+      </div>
+    </t>
+    <div class="text-center mb32">
+      <t t-call="website.pager">
+        <t t-set="pager" t-value="form.form_search_results['pager']" />
+      </t>
+    </div>
+  </div>
+
+</template>
+
+</odoo>

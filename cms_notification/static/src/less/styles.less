@@ -1,0 +1,49 @@
+.notif-circle{
+	display: block;
+	content: ' \25CF';
+	color: @brand-warning;
+	font-size: 20px;
+	line-height: 0;
+	position: absolute;
+	top: 20px;
+	left: 5px;
+	z-index: 999;
+}
+#user-menu.has_unread_notif{
+    position: relative;
+    &::before{
+        .notif-circle;
+    }
+    #notifications{
+        position: relative;
+        a::before{
+            .notif-circle;
+            top: 8px;
+            left: 15px;
+        }
+    }
+}
+#wrapwrap .cms_form_wrapper.cms_notification_panel_form{
+	// hide required fields mark. Is useless here.
+	.field-required-legend,
+	form .field-required .control-label::after {
+		display:none;
+	}
+}
+.cms_form_wrapper.mail_message{
+    .listing{
+        padding: 1em 0;
+        .list_item{
+            border-bottom: 1px solid;
+        }
+        .item_unread{
+            .subject{
+                font-weight: bold;
+            }
+            .mark_as_unread{ display: none }
+        }
+        .item_read{
+            .mark_as_read{ display: none }
+        }
+    }
+}
