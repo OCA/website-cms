@@ -3,19 +3,19 @@
 # * cms_notification
 # 
 # Translators:
-# OCA Transbot <transbot@odoo-community.org>, 2017
+# Ashish Deshmukh <ashish.p.deshmukh@gmail.com>, 2017
 msgid ""
 msgstr ""
 "Project-Id-Version: Odoo Server 9.0c\n"
 "Report-Msgid-Bugs-To: \n"
 "POT-Creation-Date: 2017-11-23 03:53+0000\n"
 "PO-Revision-Date: 2017-11-23 03:53+0000\n"
-"Last-Translator: OCA Transbot <transbot@odoo-community.org>, 2017\n"
-"Language-Team: German (https://www.transifex.com/oca/teams/23907/de/)\n"
+"Last-Translator: Ashish Deshmukh <ashish.p.deshmukh@gmail.com>, 2017\n"
+"Language-Team: Hindi (India) (https://www.transifex.com/oca/teams/23907/hi_IN/)\n"
 "MIME-Version: 1.0\n"
 "Content-Type: text/plain; charset=UTF-8\n"
 "Content-Transfer-Encoding: \n"
-"Language: de\n"
+"Language: hi_IN\n"
 "Plural-Forms: nplurals=2; plural=(n != 1);\n"
 
 #. module: cms_notification
@@ -31,25 +31,25 @@ msgstr ""
 #. module: cms_notification
 #: model:ir.model,name:cms_notification.model_cms_notification_listing
 msgid "CMS notification"
-msgstr "CMS notification"
+msgstr ""
 
 #. module: cms_notification
 #: model:ir.model,name:cms_notification.model_cms_notification_panel_form
 msgid "CMS notification control panel"
-msgstr "CMS notification control panel"
+msgstr ""
 
 #. module: cms_notification
 #: code:addons/cms_notification/models/notification_panel_form.py:36
 #, python-format
 msgid "Changes applied."
-msgstr "Änderungen wurden übernommen."
+msgstr ""
 
 #. module: cms_notification
 #: model:ir.model.fields,field_description:cms_notification.field_cms_form_widget_notif_radio_display_name
 #: model:ir.model.fields,field_description:cms_notification.field_cms_notification_listing_display_name
 #: model:ir.model.fields,field_description:cms_notification.field_cms_notification_panel_form_display_name
 msgid "Display Name"
-msgstr "Anzeigename"
+msgstr "प्रदर्शित होने वाला नाम"
 
 #. module: cms_notification
 #: model:ir.model.fields,field_description:cms_notification.field_res_users_notify_frequency
@@ -64,14 +64,14 @@ msgstr ""
 #. module: cms_notification
 #: model:ir.ui.view,arch_db:cms_notification.notify_email_help_none
 msgid "I don't want to get notification emails."
-msgstr "Ich möchte keine Benachrichtigungen erhalten."
+msgstr ""
 
 #. module: cms_notification
 #: model:ir.model.fields,field_description:cms_notification.field_cms_form_widget_notif_radio_id
 #: model:ir.model.fields,field_description:cms_notification.field_cms_notification_listing_id
 #: model:ir.model.fields,field_description:cms_notification.field_cms_notification_panel_form_id
 msgid "ID"
-msgstr "ID"
+msgstr "आईडी"
 
 #. module: cms_notification
 #: model:ir.model.fields,help:cms_notification.field_mail_message_subtype_cms_type
@@ -79,15 +79,13 @@ msgid ""
 "If active, this message subtype will be visible in users' notifications "
 "control panel."
 msgstr ""
-"If active, this message subtype will be visible in users' notifications "
-"control panel."
 
 #. module: cms_notification
 #: model:ir.model.fields,field_description:cms_notification.field_cms_form_widget_notif_radio___last_update
 #: model:ir.model.fields,field_description:cms_notification.field_cms_notification_listing___last_update
 #: model:ir.model.fields,field_description:cms_notification.field_cms_notification_panel_form___last_update
 msgid "Last Modified on"
-msgstr "Zuletzt geändert am"
+msgstr "अंतिम बार संशोधित"
 
 #. module: cms_notification
 #: model:ir.ui.view,arch_db:cms_notification.listing
@@ -107,13 +105,13 @@ msgstr ""
 #. module: cms_notification
 #: model:ir.model,name:cms_notification.model_mail_message_subtype
 msgid "Message subtypes"
-msgstr "Nachrichten-Subtyp"
+msgstr ""
 
 #. module: cms_notification
 #: code:addons/cms_notification/models/notification_listing.py:24
 #, python-format
 msgid "My notifications"
-msgstr "Meine Benachrichtigungen"
+msgstr ""
 
 #. module: cms_notification
 #: model:ir.ui.view,arch_db:cms_notification.listing
@@ -124,7 +122,7 @@ msgstr ""
 #: code:addons/cms_notification/models/notification_panel_form.py:28
 #, python-format
 msgid "Notification settings."
-msgstr "Benachrichtigungseinstellungen."
+msgstr ""
 
 #. module: cms_notification
 #: model:ir.model.fields,field_description:cms_notification.field_res_users_notify_conf_ids
@@ -165,20 +163,18 @@ msgstr ""
 #. module: cms_notification
 #: model:ir.model.fields,field_description:cms_notification.field_mail_message_subtype_cms_type
 msgid "Visible in CMS control panel"
-msgstr "Visible in CMS control panel"
+msgstr ""
 
 #. module: cms_notification
 #: model:ir.ui.view,arch_db:cms_notification.notify_email_help_digest
 msgid ""
 "You will receive a summary of the notification in the chosen frequency."
 msgstr ""
-"Sie erhalten eine Übersicht der Benachrichtigungen entsprechend der "
-"gewählten Häufigkeit."
 
 #. module: cms_notification
 #: model:ir.ui.view,arch_db:cms_notification.notify_email_help_always
 msgid "You will receive an email for every notification."
-msgstr "Sie erhalten eine Email für jede Benachrichtigung."
+msgstr ""
 
 #. module: cms_notification
 #: model:ir.model,name:cms_notification.model_cms_form_widget_notif_radio
