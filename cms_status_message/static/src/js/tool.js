@@ -1,12 +1,10 @@
 odoo.define('cms_status_message.tool', function (require) {
     'use strict';
 
-    var Model = require('web.Model');
-    var session = require('web.session');
-    var WebsiteModel = new Model('website', session.user_context);
-    var core = require('web.core');
-    var qweb = core.qweb;
-    var ajax = require('web.ajax');
+    var session = require('web.session'),
+        core = require('web.core'),
+        qweb = core.qweb,
+        ajax = require('web.ajax');
 
     // load existing qweb templates
     ajax.jsonRpc('/web/dataset/call', 'call', {
@@ -26,10 +24,18 @@ odoo.define('cms_status_message.tool', function (require) {
 
     var MessageTool = {
         add_message: function add_message (msg, options) {
-            return WebsiteModel.call('add_status_message', [msg, ], options);
+          return ajax.jsonRpc('/web/dataset/call', 'call', {
+            'model': 'website',
+            'method': 'add_status_message',
+            'args': [[msg, ], options]
+          })
         },
         get_messages: function get_messages() {
-            return WebsiteModel.call('get_status_message', []);
+            return ajax.jsonRpc('/web/dataset/call', 'call', {
+              'model': 'website',
+              'method': 'get_status_message',
+              'args': []
+            })
         },
         render_messages: function render_messages(msg, selector) {
             // defaults
