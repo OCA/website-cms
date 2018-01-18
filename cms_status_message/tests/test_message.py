@@ -1,8 +1,7 @@
-# -*- coding: utf-8 -*-
-# Copyright 2017 Simone Orsi
+# Copyright 2017-2018 Camptocamp - Simone Orsi
 # License LGPL-3.0 or later (http://www.gnu.org/licenses/lgpl).
 
-from openerp.tests.common import HttpCase
+from odoo.tests.common import HttpCase
 
 import logging
 from lxml import html
@@ -12,13 +11,13 @@ import mock
 _logger = logging.getLogger(__name__)
 
 
-IMPORT = 'openerp.addons.cms_status_message.models.website'
+IMPORT = 'odoo.addons.cms_status_message.models.website'
 
 
 class HTMLCase(HttpCase):
 
     def setUp(self):
-        super(HTMLCase, self).setUp()
+        super().setUp()
         self.authenticate('admin', 'admin')
         self.website = self.env['website'].browse(1)
 
@@ -32,7 +31,8 @@ class HTMLCase(HttpCase):
             }
 
     def html_get_doc(self, url):
-        return html.document_fromstring(self.url_open(url, timeout=30).read())
+        response = self.url_open(url, timeout=30)
+        return html.document_fromstring(response.content)
 
     def test_message_add_message(self):
         # we can add one or more messages
