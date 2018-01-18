@@ -11,7 +11,7 @@ from contextlib import contextmanager
 from odoo.tests.common import HttpCase
 from ..controllers import main
 
-IMPORT = 'openerp.addons.cms_delete_content.controllers.main'
+IMPORT = 'odoo.addons.cms_delete_content.controllers.main'
 
 
 class TestDelete(HttpCase):
@@ -20,7 +20,7 @@ class TestDelete(HttpCase):
     post_install = True
 
     def setUp(self):
-        super(TestDelete, self).setUp()
+        super().setUp()
         self.authenticate('admin', 'admin')
         self.delete_controller = main.DeleteController()
         self.partner = self.env['res.partner'].create({'name': 'New'})
