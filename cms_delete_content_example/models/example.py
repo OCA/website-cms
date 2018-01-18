@@ -1,12 +1,11 @@
-# -*- coding: utf-8 -*-
-# # Copyright 2017 Rémy Taymans
+# # Copyright 2017-2018 Rémy Taymans
 # # License AGPL-3.0 or later (http://www.gnu.org/licenses/agpl).
 
 from odoo import models, fields
 
 
 class ExampleModel(models.Model):
-    """A test model"""
+    """A demo model"""
 
     _name = "cms.delete.content.example"
     _inherit = "website.published.mixin"
