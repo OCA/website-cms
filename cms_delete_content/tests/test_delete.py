@@ -1,5 +1,4 @@
-# -*- coding: utf-8 -*-
-# Copyright 2017 Simone Orsi
+# Copyright 2017-2018 Camptocamp - Simone Orsi
 # License LGPL-3.0 or later (http://www.gnu.org/licenses/lgpl).
 
 
@@ -57,8 +56,10 @@ class TestDelete(HttpCase):
 
     def test_delete_confirm(self):
         with self.mock_request(IMPORT):
-            resp = self.url_open(self.partner.cms_delete_confirm_url).read()
-            node = self.to_xml_node(resp)
+            response = self.url_open(
+                self.partner.cms_delete_confirm_url, timeout=30)
+            content = response.content
+            node = self.to_xml_node(content)
             self.assertEqual(
                 node.find_class('modal-title')[0].text_content().strip(),
                 'Are you sure you want to delete this item?'
