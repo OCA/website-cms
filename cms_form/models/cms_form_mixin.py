@@ -1,5 +1,4 @@
-# -*- coding: utf-8 -*-
-# Copyright 2017 Simone Orsi
+# Copyright 2017-2018 Simone Orsi
 # License LGPL-3.0 or later (http://www.gnu.org/licenses/lgpl.html).
 
 import inspect
@@ -109,7 +108,7 @@ class CMSFormMixin(models.AbstractModel):
         form.request = request.httprequest  # werkzeug request, the "real" one
         form.main_object = main_object
         # override `_form_` parameters
-        for k, v in kw.iteritems():
+        for k, v in kw.items():
             if not inspect.ismethod(getattr(form, '_form_' + k)):
                 setattr(form, '_form_' + k, v)
         return form
@@ -162,12 +161,12 @@ class CMSFormMixin(models.AbstractModel):
                 attributes=self._form_fields_attributes)
             # inject defaults
             defaults = self.form_model.default_get(self._form_model_fields)
-            for k, v in defaults.iteritems():
+            for k, v in defaults.items():
                 _model_fields[k]['_default'] = v
         # load form fields
         _form_fields = self.fields_get(attributes=self._form_fields_attributes)
         # inject defaults
-        for k, v in self.default_get(_form_fields.keys()).iteritems():
+        for k, v in self.default_get(list(_form_fields.keys())).items():
             _form_fields[k]['_default'] = v
         _all_fields.update(_model_fields)
         # form fields override model fields
@@ -184,7 +183,7 @@ class CMSFormMixin(models.AbstractModel):
         # remove unwanted fields
         self._form_remove_uwanted(_all_fields)
         # remove non-stored fields to exclude computed
-        _all_fields = {k: v for k, v in _all_fields.iteritems() if v['store']}
+        _all_fields = {k: v for k, v in _all_fields.items() if v['store']}
         # update fields order
         if self._form_fields_order:
             _sorted_all_fields = OrderedDict()
@@ -198,10 +197,10 @@ class CMSFormMixin(models.AbstractModel):
     def _form_prepare_subfields(self, _all_fields):
         """Add subfields to related main fields."""
         # TODO: test this
-        for mainfield, subfields in self._form_sub_fields.iteritems():
+        for mainfield, subfields in self._form_sub_fields.items():
             if mainfield in _all_fields:
                 _subfields = {}
-                for val, subs in subfields.iteritems():
+                for val, subs in subfields.items():
                     _subfields[val] = {}
                     for sub in subs:
                         if sub in _all_fields:
@@ -216,7 +215,7 @@ class CMSFormMixin(models.AbstractModel):
 
     def form_update_fields_attributes(self, _fields):
         """Manipulate fields attributes."""
-        for fname, field in _fields.iteritems():
+        for fname, field in _fields.items():
             if fname in self._form_required_fields:
                 _fields[fname]['required'] = True
             _fields[fname]['widget'] = self.form_get_widget(fname, field)
@@ -245,7 +244,7 @@ class CMSFormMixin(models.AbstractModel):
     def form_file_fields(self):
         """File fields."""
         return {
-            k: v for k, v in self.form_fields().iteritems()
+            k: v for k, v in self.form_fields().items()
             if v['type'] == 'binary'
         }
 
@@ -261,12 +260,12 @@ class CMSFormMixin(models.AbstractModel):
             _values = self.request.args
         # normal fields
         values = {
-            k: v for k, v in _values.iteritems()
+            k: v for k, v in _values.items()
             if k not in ('csrf_token', )
         }
         # file fields
         values.update(
-            {k: v for k, v in self.request.files.iteritems()}
+            {k: v for k, v in self.request.files.items()}
         )
         return values
 
@@ -282,7 +281,7 @@ class CMSFormMixin(models.AbstractModel):
         request_values = request_values or self.form_get_request_values()
         defaults = request_values.copy()
         form_fields = self.form_fields()
-        for fname, field in form_fields.iteritems():
+        for fname, field in form_fields.items():
             value = field['widget'].w_load(**request_values)
             # override via specific form loader when needed
             loader = self.form_get_loader(
@@ -315,7 +314,7 @@ class CMSFormMixin(models.AbstractModel):
         """Extract values from request form."""
         request_values = request_values or self.form_get_request_values()
         values = {}
-        for fname, field in self.form_fields().iteritems():
+        for fname, field in self.form_fields().items():
             value = field['widget'].w_extract(**request_values)
             # override via specific form extractor when needed
             extractor = self.form_get_extractor(
