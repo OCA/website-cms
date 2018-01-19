@@ -1,32 +1,47 @@
 # Copyright 2017-2018 Simone Orsi
 # License LGPL-3.0 or later (http://www.gnu.org/licenses/lgpl.html).
 
-from .common import fake_request, FormTestCase
+from .common import FormTestCase
+from .utils import fake_request
+from .fake_models import FakePartnerForm, FakeSearchPartnerForm
 
 
 class TestCMSSearchForm(FormTestCase):
 
-    def setUp(self):
-        super(TestCMSSearchForm, self).setUp()
-        self.partner_model = self.env['res.partner']
+    TEST_MODELS_KLASSES = [FakePartnerForm, FakeSearchPartnerForm]
 
-        self.expected_partners = []
-        self.expected_partners_ids = []
-        self._expected_partners = (
-            ('Salmo', self.env.ref('base.it').id, ),
-            ('Marracash', self.env.ref('base.it').id, ),
-            ('Notorious BIG', self.env.ref('base.us').id, ),
-            ('Dr. Dre', self.env.ref('base.us').id, ),
-            ('NTM', self.env.ref('base.fr').id, ),
+    @classmethod
+    def setUpClass(cls):
+        super(TestCMSSearchForm, cls).setUpClass()
+        cls._setup_models()
+        cls._setup_records()
+
+    @classmethod
+    def tearDownClass(cls):
+        cls._teardown_models()
+        super(TestCMSSearchForm, cls).tearDownClass()
+
+    @classmethod
+    def _setup_records(cls):
+        cls.partner_model = cls.env['res.partner']
+
+        cls.expected_partners = []
+        cls.expected_partners_ids = []
+        cls._expected_partners = (
+            ('Salmo', cls.env.ref('base.it').id, ),
+            ('Marracash', cls.env.ref('base.it').id, ),
+            ('Notorious BIG', cls.env.ref('base.us').id, ),
+            ('Dr. Dre', cls.env.ref('base.us').id, ),
+            ('NTM', cls.env.ref('base.fr').id, ),
         )
 
-        for name, country_id in self._expected_partners:
-            self.expected_partners_ids.append(self.partner_model.create({
+        for name, country_id in cls._expected_partners:
+            cls.expected_partners_ids.append(cls.partner_model.create({
                 'name': name,
                 'country_id': country_id,
             }).id)
-        self.expected_partners = \
-            self.partner_model.browse(self.expected_partners_ids)
+        cls.expected_partners = \
+            cls.partner_model.browse(cls.expected_partners_ids)
 
     def assert_results(self, form, count, expected):
         self.assertTrue('results' in form.form_search_results)
