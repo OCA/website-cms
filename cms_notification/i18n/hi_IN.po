@@ -52,7 +52,7 @@ msgid "Display Name"
 msgstr "प्रदर्शित होने वाला नाम"
 
 #. module: cms_notification
-#: model:ir.model.fields,field_description:cms_notification.field_res_users_notify_frequency
+#: model:ir.model.fields,field_description:cms_notification.field_res_users_digest_frequency
 msgid "Frequency"
 msgstr ""
 

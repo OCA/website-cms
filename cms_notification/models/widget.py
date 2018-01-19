@@ -1,8 +1,7 @@
-# -*- coding: utf-8 -*-
-# Copyright 2017 Simone Orsi
+# Copyright 2017-2018 Simone Orsi
 # License LGPL-3.0 or later (http://www.gnu.org/licenses/lgpl).
 
-from openerp import models
+from odoo import models
 
 
 class NotificationSelectionWidget(models.AbstractModel):
@@ -17,7 +16,7 @@ class NotificationSelectionWidget(models.AbstractModel):
         """Change options order and inject help text."""
         items = []
         sel = dict(self.w_field['selection'])
-        for item in ('always', 'digest', 'none', ):
+        for item in ('inbox', 'email', ):
             template = self.env.ref(
                 self.help_tmpl_prefix + item, raise_if_not_found=0)
             _help = None
@@ -26,6 +25,6 @@ class NotificationSelectionWidget(models.AbstractModel):
             items.append({
                 'value': item,
                 'label': sel[item],
-                'help': _help
+                'help': _help,
             })
         return items

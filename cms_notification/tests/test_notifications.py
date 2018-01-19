@@ -1,9 +1,9 @@
-# -*- coding: utf-8 -*-
-# Copyright 2017 Simone Orsi
+# Copyright 2017-2018 Simone Orsi
 # License LGPL-3.0 or later (http://www.gnu.org/licenses/lgpl).
 
-from openerp.tests.common import TransactionCase
-from openerp.addons.cms_form.tests.common import fake_request
+from odoo.addons.cms_form.tests.common import FormTestCase
+from odoo.addons.cms_form.tests.utils import fake_request
+from .fake_models import FakeNotificationPanel
 
 
 def add_xmlid(env, record, xmlid, noupdate=False):
@@ -28,39 +28,51 @@ def add_xmlid(env, record, xmlid, noupdate=False):
     })
 
 
-class CMSNotificationCase(TransactionCase):
+class CMSNotificationCase(FormTestCase):
 
-    at_install = False
-    post_install = True
+    TEST_MODELS_KLASSES = [FakeNotificationPanel, ]
 
-    def setUp(self):
-        super(CMSNotificationCase, self).setUp()
-        self.partner_model = self.env['res.partner']
-        self.subtype_model = self.env['mail.message.subtype']
+    @classmethod
+    def setUpClass(cls):
+        super().setUpClass()
+        # from base cms_form test case
+        cls._setup_models()
+        cls._setup_records()
 
-        self.partner1 = self.partner_model.with_context(
-            tracking_disable=1).create({'name': 'Marty McFly'})
-        self.subtype1 = self.subtype_model.create(
+    @classmethod
+    def tearDownClass(cls):
+        cls._teardown_models()
+        super().tearDownClass()
+
+    @classmethod
+    def _setup_records(cls):
+        user_model = cls.env['res.users'].with_context(
+            no_reset_password=True, tracking_disable=True)
+        cls.user1 = user_model.create({
+            'name': 'Marty McFly',
+            'login': 'marty',
+            'email': 'marty@email.com',
+        })
+        cls.subtype_model = cls.env['mail.message.subtype']
+        cls.subtype1 = cls.subtype_model.create(
             {'name': 'Back to the future I'})
-        add_xmlid(self.env, self.subtype1, 'cms_notification.test_subtype1')
-        self.subtype2 = self.subtype_model.create(
+        add_xmlid(cls.env, cls.subtype1, 'cms_notification.test_subtype1')
+        cls.subtype2 = cls.subtype_model.create(
             {'name': 'Back to the future II'})
-        add_xmlid(self.env, self.subtype2, 'cms_notification.test_subtype2')
-        self.subtype3 = self.subtype_model.create(
+        add_xmlid(cls.env, cls.subtype2, 'cms_notification.test_subtype2')
+        cls.subtype3 = cls.subtype_model.create(
             {'name': 'Back to the future III'})
-        add_xmlid(self.env, self.subtype3, 'cms_notification.test_subtype3')
-        self.form_model_key = 'cms.notification.panel.form'
-
-    def get_form(self, req=None, **kw):
-        request = req or fake_request()
-        return self.env[self.form_model_key].form_init(request, **kw)
+        add_xmlid(cls.env, cls.subtype3, 'cms_notification.test_subtype3')
 
     def _assert_values(self, expected, values):
-        for k, v in expected.iteritems():
+        for k, v in expected.items():
             self.assertEqual(values[k], v)
 
     def test_form_defaults(self):
-        form = self.get_form(main_object=self.partner1)
+        form = self.get_form(
+            'cms.notification.panel.form',
+            main_object=self.user1,
+            sudo_uid=self.user1.id)
         defaults = form.form_load_defaults()
         expected = dict(
             # not specific record for disabling: all ON
@@ -70,9 +82,9 @@ class CMSNotificationCase(TransactionCase):
         )
         self._assert_values(expected, defaults)
 
-        self.partner1._notify_enable_subtype(self.subtype1)
-        self.partner1._notify_enable_subtype(self.subtype2)
-        self.partner1._notify_disable_subtype(self.subtype3)
+        self.user1._notify_enable_subtype(self.subtype1)
+        self.user1._notify_enable_subtype(self.subtype2)
+        self.user1._notify_disable_subtype(self.subtype3)
         defaults = form.form_load_defaults()
         expected = dict(
             enable_1=True,
@@ -89,8 +101,8 @@ class CMSNotificationCase(TransactionCase):
         }
         req = fake_request(form_data=data, method='POST')
         form = self.get_form(
-            req=req, main_object=self.partner1)
+            'cms.notification.panel.form', req=req, main_object=self.user1)
         form.form_process()
-        self.assertIn(self.subtype1, self.partner1.enabled_notify_subtype_ids)
-        self.assertIn(self.subtype2, self.partner1.disabled_notify_subtype_ids)
-        self.assertIn(self.subtype3, self.partner1.enabled_notify_subtype_ids)
+        self.assertIn(self.subtype1, self.user1.enabled_notify_subtype_ids)
+        self.assertIn(self.subtype2, self.user1.disabled_notify_subtype_ids)
+        self.assertIn(self.subtype3, self.user1.enabled_notify_subtype_ids)

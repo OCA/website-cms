@@ -1,9 +1,8 @@
-# -*- coding: utf-8 -*-
-# Copyright 2017 Simone Orsi
+# Copyright 2017-2018 Simone Orsi
 # License LGPL-3.0 or later (http://www.gnu.org/licenses/lgpl).
 
-from openerp import http
-from openerp.addons.cms_form.controllers.main \
+from odoo import http
+from odoo.addons.cms_form.controllers.main \
     import FormControllerMixin, SearchFormControllerMixin
 
 
@@ -14,11 +13,10 @@ class PanelFormController(http.Controller, FormControllerMixin):
         '/my/settings/notifications',
     ], type='http', auth='user', website=True)
     def cms_form(self, **kw):
-        model = 'res.partner'
-        # get current user partner
-        model_id = http.request.env.user.partner_id.id
-        return self.make_response(
-            model, model_id=model_id, **kw)
+        model = 'res.users'
+        # get current user
+        model_id = http.request.env.user.id
+        return self.make_response(model, model_id=model_id, **kw)
 
     def form_model_key(self, model):
         return 'cms.notification.panel.form'
@@ -31,11 +29,10 @@ class MyNotificationsController(http.Controller, SearchFormControllerMixin):
         '/my/notifications',
     ], type='http', auth='user', website=True)
     def cms_form(self, **kw):
-        model = 'res.partner'
-        # get current user partner
-        model_id = http.request.env.user.partner_id.id
-        return self.make_response(
-            model, model_id=model_id, **kw)
+        model = 'res.users'
+        # get current user
+        model_id = http.request.env.user.id
+        return self.make_response(model, model_id=model_id, **kw)
 
     def form_model_key(self, model):
         return 'cms.notification.listing'

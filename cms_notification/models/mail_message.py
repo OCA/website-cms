@@ -1,8 +1,7 @@
-# -*- coding: utf-8 -*-
-# Copyright 2017 Simone Orsi
+# Copyright 2017-2018 Simone Orsi
 # License LGPL-3.0 or later (http://www.gnu.org/licenses/lgpl).
 
-from openerp import models, fields, api, tools
+from odoo import models, fields, api, tools
 
 
 class MailMessage(models.Model):
@@ -31,7 +30,7 @@ class MailMessage(models.Model):
     def _compute_ref_item_id(self):
         for item in self:
             if item.model and item.res_id:
-                item.ref_item_id = "{0.model},{0.res_id}".format(item)
+                item.ref_item_id = "{},{}".format(item.model, item.res_id)
 
     @api.multi
     @api.depends("model")

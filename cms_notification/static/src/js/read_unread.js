@@ -4,15 +4,12 @@ odoo.define('cms_notification.read_unread', function (require) {
     Mark messages as read/unread
     */
 
-    var animation = require("web_editor.snippets.animation");
-    var $ = require("$");
-    var session = require('web.session');
-    var Model = require('web.Model');
-    var MessageModel = new Model('mail.message', session.user_context);
+    var sAnimation = require('website.content.snippets.animation');
+    var ajax = require('web.ajax');
 
-    return animation.registry.CMSNotificationsReadUnread = animation.Class.extend({
+    sAnimation.registry.CMSNotificationsReadUnread = sAnimation.Class.extend({
       selector: ".notification_listing a.mark_as",
-      start: function (editable_mode) {
+      start: function () {
         var self = this;
         this.$el.on('click', function(e){
           e.stopPropagation();
@@ -22,17 +19,25 @@ odoo.define('cms_notification.read_unread', function (require) {
         });
       },
       mark_as_read: function (ids) {
-        return MessageModel.call('set_message_done', [ids]);
+        return ajax.jsonRpc("/web/dataset/call_kw", 'call', {
+          model: 'mail.message',
+          method: 'set_message_done',
+          args: [ids]
+        });
       },
       mark_as_unread: function (ids) {
-        return MessageModel.call('mark_as_unread', [ids]);
+        return ajax.jsonRpc("/web/dataset/call_kw", 'call', {
+          model: 'mail.message',
+          method: 'mark_as_unread',
+          args: [ids]
+        });
       },
       update_ui: function(ids){
         var self = this;
         $.each(ids, function(){
           var $item = $('#item_' + this),
               status = $item.data('status'),
-              next_status = status == 'unread'? 'read': 'unread';
+              next_status = status === 'unread'? 'read': 'unread';
           // update current item status
           $item.data('status', next_status);
           $item.switchClass('item_' + status, 'item_' + next_status);

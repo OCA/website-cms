@@ -1,8 +1,7 @@
-# -*- coding: utf-8 -*-
-# Copyright 2017 Simone Orsi
+# Copyright 2017-2018 Simone Orsi
 # License LGPL-3.0 or later (http://www.gnu.org/licenses/lgpl).
 
-from openerp import fields, models
+from odoo import fields, models
 
 
 class MailMessageSubtype(models.Model):
