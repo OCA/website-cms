@@ -24,13 +24,13 @@ odoo.define("cms_form_example.tour", function (require) {
                             $('select[name="country_id"]').val(this.value);
                         }
                     });
-                },
+                }
             },
             {
                 title: _t("Partner created"),
                 waitFor: "alert alert-info alert-dismissible:contains(Item created.)",
                 content:   _t("This is the new partner. Let's edit it."),
-                popover:   { next: _t("Continue") },
+                popover:   { next: _t("Continue") }
             }
         ]
     });
