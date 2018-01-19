@@ -6,10 +6,24 @@ from werkzeug.wrappers import Request
 
 from odoo import http
 
-from .common import fake_request, FormTestCase
+from .common import FormTestCase
+from .utils import fake_request
+from .fake_models import FakePartnerForm, FakeFieldsForm
 
 
 class TestFormBase(FormTestCase):
+
+    TEST_MODELS_KLASSES = [FakePartnerForm, FakeFieldsForm]
+
+    @classmethod
+    def setUpClass(cls):
+        super(TestFormBase, cls).setUpClass()
+        cls._setup_models()
+
+    @classmethod
+    def tearDownClass(cls):
+        cls._teardown_models()
+        super(TestFormBase, cls).tearDownClass()
 
     def test_form_init(self):
         form = self.get_form('cms.form.mixin')

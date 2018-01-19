@@ -2,9 +2,22 @@
 # License LGPL-3.0 or later (http://www.gnu.org/licenses/lgpl.html).
 
 from .common import FormRenderTestCase
+from .fake_models import FakeFieldsForm
 
 
 class TestRender(FormRenderTestCase):
+
+    TEST_MODELS_KLASSES = [FakeFieldsForm, ]
+
+    @classmethod
+    def setUpClass(cls):
+        super(TestRender, cls).setUpClass()
+        cls._setup_models()
+
+    @classmethod
+    def tearDownClass(cls):
+        cls._teardown_models()
+        super(TestRender, cls).tearDownClass()
 
     def test_render_form_attrs(self):
         form = self.get_form('cms.form.test_fields')
