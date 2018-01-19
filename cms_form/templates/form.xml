@@ -1,6 +1,6 @@
 <?xml version="1.0" encoding="utf-8"?>
 <!--
-Copyright 2017 Simone Orsi
+Copyright 2017-2018 Simone Orsi
 License LGPL-3.0 or later (http://www.gnu.org/licenses/lgpl.html).
 -->
 <odoo>
@@ -118,7 +118,7 @@ License LGPL-3.0 or later (http://www.gnu.org/licenses/lgpl.html).
 <template id="search_form_buttons" name="CMS search form buttons"
           inherit_id="cms_form.base_form_buttons" primary="True">
 
-  <xpath expr="//div[contains(@class, 'form-controls')]" position="replace">
+  <xpath expr="//div[hasclass('form-controls')]" position="replace">
     <div class="form-group form-controls">
        <div class="col-sm-9 col-sm-offset-3">
          <button type="submit" class="btn btn-primary">Search</button>
