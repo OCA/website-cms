@@ -1,6 +1,6 @@
 <?xml version="1.0" encoding="utf-8"?>
 <!--
-Copyright 2017 Simone Orsi
+Copyright 2017-2018 Simone Orsi
 License LGPL-3.0 or later (http://www.gnu.org/licenses/lgpl.html).
 -->
 <odoo>
@@ -81,7 +81,7 @@ License LGPL-3.0 or later (http://www.gnu.org/licenses/lgpl.html).
 
   <!-- NOTE: `t-att-value` is really important here
   since without it `initSelection` function for select2 does not work-->
-  <input type="text" t-att-id="fname" t-att-name="widget.w_fname"
+  <input type="text" t-att-id="widget.w_fname" t-att-name="widget.w_fname"
          t-attf-class="form-control js_select2_m2m_widget #{widget.w_css_klass}"
          t-attf-data-init-value="#{widget.w_field_value}" t-att-value="widget.w_field_value or widget.w_fname"
          t-att-data-model="widget.w_field['relation']"
@@ -97,7 +97,7 @@ License LGPL-3.0 or later (http://www.gnu.org/licenses/lgpl.html).
 
   <div class="input-group">
     <!-- TODO: show date in user locale and convert value server side -->
-    <input t-att-name="widget.w_fname" t-att-id="fname"
+    <input t-att-name="widget.w_fname" t-att-id="widget.w_fname"
            t-attf-class="form-control js_datepicker #{widget.w_css_klass}"
            type="text" data-format="yy-mm-dd" placeholder="YYYY-MM-DD"
            t-att-value="widget.w_field_value"/>
@@ -110,11 +110,13 @@ License LGPL-3.0 or later (http://www.gnu.org/licenses/lgpl.html).
 
 
 <template id="field_widget_text" name="CMS form text field widget">
-
-    <textarea t-att-name="widget.w_fname" t-att-id="fname"
+    <!--
+    XXX: in v11 `t-esc` must stay inside the textarea
+    otherwise the whole text area is not rendered at all when value is empty.
+    -->
+    <textarea t-att-name="widget.w_fname" t-att-id="widget.w_fname"
               t-attf-class="form-control #{widget.w_css_klass}"
-              t-esc="widget.w_field_value"
-              t-att-maxlength="widget.w_maxlength" />
+              t-att-maxlength="widget.w_maxlength"><t t-esc="widget.w_field_value" /></textarea>
     <t t-if="widget.w_maxlength">
         <input type="text" size="3" readonly="1" t-ignore="1"
                t-attf-name="#{widget.w_fname}_counter"
@@ -127,7 +129,7 @@ License LGPL-3.0 or later (http://www.gnu.org/licenses/lgpl.html).
 <template id="field_widget_boolean" name="CMS form boolean field widget">
 
     <input type="checkbox"
-           t-att-name="widget.w_fname" t-att-id="fname"
+           t-att-name="widget.w_fname" t-att-id="widget.w_fname"
            t-att-checked="widget.w_field_value or None"
            t-attf-class="form-control #{widget.w_css_klass}"
            />
@@ -144,7 +146,7 @@ License LGPL-3.0 or later (http://www.gnu.org/licenses/lgpl.html).
         class="form-control"
         />
     <t t-if="widget.w_field_value">
-      <t t-set="prefix" t-value="fname"/>
+      <t t-set="prefix" t-value="widget.w_fname"/>
       <img class="img img-responsive" t-att-src="widget.w_field_value.get('value')" />
       <div t-attf-id="#{prefix}_keepbox" class="keepbox text-center">
         <div class="form-group">

@@ -1,13 +1,12 @@
-# -*- coding: utf-8 -*-
-# Copyright 2017 Simone Orsi
+# Copyright 2017-2018 Simone Orsi
 # License LGPL-3.0 or later (http://www.gnu.org/licenses/lgpl.html).
 
 
-from cStringIO import StringIO
+from io import StringIO
 from lxml import html
 from werkzeug.wrappers import Request
 import mock
-import urllib
+import urllib.parse
 
 from odoo import http
 from odoo.tests.common import TransactionCase, HttpCase
@@ -15,7 +14,7 @@ from odoo.tests.common import TransactionCase, HttpCase
 
 def fake_request(form_data=None, query_string=None,
                  method='GET', content_type=None):
-    data = urllib.urlencode(form_data or {})
+    data = urllib.parse.urlencode(form_data or {})
     query_string = query_string or ''
     content_type = content_type or 'application/x-www-form-urlencoded'
     # werkzeug request
@@ -55,7 +54,7 @@ class FormRenderMixin(FormTestMixin):
             '(//input|//select|//textarea)[@name="{}"]'.format(name))
 
     def assert_match_attrs(self, value, expected):
-        for k, v in expected.iteritems():
+        for k, v in expected.items():
             self.assertEqual(value[k].strip(), v.strip())
 
     def assert_match_inputs(self, node, expected):

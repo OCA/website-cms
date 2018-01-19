@@ -1,5 +1,4 @@
-# -*- coding: utf-8 -*-
-# Copyright 2017 Simone Orsi
+# Copyright 2017-2018 Simone Orsi
 # License LGPL-3.0 or later (http://www.gnu.org/licenses/lgpl.html).
 
 import json
@@ -79,7 +78,7 @@ class IntegerWidget(models.AbstractModel):
     _inherit = 'cms.form.widget.char'
 
     def w_extract(self, **req_values):
-        value = super(IntegerWidget, self).w_extract(**req_values)
+        value = super().w_extract(**req_values)
         return utils.safe_to_integer(value)
 
 
@@ -88,7 +87,7 @@ class FloatWidget(models.AbstractModel):
     _inherit = 'cms.form.widget.char'
 
     def w_extract(self, **req_values):
-        value = super(FloatWidget, self).w_extract(**req_values)
+        value = super().w_extract(**req_values)
         return utils.safe_to_float(value)
 
 
@@ -98,7 +97,7 @@ class M2OWidget(models.AbstractModel):
     _w_template = 'cms_form.field_widget_m2o'
 
     def widget_init(self, form, fname, field, **kw):
-        widget = super(M2OWidget, self).widget_init(form, fname, field, **kw)
+        widget = super().widget_init(form, fname, field, **kw)
         widget.w_comodel = self.env[widget.w_field['relation']]
         widget.w_domain = widget.w_field.get('domain', [])
         return widget
@@ -108,14 +107,14 @@ class M2OWidget(models.AbstractModel):
         return self.w_comodel.search(self.w_domain)
 
     def w_load(self, **req_values):
-        value = super(M2OWidget, self).w_load(**req_values)
+        value = super().w_load(**req_values)
         return self.m2o_to_form(value)
 
     def m2o_to_form(self, value):
         # important: return False if no value
         # otherwise you will compare an empty recordset with an id
         # in a select input in form widget template.
-        if isinstance(value, basestring) and value.isdigit():
+        if isinstance(value, str) and value.isdigit():
             # number as string
             return int(value) > 0 and int(value)
         elif isinstance(value, models.BaseModel):
@@ -125,7 +124,7 @@ class M2OWidget(models.AbstractModel):
         return None
 
     def w_extract(self, **req_values):
-        value = super(M2OWidget, self).w_extract(**req_values)
+        value = super().w_extract(**req_values)
         return self.form_to_m2o(value, **req_values)
 
     def form_to_m2o(self, value, **req_values):
@@ -169,13 +168,13 @@ class X2MWidget(models.AbstractModel):
     w_diplay_field = 'display_name'
 
     def widget_init(self, form, fname, field, **kw):
-        widget = super(X2MWidget, self).widget_init(form, fname, field, **kw)
+        widget = super().widget_init(form, fname, field, **kw)
         widget.w_comodel = self.env[widget.w_field['relation']]
         widget.w_domain = widget.w_field.get('domain', [])
         return widget
 
     def w_load(self, **req_values):
-        value = super(X2MWidget, self).w_load(**req_values)
+        value = super().w_load(**req_values)
         return self.x2many_to_form(value, **req_values)
 
     def x2many_to_form(self, value, **req_values):
@@ -190,7 +189,7 @@ class X2MWidget(models.AbstractModel):
                 {'id': x.id, 'name': x[self.w_diplay_field]}
                 for x in value or []
             ]
-        elif (isinstance(value, basestring) and
+        elif (isinstance(value, str) and
                 value == req_values.get(self.w_fname)):
             # value from request
             # FIXME: the field could come from the form not the model!
@@ -200,7 +199,7 @@ class X2MWidget(models.AbstractModel):
         return value
 
     def w_extract(self, **req_values):
-        value = super(X2MWidget, self).w_extract(**req_values)
+        value = super().w_extract(**req_values)
         return self.form_to_x2many(value, **req_values)
 
     def form_to_x2many(self, value, **req_values):
@@ -234,7 +233,7 @@ class DateWidget(models.AbstractModel):
     _w_template = 'cms_form.field_widget_date'
 
     def w_extract(self, **req_values):
-        value = super(DateWidget, self).w_extract(**req_values)
+        value = super().w_extract(**req_values)
         return self.form_to_date(value, **req_values)
 
     def form_to_date(self, value, **req_values):
@@ -248,7 +247,7 @@ class TextWidget(models.AbstractModel):
     w_maxlength = None
 
     def widget_init(self, form, fname, field, **kw):
-        widget = super(TextWidget, self).widget_init(
+        widget = super().widget_init(
             form, fname, field, **kw
         )
         widget.w_maxlength = kw.get('maxlength')
@@ -260,7 +259,7 @@ class BinaryWidget(models.AbstractModel):
     _inherit = 'cms.form.widget.mixin'
 
     def w_load(self, **req_values):
-        value = super(BinaryWidget, self).w_load(**req_values)
+        value = super().w_load(**req_values)
         return self.binary_to_form(value, **req_values)
 
     def binary_to_form(self, value, **req_values):
@@ -275,7 +274,8 @@ class BinaryWidget(models.AbstractModel):
                 value = ''
                 mimetype = ''
             else:
-                mimetype = guess_mimetype(value.decode('base64'))
+                value = str(value, 'utf-8')
+                mimetype = guess_mimetype(base64.b64decode(value))
             _value = {
                 'value': value,
                 'raw_value': value,
@@ -286,7 +286,7 @@ class BinaryWidget(models.AbstractModel):
         return _value
 
     def w_extract(self, **req_values):
-        value = super(BinaryWidget, self).w_extract(**req_values)
+        value = super().w_extract(**req_values)
         return self.form_to_binary(value, **req_values)
 
     def form_to_binary(self, value, **req_values):
@@ -319,12 +319,12 @@ class BooleanWidget(models.AbstractModel):
     w_true_values = utils.TRUE_VALUES
 
     def widget_init(self, form, fname, field, **kw):
-        widget = super(BooleanWidget, self).widget_init(
+        widget = super().widget_init(
             form, fname, field, **kw)
         widget.w_true_values = kw.get('true_values', self.w_true_values)
         widget.w_field_value = widget.w_field_value in self.w_true_values
         return widget
 
     def w_extract(self, **req_values):
-        value = super(BooleanWidget, self).w_extract(**req_values)
+        value = super().w_extract(**req_values)
         return utils.string_to_bool(value, true_values=self.w_true_values)

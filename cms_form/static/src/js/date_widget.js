@@ -1,6 +1,8 @@
 odoo.define('cms_form.date_widget', function (require) {
     'use strict';
 
+    require('web.dom_ready');
+
     $(document).ready(function () {
         $("input.js_datepicker").each(function(){
             var $input = $(this);

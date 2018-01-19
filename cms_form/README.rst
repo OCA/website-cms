@@ -125,7 +125,7 @@ The form will be automatically available at: ``/cms/form/search/res.partner``.
 NOTE: default generic routes work if the form's name is ```cms.form.search`` + model name, like ``cms.form.search.res.partner``.
 If you want you can easily define your own controller and give your form a different name,
 and have more elegant routes like ``/partners``.
-Take a look at `cms_form_example <../cms_form_example>`_.
+Take a look at `cms_form_example`.
 
 
 Master / slave fields

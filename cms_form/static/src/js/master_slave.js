@@ -7,10 +7,9 @@ odoo.define('cms_form.master_slave', function (require) {
 
     // TODO: this does not work ATM :(
     // var pyeval = require('web.pyeval');
-    var animation = require("web_editor.snippets.animation");
-    var $ = require("$");
+    var sAnimation = require('website.content.snippets.animation');
 
-    return animation.registry.CMSFormMasterSlave = animation.Class.extend({
+    sAnimation.registry.CMSFormMasterSlave = sAnimation.Class.extend({
       selector: ".cms_form_wrapper form",
       start: function (editable_mode) {
         this.data = this.$el.data('form');
@@ -35,54 +34,43 @@ odoo.define('cms_form.master_slave', function (require) {
             var handler = self.handlers[action];
             if (handler) {
               $master_input.on('change', function(){
-                handler($(this), mapping) }
-              ).filter(':selected,:checked,[type=text]').trigger('change'); // trigger change only for specific inputs
+                var $input = $(this),
+                    val = $input.val();
+                if ($input.is(':checkbox')) {
+                  // value == 'on' => true/false
+                  val = $input.is(':checked');
+                }
+                $.each(mapping, function(slave_fname, values){
+                  if (_.contains(values, val)) {
+                    handler(slave_fname)
+                  }
+                });
+              }).filter('select,[type=checkbox],[type=text]').trigger('change'); // trigger change only for specific inputs
             }
           })
         })
       },
-      // TODO: merge these functions as they are pretty much equals
-      handle_hide: function($input, mapping){
-        $.each(mapping, function(slave_fname, values){
-          if ($.inArray($input.val(), values) >= 0) {
-            $('[name="' + slave_fname +'"]').closest('.form-group').hide();
-          }
-        });
+      handle_hide: function(slave_fname){
+        $('[name="' + slave_fname +'"]').closest('.form-group').hide();
       },
-      handle_show: function($input, mapping){
-        $.each(mapping, function(slave_fname, values){
-          if ($.inArray($input.val(), values) >= 0) {
-            $('[name="' + slave_fname +'"]').closest('.form-group').show();
-          }
-        });
+      handle_show: function(slave_fname){
+        $('[name="' + slave_fname +'"]').closest('.form-group').show();
       },
-      handle_readonly: function($input, mapping){
-        $.each(mapping, function(slave_fname, values){
-          if ($.inArray($input.val(), values) >= 0) {
-            $('[name="' + slave_fname +'"]').attr('disabled', 'disabled');
-          }
-        });
+      handle_readonly: function(slave_fname){
+        $('[name="' + slave_fname +'"]')
+          .attr('disabled', 'disabled')
+          .closest('.form-group').addClass('disabled');
       },
-      handle_no_readonly: function($input, mapping){
-        $.each(mapping, function(slave_fname, values){
-          if ($.inArray($input.val(), values) >= 0) {
-            $('[name="' + slave_fname +'"]').attr('disabled', null);
-          }
-        });
+      handle_no_readonly: function(slave_fname){
+        $('[name="' + slave_fname +'"]')
+          .attr('disabled', null)
+          .closest('.form-group').removeClass('disabled');
       },
-      handle_required: function($input, mapping){
-        $.each(mapping, function(slave_fname, values){
-          if ($.inArray($input.val(), values) >= 0) {
-            $('[name="' + slave_fname +'"]').attr('required', 'required');
-          }
-        });
+      handle_required: function(slave_fname){
+        $('[name="' + slave_fname +'"]').attr('required', 'required');
       },
-      handle_no_required: function($input, mapping){
-        $.each(mapping, function(slave_fname, values){
-          if ($.inArray($input.val(), values) >= 0) {
-            $('[name="' + slave_fname +'"]').attr('required', null);
-          }
-        });
+      handle_no_required: function(slave_fname){
+        $('[name="' + slave_fname +'"]').attr('required', null);
       }
     });
 
