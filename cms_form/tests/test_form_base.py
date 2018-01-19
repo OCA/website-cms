@@ -1,5 +1,4 @@
-# -*- coding: utf-8 -*-
-# Copyright 2017 Simone Orsi
+# Copyright 2017-2018 Simone Orsi
 # License LGPL-3.0 or later (http://www.gnu.org/licenses/lgpl.html).
 
 
@@ -28,16 +27,16 @@ class TestFormBase(FormTestCase):
             extra_css_klass='baz',
         )
         form = self.get_form('cms.form.mixin', **overrides)
-        for k, v in overrides.iteritems():
+        for k, v in overrides.items():
             self.assertEqual(getattr(form, '_form_' + k), v)
 
     def test_fields_load(self):
         form = self.get_form('cms.form.res.partner')
         fields = form.form_fields()
         self.assertEqual(len(fields), 3)
-        self.assertTrue('name' in fields.keys())
-        self.assertTrue('country_id' in fields.keys())
-        self.assertTrue('custom' in fields.keys())
+        self.assertTrue('name' in list(fields.keys()))
+        self.assertTrue('country_id' in list(fields.keys()))
+        self.assertTrue('custom' in list(fields.keys()))
 
         # whitelist
         form = self.get_form(
@@ -45,9 +44,9 @@ class TestFormBase(FormTestCase):
             fields_whitelist=('name', ))
         fields = form.form_fields()
         self.assertEqual(len(fields), 1)
-        self.assertTrue('name' in fields.keys())
-        self.assertTrue('country_id' not in fields.keys())
-        self.assertTrue('custom' not in fields.keys())
+        self.assertTrue('name' in list(fields.keys()))
+        self.assertTrue('country_id' not in list(fields.keys()))
+        self.assertTrue('custom' not in list(fields.keys()))
 
         # blacklist
         form = self.get_form(
@@ -55,27 +54,27 @@ class TestFormBase(FormTestCase):
             fields_blacklist=('country_id', ))
         fields = form.form_fields()
         self.assertEqual(len(fields), 2)
-        self.assertTrue('name' in fields.keys())
-        self.assertTrue('country_id' not in fields.keys())
-        self.assertTrue('custom' in fields.keys())
+        self.assertTrue('name' in list(fields.keys()))
+        self.assertTrue('country_id' not in list(fields.keys()))
+        self.assertTrue('custom' in list(fields.keys()))
 
     def test_fields_order(self):
         form = self.get_form(
             'cms.form.res.partner',
             fields_order=['name', 'custom', 'country_id', ])
         fields = form.form_fields()
-        self.assertEqual(fields.keys()[0], 'name')
-        self.assertEqual(fields.keys()[1], 'custom')
-        self.assertEqual(fields.keys()[2], 'country_id')
+        self.assertEqual(list(fields.keys())[0], 'name')
+        self.assertEqual(list(fields.keys())[1], 'custom')
+        self.assertEqual(list(fields.keys())[2], 'country_id')
 
         # change order
         form = self.get_form(
             'cms.form.res.partner',
             fields_order=['country_id', 'name', 'custom'])
         fields = form.form_fields()
-        self.assertEqual(fields.keys()[0], 'country_id')
-        self.assertEqual(fields.keys()[1], 'name')
-        self.assertEqual(fields.keys()[2], 'custom')
+        self.assertEqual(list(fields.keys())[0], 'country_id')
+        self.assertEqual(list(fields.keys())[1], 'name')
+        self.assertEqual(list(fields.keys())[2], 'custom')
 
     def test_fields_attributes(self):
         form = self.get_form('cms.form.res.partner')
@@ -96,7 +95,7 @@ class TestFormBase(FormTestCase):
             'a_many2many',
         ), None)
         fields = form.form_fields()
-        for fname, loader in expected.iteritems():
+        for fname, loader in expected.items():
             self.assertEqual(
                 loader, form.form_get_loader(fname, fields[fname])
             )
@@ -128,7 +127,7 @@ class TestFormBase(FormTestCase):
             'a_many2many',
         ), None)
         fields = form.form_fields()
-        for fname, loader in expected.iteritems():
+        for fname, loader in expected.items():
             self.assertEqual(
                 loader, form.form_get_extractor(fname, fields[fname])
             )
@@ -159,7 +158,7 @@ class TestFormBase(FormTestCase):
             'country_id': None,
             'custom': 'oh yeah!'
         }
-        for k, v in expected.iteritems():
+        for k, v in expected.items():
             self.assertEqual(defaults[k], v)
 
         # write mode, have main_object
@@ -173,7 +172,7 @@ class TestFormBase(FormTestCase):
             'country_id': 5,
             'custom': 'oh yeah!'
         }
-        for k, v in expected.iteritems():
+        for k, v in expected.items():
             self.assertEqual(defaults[k], v)
 
         # values from request
@@ -186,7 +185,7 @@ class TestFormBase(FormTestCase):
         form = self.get_form(
             'cms.form.res.partner', req=request, main_object=main_object)
         defaults = form.form_load_defaults()
-        for k, v in data.iteritems():
+        for k, v in data.items():
             self.assertEqual(defaults[k], v)
 
     def test_extract_from_request(self):
@@ -212,7 +211,7 @@ class TestFormBase(FormTestCase):
             'a_many2many': [(6, False, [1, 2, 3]), ],
             'a_one2many': [(6, False, [4, 5, 6]), ],
         }
-        for k, v in values.iteritems():
+        for k, v in values.items():
             self.assertEqual(expected[k], v)
         # read mode
         form = self.get_form(
@@ -222,5 +221,5 @@ class TestFormBase(FormTestCase):
             'a_many2many': [1, 2, 3],
             'a_one2many': [4, 5, 6],
         })
-        for k, v in values.iteritems():
+        for k, v in values.items():
             self.assertEqual(expected[k], v)

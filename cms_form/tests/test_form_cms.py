@@ -1,5 +1,4 @@
-# -*- coding: utf-8 -*-
-# Copyright 2017 Simone Orsi
+# Copyright 2017-2018 Simone Orsi
 # License LGPL-3.0 or later (http://www.gnu.org/licenses/lgpl.html).
 
 import mock
@@ -77,7 +76,7 @@ class TestCMSForm(FormTestCase):
             'cms.form.res.partner',
             req=request)
         to_patch = \
-            'openerp.addons.cms_form.models.cms_form.CMSForm._form_create'
+            'odoo.addons.cms_form.models.cms_form.CMSForm._form_create'
         with mock.patch(to_patch) as patched:
             form.form_create_or_update()
             patched.assert_called_with({'name': 'Johnny Glamour'})
@@ -89,7 +88,7 @@ class TestCMSForm(FormTestCase):
             main_object=main_object,
             req=request)
         to_patch = \
-            'openerp.addons.cms_form.models.cms_form.CMSForm._form_write'
+            'odoo.addons.cms_form.models.cms_form.CMSForm._form_write'
         with mock.patch(to_patch) as patched:
             form.form_create_or_update()
             patched.assert_called_with({'name': 'Johnny Glamour'})
