@@ -48,7 +48,7 @@ License LGPL-3.0 or later (http://www.gnu.org/licenses/lgpl.html).
 </template>
 
 <template id="base_form_fields" name="CMS form fields">
-    <t t-foreach="form_fields.iterkeys()" t-as="fname">
+    <t t-foreach="form_fields.keys()" t-as="fname">
       <t t-if="not form_fields[fname].get('is_subfield')">
         <t t-call="cms_form.form_horizontal_field_wrapper">
           <t t-set="field" t-value="form_fields[fname]" />
