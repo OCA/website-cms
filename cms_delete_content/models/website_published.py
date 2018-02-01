@@ -1,5 +1,4 @@
-# -*- coding: utf-8 -*-
-# Copyright 2017 Simone Orsi
+# Copyright 2017-2018 Camptocamp - Simone Orsi
 # License LGPL-3.0 or later (http://www.gnu.org/licenses/lgpl).
 
 
@@ -19,7 +18,7 @@ class WebsitePublishedMixin(models.AbstractModel):
     def _compute_cms_delete_url(self):
         for item in self:
             item.cms_delete_url = \
-                u'/cms/delete/{}/{}'.format(item._name, item.id)
+                '/cms/delete/{}/{}'.format(item._name, item.id)
 
     cms_delete_confirm_url = fields.Char(
         string='CMS delete confirm URL',
@@ -31,7 +30,7 @@ class WebsitePublishedMixin(models.AbstractModel):
     def _compute_cms_delete_confirm_url(self):
         for item in self:
             item.cms_delete_confirm_url = \
-                u'/cms/delete/{}/{}/confirm'.format(item._name, item.id)
+                '/cms/delete/{}/{}/confirm'.format(item._name, item.id)
 
     @property
     def cms_after_delete_url(self):

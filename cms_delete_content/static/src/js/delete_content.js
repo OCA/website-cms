@@ -1,13 +1,13 @@
 odoo.define('cms_delete_content.delete_confirm', function (require) {
     'use strict';
 
-    var ajax = require('web.ajax');
-    var msg_tool = require('cms_status_message.tool');
-    var core = require('web.core');
-    var _t = core._t;
-    var animation = require("web_editor.snippets.animation");
+    var ajax = require('web.ajax'),
+        msg_tool = require('cms_status_message.tool'),
+        core = require('web.core'),
+        _t = core._t,
+        sAnimation = require('website.content.snippets.animation');
 
-    return animation.registry.countryDropdown = animation.Class.extend({
+    sAnimation.registry.cms_delete_confirm = sAnimation.Class.extend({
       selector: ".cms_delete_confirm",
       start: function (editable_mode) {
         this.modal_url = this.$el.attr('href');
@@ -36,7 +36,7 @@ odoo.define('cms_delete_content.delete_confirm', function (require) {
           type: 'POST',
           url: url,
           data: data,
-          dataType: 'json',
+          dataType: 'json'
         }).done(function (result) {
           self.handle_modal_success(result);
         });
@@ -54,12 +54,11 @@ odoo.define('cms_delete_content.delete_confirm', function (require) {
           var msg = {
             'msg': result.message,
             'title': _t('Info')
-          }
+          };
           // wipe existing
           $('.status_message').remove();
           // inject new
-          $(msg_tool.render_messages(msg))
-            .hide().prependTo('main').fadeIn('slow');
+          $(msg_tool.render_messages(msg)).hide().prependTo('main').fadeIn('slow');
         }
         // TODO: trigger custom event as hook
       }

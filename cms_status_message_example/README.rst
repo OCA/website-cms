@@ -15,6 +15,11 @@ Just go to the following url to see it in action :
 
     ./status-msg/test
 
+
+.. image:: https://odoo-community.org/website/image/ir.attachment/5784_f2813bd/datas
+   :alt: Try me on Runbot
+   :target: https://runbot.odoo-community.org/runbot/225/11.0
+
 Bug Tracker
 ===========
 

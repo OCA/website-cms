@@ -1,5 +1,4 @@
-# -*- coding: utf-8 -*-
-# Copyright 2017 Simone Orsi
+# Copyright 2017-2018 Camptocamp - Simone Orsi
 # License LGPL-3.0 or later (http://www.gnu.org/licenses/lgpl).
 
 
@@ -12,7 +11,7 @@ from contextlib import contextmanager
 from odoo.tests.common import HttpCase
 from ..controllers import main
 
-IMPORT = 'openerp.addons.cms_delete_content.controllers.main'
+IMPORT = 'odoo.addons.cms_delete_content.controllers.main'
 
 
 class TestDelete(HttpCase):
@@ -21,7 +20,7 @@ class TestDelete(HttpCase):
     post_install = True
 
     def setUp(self):
-        super(TestDelete, self).setUp()
+        super().setUp()
         self.authenticate('admin', 'admin')
         self.delete_controller = main.DeleteController()
         self.partner = self.env['res.partner'].create({'name': 'New'})
@@ -57,8 +56,10 @@ class TestDelete(HttpCase):
 
     def test_delete_confirm(self):
         with self.mock_request(IMPORT):
-            resp = self.url_open(self.partner.cms_delete_confirm_url).read()
-            node = self.to_xml_node(resp)
+            response = self.url_open(
+                self.partner.cms_delete_confirm_url, timeout=30)
+            content = response.content
+            node = self.to_xml_node(content)
             self.assertEqual(
                 node.find_class('modal-title')[0].text_content().strip(),
                 'Are you sure you want to delete this item?'
