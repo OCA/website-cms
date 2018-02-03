@@ -14,6 +14,8 @@
     ],
     'data': [
         'security/cms_form.xml',
+        # FIXME: remove when fix merged
+        'templates/fix_odoo.xml',
         'templates/assets.xml',
         'templates/form.xml',
         'templates/widgets.xml',
