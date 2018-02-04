@@ -47,8 +47,9 @@ class Website(models.Model):
             'type': type_,
             'dismissible': bool(dismissible),
         }
-        session = session or request.session
-        if session:
+        if session is None:
+            session = request.session
+        if session is not None:
             session.setdefault('status_message', []).append(status_message)
 
     @api.model
