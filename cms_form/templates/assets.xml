@@ -13,7 +13,8 @@ License LGPL-3.0 or later (http://www.gnu.org/licenses/lgpl.html).
 		</xpath>
 
 		<xpath expr="//script[last()]" position="after">
-			<script type="text/javascript" src="/cms_form/static/src/js/select2widgets.js"></script>
+			<script type="text/javascript" src="/web/static/src/js/core/pyeval.js"></script>
+			<script type="text/javascript" src="/cms_form/static/src/js/select2_widgets.js"></script>
 			<script type="text/javascript" src="/cms_form/static/src/js/date_widget.js"></script>
 			<script type="text/javascript" src="/cms_form/static/src/js/textarea_widget.js"></script>
 			<script type="text/javascript" src="/cms_form/static/src/js/master_slave.js"></script>

@@ -120,16 +120,37 @@ class FloatWidget(models.AbstractModel):
         return utils.safe_to_float(value)
 
 
-class M2OWidget(models.AbstractModel):
-    _name = 'cms.form.widget.many2one'
-    _inherit = 'cms.form.widget.mixin'
-    _w_template = 'cms_form.field_widget_m2o'
+class X2XWidgetMixin(models.AbstractModel):
+    """Basic mixin for relational fields."""
+
+    _name = 'cms.form.widget.x2x.mixin'
+    _w_display_field = 'name'
 
     def widget_init(self, form, fname, field, **kw):
         widget = super().widget_init(form, fname, field, **kw)
         widget.w_comodel = self.env[widget.w_field['relation']]
         widget.w_domain = widget.w_field.get('domain', [])
+        data_defaults = {
+            'model': widget.w_comodel._name,
+            'init_value': widget.w_field_value,
+            'domain': widget.w_domain,
+            'search_field': 'name',
+            'display_name': widget._w_display_field,
+            'fields': ['name', ],
+        }
+        for k, v in data_defaults.items():
+            if k not in widget.w_data:
+                widget.w_data[k] = v
         return widget
+
+
+class M2OWidget(models.AbstractModel):
+    _name = 'cms.form.widget.many2one'
+    _inherit = [
+        'cms.form.widget.x2x.mixin',
+        'cms.form.widget.mixin',
+    ]
+    _w_template = 'cms_form.field_widget_m2o'
 
     @property
     def w_option_items(self):
@@ -143,13 +164,23 @@ class M2OWidget(models.AbstractModel):
         # important: return False if no value
         # otherwise you will compare an empty recordset with an id
         # in a select input in form widget template.
+        fname = self.w_data['display_name']
+        _value = value
+        _name = ''
+        # TODO: move this to the x2x mixin and reuse it for multi rel too
         if isinstance(value, str) and value.isdigit():
             # number as string
-            return int(value) > 0 and int(value)
+            _value = int(value) > 0 and int(value)
         elif isinstance(value, models.BaseModel):
-            return value and value.id or None
+            _value = value and value.id or None
+            _name = value and value[fname] or ''
         elif isinstance(value, int):
-            return value
+            _value = value
+        if _value:
+            if not _name:
+                _name = self.w_comodel.browse(_value)[fname]
+            # select2 compat value
+            return {'id': _value, fname: _name}
         return None
 
     def w_extract(self, **req_values):
@@ -166,15 +197,16 @@ class M2OMultiWidget(models.AbstractModel):
     _name = 'cms.form.widget.many2one.multi'
     _inherit = 'cms.form.widget.many2one'
     _w_template = 'cms_form.field_widget_m2o_multi'
-    w_diplay_field = 'display_name'
+    w_display_field = 'display_name'
 
     def m2o_to_form(self, value, **req_values):
         if not value:
             return json.dumps([])
         if (isinstance(value, str) and
                 value == req_values.get(self.w_fname)):
-            value = self.w_comodel.browse(
-                self.w_ids_from_input(value)).read(['name'])
+            value = self.w_comodel.browse(self.w_ids_from_input(value)).read(
+                [self.w_data['display_name']]
+            )
         value = json.dumps(value)
         return value
 
@@ -229,15 +261,12 @@ class RadioSelectionWidget(SelectionWidget):
 
 class X2MWidget(models.AbstractModel):
     _name = 'cms.form.widget.x2m.mixin'
-    _inherit = 'cms.form.widget.mixin'
+    _inherit = [
+        'cms.form.widget.x2x.mixin',
+        'cms.form.widget.mixin',
+    ]
     _w_template = 'cms_form.field_widget_x2m'
-    w_diplay_field = 'display_name'
-
-    def widget_init(self, form, fname, field, **kw):
-        widget = super().widget_init(form, fname, field, **kw)
-        widget.w_comodel = self.env[widget.w_field['relation']]
-        widget.w_domain = widget.w_field.get('domain', [])
-        return widget
+    _w_display_field = 'display_name'
 
     def w_load(self, **req_values):
         value = super().w_load(**req_values)
@@ -253,13 +282,14 @@ class X2MWidget(models.AbstractModel):
         return False
 
     def x2many_to_form(self, value, **req_values):
+        fname = self.w_data['display_name']
         if self._is_not_valued(value):
-            return json.dumps([])
+            return []
         if (not isinstance(value, str) and
                 self.w_record and self.w_record[self.w_fname] == value):
             # value from record
             value = [
-                {'id': x.id, 'name': x[self.w_diplay_field]}
+                {'id': x.id, fname: x[fname]}
                 for x in value or []
             ]
         elif (isinstance(value, str) and
@@ -267,8 +297,8 @@ class X2MWidget(models.AbstractModel):
             # value from request
             # FIXME: the field could come from the form not the model!
             value = self.w_form_model[self.w_fname].browse(
-                self.w_ids_from_input(value)).read(['name'])
-        value = json.dumps(value)
+                self.w_ids_from_input(value)
+            ).read([fname])
         return value
 
     def w_extract(self, **req_values):
