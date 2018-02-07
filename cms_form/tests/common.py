@@ -1,38 +1,10 @@
-# -*- coding: utf-8 -*-
-# Copyright 2017 Simone Orsi
+# Copyright 2017-2018 Simone Orsi
 # License LGPL-3.0 or later (http://www.gnu.org/licenses/lgpl.html).
 
 
-from cStringIO import StringIO
 from lxml import html
-from werkzeug.wrappers import Request
-import mock
-import urllib
-
-from odoo import http
-from odoo.tests.common import TransactionCase, HttpCase
-
-
-def fake_request(form_data=None, query_string=None,
-                 method='GET', content_type=None):
-    data = urllib.urlencode(form_data or {})
-    query_string = query_string or ''
-    content_type = content_type or 'application/x-www-form-urlencoded'
-    # werkzeug request
-    w_req = Request.from_values(
-        query_string=query_string,
-        content_length=len(data),
-        input_stream=StringIO(data),
-        content_type=content_type,
-        method=method)
-    w_req.session = mock.MagicMock()
-    # odoo request
-    o_req = http.HttpRequest(w_req)
-    o_req.website = mock.MagicMock()
-    o_req.csrf_token = mock.MagicMock()
-    o_req.httprequest = w_req
-    o_req.__testing__ = True
-    return o_req
+from odoo.tests.common import SavepointCase, HttpCase
+from .utils import fake_request, setup_test_model, teardown_test_model
 
 
 class FormTestMixin(object):
@@ -40,9 +12,35 @@ class FormTestMixin(object):
     at_install = False
     post_install = True
 
-    def get_form(self, form_model, req=None, **kw):
+    def get_form(self, form_model, req=None, ctx=None, sudo_uid=None, **kw):
+        """Retrieve and initialize a form.
+
+        :param form_model: model dotted name
+        :param req: a fake request. Default to base fake request
+        :param kw: extra arguments to init the form
+        """
+        model = self.env[form_model]
+        if sudo_uid:
+            model = model.sudo(sudo_uid)
+        if ctx:
+            model = model.with_context(**ctx)
         request = req or fake_request()
-        return self.env[form_model].form_init(request, **kw)
+        return model.form_init(request, **kw)
+
+    # override this in your test case to inject new models on the fly
+    TEST_MODELS_KLASSES = []
+
+    @classmethod
+    def _setup_models(cls):
+        """Setup new fake models for testing."""
+        for kls in cls.TEST_MODELS_KLASSES:
+            setup_test_model(cls.env, kls)
+
+    @classmethod
+    def _teardown_models(cls):
+        """Wipe fake models once tests have finished."""
+        for kls in cls.TEST_MODELS_KLASSES:
+            teardown_test_model(cls.env, kls)
 
 
 class FormRenderMixin(FormTestMixin):
@@ -55,7 +53,7 @@ class FormRenderMixin(FormTestMixin):
             '(//input|//select|//textarea)[@name="{}"]'.format(name))
 
     def assert_match_attrs(self, value, expected):
-        for k, v in expected.iteritems():
+        for k, v in expected.items():
             self.assertEqual(value[k].strip(), v.strip())
 
     def assert_match_inputs(self, node, expected):
@@ -63,15 +61,28 @@ class FormRenderMixin(FormTestMixin):
             self.assertEqual(len(self.find_input_name(node, name)), 1)
 
 
-class FormTestCase(TransactionCase, FormTestMixin):
+class FormTestCase(SavepointCase, FormTestMixin):
     """Base class for transaction cases."""
 
 
-class FormRenderTestCase(TransactionCase, FormRenderMixin):
+class FormRenderTestCase(SavepointCase, FormRenderMixin):
     """Base class for http cases."""
 
 
 class FormHttpTestCase(HttpCase, FormRenderMixin):
 
+    def setUp(self):
+        # HttpCase has no ENV on setUpClass
+        super().setUp()
+        for kls in self.TEST_MODELS_KLASSES:
+            setup_test_model(self.env, kls)
+
+    def tearDown(self):
+        # HttpCase has no ENV on setUpClass
+        for kls in self.TEST_MODELS_KLASSES:
+            teardown_test_model(self.env, kls)
+        super().tearDown()
+
     def html_get(self, url):
-        return html.document_fromstring(self.url_open(url, timeout=30).read())
+        resp = self.url_open(url, timeout=30)
+        return html.document_fromstring(resp.content)

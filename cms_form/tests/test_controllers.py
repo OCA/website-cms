@@ -1,22 +1,25 @@
-# -*- coding: utf-8 -*-
-# Copyright 2017 Simone Orsi
+# Copyright 2017-2018 Simone Orsi
 # License LGPL-3.0 or later (http://www.gnu.org/licenses/lgpl.html).
 
 
 from contextlib import contextmanager
 import mock
 
-from .common import fake_request, FormHttpTestCase
+from .common import FormHttpTestCase
 from ..controllers import main
+from .fake_models import FakePartnerForm, FakeSearchPartnerForm
+from .utils import fake_request
 
 
-IMPORT = 'openerp.addons.cms_form.controllers.main'
+IMPORT = 'odoo.addons.cms_form.controllers.main'
 
 
 class TestControllers(FormHttpTestCase):
 
+    TEST_MODELS_KLASSES = [FakePartnerForm, FakeSearchPartnerForm]
+
     def setUp(self):
-        super(TestControllers, self).setUp()
+        super().setUp()
         self.form_controller = main.CMSFormController()
         self.form_search_controller = main.CMSSearchFormController()
         self.authenticate('admin', 'admin')

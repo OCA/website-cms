@@ -1,13 +1,12 @@
 odoo.define('cms_form.select2widgets', function (require) {
     'use strict';
 
-    var Model = require('web.Model');
     var ajax = require('web.ajax');
     var core = require('web.core');
-    var base = require('web_editor.base');
-
+    var weContext = require("web_editor.context");
     var _t = core._t;
 
+    require('web.dom_ready');
 
     if(!$('.js_select2_m2m_widget').length) {
         return $.Deferred().reject("DOM doesn't contain '.js_select2_m2m_widget'");
@@ -46,7 +45,7 @@ odoo.define('cms_form.select2widgets', function (require) {
                         args: [domain],
                         kwargs: {
                             fields: $input.data('fields'),
-                            context: base.get_context()
+                            context: weContext.get()
                         }
                     }).then(function(data) {
                         var display_name = $input.data('display_name');
