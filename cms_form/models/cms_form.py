@@ -34,7 +34,7 @@ class CMSForm(models.AbstractModel):
         else:
             title = _('Create %s')
             if self._form_model:
-                model = self.env['ir.model'].search(
+                model = self.env['ir.model'].sudo().search(
                     [('model', '=', self._form_model)])
                 name = model and model.name or ''
                 title = _('Create %s') % name

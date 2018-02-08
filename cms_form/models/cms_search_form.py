@@ -44,7 +44,7 @@ class CMSFormSearch(models.AbstractModel):
     def form_title(self):
         title = _('Search')
         if self._form_model:
-            model = self.env['ir.model'].search(
+            model = self.env['ir.model'].sudo().search(
                 [('model', '=', self._form_model)])
             name = model and model.name or ''
             title = _('Search %s') % name
