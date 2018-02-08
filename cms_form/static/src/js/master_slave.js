@@ -35,9 +35,20 @@ odoo.define('cms_form.master_slave', function (require) {
             var handler = self.handlers[action];
             if (handler) {
               $master_input.on('change', function(){
-                handler($(this), mapping) }
-                // trigger change only for specific inputs
-              ).filter(':selected,:checked,[type=text]').trigger('change');
+                var $input = $(this),
+                    val = $input.val();
+                if ($input.is(':checkbox')) {
+                  // value == 'on' => true/false
+                  val = $input.is(':checked');
+                }
+                $.each(mapping, function(slave_fname, values){
+                  if (_.contains(values, val)) {
+                    handler(slave_fname)
+                  }
+                });
+              }).filter(
+                'select,[type=checkbox],[type=radio]:checked,[type=text]'
+              ).trigger('change'); // trigger change to apply maste/slave rules at load
             }
           });
         });
