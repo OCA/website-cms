@@ -45,7 +45,9 @@ odoo.define('cms_form.master_slave', function (require) {
                     handler(slave_fname)
                   }
                 });
-              }).filter('select,[type=checkbox],[type=text]').trigger('change'); // trigger change only for specific inputs
+              }).filter(
+                'select,[type=checkbox],[type=radio]:checked,[type=text]'
+              ).trigger('change'); // trigger change to apply maste/slave rules at load
             }
           })
         })
