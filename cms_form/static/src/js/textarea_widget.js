@@ -1,13 +1,12 @@
 odoo.define('cms_form.textarea_widget', function (require) {
     'use strict';
 
-    var ajax = require('web.ajax');
     require('web.dom_ready');
 
     $(document).ready(function () {
         $('textarea[maxlength]').bind('input propertychange', function(){
             var $self = $(this),
-                maxlength = parseInt($self.attr('maxlength')),
+                maxlength = parseInt($self.attr('maxlength'), 10),
                 length = $self.val().length,
                 left = maxlength - length,
                 $counter = $self.siblings('.text-counter');
