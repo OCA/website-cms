@@ -37,7 +37,10 @@ odoo.define('cms_notification.read_unread', function (require) {
         $.each(ids, function(){
           var $item = $('#item_' + this),
               status = $item.data('status'),
-              next_status = status === 'unread'? 'read': 'unread';
+              next_status = 'unread';
+          if (status === 'unread') {
+            next_status = 'read';
+          }
           // update current item status
           $item.data('status', next_status);
           $item.switchClass('item_' + status, 'item_' + next_status);
