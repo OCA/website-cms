@@ -1,15 +1,14 @@
 odoo.define('cms_delete_content.delete_confirm', function (require) {
     'use strict';
 
-    var ajax = require('web.ajax'),
-        msg_tool = require('cms_status_message.tool'),
+    var msg_tool = require('cms_status_message.tool'),
         core = require('web.core'),
-        _t = core._t,
         sAnimation = require('website.content.snippets.animation');
+    var _t = core._t;
 
     sAnimation.registry.cms_delete_confirm = sAnimation.Class.extend({
       selector: ".cms_delete_confirm",
-      start: function (editable_mode) {
+      start: function () {
         this.modal_url = this.$el.attr('href');
         this.$el.on('click', $.proxy(this.handle_click, this));
       },
