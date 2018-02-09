@@ -104,7 +104,7 @@ class PartnerForm(models.AbstractModel):
         # TODO: this could be useless as we validate w/ `form_validate_email`
         valid = validate_email(email)
         if email and valid and not user._is_admin():
-            exists = user.sudo().search_count(
+            exists = user.with_context(active_test=False).sudo().search_count(
                 ['|', ('login', '=', email), ('email', '=', email)]
             )
             if exists and self.o_request.website:
