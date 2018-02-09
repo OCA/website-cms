@@ -1,0 +1,25 @@
+<?xml version="1.0" encoding="utf-8" ?>
+<!--
+Copyright 2017-2018 Simone Orsi
+License LGPL-3.0 or later (http://www.gnu.org/licenses/lgpl.html).
+-->
+<odoo>
+
+
+<template id="field_widget_notification_selection" name="CMS notification selection widget"
+    inherit_id="cms_form.field_widget_radio_selection">
+
+  <xpath expr="//div[hasclass('option-item')]" position="inside">
+    <t t-set="subfields_by_value" t-value="widget.w_subfields_by_value(opt_item['value'])" />
+    <!-- inject subwidgets by option value -->
+    <t t-foreach="subfields_by_value.keys()" t-as="sub">
+      <t t-set="subwidget" t-value="subfields_by_value[sub]['widget']" />
+      <div class="subwidget">
+        <t t-raw="subwidget.render()" />
+      </div>
+    </t>
+  </xpath>
+
+</template>
+
+</odoo>

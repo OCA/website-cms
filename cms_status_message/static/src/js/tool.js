@@ -1,10 +1,9 @@
 odoo.define('cms_status_message.tool', function (require) {
     'use strict';
 
-    var session = require('web.session'),
-        core = require('web.core'),
-        qweb = core.qweb,
+    var core = require('web.core'),
         ajax = require('web.ajax');
+    var qweb = core.qweb;
 
     // load existing qweb templates
     ajax.jsonRpc('/web/dataset/call', 'call', {
@@ -28,14 +27,14 @@ odoo.define('cms_status_message.tool', function (require) {
             'model': 'website',
             'method': 'add_status_message',
             'args': [[msg, ], options]
-          })
+          });
         },
         get_messages: function get_messages() {
             return ajax.jsonRpc('/web/dataset/call', 'call', {
               'model': 'website',
               'method': 'get_status_message',
               'args': []
-            })
+            });
         },
         render_messages: function render_messages(msg, selector) {
             // defaults
@@ -44,7 +43,7 @@ odoo.define('cms_status_message.tool', function (require) {
                 'title': null,
                 'type': 'info',
                 'dismissible': true
-            }
+            };
             // inject user values
             $.extend(status_message, msg);
             // render it
@@ -55,10 +54,10 @@ odoo.define('cms_status_message.tool', function (require) {
             if(selector){
                 $(result).prependTo(selector);
             }
-            return result
+            return result;
         }
-    }
+    };
 
-    return MessageTool
+    return MessageTool;
 
 });

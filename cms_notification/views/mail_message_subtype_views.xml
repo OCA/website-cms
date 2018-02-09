@@ -1,0 +1,28 @@
+<?xml version="1.0" encoding="utf-8" ?>
+<!--
+Copyright 2017-2018 Simone Orsi
+License LGPL-3.0 or later (http://www.gnu.org/licenses/lgpl.html).
+-->
+<odoo>
+    <record model="ir.ui.view" id="message_subtype_tree">
+        <field name="name">mail_digest mail.message.subtype.tree</field>
+        <field name="model">mail.message.subtype</field>
+        <field name="inherit_id" ref="mail.view_message_subtype_tree"/>
+        <field name="arch" type="xml">
+            <field name="default" position="after">
+                <field name="cms_type"/>
+            </field>
+        </field>
+    </record>
+
+    <record model="ir.ui.view" id="mail_message_subtype_form">
+        <field name="name">mail_digest mail.message.subtype.form</field>
+        <field name="model">mail.message.subtype</field>
+        <field name="inherit_id" ref="mail.view_mail_message_subtype_form"/>
+        <field name="arch" type="xml">
+            <field name="default" position="after">
+                <field name="cms_type"/>
+            </field>
+        </field>
+    </record>
+</odoo>

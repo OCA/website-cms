@@ -1,0 +1,20 @@
+<?xml version="1.0" encoding="utf-8" ?>
+<!--
+Copyright 2017-2018 Simone Orsi
+License LGPL-3.0 or later (http://www.gnu.org/licenses/lgpl.html).
+-->
+<odoo>
+
+  <template id="notify_email_help_always" name="CMS notification form - notify_email help `all`">
+    <p>You will receive an email for every notification.</p>
+  </template>
+
+  <template id="notify_email_help_digest" name="CMS notification form - notify_email help `digest`">
+    <p>You will receive a summary of the notification in the chosen frequency.</p>
+  </template>
+
+  <template id="notify_email_help_none" name="CMS notification form - notify_email help `never`">
+    <p>I don't want to get notification emails.</p>
+  </template>
+
+</odoo>

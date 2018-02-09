@@ -1,0 +1,25 @@
+<?xml version="1.0" encoding="utf-8" ?>
+<!--
+Copyright 2017-2018 Simone Orsi
+License LGPL-3.0 or later (http://www.gnu.org/licenses/lgpl.html).
+-->
+<odoo>
+
+    <template id="user_menu" name="CMS notification user menu" inherit_id="website.layout">
+      <xpath expr="//ul[@id='top_menu']/li[hasclass('dropdown')]" position="attributes">
+        <attribute name="id">user-menu</attribute>
+        <attribute name="class"></attribute>
+        <attribute name="t-att-class">'dropdown' + (' has_unread_notif' if request.env.user.has_unread_notif else '')</attribute>
+      </xpath>
+      <xpath expr="//li[@id='o_logout']" position="before">
+        <li id="notifications-settings">
+          <a role="menuitem" href="/my/settings/notifications"><i class="fa fa-envelope" t-translation="off" /> Notifications settings</a>
+        </li>
+        <li id="notifications">
+          <a role="menuitem" href="/my/notifications"><i class="fa fa-envelope" t-translation="off" /> Notifications</a>
+        </li>
+        <li role="separator" class="divider"></li>
+      </xpath>
+    </template>
+
+</odoo>
