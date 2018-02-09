@@ -11,7 +11,7 @@ odoo.define('cms_form.master_slave', function (require) {
 
     sAnimation.registry.CMSFormMasterSlave = sAnimation.Class.extend({
       selector: ".cms_form_wrapper form",
-      start: function (editable_mode) {
+      start: function () {
         this.data = this.$el.data('form');
         this.setup_handlers();
         this.load_master_slave();
@@ -42,15 +42,16 @@ odoo.define('cms_form.master_slave', function (require) {
                 }
                 $.each(mapping, function(slave_fname, values){
                   if (_.contains(values, val)) {
-                    handler(slave_fname)
+                    handler(slave_fname);
                   }
                 });
               }).filter(
                 'select,[type=checkbox],[type=radio]:checked,[type=text]'
-              ).trigger('change'); // trigger change to apply maste/slave rules at load
+              ).trigger('change');
+              // trigger change to apply maste/slave rules at load
             }
-          })
-        })
+          });
+        });
       },
       handle_hide: function(slave_fname){
         $('[name="' + slave_fname +'"]').closest('.form-group').hide();

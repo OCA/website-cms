@@ -20,9 +20,8 @@ odoo.define('cms_form.date_widget', function (require) {
                 .closest('.input-group')
                 .find('.js_datepicker_trigger').click(function(){
                     $input.datepicker('show');
-                })
-        })
-
+                });
+        });
 
     });
 

@@ -2,9 +2,7 @@ odoo.define('cms_form.select2widgets', function (require) {
     'use strict';
 
     var ajax = require('web.ajax');
-    var core = require('web.core');
     var weContext = require("web_editor.context");
-    var _t = core._t;
 
     require('web.dom_ready');
 
@@ -16,24 +14,23 @@ odoo.define('cms_form.select2widgets', function (require) {
 
         $('input.js_select2_m2m_widget').each(function(){
             var $input = $(this);
-            var lastsearch = [];
             $input.select2({
                 multiple: true,
                 tags: true,
                 tokenSeparators: [",", " ", "_"],
                 formatResult: function(term) {
+                    var formatted = _.escape(term.text);
                     if (term.isNew) {
-                        return '<span class="label label-primary">New</span> ' + _.escape(term.text);
-                    } else {
-                        return _.escape(term.text);
+                        formatted = '<span class="label label-primary">New</span> ' + formatted;
                     }
+                    return formatted;
                 },
                 query: function(options) {
                     var domain = [];
                     if (options.term){
                         domain.push([
                           $input.data('search_field') || 'name', 'ilike', '%' + options.term + '%'
-                        ])
+                        ]);
                     }
                     // TODO: use data.CompundDomain to build domain
                     // ATM it's just in backend assets
