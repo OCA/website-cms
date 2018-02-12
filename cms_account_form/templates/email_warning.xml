@@ -1,0 +1,15 @@
+<?xml version="1.0" encoding="utf-8"?>
+<!--
+Copyright 2018-2018 Simone Orsi - Camptocamp SA
+License LGPL-3.0 or later (http://www.gnu.org/licenses/lgpl.html).
+-->
+<odoo>
+
+  <template id="email_field_update_warning" name="CMS account form email warning">
+    <div class="alert alert-warning" role="alert">
+      <strong>If you modify your email, your login will be updated as well.</strong><br />
+      You'll be logged out and a confirmation email will be sent to the new address.
+    </div>
+  </template>
+
+</odoo>
