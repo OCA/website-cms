@@ -235,4 +235,49 @@ License LGPL-3.0 or later (http://www.gnu.org/licenses/lgpl.html).
 </template>
 
 
+<template id="wizard_form_wrapper" name="CMS wizard form wrapper"
+          inherit_id="cms_form.form_wrapper" primary="True">
+
+  <t t-if="form.form_title" position="before">
+    <t t-if="form.wiz_show_progress_bar">
+      <t t-call="cms_form.wizard_progress_bar" />
+    </t>
+  </t>
+
+</template>
+
+
+<template id="wizard_progress_bar" name="CMS Wizard progress bar">
+  <ul class="status-bar wizard-status-bar hidden-xs">
+    <t t-set="current_step" t-value="form.wiz_current_step()" />
+    <t t-foreach="form.wiz_steps" t-as="step">
+      <t t-set="info" t-value="form.wiz_get_step_info(step)" />
+      <li t-attf-id="step_#{step}" t-attf-class="step">
+        <span t-if="info.get('title')" t-esc="info['title']" t-att-title="info.get('description')"
+              t-attf-class="#{page == step and 'active text-primary' or 'text-muted'}" />
+      </li>
+    </t>
+  </ul>
+</template>
+
+
+<template id="wizard_form_buttons" name="CMS wizard form buttons"
+          inherit_id="cms_form.base_form_buttons" primary="True">
+
+  <xpath expr="//div[hasclass('form-controls')]" position="replace">
+    <div class="form-group form-controls">
+      <t t-if="form.wiz_next_step()">
+        <button type="submit" name="wiz_submit" value="next" class="btn btn-primary btn-next pull-right">Next</button>
+      </t>
+      <t t-else="">
+        <button type="submit" class="btn btn-primary pull-right">Submit</button>
+      </t>
+      <t t-if="form.wiz_prev_step()">
+        <button type="submit" name="wiz_submit" value="prev" class="btn btn-primary btn-prev pull-left">Prev</button>
+      </t>
+     </div>
+  </xpath>
+
+</template>
+
 </odoo>

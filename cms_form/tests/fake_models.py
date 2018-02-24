@@ -15,8 +15,7 @@ class FakePartnerForm(models.AbstractModel):
 
     custom = fields.Char()
 
-    def _form_load_custom(
-            self, main_object, fname, value, **req_values):
+    def _form_load_custom(self, fname, field, value, **req_values):
         return req_values.get('custom', 'oh yeah!')
 
 
@@ -90,3 +89,58 @@ class FakeFieldsForm(models.AbstractModel):
     def _form_validate_char(self, value, **request_values):
         """Specific validator for all `char` fields."""
         return not len(value) > 8, 'Text length must be greater than 8!'
+
+
+FAKE_STORAGE = {}
+
+
+class FakeWiz(models.AbstractModel):
+    """A wizard form."""
+
+    _name = 'fake.wiz'
+    _inherit = 'cms.form.wizard'
+    _wiz_name = _name
+
+    @property
+    def _wiz_storage(self):
+        return FAKE_STORAGE
+
+    def wiz_configure_steps(self):
+        return {
+            1: {'form_model': 'fake.wiz.step1.country'},
+            2: {'form_model': 'fake.wiz.step2.partner'},
+            3: {'form_model': 'fake.wiz.step3.partner'},
+        }
+
+
+class FakeWizStep1Country(models.AbstractModel):
+
+    _name = 'fake.wiz.step1.country'
+    _inherit = 'fake.wiz'
+    _form_model = 'res.country'
+    _form_model_fields = ('name', )
+
+
+class FakeWizStep2Partner(models.AbstractModel):
+
+    _name = 'fake.wiz.step2.partner'
+    _inherit = 'fake.wiz'
+    _form_model = 'res.partner'
+    _form_model_fields = ('name', 'to_be_stored', )
+    _wiz_step_stored_fields = ('to_be_stored', )
+
+    to_be_stored = fields.Char()
+
+
+class FakeWizStep3Partner(models.AbstractModel):
+
+    _name = 'fake.wiz.step3.partner'
+    _inherit = 'fake.wiz'
+    _form_model = 'res.partner'
+    _form_model_fields = ('name', )
+
+
+WIZ_KLASSES = [
+    FakeWiz, FakeWizStep1Country,
+    FakeWizStep2Partner, FakeWizStep3Partner
+]

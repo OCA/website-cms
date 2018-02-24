@@ -1,0 +1,91 @@
+@cms-prog-bar-bg: @brand-primary;
+@cms-prog-bar-bg-active: darken(@cms-prog-bar-bg, 10%);
+@cms-prog-bar-bg-hover: lighten(@cms-prog-bar-bg, 10%);
+
+// not using `progress-bar` as it's already styled
+// for percentage bar by bootstrap
+.cms_form_wrapper .status-bar{
+  float: right;
+  overflow: hidden;
+  list-style:none;
+  display: inline-block;
+  margin: 1em 0 !important;
+
+  .icon{
+    font-size: 14px;
+  }
+
+  li{
+    float:left;
+    a, span{
+      color:#FFF;
+      display:block;
+      background-color: @cms-prog-bar-bg;
+      text-decoration: none;
+      position:relative;
+      height: 40px;
+      line-height:40px;
+      padding: 0 20px 0 10px;
+      text-align: center;
+      margin-right: 23px;
+    }
+    &:first-child{
+      a, span{
+        padding-left:15px;
+        &:before{
+          border:none;
+         }
+      }
+    }
+    &:last-child{
+      a, span{
+        padding-right:15px;
+        &:after{
+          border:none;
+        }
+      }
+    }
+
+    a, span{
+      &:before,
+      &:after{
+        content: "";
+        position:absolute;
+        top: 0;
+        border:0 solid @cms-prog-bar-bg;
+        border-width:20px 10px;
+        width: 0;
+        height: 0;
+      }
+      &:before{
+        left:-20px;
+        border-left-color:transparent;
+      }
+      &:after{
+        left:100%;
+        border-color:transparent;
+        border-left-color: @cms-prog-bar-bg;
+      }
+      &:hover{
+        background-color: @cms-prog-bar-bg-hover;
+        &:before{
+          border-color: @cms-prog-bar-bg-hover;
+          border-left-color:transparent;
+         }
+        &:after{
+          border-left-color: @cms-prog-bar-bg-hover;
+        }
+      }
+      &.active{
+        background-color: @cms-prog-bar-bg-active;
+        &:before{
+          border-color:@cms-prog-bar-bg-active;
+          border-left-color:transparent;
+         }
+        &:after{
+          border-left-color:@cms-prog-bar-bg-active;
+        }
+      }
+    }
+  }
+}
