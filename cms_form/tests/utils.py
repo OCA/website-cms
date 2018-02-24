@@ -4,6 +4,7 @@
 
 from io import StringIO
 from werkzeug.wrappers import Request
+from werkzeug.contrib.sessions import SessionStore
 import mock
 import urllib.parse
 
@@ -33,10 +34,20 @@ def fake_request(form_data=None, query_string=None,
     return o_req
 
 
+class FakeSessionStore(SessionStore):
+
+    def delete(self, session):
+        session.clear()
+        del session
+
+
+session_store = FakeSessionStore(session_class=http.OpenERPSession)
+
+
 def fake_session(env, **kw):
     db = get_db_name()
     env = api.Environment(env.cr, env.uid, {})
-    session = http.root.session_store.new()
+    session = session_store.new()
     session.db = db
     session.uid = env.uid
     session.login = 'admin'
@@ -47,7 +58,7 @@ def fake_session(env, **kw):
     for k, v in kw.items():
         if hasattr(session, k):
             setattr(session, k, v)
-    session.__fake_session = True
+    session.__testing__ = True
     return session
 
 
