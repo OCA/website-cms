@@ -18,6 +18,11 @@ Go on the website app of Odoo. Then you can reach the following pages:
 * /partners/add: shows you a nice form to add a new partner
 * /partners/$ID/edit: shows you a nice form to edit partner with matching $ID
 
+Above mentioned forms are available also in fieldset and tabbed mode:
+
+* /partners/fieldset/add
+* /partners/tabbed/add
+
 Pick up a partner form /partners page to see details for this partner.
 
 Bug Tracker

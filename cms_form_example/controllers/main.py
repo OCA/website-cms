@@ -6,7 +6,7 @@ from odoo.addons.cms_form.controllers.main import SearchFormControllerMixin
 from odoo.addons.cms_form.controllers.main import FormControllerMixin
 
 
-class PartnerFormController(http.Controller, FormControllerMixin):
+class PartnerForm(http.Controller, FormControllerMixin):
     """Partner form controller."""
 
     @http.route([
@@ -19,6 +19,40 @@ class PartnerFormController(http.Controller, FormControllerMixin):
         model = 'res.partner'
         return self.make_response(
             model, model_id=main_object and main_object.id, **kw)
+
+
+class PartnerFormFieldset(http.Controller, FormControllerMixin):
+    """Partner form w/ fieldsets."""
+
+    @http.route([
+        '/partner/fieldset/add',
+        '/partner/fieldset/<model("res.partner"):main_object>/edit',
+    ], type='http', auth='user', website=True)
+    def cms_form(self, main_object=None, **kw):
+        model = 'res.partner'
+        return self.make_response(
+            model, model_id=main_object and main_object.id, **kw)
+
+    def form_model_key(self, model):
+        """Return a valid form model."""
+        return 'cms.form.res.partner.fset'
+
+
+class PartnerFormTabbedFieldset(http.Controller, FormControllerMixin):
+    """Partner form w/ tabs."""
+
+    @http.route([
+        '/partner/tabbed/add',
+        '/partner/tabbed/<model("res.partner"):main_object>/edit',
+    ], type='http', auth='user', website=True)
+    def cms_form(self, main_object=None, **kw):
+        model = 'res.partner'
+        return self.make_response(
+            model, model_id=main_object and main_object.id, **kw)
+
+    def form_model_key(self, model):
+        """Return a valid form model."""
+        return 'cms.form.res.partner.fset.tabbed'
 
 
 class PartnerListing(http.Controller, SearchFormControllerMixin):
