@@ -48,14 +48,67 @@ License LGPL-3.0 or later (http://www.gnu.org/licenses/lgpl.html).
 </template>
 
 <template id="base_form_fields" name="CMS form fields">
-    <t t-foreach="form_fields.keys()" t-as="fname">
-      <t t-if="not form_fields[fname].get('is_subfield')">
-        <t t-call="cms_form.form_horizontal_field_wrapper">
-          <t t-set="field" t-value="form_fields[fname]" />
-          <t t-set="widget" t-value="field['widget']" />
+  <div t-attf-class="form-fields #{ form.form_fieldsets_wrapper_klass }">
+    <t t-if="form_fieldsets">
+      <t t-if="form._form_fieldsets_display == 'tabs'">
+        <t t-call="cms_form.fieldsets_as_tabs" />
+      </t>
+      <t t-else="">
+        <t t-foreach="form_fieldsets" t-as="fset">
+          <t t-call="cms_form.single_fieldset" />
         </t>
       </t>
     </t>
+    <t t-else="">
+      <t t-foreach="form_fields.keys()" t-as="fname">
+        <t t-call="cms_form.single_field" />
+      </t>
+    </t>
+  </div>
+</template>
+
+<template id="single_field" name="CMS form single field">
+    <t t-if="not form_fields[fname].get('is_subfield')">
+      <t t-call="cms_form.form_horizontal_field_wrapper">
+        <t t-set="field" t-value="form_fields[fname]" />
+        <t t-set="widget" t-value="field['widget']" />
+      </t>
+    </t>
+</template>
+
+<template id="single_fieldset" name="CMS form single fieldset">
+  <fieldset t-att-id="fset['id']" t-att-class="fset.get('css_extra_klass')">
+    <t t-if="show_legend is not False and fset.get('title')">
+      <legend t-esc="fset['title']" />
+    </t>
+    <t t-if="fset.get('description')">
+      <p class="fieldset-description" t-esc="fset['description']" />
+    </t>
+    <t t-foreach="fset['fields']" t-as="fname">
+      <t t-call="cms_form.single_field" />
+    </t>
+  </fieldset>
+</template>
+
+<template id="fieldsets_as_tabs" name="CMS form fieldsets as tabs">
+  <ul class="nav nav-tabs" role="tablist">
+    <t t-foreach="form_fieldsets" t-as="fset">
+      <li t-att-class="fset_first and 'active' or None" role="presentation">
+        <a t-attf-href="#tab-#{fset['id']}"
+           t-attf-aria-controls="tab-#{fset['id']}"
+           role="tab" data-toggle="tab" t-esc="fset['title']">Home</a>
+      </li>
+    </t>
+  </ul>
+  <div class="tab-content">
+    <t t-foreach="form_fieldsets" t-as="fset">
+      <div t-attf-id="tab-#{fset['id']}" t-attf-class="tab-pane #{fset_first and 'active' or ''}" role="tabpanel">
+        <t t-call="cms_form.single_fieldset">
+          <t t-set="show_legend" t-value="False" />
+        </t>
+      </div>
+    </t>
+  </div>
 </template>
 
 
@@ -71,6 +124,7 @@ License LGPL-3.0 or later (http://www.gnu.org/licenses/lgpl.html).
     </t>
 
     <t t-set="form_fields" t-value="form.form_fields()" />
+    <t t-set="form_fieldsets" t-value="form.form_fieldsets()" />
 
     <t t-call="#{ form.form_fields_template }" />
 

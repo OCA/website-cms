@@ -20,6 +20,7 @@ Features
     * field value load (from existing instance or from request)
     * field value extraction (from request)
     * field value write (to existing instance)
+* automatic field grouping in fieldsets
 
 * highly customizable
 * works with every odoo model
@@ -99,6 +100,59 @@ The form above can be extended with extra fields that are not part of the ``_for
 ``notify_partner`` will be included into the form but it will be discarded on create and write.
 Nevertheless you can use it as a control flag before and after the record has been created or updated
 using the hook ``form_after_create_or_update``, as you see in this example.
+
+
+Form with fieldsets and tabs
+----------------------------
+
+You want to group fields into meaningful groups. You can use fieldsets:
+
+.. code-block:: python
+
+    class PartnerForm(models.AbstractModel):
+
+        _name = 'cms.form.res.partner'
+        _inherit = 'cms.form'
+        _form_model = 'res.partner'
+        _form_model_fields = ('name', 'country_id', 'email')
+        _form_required_fields = ('name', 'country_id', 'email')
+        _form_fieldsets = [
+            {
+                'id': 'main',
+                'title': 'Main',
+                'fields': [
+                    'name',
+                    'email',
+                ],
+            },
+            {
+                'id': 'secondary',
+                'title': 'Secondary',
+                'fields': [
+                    'country_id',
+                    'notify_partner',
+                ],
+            },
+        ]
+
+        notify_partner = fields.Boolean()
+
+|preview_fieldsets|
+
+
+If you want fieldsets to be displayed as tabs, just override this option:
+
+.. code-block:: python
+
+    class PartnerForm(models.AbstractModel):
+
+        _name = 'cms.form.res.partner'
+        _inherit = 'cms.form'
+        _form_fieldsets = [...]
+        _form_fieldsets_display = 'tabs'
+
+
+|preview_tabbed|
 
 
 Search form
@@ -220,3 +274,5 @@ To contribute to this module, please visit https://odoo-community.org.
 .. |preview_create| image:: ./images/cms_form_example_create_partner.png
 .. |preview_edit| image:: ./images/cms_form_example_edit_partner.png
 .. |preview_search| image:: ./images/cms_form_example_search.png
+.. |preview_fieldsets| image:: ./images/cms_form_example_fieldsets.png
+.. |preview_tabbed| image:: ./images/cms_form_example_tabbed.png
