@@ -439,12 +439,15 @@ class CMSFormMixin(models.AbstractModel):
         """
         return self._form_extra_css_klass
 
-    def form_json_info(self):
+    def _form_json_info(self):
         info = {}
         info.update({
             'master_slave': self._form_master_slave_info()
         })
-        return json.dumps(info)
+        return info
+
+    def form_json_info(self):
+        return json.dumps(self._form_json_info())
 
     def _form_master_slave_info(self):
         """Return info about master/slave fields JSON compatible.
