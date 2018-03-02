@@ -189,10 +189,8 @@ class X2MWidget(models.AbstractModel):
     def x2many_to_form(self, value, **req_values):
         if self._is_not_valued(value):
             return json.dumps([])
-        # FIXME: this check can compare pears and apples
-        # because the value might come from the request
-        # and we compare objects to strings or list of strings
-        if self.w_record and value == self.w_record[self.w_fname]:
+        if (not isinstance(value, str) and
+                self.w_record and self.w_record[self.w_fname] == value):
             # value from record
             value = [
                 {'id': x.id, 'name': x[self.w_diplay_field]}
