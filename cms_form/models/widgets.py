@@ -177,8 +177,17 @@ class X2MWidget(models.AbstractModel):
         value = super().w_load(**req_values)
         return self.x2many_to_form(value, **req_values)
 
-    def x2many_to_form(self, value, **req_values):
+    def _is_not_valued(self, value):
         if not value:
+            return True
+        if isinstance(value, (list, tuple)):
+            # if value comes from `default_get` we have [(6, 0, [])]
+            if not all([x[-1] for x in value]):
+                return True
+        return False
+
+    def x2many_to_form(self, value, **req_values):
+        if self._is_not_valued(value):
             return json.dumps([])
         # FIXME: this check can compare pears and apples
         # because the value might come from the request
