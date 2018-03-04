@@ -25,10 +25,6 @@ Features
 * highly customizable
 * works with every odoo model
 * works also without any model
-* add handy attributes to models inheriting from ``website.published.mixin``:
-    * ``cms_add_url``: lead to create form view. By default ``/cms/form/create/my.model``
-    * ``cms_edit_url``: lead to edit form view. By default ``/cms/form/edit/my.model/model_id``
-    * ``cms_search_url``: lead to search form view. By default ``/cms/form/search/my.model``
 
 Usage
 =====
@@ -62,8 +58,8 @@ Here's the result:
 
 The form will be automatically available on these routes:
 
-* ``/cms/form/create/res.partner`` to create new partners
-* ``/cms/form/edit/res.partner/1`` edit existing partners (partner id=1 in this case)
+* ``/cms/create/res.partner`` to create new partners
+* ``/cms/edit/res.partner/1`` edit existing partners (partner id=1 in this case)
 
 NOTE: default generic routes work if the form's name is ``cms.form.`` + model name, like ``cms.form.res.partner``.
 If you want you can easily define your own controller and give your form a different name,
@@ -174,7 +170,7 @@ Just inherit from ``cms.form.search`` to add a form for your model. Quick exampl
 
 |preview_search|
 
-The form will be automatically available at: ``/cms/form/search/res.partner``.
+The form will be automatically available at: ``/cms/search/res.partner``.
 
 NOTE: default generic routes work if the form's name is ```cms.form.search`` + model name, like ``cms.form.search.res.partner``.
 If you want you can easily define your own controller and give your form a different name,
