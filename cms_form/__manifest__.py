@@ -10,6 +10,7 @@
     'author': 'Camptocamp, Odoo Community Association (OCA)',
     'depends': [
         'website',
+        'cms_info',
         'cms_status_message',
     ],
     'data': [
