@@ -116,8 +116,8 @@ class CMSFormController(http.Controller, FormControllerMixin):
     """CMS form controller."""
 
     @http.route([
-        '/cms/form/create/<string:model>',
-        '/cms/form/edit/<string:model>/<int:model_id>',
+        '/cms/create/<string:model>',
+        '/cms/edit/<string:model>/<int:model_id>',
     ], type='http', auth='user', website=True)
     def cms_form(self, model, model_id=None, **kw):
         """Handle a `form` route.
@@ -169,8 +169,8 @@ class CMSSearchFormController(http.Controller, SearchFormControllerMixin):
     """CMS form controller."""
 
     @http.route([
-        '/cms/form/search/<string:model>',
-        '/cms/form/search/<string:model>/page/<int:page>',
+        '/cms/search/<string:model>',
+        '/cms/search/<string:model>/page/<int:page>',
     ], type='http', auth='public', website=True)
     def cms_form(self, model, **kw):
         """Handle a search `form` route.

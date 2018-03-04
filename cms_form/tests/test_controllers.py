@@ -100,6 +100,17 @@ class TestControllers(FormHttpTestCase):
         }
         self.assert_match_attrs(form_node.attrib, expected_attrs)
 
+    def test_default_routes(self):
+        self._check_route(
+            '/cms/create/res.partner',
+            'res.partner',
+            'create')
+        partner = self.env.ref('base.res_partner_1')
+        self._check_route(
+            '/cms/edit/res.partner/{}'.format(partner.id),
+            'res.partner',
+            'edit')
+
     def test_default_create_rendering(self):
         dom = self.html_get('/cms/form/create/res.partner')
         self._check_rendering(
