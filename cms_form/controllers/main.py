@@ -105,7 +105,7 @@ class FormControllerMixin(object):
           it redirects to it.
         * otherwise it just renders the form
         """
-        main_object = None
+        main_object = request.env[model]
         if model_id:
             main_object = request.env[model].browse(model_id)
         self.check_permission(model, main_object)
