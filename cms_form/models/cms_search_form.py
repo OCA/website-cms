@@ -123,6 +123,10 @@ class CMSFormSearch(models.AbstractModel):
                 continue
             elif field['type'] in ('boolean', ):
                 value = value == 'on' and True
+            elif field['type'] in ('date', 'datetime'):
+                if not value:
+                    # searching for an empty string breaks search
+                    continue
             leaf = (fname, operator, value)
             domain.append(leaf)
         return domain
