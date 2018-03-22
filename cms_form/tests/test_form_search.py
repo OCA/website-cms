@@ -3,12 +3,18 @@
 
 from .common import FormTestCase
 from .utils import fake_request
-from .fake_models import FakePartnerForm, FakeSearchPartnerForm
+from .fake_models import (
+    FakePartnerForm, FakeSearchPartnerForm, FakeSearchPartnerFormMulti
+)
 
 
 class TestCMSSearchForm(FormTestCase):
 
-    TEST_MODELS_KLASSES = [FakePartnerForm, FakeSearchPartnerForm]
+    TEST_MODELS_KLASSES = [
+        FakePartnerForm,
+        FakeSearchPartnerForm,
+        FakeSearchPartnerFormMulti,
+    ]
 
     @classmethod
     def setUpClass(cls):
@@ -23,7 +29,8 @@ class TestCMSSearchForm(FormTestCase):
 
     @classmethod
     def _setup_records(cls):
-        cls.partner_model = cls.env['res.partner']
+        cls.partner_model = cls.env['res.partner'].with_context(
+            tracking_disable=True)
 
         cls.expected_partners = []
         cls.expected_partners_ids = []
@@ -54,28 +61,43 @@ class TestCMSSearchForm(FormTestCase):
             sorted(expected.mapped('id')),
         )
 
-    def get_search_form(self, data):
+    def get_search_form(self, data, form_model='cms.form.search.res.partner'):
         request = fake_request(form_data=data)
-        form = self.get_form(
-            'cms.form.search.res.partner', req=request)
+        form = self.get_form(form_model, req=request)
         # restrict search results to these ids
         form.test_record_ids = self.expected_partners_ids
-        form.form_process()
         return form
 
     def test_search(self):
         data = {'name': 'Salmo', }
         form = self.get_search_form(data)
+        form.form_process()
         self.assert_results(form, 1, self.expected_partners[:1])
 
         data = {'name': 'Marracash', }
         form = self.get_search_form(data)
+        form.form_process()
         self.assert_results(form, 1, self.expected_partners[1:2])
 
         data = {'country_id': self.env.ref('base.it').id, }
         form = self.get_search_form(data)
+        form.form_process()
         self.assert_results(form, 2, self.expected_partners[:2])
 
         data = {'country_id': self.env.ref('base.fr').id, }
         form = self.get_search_form(data)
+        form.form_process()
         self.assert_results(form, 1, self.expected_partners[4:])
+
+    def test_search_multi(self):
+        countries = [
+            self.env.ref('base.it').id,
+            self.env.ref('base.fr').id,
+        ]
+        data = {'country_id':  ','.join(map(str, countries))}
+        form = self.get_search_form(
+            data, form_model='cms.form.search.res.partner.multicountry')
+        form.form_process()
+        expected = self.expected_partners.filtered(
+            lambda x: x.country_id.id in countries)
+        self.assert_results(form, 3, expected)
