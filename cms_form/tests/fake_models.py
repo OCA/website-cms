@@ -26,7 +26,7 @@ class FakeSearchPartnerForm(models.AbstractModel):
     _name = 'cms.form.search.res.partner'
     _inherit = 'cms.form.search'
     _form_model = 'res.partner'
-    _form_model_fields = ('name', 'country_id')
+    _form_model_fields = ('name', 'country_id', )
 
     def form_search_domain(self, search_values):
         """Force domain to include only test-created records."""
@@ -39,6 +39,22 @@ class FakeSearchPartnerForm(models.AbstractModel):
         if include_only_ids:
             domain.append(('id', 'in', include_only_ids))
         return domain
+
+
+class FakeSearchPartnerFormMulti(models.AbstractModel):
+    """A test model search form w/ multiple values for country."""
+
+    _name = 'cms.form.search.res.partner.multicountry'
+    _inherit = 'cms.form.search.res.partner'
+    _form_search_fields_multi = ('country_id', )
+
+    @property
+    def form_widgets(self):
+        res = super().form_widgets
+        res.update({
+            'country_id': 'cms.form.widget.many2one.multi',
+        })
+        return res
 
 
 class FakeFieldsForm(models.AbstractModel):
