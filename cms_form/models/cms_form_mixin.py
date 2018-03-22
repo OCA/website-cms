@@ -35,6 +35,7 @@ class CMSFormMixin(models.AbstractModel):
     form_template = 'cms_form.base_form'
     form_fields_template = 'cms_form.base_form_fields'
     form_buttons_template = 'cms_form.base_form_buttons'
+    form_display_mode = 'horizontal'  # or 'vertical'
     form_action = ''
     form_method = 'POST'
     _form_mode = ''
@@ -380,6 +381,8 @@ class CMSFormMixin(models.AbstractModel):
         """
         values = self.form_render_values.copy()
         values.update(kw)
+        values['field_wrapper_template'] = \
+            'cms_form.form_{}_field_wrapper'.format(self.form_display_mode)
         return self.env.ref(self.form_template).render(values)
 
     def form_process(self, **kw):
@@ -437,7 +440,13 @@ class CMSFormMixin(models.AbstractModel):
 
         By default you can provide extra klasses via `_form_extra_css_klass`.
         """
-        return self._form_extra_css_klass
+        klass = ''
+        if self.form_display_mode == 'horizontal':
+            klass = 'form-horizontal '
+        elif self.form_display_mode == 'vertical':
+            # actually not a real BS3 css klass but helps styling
+            klass = 'form-vertical '
+        return klass + self._form_extra_css_klass
 
     def _form_json_info(self):
         info = {}
