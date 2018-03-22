@@ -101,6 +101,7 @@ License LGPL-3.0 or later (http://www.gnu.org/licenses/lgpl.html).
     <input t-att-name="widget.w_fname" t-att-id="widget.w_fname"
            t-attf-class="form-control js_datepicker #{widget.w_css_klass}"
            type="text" data-format="yy-mm-dd" placeholder="YYYY-MM-DD"
+           t-att-data-params='widget.w_data_json()'
            t-att-value="widget.w_field_value"/>
     <span class="input-group-addon js_datepicker_trigger">
       <span class="fa fa-calendar"></span>
