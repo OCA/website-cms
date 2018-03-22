@@ -18,10 +18,12 @@ class CMSFormSearch(models.AbstractModel):
     _form_mode = 'search'
     _form_extract_value_mode = 'read'
     # show results if no query has been submitted?
-    _form_show_results_no_submit = 1
+    _form_show_results_no_submit = True
     _form_results_per_page = 10
     # sort by this param, defaults to model's `_order`
     _form_results_orderby = ''
+    # declare fields that must be searched w/ multiple values
+    _form_search_fields_multi = ()
 
     def form_update_fields_attributes(self, _fields):
         """No field should be mandatory."""
@@ -102,6 +104,10 @@ class CMSFormSearch(models.AbstractModel):
         for fname, field in self.form_fields().items():
             value = search_values.get(fname)
             if value is None:
+                continue
+            if fname in self._form_search_fields_multi:
+                leaf = (fname, 'in', value)
+                domain.append(leaf)
                 continue
             if field['type'] in ('many2one', ) and value < 1:
                 # we need an existing ID here ( > 0)
