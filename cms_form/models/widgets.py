@@ -66,6 +66,9 @@ class Widget(models.AbstractModel):
     def w_subfields_by_value(self, value='_all'):
         return self.w_subfields.get(value, {})
 
+    def w_data_json(self):
+        return json.dumps(self.w_data)
+
 
 class CharWidget(models.AbstractModel):
     _name = 'cms.form.widget.char'
