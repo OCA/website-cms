@@ -24,19 +24,30 @@ License LGPL-3.0 or later (http://www.gnu.org/licenses/lgpl.html).
 
 </template>
 
-<!-- TODO: add non-horizontal form template -->
 
 <template id="form_horizontal_field_wrapper" name="CMS form field wrapper horiz form">
-    <div t-attf-class="form-group form-field field-#{fname} #{field['required'] and 'field-required' or ''} #{errors.get(fname) and 'has-error' or ''}">
-      <label class="col-md-3 col-sm-4 control-label"
-             t-att-for="fname" t-esc="field['string']">Name</label>
-      <div class="col-md-9 col-sm-8">
-        <t t-raw="widget.render()"/>
-        <t t-if="field.get('help')">
-            <t t-call="cms_form.base_form_field_help_block" />
-        </t>
-      </div>
+  <div t-attf-class="form-group form-field field-#{fname} #{field['required'] and 'field-required' or ''} #{errors.get(fname) and 'has-error' or ''}">
+    <label class="col-md-3 col-sm-4 control-label"
+           t-att-for="fname" t-esc="field['string']">Name</label>
+    <div class="col-md-9 col-sm-8">
+      <t t-raw="widget.render()"/>
+      <t t-if="field.get('help')">
+        <t t-call="cms_form.base_form_field_help_block" />
+      </t>
     </div>
+  </div>
+</template>
+
+
+<template id="form_vertical_field_wrapper" name="CMS form field wrapper vertical form">
+  <div t-attf-class="form-group form-field field-#{fname} #{field['required'] and 'field-required' or ''} #{errors.get(fname) and 'has-error' or ''}">
+    <label class="control-label"
+           t-att-for="fname" t-esc="field['string']">Name</label>
+    <t t-raw="widget.render()"/>
+    <t t-if="field.get('help')">
+        <t t-call="cms_form.base_form_field_help_block" />
+    </t>
+  </div>
 </template>
 
 
@@ -69,7 +80,10 @@ License LGPL-3.0 or later (http://www.gnu.org/licenses/lgpl.html).
 
 <template id="single_field" name="CMS form single field">
     <t t-if="not form_fields[fname].get('is_subfield')">
-      <t t-call="cms_form.form_horizontal_field_wrapper">
+      <!-- this template is computed in `form_render`
+      based on `form_display_mode`
+      -->
+      <t t-call="#{ field_wrapper_template }">
         <t t-set="field" t-value="form_fields[fname]" />
         <t t-set="widget" t-value="field['widget']" />
       </t>
@@ -116,7 +130,7 @@ License LGPL-3.0 or later (http://www.gnu.org/licenses/lgpl.html).
 
   <form t-att-action="form.form_action" t-att-method="form.form_method"
         t-att-data-form="form.form_json_info()"
-        t-attf-class="form-horizontal #{form.form_css_klass}"
+        t-att-class="form.form_css_klass"
         enctype="multipart/form-data">
 
     <t t-if="form.form_method == 'POST'">
