@@ -94,6 +94,15 @@ License LGPL-3.0 or later (http://www.gnu.org/licenses/lgpl.html).
 </template>
 
 
+<template id="field_widget_m2o_multi" name="CMS form m2o multi select field widget"
+          inherit_id="field_widget_x2m" primary="True">
+
+  <xpath expr="//input" position="attributes">
+    <attribute name="t-attf-class" add=" m2o" />
+  </xpath>
+</template>
+
+
 <template id="field_widget_date" name="CMS form date field widget">
 
   <div class="input-group">
