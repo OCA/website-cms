@@ -75,6 +75,28 @@ class CMSFormMixin(models.AbstractModel):
     _form_fields_whitelist = ()
     # exclude these fields
     _form_fields_blacklist = ()
+    # group form fields together
+    _form_fieldsets = [
+        # {
+        #     'id': 'main',
+        #     'title': 'My group of fields',
+        #     'description': 'Bla bla bla',
+        #     'fields': ['name', 'age', 'foo'],
+        #     'css_extra_klass': 'best_fieldset',
+        # },
+        # {
+        #     'id': 'extras',
+        #     'title': 'My group of fields 2',
+        #     'description': 'Bla bla bla',
+        #     'fields': ['some', 'other', 'field'],
+        #     'css_extra_klass': '',
+        # },
+    ]
+    # control fieldset display
+    # options:
+    # * `tabs` -> rendered as tabs
+    # * `vertical` -> one after each other, vertically
+    _form_fieldsets_display = 'vertical'
     # extract values mode
     # This param can be used to alter value format
     # when extracting values from request.
@@ -216,6 +238,16 @@ class CMSFormMixin(models.AbstractModel):
         """Remove fields from form fields."""
         for fname in self.__form_fields_ignore:
             _all_fields.pop(fname, None)
+
+    def form_fieldsets(self):
+        return self._form_fieldsets
+
+    @property
+    def form_fieldsets_wrapper_klass(self):
+        klass = []
+        if self._form_fieldsets:
+            klass = ['has_fieldsets', self._form_fieldsets_display]
+        return ' '.join(klass)
 
     def form_update_fields_attributes(self, _fields):
         """Manipulate fields attributes."""
