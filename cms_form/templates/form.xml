@@ -26,7 +26,7 @@ License LGPL-3.0 or later (http://www.gnu.org/licenses/lgpl.html).
 
 
 <template id="form_horizontal_field_wrapper" name="CMS form field wrapper horiz form">
-  <div t-attf-class="form-group form-field field-#{fname} #{field['required'] and 'field-required' or ''} #{errors.get(fname) and 'has-error' or ''}">
+  <div t-att-class="form.form_make_field_wrapper_klass(fname, field, errors=errors)">
     <label class="col-md-3 col-sm-4 control-label"
            t-att-for="fname" t-esc="field['string']">Name</label>
     <div class="col-md-9 col-sm-8">
@@ -40,7 +40,7 @@ License LGPL-3.0 or later (http://www.gnu.org/licenses/lgpl.html).
 
 
 <template id="form_vertical_field_wrapper" name="CMS form field wrapper vertical form">
-  <div t-attf-class="form-group form-field field-#{fname} #{field['required'] and 'field-required' or ''} #{errors.get(fname) and 'has-error' or ''}">
+  <div t-att-class="form.form_make_field_wrapper_klass(fname, field, errors=errors)">
     <label class="control-label"
            t-att-for="fname" t-esc="field['string']">Name</label>
     <t t-raw="widget.render()"/>
