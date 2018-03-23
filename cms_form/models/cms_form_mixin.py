@@ -480,6 +480,20 @@ class CMSFormMixin(models.AbstractModel):
             klass = 'form-vertical '
         return klass + self._form_extra_css_klass
 
+    def form_make_field_wrapper_klass(self, fname, field, **kw):
+        """Return specific CSS klass for the field wrapper."""
+        klass = [
+            'form-group',
+            'form-field',
+            'field-{type}',
+            'field-{fname}',
+        ]
+        if field['required']:
+            klass.append('field-required')
+        if kw.get('errors', {}).get(fname):
+            klass.append('has-error')
+        return ' '.join(klass).format(fname=fname, **field)
+
     def _form_json_info(self):
         info = {}
         info.update({
