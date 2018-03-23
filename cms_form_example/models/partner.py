@@ -17,9 +17,9 @@ if not testing:
         _name = 'cms.form.res.partner'
         _inherit = 'cms.form'
         _form_model = 'res.partner'
-        _form_model_fields = ('name', 'country_id')
+        _form_model_fields = ('name', 'country_id', 'category_id')
         _form_required_fields = ('name', )
-        _form_fields_order = ('name', 'country_id')
+        _form_fields_order = ('name', 'country_id', 'category_id')
 
         custom = fields.Char()
 
@@ -35,3 +35,30 @@ if not testing:
         _inherit = 'cms.form.search'
         _form_model = 'res.partner'
         _form_model_fields = ('name', 'country_id', )
+
+    class ExamplePartnerFormWithFieldsets(models.AbstractModel):
+        _name = 'cms.form.res.partner.fset'
+        _inherit = 'cms.form.res.partner'
+
+        _form_fieldsets = [
+            {
+                'id': 'main',
+                'title': 'Main',
+                'fields': [
+                    'name',
+                    'category_id',
+                ],
+            },
+            {
+                'id': 'secondary',
+                'title': 'Secondary',
+                'fields': [
+                    'country_id',
+                ],
+            },
+        ]
+
+    class ExamplePartnerFormWithTabbedFieldsets(models.AbstractModel):
+        _name = 'cms.form.res.partner.fset.tabbed'
+        _inherit = 'cms.form.res.partner.fset'
+        _form_fieldsets_display = 'tabs'
