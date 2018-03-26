@@ -35,6 +35,7 @@ class CMSFormMixin(models.AbstractModel):
     form_template = 'cms_form.base_form'
     form_fields_template = 'cms_form.base_form_fields'
     form_buttons_template = 'cms_form.base_form_buttons'
+    form_display_mode = 'horizontal'  # or 'vertical'
     form_action = ''
     form_method = 'POST'
     _form_mode = ''
@@ -74,6 +75,28 @@ class CMSFormMixin(models.AbstractModel):
     _form_fields_whitelist = ()
     # exclude these fields
     _form_fields_blacklist = ()
+    # group form fields together
+    _form_fieldsets = [
+        # {
+        #     'id': 'main',
+        #     'title': 'My group of fields',
+        #     'description': 'Bla bla bla',
+        #     'fields': ['name', 'age', 'foo'],
+        #     'css_extra_klass': 'best_fieldset',
+        # },
+        # {
+        #     'id': 'extras',
+        #     'title': 'My group of fields 2',
+        #     'description': 'Bla bla bla',
+        #     'fields': ['some', 'other', 'field'],
+        #     'css_extra_klass': '',
+        # },
+    ]
+    # control fieldset display
+    # options:
+    # * `tabs` -> rendered as tabs
+    # * `vertical` -> one after each other, vertically
+    _form_fieldsets_display = 'vertical'
     # extract values mode
     # This param can be used to alter value format
     # when extracting values from request.
@@ -215,6 +238,16 @@ class CMSFormMixin(models.AbstractModel):
         """Remove fields from form fields."""
         for fname in self.__form_fields_ignore:
             _all_fields.pop(fname, None)
+
+    def form_fieldsets(self):
+        return self._form_fieldsets
+
+    @property
+    def form_fieldsets_wrapper_klass(self):
+        klass = []
+        if self._form_fieldsets:
+            klass = ['has_fieldsets', self._form_fieldsets_display]
+        return ' '.join(klass)
 
     def form_update_fields_attributes(self, _fields):
         """Manipulate fields attributes."""
@@ -380,6 +413,8 @@ class CMSFormMixin(models.AbstractModel):
         """
         values = self.form_render_values.copy()
         values.update(kw)
+        values['field_wrapper_template'] = \
+            'cms_form.form_{}_field_wrapper'.format(self.form_display_mode)
         return self.env.ref(self.form_template).render(values)
 
     def form_process(self, **kw):
@@ -437,7 +472,27 @@ class CMSFormMixin(models.AbstractModel):
 
         By default you can provide extra klasses via `_form_extra_css_klass`.
         """
-        return self._form_extra_css_klass
+        klass = ''
+        if self.form_display_mode == 'horizontal':
+            klass = 'form-horizontal '
+        elif self.form_display_mode == 'vertical':
+            # actually not a real BS3 css klass but helps styling
+            klass = 'form-vertical '
+        return klass + self._form_extra_css_klass
+
+    def form_make_field_wrapper_klass(self, fname, field, **kw):
+        """Return specific CSS klass for the field wrapper."""
+        klass = [
+            'form-group',
+            'form-field',
+            'field-{type}',
+            'field-{fname}',
+        ]
+        if field['required']:
+            klass.append('field-required')
+        if kw.get('errors', {}).get(fname):
+            klass.append('has-error')
+        return ' '.join(klass).format(fname=fname, **field)
 
     def _form_json_info(self):
         info = {}
