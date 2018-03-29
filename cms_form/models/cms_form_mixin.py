@@ -145,7 +145,7 @@ class CMSFormMixin(models.AbstractModel):
 
     def _can_create(self, raise_exception=True):
         """Check that current user can create instances of given model."""
-        if self.form_model:
+        if self._form_model:
             return self.form_model.check_access_rights(
                 'create', raise_exception=raise_exception)
         return True
