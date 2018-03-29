@@ -132,7 +132,8 @@ class CMSFormMixin(models.AbstractModel):
         form.main_object = main_object
         # override `_form_` parameters
         for k, v in kw.items():
-            if not inspect.ismethod(getattr(form, '_form_' + k)):
+            attr = getattr(form, '_form_' + k, '__no__attr__')
+            if attr != '__no__attr__' and not inspect.ismethod(attr):
                 setattr(form, '_form_' + k, v)
         return form
 
