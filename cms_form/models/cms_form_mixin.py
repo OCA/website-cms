@@ -132,8 +132,9 @@ class CMSFormMixin(models.AbstractModel):
         form.request = request.httprequest  # werkzeug request, the "real" one
         form.main_object = main_object
         # override `_form_` parameters
-        for k, v in kw.iteritems():
-            if not inspect.ismethod(getattr(form, '_form_' + k)):
+        for k, v in kw.items():
+            attr = getattr(form, '_form_' + k, '__no__attr__')
+            if attr != '__no__attr__' and not inspect.ismethod(attr):
                 setattr(form, '_form_' + k, v)
         return form
 
