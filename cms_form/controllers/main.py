@@ -3,7 +3,7 @@
 
 import werkzeug
 
-from odoo import http, exceptions, _
+from odoo import http, _
 from odoo.http import request
 
 
@@ -45,24 +45,7 @@ class FormControllerMixin(object):
         })
         return kw
 
-    def _can_create(self, model, raise_exception=True):
-        """Check that current user can create instances of given model."""
-        return request.env[model].check_access_rights(
-            'create', raise_exception=raise_exception)
-
-    def _can_edit(self, main_object, raise_exception=True):
-        """Check that current user can edit given main object."""
-        try:
-            main_object.check_access_rights('write')
-            main_object.check_access_rule('write')
-            can = True
-        except exceptions.AccessError:
-            if raise_exception:
-                raise
-            can = False
-        return can
-
-    def form_model_key(self, model):
+    def form_model_key(self, model, **kw):
         """Return a valid form model."""
         return 'cms.form.' + model
 
@@ -81,13 +64,6 @@ class FormControllerMixin(object):
             )
         return form
 
-    def check_permission(self, model, main_object):
-        """Check permission on current model and main object."""
-        if main_object:
-            self._can_edit(main_object)
-        else:
-            self._can_create(model)
-
     def make_response(self, model, model_id=None, page=0, **kw):
         """Prepare and return form response.
 
@@ -105,11 +81,8 @@ class FormControllerMixin(object):
           it redirects to it.
         * otherwise it just renders the form
         """
-        main_object = request.env[model]
-        if model_id:
-            main_object = request.env[model].browse(model_id)
-        self.check_permission(model, main_object)
-        form = self.get_form(model, main_object=main_object)
+        form = self.get_form(model, model_id=model_id, page=page, **kw)
+        form.form_check_permission()
         # pass only specific extra args, to not pollute form render values
         form.form_process(extra_args={'page': page})
         # search forms do not need these attrs
@@ -118,7 +91,7 @@ class FormControllerMixin(object):
             # anything went fine, redirect to next url
             return werkzeug.utils.redirect(form.form_next_url())
         # render form wrapper
-        values = self.get_render_values(main_object, **kw)
+        values = self.get_render_values(form.main_object, **kw)
         values['form'] = form
         return request.render(
             self.get_template(form, **kw),
@@ -145,9 +118,6 @@ class SearchFormControllerMixin(FormControllerMixin):
 
     def form_model_key(self, model):
         return 'cms.form.search.' + model
-
-    def check_permission(self, model, main_object):
-        pass
 
 
 class CMSSearchFormController(http.Controller, SearchFormControllerMixin):
