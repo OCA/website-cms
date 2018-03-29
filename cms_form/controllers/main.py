@@ -49,12 +49,23 @@ class FormControllerMixin(object):
         """Return a valid form model."""
         return 'cms.form.' + model
 
-    def get_form(self, model, main_object=None, **kw):
-        """Retrieve form for given model or object and initialize it."""
-        form_model_key = self.form_model_key(model)
+    def get_form(self, model, model_id=None, page=0, **kw):
+        """Retrieve form for given model and initialize it."""
+        form_model_key = kw.pop('form_model_key', None)
+        if not form_model_key:
+            form_model_key = self.form_model_key(model, **kw)
         if form_model_key in request.env:
+            if model:
+                main_object = request.env[model]
+                if model_id:
+                    main_object = request.env[model].browse(model_id)
+            else:
+                # HACK: odoo requires a stupid `main_object` to stay there
+                # See https://github.com/odoo/odoo/pull/22384
+                # So here we mock main_object to the form model recordset
+                main_object = request.env[form_model_key]
             form = request.env[form_model_key].form_init(
-                request, main_object=main_object)
+                request, main_object=main_object, page=page)
         else:
             # TODO: enable form by default?
             # How? with a flag on ir.model.model?
