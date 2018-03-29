@@ -5,7 +5,7 @@ import inspect
 import json
 from collections import OrderedDict
 
-from odoo import models, tools
+from odoo import models, tools, exceptions
 
 from ..utils import data_merge
 
@@ -135,6 +135,34 @@ class CMSFormMixin(models.AbstractModel):
             if not inspect.ismethod(getattr(form, '_form_' + k)):
                 setattr(form, '_form_' + k, v)
         return form
+
+    def form_check_permission(self):
+        """Check permission on current model and main object if any."""
+        if self.main_object:
+            self._can_edit()
+        else:
+            self._can_create()
+
+    def _can_create(self, raise_exception=True):
+        """Check that current user can create instances of given model."""
+        if self.form_model:
+            return self.form_model.check_access_rights(
+                'create', raise_exception=raise_exception)
+        return True
+
+    def _can_edit(self, raise_exception=True):
+        """Check that current user can edit main object if any."""
+        if not self.main_object:
+            return True
+        try:
+            self.main_object.check_access_rights('write')
+            self.main_object.check_access_rule('write')
+            can = True
+        except exceptions.AccessError:
+            if raise_exception:
+                raise
+            can = False
+        return can
 
     @property
     def form_title(self):
