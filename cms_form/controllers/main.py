@@ -100,13 +100,15 @@ class FormControllerMixin(object):
         if getattr(form, 'form_success', None) \
                 and getattr(form, 'form_redirect', None):
             # anything went fine, redirect to next url
-            return werkzeug.utils.redirect(form.form_next_url())
+            # https://developer.mozilla.org/en-US/docs/Web/HTTP/Status/303
+            return werkzeug.utils.redirect(form.form_next_url(), code=303)
         # render form wrapper
         values = self.get_render_values(form.main_object, **kw)
         values['form'] = form
         return request.render(
             self.get_template(form, **kw),
             values,
+            headers={'Cache-Control': 'no-cache'}
         )
 
 
