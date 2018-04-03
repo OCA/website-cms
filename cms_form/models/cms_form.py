@@ -167,11 +167,13 @@ class CMSForm(models.AbstractModel):
 
     def _form_write(self, values):
         """Just write on the main object."""
-        self.main_object.write(values)
+        # pass a copy to avoid pollution of initial values by odoo
+        self.main_object.write(values.copy())
 
     def _form_create(self, values):
         """Just create the main object."""
-        self.main_object = self.form_model.create(values)
+        # pass a copy to avoid pollution of initial values by odoo
+        self.main_object = self.form_model.create(values.copy())
 
     def form_create_or_update(self):
         """Prepare values and create or update main_object."""
