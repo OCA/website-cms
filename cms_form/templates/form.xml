@@ -34,6 +34,9 @@ License LGPL-3.0 or later (http://www.gnu.org/licenses/lgpl.html).
       <t t-if="field.get('help')">
         <t t-call="cms_form.base_form_field_help_block" />
       </t>
+      <t t-if="errors.get(fname)">
+        <t t-call="cms_form.base_form_field_error_block" />
+      </t>
     </div>
   </div>
 </template>
@@ -45,7 +48,10 @@ License LGPL-3.0 or later (http://www.gnu.org/licenses/lgpl.html).
            t-att-for="fname" t-esc="field['string']">Name</label>
     <t t-raw="widget.render()"/>
     <t t-if="field.get('help')">
-        <t t-call="cms_form.base_form_field_help_block" />
+      <t t-call="cms_form.base_form_field_help_block" />
+    </t>
+    <t t-if="errors.get(fname)">
+      <t t-call="cms_form.base_form_field_error_block" />
     </t>
   </div>
 </template>
@@ -57,6 +63,14 @@ License LGPL-3.0 or later (http://www.gnu.org/licenses/lgpl.html).
       <t t-raw="field['help']" />
     </div>
 </template>
+
+
+<template id="base_form_field_error_block" name="CMS form field error block">
+    <div class="alert alert-danger error-msg">
+      <span t-esc="errors_message[fname]" />
+    </div>
+</template>
+
 
 <template id="base_form_fields" name="CMS form fields">
   <div t-attf-class="form-fields #{ form.form_fieldsets_wrapper_klass }">
