@@ -299,10 +299,10 @@ class CMSFormMixin(models.AbstractModel):
                 widget_model = model_key
         return self.form_widgets.get(fname, widget_model)
 
-    def form_get_widget(self, fname, field):
+    def form_get_widget(self, fname, field, **kw):
         """Retrieve and initialize widget."""
         return self.env[self.form_get_widget_model(fname, field)].widget_init(
-            self, fname, field,
+            self, fname, field, **kw
         )
 
     @property
