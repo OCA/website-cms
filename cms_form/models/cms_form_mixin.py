@@ -324,15 +324,23 @@ class CMSFormMixin(models.AbstractModel):
             # and this will make the form machinery miss all the fields
             _values = self.request.args
         # normal fields
-        values = {
-            k: v for k, v in _values.items()
-            if k not in ('csrf_token', )
-        }
+        res = {}
+        for k, v in _values.items():
+            if k in ('csrf_token', ):
+                continue
+            if k.endswith(':list'):
+                # fields w/ multiple values
+                # TODO
+                # 1. add test and docs
+                # 2. support more "transformers" (`:int` for instance)
+                v = _values.getlist(k)
+                k = k[:len(':list') + 1]
+            res[k] = v
         # file fields
-        values.update(
+        res.update(
             {k: v for k, v in self.request.files.items()}
         )
-        return values
+        return res
 
     def form_load_defaults(self, main_object=None, request_values=None):
         """Load default values.
