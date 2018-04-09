@@ -4,7 +4,10 @@
 
 from lxml import html
 from odoo.tests.common import SavepointCase, HttpCase
-from .utils import fake_request, setup_test_model, teardown_test_model
+from .utils import (
+    fake_request, fake_session,
+    setup_test_model, teardown_test_model
+)
 
 
 class FormTestMixin(object):
@@ -24,7 +27,9 @@ class FormTestMixin(object):
             model = model.sudo(sudo_uid)
         if ctx:
             model = model.with_context(**ctx)
-        request = req or fake_request()
+
+        session = session if session is not None else fake_session(self.env)
+        request = req or fake_request(session=session)
         return model.form_init(request, **kw)
 
     # override this in your test case to inject new models on the fly
