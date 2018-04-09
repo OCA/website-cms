@@ -46,13 +46,61 @@ class TestAccountForm(FormTestCase):
         form.form_create_or_update()
         self.assertEqual(self.partner1.name, data['name'])
 
+    def test_form_update_email_validation_called(self):
+        data = {
+            'email': 'this email is #so_wrong',
+        }
+        request = fake_request(form_data=data, method='POST')
+        # get the form to edit partner1
+        form = self.get_form(
+            'cms.form.my.account',
+            sudo_uid=self.user1.id,
+            req=request,
+            main_object=self.partner1)
+        patch_path = \
+            'odoo.addons.cms_account_form.models.account_form.AccountForm'
+        with mock.patch(patch_path + '._form_validate_email') as patched:
+            # method is mocked thus is going to return a mocked object
+            # instead of a tuple. `form_validate` will raise ValueError
+            patched.return_value = ('email_not_valid', 'message')
+            form.form_process()
+            patched.assert_called_with(
+                'this email is #so_wrong',
+                # request values
+                email='this email is #so_wrong',
+            )
+
+    def test_form_update_vat_validation_called(self):
+        data = {
+            'vat': 'this VAT is #so_wrong',
+        }
+        request = fake_request(form_data=data, method='POST')
+        # get the form to edit partner1
+        form = self.get_form(
+            'cms.form.my.account',
+            sudo_uid=self.user1.id,
+            req=request,
+            main_object=self.partner1)
+        patch_path = \
+            'odoo.addons.cms_account_form.models.account_form.AccountForm'
+        with mock.patch(patch_path + '._form_validate_vat') as patched:
+            # method is mocked thus is going to return a mocked object
+            # instead of a tuple. `form_validate` will raise ValueError
+            patched.return_value = ('vat_not_valid', 'message')
+            form.form_process()
+            patched.assert_called_with(
+                'this VAT is #so_wrong',
+                # request values
+                vat='this VAT is #so_wrong',
+            )
+
     def test_validate_vat_ok(self):
         form = self.get_form(
             'cms.form.my.account',
             sudo_uid=self.user1.id,
             ctx={'test_do_fail': False},
             main_object=self.partner1)
-        error, msg = form.form_validate_vat('THIS_VAT_IS_OK ;)')
+        error, msg = form._form_validate_vat('THIS_VAT_IS_OK ;)')
         self.assertEqual(error, None)
         self.assertEqual(msg, None)
 
@@ -62,7 +110,7 @@ class TestAccountForm(FormTestCase):
             sudo_uid=self.user1.id,
             ctx={'test_do_fail': True},
             main_object=self.partner1)
-        error, msg = form.form_validate_vat('000000000')
+        error, msg = form._form_validate_vat('000000000')
         self.assertEqual(error, 'vat_not_valid')
         self.assertEqual(msg, 'VAT check failed')
 
@@ -71,7 +119,7 @@ class TestAccountForm(FormTestCase):
             'cms.form.my.account',
             sudo_uid=self.user1.id,
             main_object=self.partner1)
-        error, msg = form.form_validate_email('john.doe@notsorealemail.com')
+        error, msg = form._form_validate_email('john.doe@notsorealemail.com')
         self.assertEqual(error, None)
         self.assertEqual(msg, None)
 
@@ -80,7 +128,7 @@ class TestAccountForm(FormTestCase):
             'cms.form.my.account',
             sudo_uid=self.user1.id,
             main_object=self.partner1)
-        error, msg = form.form_validate_email('john.doe+notsorealemail.com')
+        error, msg = form._form_validate_email('john.doe+notsorealemail.com')
         self.assertEqual(error, 'email_not_valid')
         self.assertEqual(
             msg, 'Invalid Email! Please enter a valid email address.')

@@ -12,8 +12,8 @@ except ImportError:
     _logger.debug("Cannot import `validate_email`.")
 
 
-class PartnerForm(models.AbstractModel):
-    """Partner model form."""
+class AccountForm(models.AbstractModel):
+    """Partner account form."""
 
     _name = 'cms.form.my.account'
     _inherit = 'cms.form'
@@ -56,14 +56,14 @@ class PartnerForm(models.AbstractModel):
         tmpl = self.env.ref('cms_account_form.email_field_update_warning')
         _fields['email']['help'] = tmpl.render({})
 
-    def form_validate_email(self, value, **req_values):
+    def _form_validate_email(self, value, **req_values):
         error, message = None, None
         if value and not validate_email(value):
             error = 'email_not_valid'
             message = _('Invalid Email! Please enter a valid email address.')
         return error, message
 
-    def form_validate_vat(self, value, **req_values):
+    def _form_validate_vat(self, value, **req_values):
         error, message = None, None
         if value and hasattr(self.form_model, 'check_vat'):
             country_id = int(req_values.get("country_id", 0))
@@ -101,7 +101,7 @@ class PartnerForm(models.AbstractModel):
             * logout current session to force re-login with new email
         """
         email = values['email']
-        # TODO: this could be useless as we validate w/ `form_validate_email`
+        # TODO: this could be useless as we validate w/ `_form_validate_email`
         valid = validate_email(email)
         if email and valid and not user._is_admin():
             exists = user.with_context(active_test=False).sudo().search_count(
