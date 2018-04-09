@@ -5,7 +5,7 @@ import inspect
 import json
 from collections import OrderedDict
 
-from odoo import models, tools
+from odoo import models, tools, exceptions
 
 from ..utils import data_merge
 
@@ -132,9 +132,38 @@ class CMSFormMixin(models.AbstractModel):
         form.main_object = main_object
         # override `_form_` parameters
         for k, v in kw.items():
-            if not inspect.ismethod(getattr(form, '_form_' + k)):
+            attr = getattr(form, '_form_' + k, '__no__attr__')
+            if attr != '__no__attr__' and not inspect.ismethod(attr):
                 setattr(form, '_form_' + k, v)
         return form
+
+    def form_check_permission(self):
+        """Check permission on current model and main object if any."""
+        if self.main_object:
+            self._can_edit()
+        else:
+            self._can_create()
+
+    def _can_create(self, raise_exception=True):
+        """Check that current user can create instances of given model."""
+        if self._form_model:
+            return self.form_model.check_access_rights(
+                'create', raise_exception=raise_exception)
+        return True
+
+    def _can_edit(self, raise_exception=True):
+        """Check that current user can edit main object if any."""
+        if not self.main_object:
+            return True
+        try:
+            self.main_object.check_access_rights('write')
+            self.main_object.check_access_rule('write')
+            can = True
+        except exceptions.AccessError:
+            if raise_exception:
+                raise
+            can = False
+        return can
 
     @property
     def form_title(self):
@@ -270,10 +299,10 @@ class CMSFormMixin(models.AbstractModel):
                 widget_model = model_key
         return self.form_widgets.get(fname, widget_model)
 
-    def form_get_widget(self, fname, field):
+    def form_get_widget(self, fname, field, **kw):
         """Retrieve and initialize widget."""
         return self.env[self.form_get_widget_model(fname, field)].widget_init(
-            self, fname, field,
+            self, fname, field, **kw
         )
 
     @property
@@ -295,15 +324,23 @@ class CMSFormMixin(models.AbstractModel):
             # and this will make the form machinery miss all the fields
             _values = self.request.args
         # normal fields
-        values = {
-            k: v for k, v in _values.items()
-            if k not in ('csrf_token', )
-        }
+        res = {}
+        for k, v in _values.items():
+            if k in ('csrf_token', ):
+                continue
+            if k.endswith(':list'):
+                # fields w/ multiple values
+                # TODO
+                # 1. add test and docs
+                # 2. support more "transformers" (`:int` for instance)
+                v = _values.getlist(k)
+                k = k[:len(':list') + 1]
+            res[k] = v
         # file fields
-        values.update(
+        res.update(
             {k: v for k, v in self.request.files.items()}
         )
-        return values
+        return res
 
     def form_load_defaults(self, main_object=None, request_values=None):
         """Load default values.

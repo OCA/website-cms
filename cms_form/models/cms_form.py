@@ -29,6 +29,8 @@ class CMSForm(models.AbstractModel):
 
     @property
     def form_title(self):
+        if not self._form_model:
+            return ''
         if self.main_object:
             rec_field = self.main_object[self.form_model._rec_name]
             if hasattr(rec_field, 'id'):
@@ -152,6 +154,8 @@ class CMSForm(models.AbstractModel):
     def _form_purge_non_model_fields(self, values):
         """Purge fields that are not in `form_model` schema and return them."""
         extra_values = {}
+        if not self._form_model:
+            return extra_values
         _model_fields = list(self.form_model.fields_get(
             self._form_model_fields,
             attributes=self._form_fields_attributes).keys())
@@ -163,11 +167,13 @@ class CMSForm(models.AbstractModel):
 
     def _form_write(self, values):
         """Just write on the main object."""
-        self.main_object.write(values)
+        # pass a copy to avoid pollution of initial values by odoo
+        self.main_object.write(values.copy())
 
     def _form_create(self, values):
         """Just create the main object."""
-        self.main_object = self.form_model.create(values)
+        # pass a copy to avoid pollution of initial values by odoo
+        self.main_object = self.form_model.create(values.copy())
 
     def form_create_or_update(self):
         """Prepare values and create or update main_object."""
