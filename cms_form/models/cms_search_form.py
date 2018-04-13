@@ -25,6 +25,10 @@ class CMSFormSearch(models.AbstractModel):
     # declare fields that must be searched w/ multiple values
     _form_search_fields_multi = ()
 
+    def form_check_permission(self):
+        """Just searching, nothing to check here."""
+        return True
+
     def form_update_fields_attributes(self, _fields):
         """No field should be mandatory."""
         super().form_update_fields_attributes(_fields)
