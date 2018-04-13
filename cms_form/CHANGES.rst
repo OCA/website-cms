@@ -3,6 +3,18 @@ CHANGELOG
 =========
 
 
+11.0.1.2.1 (2018-04-13)
+=======================
+
+Fix
+---
+
+* Fix search form regression on permission check
+
+  In 32a662e I've moved permission check from controller to form
+  but I missed the bypass for search forms.
+
+
 11.0.1.2.0 (2018-04-09)
 =======================
 
