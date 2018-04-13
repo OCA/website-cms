@@ -62,9 +62,10 @@ class TestCMSSearchForm(FormTestCase):
             sorted(expected.mapped('id')),
         )
 
-    def get_search_form(self, data, form_model='cms.form.search.res.partner'):
+    def get_search_form(
+            self, data, form_model='cms.form.search.res.partner', **kw):
         request = fake_request(form_data=data)
-        form = self.get_form(form_model, req=request)
+        form = self.get_form(form_model, req=request, **kw)
         # restrict search results to these ids
         form.test_record_ids = self.expected_partners_ids
         return form
@@ -102,3 +103,8 @@ class TestCMSSearchForm(FormTestCase):
         expected = self.expected_partners.filtered(
             lambda x: x.country_id.id in countries)
         self.assert_results(form, 3, expected)
+
+    def test_search_form_bypass_security_check(self):
+        form = self.get_search_form(
+            {}, sudo_uid=self.env.ref('base.public_user').id)
+        self.assertTrue(form.form_check_permission())
