@@ -18,7 +18,7 @@ class PanelFormController(http.Controller, FormControllerMixin):
         model_id = http.request.env.user.id
         return self.make_response(model, model_id=model_id, **kw)
 
-    def form_model_key(self, model):
+    def form_model_key(self, model, **kw):
         return 'cms.notification.panel.form'
 
 
@@ -34,5 +34,5 @@ class MyNotificationsController(http.Controller, SearchFormControllerMixin):
         model_id = http.request.env.user.id
         return self.make_response(model, model_id=model_id, **kw)
 
-    def form_model_key(self, model):
+    def form_model_key(self, model, **kw):
         return 'cms.notification.listing'
