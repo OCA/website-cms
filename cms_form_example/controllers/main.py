@@ -33,7 +33,7 @@ class PartnerFormFieldset(http.Controller, FormControllerMixin):
         return self.make_response(
             model, model_id=main_object and main_object.id, **kw)
 
-    def form_model_key(self, model):
+    def form_model_key(self, model, **kw):
         """Return a valid form model."""
         return 'cms.form.res.partner.fset'
 
@@ -50,7 +50,7 @@ class PartnerFormTabbedFieldset(http.Controller, FormControllerMixin):
         return self.make_response(
             model, model_id=main_object and main_object.id, **kw)
 
-    def form_model_key(self, model):
+    def form_model_key(self, model, **kw):
         """Return a valid form model."""
         return 'cms.form.res.partner.fset.tabbed'
 
