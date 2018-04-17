@@ -3,6 +3,15 @@ CHANGELOG
 =========
 
 
+11.0.1.3.0 (2018-04-17)
+=======================
+
+Improve
+-------
+
+* Add wizard support to easily create custom wizards
+
+
 11.0.1.2.1 (2018-04-13)
 =======================
 
