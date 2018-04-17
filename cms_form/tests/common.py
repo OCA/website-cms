@@ -4,7 +4,10 @@
 
 from lxml import html
 from odoo.tests.common import SavepointCase, HttpCase
-from .utils import fake_request, setup_test_model, teardown_test_model
+from .utils import (
+    fake_request, fake_session, session_store,
+    setup_test_model, teardown_test_model
+)
 
 
 class FormTestMixin(object):
@@ -12,7 +15,8 @@ class FormTestMixin(object):
     at_install = False
     post_install = True
 
-    def get_form(self, form_model, req=None, ctx=None, sudo_uid=None, **kw):
+    def get_form(self, form_model, req=None, session=None,
+                 ctx=None, sudo_uid=None, **kw):
         """Retrieve and initialize a form.
 
         :param form_model: model dotted name
@@ -24,7 +28,9 @@ class FormTestMixin(object):
             model = model.sudo(sudo_uid)
         if ctx:
             model = model.with_context(**ctx)
-        request = req or fake_request()
+
+        session = session if session is not None else fake_session(self.env)
+        request = req or fake_request(session=session)
         return model.form_init(request, **kw)
 
     # override this in your test case to inject new models on the fly
@@ -63,6 +69,19 @@ class FormRenderMixin(FormTestMixin):
 
 class FormTestCase(SavepointCase, FormTestMixin):
     """Base class for transaction cases."""
+
+
+class FormSessionTestCase(SavepointCase, FormTestMixin):
+    """Base class for transaction cases."""
+
+    def setUp(self):
+        super().setUp()
+        self.session = fake_session(self.env)
+
+    def tearDown(self):
+        # self.session.clear()
+        session_store.delete(self.session)
+        super().tearDown()
 
 
 class FormRenderTestCase(SavepointCase, FormRenderMixin):

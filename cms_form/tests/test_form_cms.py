@@ -80,7 +80,11 @@ class TestCMSForm(FormTestCase):
             req=request)
         with mute_logger('odoo.sql_db'):
             values = form.form_process_POST({})
-        self.assertTrue('_integrity' in values['errors'])
+        self.assertTrue(
+            # custom modules can provide different errors for constraints
+            '_integrity' in values['errors'] or
+            '_validation' in values['errors']
+        )
 
     def test_purge_non_model_fields(self):
         data = {
