@@ -17,7 +17,7 @@ class MyAccount(CustomerPortal, FormControllerMixin):
         partner = request.env.user.partner_id
         return self.make_response(model, model_id=partner.id, **kw)
 
-    def form_model_key(self, model):
+    def form_model_key(self, model, **kw):
         """Return a valid form model."""
         return 'cms.form.my.account'
 
