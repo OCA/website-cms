@@ -145,6 +145,10 @@ class CMSFormWizard(models.AbstractModel):
         return self.wiz_storage_get()['steps'].get(step) or {}
 
     def form_after_create_or_update(self, values, extra_values):
+        step_values = self._prepare_step_values_to_store(values, extra_values)
+        self.wiz_save_step(step_values)
+
+    def _prepare_step_values_to_store(self, values, extra_values):
         values = values.copy()
         values.update(extra_values)
         step_values = {}
@@ -154,4 +158,4 @@ class CMSFormWizard(models.AbstractModel):
         for fname in stored_fields:
             if fname in values:
                 step_values[fname] = values[fname]
-        self.wiz_save_step(step_values)
+        return step_values
