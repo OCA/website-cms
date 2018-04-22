@@ -5,7 +5,7 @@ import inspect
 import json
 from collections import OrderedDict
 
-from odoo import models, tools, exceptions
+from odoo import models, tools, exceptions, _
 
 from ..utils import data_merge
 
@@ -137,13 +137,38 @@ class CMSFormMixin(models.AbstractModel):
                 setattr(form, '_form_' + k, v)
         return form
 
-    def form_check_permission(self):
+    def form_check_permission(self, raise_exception=True):
         """Check permission on current model and main object if any."""
+        res = True
+        msg = ''
         if self.main_object:
-            self._can_edit()
+            if hasattr(self.main_object, 'cms_can_edit'):
+                res = self.main_object.cms_can_edit()
+            else:
+                # not `website.published.mixin` model
+                # TODO: probably is better to move such methods
+                # defined in `cms_info` to `base` model instead.
+                # You might want to use a form on an a non-website model.
+                # This should be considered if we move away from `website`
+                # as a base and rely only on `portal` features.
+                res = self._can_edit(raise_exception=False)
+            msg = _(
+                'You cannot edit this record. Model: %s, ID: %s.'
+            ) % (self.main_object._name, self.main_object.id)
         else:
-            self._can_create()
-        return True
+            if self._form_model:
+                if hasattr(self.form_model, 'cms_can_create'):
+                    res = self.form_model.cms_can_create()
+                else:
+                    # not `website.published.mixin` model
+                    res = self._can_create(raise_exception=False)
+                msg = _(
+                    'You are not allowed to create any record '
+                    'for the model `%s`.'
+                ) % self._form_model
+        if raise_exception and not res:
+            raise exceptions.AccessError(msg)
+        return res
 
     def _can_create(self, raise_exception=True):
         """Check that current user can create instances of given model."""
