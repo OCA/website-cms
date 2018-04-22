@@ -76,14 +76,13 @@ Inject a custom message on the fly:
         'title': _t('Warning'),
         'type': 'warning'
     }
-    // wipe existing
-    $('.status_message').remove();
+    msg_tool.render_messages(msg).then(function(html) {
+        // wipe existing
+        $('.status_message').remove();
+        // inject new
+        $(html).hide().prependTo('#wrap').fadeIn('slow');
+    });
 
-    // inject new
-    $(msg_tool.render_messages(msg))
-        .hide()
-        .prependTo('main')
-        .fadeIn('slow');
 
 Add a status message to the session, useful if you want to show the
 message only after a redirect:
