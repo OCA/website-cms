@@ -13,6 +13,10 @@ class FakePartnerForm(models.AbstractModel):
     _form_model_fields = ('name', 'country_id')
     _form_required_fields = ('name', 'country_id')
 
+    def form_check_permission(self, raise_exception=True):
+        # no need for this
+        pass
+
     custom = fields.Char()
 
     def _form_load_custom(self, fname, field, value, **req_values):
@@ -101,6 +105,10 @@ class FakeWiz(models.AbstractModel):
     _inherit = 'cms.form.wizard'
     _wiz_name = _name
 
+    def form_check_permission(self, raise_exception=True):
+        # no need for this
+        pass
+
     @property
     def _wiz_storage(self):
         return FAKE_STORAGE
@@ -144,3 +152,19 @@ WIZ_KLASSES = [
     FakeWiz, FakeWizStep1Country,
     FakeWizStep2Partner, FakeWizStep3Partner
 ]
+
+
+# `AbstractModel` or `TransientModel` needed to make ACL check happy`
+class FakePublishModel(models.TransientModel):
+    _name = 'fake.publishable'
+    _inherit = [
+        'website.published.mixin',
+    ]
+    name = fields.Char()
+
+
+class FakePublishModelForm(models.AbstractModel):
+    _name = 'cms.form.fake.publishable'
+    _inherit = 'cms.form'
+    _form_model = 'fake.publishable'
+    _form_model_fields = ('name', )
