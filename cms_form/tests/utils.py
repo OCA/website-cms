@@ -50,9 +50,9 @@ def fake_session(env, **kw):
     session = session_store.new()
     session.db = db
     session.uid = env.uid
-    session.login = 'admin'
+    session.login = env.user.login
     session.password = ''
-    session.context = env['res.users'].context_get() or {}
+    session.context = dict(env.context)
     session.context['uid'] = env.uid
     session._fix_lang(session.context)
     for k, v in kw.items():
