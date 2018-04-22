@@ -3,6 +3,17 @@ CHANGELOG
 =========
 
 
+11.0.1.3.1 (2018-04-22)
+=======================
+
+Improve
+-------
+
+* Wizard: ease customization of stored values
+
+  To customize stored values you can override `_prepare_step_values_to_store`
+
+
 11.0.1.3.0 (2018-04-17)
 =======================
 
