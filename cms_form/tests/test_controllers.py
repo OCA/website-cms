@@ -100,25 +100,24 @@ class TestControllers(FormHttpTestCase):
         }
         self.assert_match_attrs(form_node.attrib, expected_attrs)
 
+    def _check_route(self, url):
+        resp = self.url_open(url, timeout=30)
+        self.assertTrue(resp.ok)
+        self.assertEqual(resp.status_code, 200)
+
     def test_default_routes(self):
-        self._check_route(
-            '/cms/create/res.partner',
-            'res.partner',
-            'create')
-        partner = self.env.ref('base.res_partner_1')
-        self._check_route(
-            '/cms/edit/res.partner/{}'.format(partner.id),
-            'res.partner',
-            'edit')
+        self._check_route('/cms/create/res.partner')
+        self._check_route('/cms/edit/res.partner/1')
+        self._check_route('/cms/search/res.partner')
 
     def test_default_create_rendering(self):
-        dom = self.html_get('/cms/form/create/res.partner')
+        dom = self.html_get('/cms/create/res.partner')
         self._check_rendering(
             dom, 'cms.form.res.partner', 'res.partner', 'create')
 
     def test_default_edit_rendering(self):
         partner = self.env.ref('base.res_partner_1')
-        dom = self.html_get('/cms/form/edit/res.partner/{}'.format(partner.id))
+        dom = self.html_get('/cms/edit/res.partner/{}'.format(partner.id))
         self._check_rendering(
             dom, 'cms.form.res.partner', 'res.partner', 'edit')
 
