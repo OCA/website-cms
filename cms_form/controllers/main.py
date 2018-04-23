@@ -28,17 +28,19 @@ class FormControllerMixin(object):
             raise NotImplementedError("You must provide a template!")
         return template
 
-    def get_render_values(self, main_object, **kw):
+    def get_render_values(self, form, **kw):
         """Retrieve rendering values.
 
         You can override this to inject more values.
         """
+        main_object = form.main_object
         parent = None
         if getattr(main_object, 'parent_id', None):
             # get the parent if any
             parent = main_object.parent_id
 
         kw.update({
+            'form': form,
             'main_object': main_object,
             'parent': parent,
             'controller': self,
@@ -103,8 +105,7 @@ class FormControllerMixin(object):
             # https://developer.mozilla.org/en-US/docs/Web/HTTP/Status/303
             return werkzeug.utils.redirect(form.form_next_url(), code=303)
         # render form wrapper
-        values = self.get_render_values(form.main_object, **kw)
-        values['form'] = form
+        values = self.get_render_values(form, **kw)
         return request.render(
             self.get_template(form, **kw),
             values,
@@ -163,6 +164,13 @@ class SearchFormControllerMixin(FormControllerMixin):
 
     def form_model_key(self, model, **kw):
         return 'cms.form.search.' + model
+
+    def get_render_values(self, form, **kw):
+        values = super().get_render_values(form, **kw)
+        values.update({
+            'pager': form.form_search_results['pager'],
+        })
+        return values
 
 
 class CMSSearchFormController(http.Controller, SearchFormControllerMixin):
