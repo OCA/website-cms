@@ -54,12 +54,13 @@ odoo.define('cms_delete_content.delete_confirm', function (require) {
           var msg = {
             'msg': result.message,
             'title': _t('Info')
-          }
-          // wipe existing
-          $('.status_message').remove();
-          // inject new
-          $(msg_tool.render_messages(msg))
-            .hide().prependTo('main').fadeIn('slow');
+          };
+          msg_tool.render_messages(msg).then(function(html) {
+            // wipe existing
+            $('.status_message').remove();
+            // inject new
+            $(html).hide().prependTo('#wrap').fadeIn('slow');
+          });
         }
         // TODO: trigger custom event as hook
       }
