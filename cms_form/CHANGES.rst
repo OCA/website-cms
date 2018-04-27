@@ -3,11 +3,35 @@ CHANGELOG
 =========
 
 
+11.0.1.4.0 (2018-04-27)
+=======================
+
+Improvements
+------------
+
+* Include wizard name in form wrapper klass
+* Add request marshallers and tests
+* Search form: pass `pager` as render value
+
+  This change is to facilitate templates that need a pager
+  to generate page metadata (like links prev/next).
+
+  A good use case is the SEO friendly `website_canonical_url`.
+
+* Rely on `cms_info` for permission and URLs
+
+
+Fixes
+-----
+
+* Fix `fake_session` helper in form tests common
+
+
 11.0.1.3.1 (2018-04-22)
 =======================
 
-Improve
--------
+Improvements
+------------
 
 * Wizard: ease customization of stored values
 
@@ -17,8 +41,8 @@ Improve
 11.0.1.3.0 (2018-04-17)
 =======================
 
-Improve
--------
+Improvements
+------------
 
 * Add wizard support to easily create custom wizards
 
@@ -26,8 +50,8 @@ Improve
 11.0.1.2.1 (2018-04-13)
 =======================
 
-Fix
----
+Fixes
+-----
 
 * Fix search form regression on permission check
 
@@ -38,8 +62,8 @@ Fix
 11.0.1.2.0 (2018-04-09)
 =======================
 
-Improve
--------
+Improvements
+------------
 
 * Add error msg block for validation errors right below field
 * Support multiple values for same field
@@ -80,8 +104,8 @@ Improve
   Before this change you had to override the controller to gain control on it.
 
 
-Fix
----
+Fixes
+-----
 
 * Fix required attr on boolean widget (was not considered)
 * `_form_create` + `_form_write` use a copy of values to avoid pollution by Odoo
@@ -92,8 +116,8 @@ Fix
 11.0.1.1.1 (2018-03-26)
 =======================
 
-Fix
----
+Fixes
+-----
 
 * Fix date widget: default today only if empty
 
@@ -101,16 +125,16 @@ Fix
 11.0.1.1.0 (2018-03-26)
 =======================
 
-Improve
--------
+Improvements
+------------
 
 * Delegate field wrapper class computation to form
 * Add vertical fields option
 * Add multi value widget for search forms
 * Improve date widget: allow custom default today
 
-Fix
----
+Fixes
+-----
 
 * Fix fieldset support for search forms
 * Fix date search w/ empty value
@@ -120,8 +144,8 @@ Fix
 11.0.1.0.4 (2018-03-23)
 =======================
 
-Improve
--------
+Improvements
+------------
 
 * Ease override of JSON info
 * Add fieldsets support
@@ -131,13 +155,13 @@ Improve
 11.0.1.0.3 (2018-03-21)
 =======================
 
-Improve
--------
+Improvements
+------------
 
 * Form controller: main_object defaults to empty recordset
 
-Fix
----
+Fixes
+-----
 
 * Fix x2m widget value comparison
 * Fix x2m widget load default value empt^^
