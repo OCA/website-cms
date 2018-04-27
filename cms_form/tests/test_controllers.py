@@ -78,7 +78,7 @@ class TestControllers(FormHttpTestCase):
             self.assertEqual(form._form_model, 'res.partner')
             self.assertEqual(form.form_mode, 'create')
 
-    def _check_rendering(self, dom, form_model, model, mode):
+    def _check_rendering(self, dom, form_model, model, mode, extra_klass=''):
         """Check default markup for form and form wrapper."""
         # test wrapper klass
         wrapper_node = dom.find_class('cms_form_wrapper')[0]
@@ -88,7 +88,7 @@ class TestControllers(FormHttpTestCase):
                     form_model=form_model.replace('.', '_'),
                     model=model.replace('.', '_'),
                     mode=mode
-                )
+                ) + (' ' + extra_klass if extra_klass else '')
         }
         self.assert_match_attrs(wrapper_node.attrib, expected_attrs)
         # test form is there and has correct klass
@@ -121,17 +121,22 @@ class TestControllers(FormHttpTestCase):
         self._check_rendering(
             dom, 'cms.form.res.partner', 'res.partner', 'edit')
 
-    def _check_wiz_rendering(self, dom, form_model, model, mode):
-        self._check_rendering(dom, form_model, model, mode)
+    def _check_wiz_rendering(
+            self, dom, form_model, model, mode, extra_klass=''):
+        self._check_rendering(
+            dom, form_model, model, mode, extra_klass=extra_klass)
         # TODO: check more (paging etc)
 
     def test_default_wiz_rendering(self):
         dom = self.html_get('/cms/wiz/fake.wiz/page/1')
         self._check_wiz_rendering(
-            dom, 'fake.wiz.step1.country', 'res.country', 'wizard')
+            dom, 'fake.wiz.step1.country',
+            'res.country', 'wizard', extra_klass='fake_wiz')
         dom = self.html_get('/cms/wiz/fake.wiz/page/2')
         self._check_wiz_rendering(
-            dom, 'fake.wiz.step2.partner', 'res.partner', 'wizard')
+            dom, 'fake.wiz.step2.partner',
+            'res.partner', 'wizard', extra_klass='fake_wiz')
         dom = self.html_get('/cms/wiz/fake.wiz/page/3')
         self._check_wiz_rendering(
-            dom, 'fake.wiz.step3.partner', 'res.partner', 'wizard')
+            dom, 'fake.wiz.step3.partner',
+            'res.partner', 'wizard', extra_klass='fake_wiz')
