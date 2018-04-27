@@ -8,13 +8,19 @@ import mock
 import json
 from contextlib import contextmanager
 
-from odoo.tests.common import HttpCase
+from odoo.addons.cms_form.tests.common import FormHttpTestCase
 from ..controllers import main
+from .fake_models import FakePublishModel
+
 
 IMPORT = 'odoo.addons.cms_delete_content.controllers.main'
 
 
-class TestDelete(HttpCase):
+class TestDelete(FormHttpTestCase):
+
+    TEST_MODELS_KLASSES = [
+        FakePublishModel,
+    ]
 
     at_install = False
     post_install = True
@@ -23,7 +29,7 @@ class TestDelete(HttpCase):
         super().setUp()
         self.authenticate('admin', 'admin')
         self.delete_controller = main.DeleteController()
-        self.partner = self.env['res.partner'].create({'name': 'New'})
+        self.record = self.env[FakePublishModel._name].create({'name': 'New'})
 
     @contextmanager
     def mock_request(self, impot_to_mock, mock_get=True):
@@ -33,7 +39,7 @@ class TestDelete(HttpCase):
             request.env = self.env
             # request.httprequest = faked.httprequest
             if mock_get:
-                request.get_main_object = lambda x, y: self.partner
+                request.get_main_object = lambda x, y: self.record
             request.website_enabled = False
             yield {
                 'request': request,
@@ -47,17 +53,17 @@ class TestDelete(HttpCase):
             with self.assertRaises(werkzeug.exceptions.NotFound):
                 # obj does not exists
                 self.delete_controller.get_main_object(
-                    'res.partner', 9999999)
+                    FakePublishModel._name, 9999999)
             self.assertEqual(
                 self.delete_controller.get_main_object(
-                    'res.partner', self.partner.id),
-                self.partner
+                    FakePublishModel._name, self.record.id),
+                self.record
             )
 
     def test_delete_confirm(self):
         with self.mock_request(IMPORT):
             response = self.url_open(
-                self.partner.cms_delete_confirm_url, timeout=30)
+                self.record.cms_delete_confirm_url, timeout=30)
             content = response.content
             node = self.to_xml_node(content)
             self.assertEqual(
@@ -68,9 +74,10 @@ class TestDelete(HttpCase):
     def test_delete(self):
         with self.mock_request(IMPORT):
             resp = self.delete_controller.handle_delete(
-                'res.partner', self.partner.id)
+                FakePublishModel._name, self.record.id)
             self.assertEqual(
                 json.loads(resp),
-                {"redirect": "", "message": "Partner deleted."}
+                {"redirect": "",
+                 "message": "%s deleted." % FakePublishModel._description}
             )
-            self.assertFalse(self.partner.exists())
+            self.assertFalse(self.record.exists())

@@ -28,17 +28,19 @@ class FormControllerMixin(object):
             raise NotImplementedError("You must provide a template!")
         return template
 
-    def get_render_values(self, main_object, **kw):
+    def get_render_values(self, form, **kw):
         """Retrieve rendering values.
 
         You can override this to inject more values.
         """
+        main_object = form.main_object
         parent = None
         if getattr(main_object, 'parent_id', None):
             # get the parent if any
             parent = main_object.parent_id
 
         kw.update({
+            'form': form,
             'main_object': main_object,
             'parent': parent,
             'controller': self,
@@ -103,8 +105,7 @@ class FormControllerMixin(object):
             # https://developer.mozilla.org/en-US/docs/Web/HTTP/Status/303
             return werkzeug.utils.redirect(form.form_next_url(), code=303)
         # render form wrapper
-        values = self.get_render_values(form.main_object, **kw)
-        values['form'] = form
+        values = self.get_render_values(form, **kw)
         return request.render(
             self.get_template(form, **kw),
             values,
@@ -116,8 +117,8 @@ class CMSFormController(http.Controller, FormControllerMixin):
     """CMS form controller."""
 
     @http.route([
-        '/cms/form/create/<string:model>',
-        '/cms/form/edit/<string:model>/<int:model_id>',
+        '/cms/create/<string:model>',
+        '/cms/edit/<string:model>/<int:model_id>',
     ], type='http', auth='user', website=True)
     def cms_form(self, model, model_id=None, **kw):
         """Handle a `form` route.
@@ -164,13 +165,20 @@ class SearchFormControllerMixin(FormControllerMixin):
     def form_model_key(self, model, **kw):
         return 'cms.form.search.' + model
 
+    def get_render_values(self, form, **kw):
+        values = super().get_render_values(form, **kw)
+        values.update({
+            'pager': form.form_search_results['pager'],
+        })
+        return values
+
 
 class CMSSearchFormController(http.Controller, SearchFormControllerMixin):
     """CMS form controller."""
 
     @http.route([
-        '/cms/form/search/<string:model>',
-        '/cms/form/search/<string:model>/page/<int:page>',
+        '/cms/search/<string:model>',
+        '/cms/search/<string:model>/page/<int:page>',
     ], type='http', auth='public', website=True)
     def cms_form(self, model, **kw):
         """Handle a search `form` route.
