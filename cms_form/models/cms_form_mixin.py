@@ -7,7 +7,8 @@ from collections import OrderedDict
 
 from odoo import models, tools, exceptions, _
 
-from ..utils import data_merge
+from .. import utils
+from .. import marshallers
 
 
 IGNORED_FORM_FIELDS = [
@@ -350,18 +351,7 @@ class CMSFormMixin(models.AbstractModel):
             # and this will make the form machinery miss all the fields
             _values = self.request.args
         # normal fields
-        res = {}
-        for k, v in _values.items():
-            if k in ('csrf_token', ):
-                continue
-            if k.endswith(':list'):
-                # fields w/ multiple values
-                # TODO
-                # 1. add test and docs
-                # 2. support more "transformers" (`:int` for instance)
-                v = _values.getlist(k)
-                k = k[:len(':list') + 1]
-            res[k] = v
+        res = marshallers.marshal_request_values(_values)
         # file fields
         res.update(
             {k: v for k, v in self.request.files.items()}
@@ -596,4 +586,4 @@ class CMSFormMixin(models.AbstractModel):
         so if you don't want to override info completely
         you can use this method to merge them properly.
         """
-        return data_merge(info, tomerge)
+        return utils.data_merge(info, tomerge)
