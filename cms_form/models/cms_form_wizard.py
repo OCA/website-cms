@@ -27,6 +27,11 @@ class CMSFormWizard(models.AbstractModel):
     _wiz_step_stored_fields = 'all'
 
     @property
+    def form_wrapper_css_klass(self):
+        klass = super().form_wrapper_css_klass
+        return klass + ' ' + self._wiz_name.replace('.', '_').lower()
+
+    @property
     def _wiz_storage_key(self):
         """Main storage key."""
         return self._wiz_name
