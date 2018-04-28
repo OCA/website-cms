@@ -1,0 +1,20 @@
+<?xml version="1.0" encoding="utf-8" ?>
+<odoo>
+
+  <template id="example" name="CMS Toolbar Example">
+
+    <t t-call="website.layout">
+      <div id="wrap">
+        <div class="container" style="max-width:800px;padding-top:1em">
+
+          <t t-raw="main_object.cms_render_toolbar(edit_url='#', create_url='#')" />
+          <h1 t-field="main_object.name" style="margin-top:3em" />
+
+        </div>
+      </div>
+    </t>
+
+  </template>
+
+</odoo>
+
