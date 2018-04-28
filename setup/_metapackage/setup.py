@@ -13,6 +13,7 @@ setuptools.setup(
         'odoo11-addon-cms_delete_content_example',
         'odoo11-addon-cms_form',
         'odoo11-addon-cms_form_example',
+        'odoo11-addon-cms_info',
         'odoo11-addon-cms_notification',
         'odoo11-addon-cms_status_message',
         'odoo11-addon-cms_status_message_example',
