@@ -1,0 +1,44 @@
+<?xml version="1.0" encoding="utf-8"?>
+<odoo>
+
+  <record id="example1" model="cms.toolbar.content.example">
+    <field name="name">Record 1</field>
+  </record>
+
+  <record id="example2" model="cms.toolbar.content.example">
+    <field name="name">Record 2</field>
+  </record>
+
+  <record id="example3" model="cms.toolbar.content.example">
+    <field name="name">Record 3</field>
+  </record>
+
+  <record id="example4" model="cms.toolbar.content.example">
+    <field name="name">Record 4</field>
+  </record>
+
+  <record id="example5" model="cms.toolbar.content.example">
+    <field name="name">Record 5</field>
+  </record>
+
+  <record id="example6" model="cms.toolbar.content.example">
+    <field name="name">Record 6</field>
+  </record>
+
+  <record id="example7" model="cms.toolbar.content.example">
+    <field name="name">Record 7</field>
+  </record>
+
+  <record id="example8" model="cms.toolbar.content.example">
+    <field name="name">Record 8</field>
+  </record>
+
+  <record id="example9" model="cms.toolbar.content.example">
+    <field name="name">Record 9</field>
+  </record>
+
+  <record id="example10" model="cms.toolbar.content.example">
+    <field name="name">Record 10</field>
+  </record>
+
+</odoo>
