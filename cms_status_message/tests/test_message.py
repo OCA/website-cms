@@ -2,7 +2,7 @@
 # Copyright 2017 Simone Orsi
 # License LGPL-3.0 or later (http://www.gnu.org/licenses/lgpl).
 
-from openerp.tests.common import HttpCase
+from odoo.tests.common import HttpCase
 
 import logging
 from lxml import html
@@ -12,7 +12,7 @@ import mock
 _logger = logging.getLogger(__name__)
 
 
-IMPORT = 'openerp.addons.cms_status_message.models.website'
+IMPORT = 'odoo.addons.cms_status_message.models.website'
 
 
 class HTMLCase(HttpCase):

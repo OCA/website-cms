@@ -14,7 +14,7 @@ from ..controllers import main
 from .fake_models import FakePublishModel
 
 
-IMPORT = 'openerp.addons.cms_delete_content.controllers.main'
+IMPORT = 'odoo.addons.cms_delete_content.controllers.main'
 
 
 def setup_test_model(env, model_cls):
