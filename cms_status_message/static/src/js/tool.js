@@ -38,7 +38,7 @@ odoo.define('cms_status_message.tool', function (require) {
                 'title': null,
                 'type': 'info',
                 'dismissible': true
-            }
+            };
             // inject user values
             $.extend(status_message, msg);
             // render it
@@ -49,10 +49,10 @@ odoo.define('cms_status_message.tool', function (require) {
             if(selector){
                 $(result).prependTo(selector);
             }
-            return result
+            return result;
         }
-    }
+    };
 
-    return MessageTool
+    return MessageTool;
 
 });

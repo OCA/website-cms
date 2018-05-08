@@ -7,9 +7,9 @@ odoo.define('cms_delete_content.delete_confirm', function (require) {
     var _t = core._t;
     var animation = require("web_editor.snippets.animation");
 
-    return animation.registry.countryDropdown = animation.Class.extend({
+    animation.registry.CMSdeleteConfirm = animation.Class.extend({
       selector: ".cms_delete_confirm",
-      start: function (editable_mode) {
+      start: function () {
         this.modal_url = this.$el.attr('href');
         this.$el.on('click', $.proxy(this.handle_click, this));
       },
