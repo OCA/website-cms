@@ -6,15 +6,15 @@ from io import StringIO
 from werkzeug.wrappers import Request
 from werkzeug.contrib.sessions import SessionStore
 import mock
-import urllib
+from urllib import urlencode
 
 from odoo import http, api
 from odoo.tests.common import get_db_name
 
 
 def fake_request(form_data=None, query_string=None,
-                 method='GET', content_type=None):
-    data = urllib.urlencode(form_data or {})
+                 method='GET', content_type=None, session=None):
+    data = urlencode(form_data or {})
     query_string = query_string or ''
     content_type = content_type or 'application/x-www-form-urlencoded'
     # werkzeug request

@@ -76,13 +76,13 @@ class FormSessionTestCase(SavepointCase, FormTestMixin):
     """Base class for transaction cases."""
 
     def setUp(self):
-        super().setUp()
+        super(FormSessionTestCase, self).setUp()
         self.session = fake_session(self.env)
 
     def tearDown(self):
         # self.session.clear()
         session_store.delete(self.session)
-        super().tearDown()
+        super(FormSessionTestCase, self).tearDown()
 
 
 class FormRenderTestCase(SavepointCase, FormRenderMixin):

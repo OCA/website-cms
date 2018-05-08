@@ -38,7 +38,7 @@ class IRQweb(models.AbstractModel):
 
         body = self._compile_directive_content(el, options)
         if body:
-            def_name = self._create_def(options, body, prefix='body_call_content', lineno=el.sourceline) # noqa
+            def_name = self._create_def(options, body, prefix='body_call_content', lineno=el.sourceline)  # noqa
 
             # call_content = []
             content.append(

@@ -19,13 +19,13 @@ class TestCMSFormWizard(FormSessionTestCase):
 
     @classmethod
     def setUpClass(cls):
-        super().setUpClass()
+        super(TestCMSFormWizard, cls).setUpClass()
         cls._setup_models()
 
     @classmethod
     def tearDownClass(cls):
         cls._teardown_models()
-        super().tearDownClass()
+        super(TestCMSFormWizard, cls).tearDownClass()
 
     def test_wiz_init(self):
         form = self.get_form(FakeWizStep1Country._name)

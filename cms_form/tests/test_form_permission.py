@@ -18,7 +18,7 @@ class TestFormPermCheck(FormTestCase):
 
     @classmethod
     def setUpClass(cls):
-        super().setUpClass()
+        super(TestFormPermCheck, cls).setUpClass()
         cls._setup_models()
         cls.record = cls.env[FakePublishModel._name].create({'name': 'Foo'})
 
@@ -26,7 +26,7 @@ class TestFormPermCheck(FormTestCase):
     def tearDownClass(cls):
         cls.record.unlink()
         cls._teardown_models()
-        super().tearDownClass()
+        super(TestFormPermCheck, cls).tearDownClass()
 
     mixin_path = 'odoo.addons.cms_info.models.website_mixin.WebsiteMixin'
 

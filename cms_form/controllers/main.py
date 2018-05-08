@@ -144,7 +144,9 @@ class WizardFormControllerMixin(FormControllerMixin):
         form_model = step_info['form_model']
         model = request.env[form_model]._form_model
         kw['form_model_key'] = form_model
-        return super().make_response(model, model_id=model_id, page=page, **kw)
+        return super(
+            WizardFormControllerMixin, self
+        ).make_response(model, model_id=model_id, page=page, **kw)
 
 
 class CMSWizardFormController(http.Controller, WizardFormControllerMixin):
@@ -167,7 +169,8 @@ class SearchFormControllerMixin(FormControllerMixin):
         return 'cms.form.search.' + model
 
     def get_render_values(self, form, **kw):
-        values = super().get_render_values(form, **kw)
+        values = super(SearchFormControllerMixin,
+                       self).get_render_values(form, **kw)
         values.update({
             'pager': form.form_search_results['pager'],
         })

@@ -103,8 +103,8 @@ class TestControllers(FormHttpTestCase):
 
     def _check_route(self, url):
         resp = self.url_open(url, timeout=30)
-        self.assertTrue(resp.ok)
-        self.assertEqual(resp.status_code, 200)
+        self.assertEqual(resp.msg, 'OK')
+        self.assertEqual(resp.getcode(), 200)
 
     def test_default_routes(self):
         self._check_route('/cms/create/res.partner')

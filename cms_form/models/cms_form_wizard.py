@@ -29,7 +29,7 @@ class CMSFormWizard(models.AbstractModel):
 
     @property
     def form_wrapper_css_klass(self):
-        klass = super().form_wrapper_css_klass
+        klass = super(CMSFormWizard, self).form_wrapper_css_klass
         return klass + ' ' + self._wiz_name.replace('.', '_').lower()
 
     @property
@@ -56,7 +56,8 @@ class CMSFormWizard(models.AbstractModel):
     }
 
     def form_init(self, request, main_object=None, page=1, wizard=None, **kw):
-        form = super().form_init(request, main_object=main_object, **kw)
+        form = super(CMSFormWizard, self).form_init(
+            request, main_object=main_object, **kw)
         form.wiz_init(page=page, **kw)
         return form
 
