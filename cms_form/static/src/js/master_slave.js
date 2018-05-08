@@ -10,9 +10,9 @@ odoo.define('cms_form.master_slave', function (require) {
     var animation = require("web_editor.snippets.animation");
     var $ = require("$");
 
-    return animation.registry.CMSFormMasterSlave = animation.Class.extend({
+    animation.registry.CMSFormMasterSlave = animation.Class.extend({
       selector: ".cms_form_wrapper form",
-      start: function (editable_mode) {
+      start: function () {
         this.data = this.$el.data('form');
         this.setup_handlers();
         this.load_master_slave();
@@ -36,10 +36,11 @@ odoo.define('cms_form.master_slave', function (require) {
             if (handler) {
               $master_input.on('change', function(){
                 handler($(this), mapping) }
-              ).filter(':selected,:checked,[type=text]').trigger('change'); // trigger change only for specific inputs
+                // trigger change only for specific inputs
+              ).filter(':selected,:checked,[type=text]').trigger('change');
             }
-          })
-        })
+          });
+        });
       },
       // TODO: merge these functions as they are pretty much equals
       handle_hide: function($input, mapping){

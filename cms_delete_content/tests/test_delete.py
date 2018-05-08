@@ -11,20 +11,55 @@ from contextlib import contextmanager
 
 from odoo.tests.common import HttpCase
 from ..controllers import main
+from .fake_models import FakePublishModel
 
-IMPORT = 'openerp.addons.cms_delete_content.controllers.main'
+
+IMPORT = 'odoo.addons.cms_delete_content.controllers.main'
+
+
+def setup_test_model(env, model_cls):
+    """Pass a test model class and initialize it.
+    Courtesy of SBidoul from https://github.com/OCA/mis-builder :)
+    """
+    model_cls._build_model(env.registry, env.cr)
+    env.registry.setup_models(env.cr)
+    env.registry.init_models(
+        env.cr, [model_cls._name],
+        dict(env.context, update_custom_fields=True)
+    )
+
+
+def teardown_test_model(env, model_cls):
+    """Pass a test model class and deinitialize it.
+    Courtesy of SBidoul from https://github.com/OCA/mis-builder :)
+    """
+    if not getattr(model_cls, '_teardown_no_delete', False):
+        del env.registry.models[model_cls._name]
+    env.registry.setup_models(env.cr)
 
 
 class TestDelete(HttpCase):
+
+    TEST_MODELS_KLASSES = [
+        FakePublishModel,
+    ]
 
     at_install = False
     post_install = True
 
     def setUp(self):
         super(TestDelete, self).setUp()
+        for kls in self.TEST_MODELS_KLASSES:
+            setup_test_model(self.env, kls)
         self.authenticate('admin', 'admin')
         self.delete_controller = main.DeleteController()
-        self.partner = self.env['res.partner'].create({'name': 'New'})
+        self.record = self.env[FakePublishModel._name].create({'name': 'New'})
+
+    def tearDown(self):
+        # HttpCase has no ENV on setUpClass
+        for kls in self.TEST_MODELS_KLASSES:
+            teardown_test_model(self.env, kls)
+        super(TestDelete, self).tearDown()
 
     @contextmanager
     def mock_request(self, impot_to_mock, mock_get=True):
@@ -34,7 +69,7 @@ class TestDelete(HttpCase):
             request.env = self.env
             # request.httprequest = faked.httprequest
             if mock_get:
-                request.get_main_object = lambda x, y: self.partner
+                request.get_main_object = lambda x, y: self.record
             request.website_enabled = False
             yield {
                 'request': request,
@@ -48,16 +83,16 @@ class TestDelete(HttpCase):
             with self.assertRaises(werkzeug.exceptions.NotFound):
                 # obj does not exists
                 self.delete_controller.get_main_object(
-                    'res.partner', 9999999)
+                    FakePublishModel._name, 9999999)
             self.assertEqual(
                 self.delete_controller.get_main_object(
-                    'res.partner', self.partner.id),
-                self.partner
+                    FakePublishModel._name, self.record.id),
+                self.record
             )
 
     def test_delete_confirm(self):
         with self.mock_request(IMPORT):
-            resp = self.url_open(self.partner.cms_delete_confirm_url).read()
+            resp = self.url_open(self.record.cms_delete_confirm_url).read()
             node = self.to_xml_node(resp)
             self.assertEqual(
                 node.find_class('modal-title')[0].text_content().strip(),
@@ -67,9 +102,10 @@ class TestDelete(HttpCase):
     def test_delete(self):
         with self.mock_request(IMPORT):
             resp = self.delete_controller.handle_delete(
-                'res.partner', self.partner.id)
+                FakePublishModel._name, self.record.id)
             self.assertEqual(
                 json.loads(resp),
-                {"redirect": "", "message": "Partner deleted."}
+                {"redirect": "",
+                 "message": "%s deleted." % FakePublishModel._description}
             )
-            self.assertFalse(self.partner.exists())
+            self.assertFalse(self.record.exists())

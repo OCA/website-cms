@@ -7,9 +7,9 @@ odoo.define('cms_delete_content.delete_confirm', function (require) {
     var _t = core._t;
     var animation = require("web_editor.snippets.animation");
 
-    return animation.registry.countryDropdown = animation.Class.extend({
+    animation.registry.CMSdeleteConfirm = animation.Class.extend({
       selector: ".cms_delete_confirm",
-      start: function (editable_mode) {
+      start: function () {
         this.modal_url = this.$el.attr('href');
         this.$el.on('click', $.proxy(this.handle_click, this));
       },
@@ -54,12 +54,13 @@ odoo.define('cms_delete_content.delete_confirm', function (require) {
           var msg = {
             'msg': result.message,
             'title': _t('Info')
-          }
-          // wipe existing
-          $('.status_message').remove();
-          // inject new
-          $(msg_tool.render_messages(msg))
-            .hide().prependTo('main').fadeIn('slow');
+          };
+          msg_tool.render_messages(msg).then(function(html) {
+            // wipe existing
+            $('.status_message').remove();
+            // inject new
+            $(html).hide().prependTo('#wrap').fadeIn('slow');
+          });
         }
         // TODO: trigger custom event as hook
       }
