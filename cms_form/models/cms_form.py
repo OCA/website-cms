@@ -12,7 +12,10 @@ class CMSForm(models.AbstractModel):
     _name = 'cms.form'
     _inherit = 'cms.form.mixin'
 
-    _form_validators = {}
+    # default validators by field type
+    _form_validators = {
+        # 'many2one': 'my_validation_method'
+    }
 
     # internal flag for successful form
     __form_success = False
@@ -27,6 +30,8 @@ class CMSForm(models.AbstractModel):
 
     @property
     def form_title(self):
+        if not self._form_model:
+            return ''
         if self.main_object:
             rec_field = self.main_object[self.form_model._rec_name]
             if hasattr(rec_field, 'id'):
@@ -150,9 +155,11 @@ class CMSForm(models.AbstractModel):
     def _form_purge_non_model_fields(self, values):
         """Purge fields that are not in `form_model` schema and return them."""
         extra_values = {}
-        _model_fields = self.form_model.fields_get(
+        if not self._form_model:
+            return extra_values
+        _model_fields = list(self.form_model.fields_get(
             self._form_model_fields,
-            attributes=self._form_fields_attributes).keys()
+            attributes=self._form_fields_attributes).keys())
         submitted_keys = values.keys()
         for fname in submitted_keys:
             if fname not in _model_fields:

@@ -67,6 +67,9 @@ class Widget(models.AbstractModel):
     def w_subfields_by_value(self, value='_all'):
         return self.w_subfields.get(value, {})
 
+    def w_data_json(self):
+        return json.dumps(self.w_data)
+
 
 class CharWidget(models.AbstractModel):
     _name = 'cms.form.widget.char'
@@ -109,9 +112,9 @@ class M2OWidget(models.AbstractModel):
 
     def w_load(self, **req_values):
         value = super(M2OWidget, self).w_load(**req_values)
-        return self.m2o_to_form(value)
+        return self.m2o_to_form(value, **req_values)
 
-    def m2o_to_form(self, value):
+    def m2o_to_form(self, value, **req_values):
         # important: return False if no value
         # otherwise you will compare an empty recordset with an id
         # in a select input in form widget template.
@@ -132,6 +135,26 @@ class M2OWidget(models.AbstractModel):
         val = utils.safe_to_integer(value)
         # we don't want m2o value do be < 1
         return val > 0 and val or None
+
+
+class M2OMultiWidget(models.AbstractModel):
+    _name = 'cms.form.widget.many2one.multi'
+    _inherit = 'cms.form.widget.many2one'
+    _w_template = 'cms_form.field_widget_m2o_multi'
+    w_diplay_field = 'display_name'
+
+    def m2o_to_form(self, value, **req_values):
+        if not value:
+            return json.dumps([])
+        if (isinstance(value, str) and
+                value == req_values.get(self.w_fname)):
+            value = self.w_comodel.browse(
+                self.w_ids_from_input(value)).read(['name'])
+        value = json.dumps(value)
+        return value
+
+    def form_to_m2o(self, value, **req_values):
+        return self.w_ids_from_input(value) if value else None
 
 
 class SelectionWidget(models.AbstractModel):
@@ -239,6 +262,13 @@ class DateWidget(models.AbstractModel):
     _name = 'cms.form.widget.date'
     _inherit = 'cms.form.widget.mixin'
     _w_template = 'cms_form.field_widget_date'
+
+    def widget_init(self, form, fname, field, **kw):
+        widget = super(DateWidget, self).widget_init(form, fname, field, **kw)
+        if 'defaultToday' not in widget.w_data:
+            # set today's date by default
+            widget.w_data['defaultToday'] = True
+        return widget
 
     def w_extract(self, **req_values):
         value = super(DateWidget, self).w_extract(**req_values)
