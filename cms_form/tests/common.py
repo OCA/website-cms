@@ -74,7 +74,7 @@ class FormHttpTestCase(HttpCase, FormRenderMixin):
 
     def setUp(self):
         # HttpCase has no ENV on setUpClass
-        super().setUp()
+        super(FormHttpTestCase, self).setUp()
         for kls in self.TEST_MODELS_KLASSES:
             setup_test_model(self.env, kls)
 
@@ -82,8 +82,8 @@ class FormHttpTestCase(HttpCase, FormRenderMixin):
         # HttpCase has no ENV on setUpClass
         for kls in self.TEST_MODELS_KLASSES:
             teardown_test_model(self.env, kls)
-        super().tearDown()
+        super(FormHttpTestCase, self).tearDown()
 
     def html_get(self, url):
         resp = self.url_open(url, timeout=30)
-        return html.document_fromstring(resp.content)
+        return html.document_fromstring(resp.read())

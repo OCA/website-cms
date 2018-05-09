@@ -20,7 +20,7 @@ class TestControllers(FormHttpTestCase):
     TEST_MODELS_KLASSES = [FakePartnerForm, FakeSearchPartnerForm]
 
     def setUp(self):
-        super().setUp()
+        super(TestControllers, self).setUp()
         self.form_controller = main.CMSFormController()
         self.form_search_controller = main.CMSSearchFormController()
         self.authenticate('admin', 'admin')
