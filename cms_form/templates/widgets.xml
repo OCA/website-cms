@@ -26,10 +26,11 @@ License LGPL-3.0 or later (http://www.gnu.org/licenses/lgpl.html).
           t-att-name="widget.w_fname"
           t-att-required="widget.w_field['required'] and '1' or None"
           t-att-data-params="widget.w_data">
-    <option value=""><t t-esc="widget.w_field['string'] + '...'" /></option>
+    <option class="empty_item" value=""><t t-esc="widget.w_field['string'] + '...'" /></option>
     <t t-foreach="widget.w_option_items" t-as="opt_item">
-      <option t-att-value="opt_item.id"
-             t-att-selected="opt_item.id == widget.w_field_value">
+      <option class="value_item"
+              t-att-value="opt_item.id"
+              t-att-selected="opt_item.id == widget.w_field_value">
         <t t-esc="opt_item.name"/>
       </option>
     </t>

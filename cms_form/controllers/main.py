@@ -4,7 +4,7 @@
 
 import werkzeug
 
-from odoo import http, _
+from odoo import http, exceptions, _
 from odoo.http import request
 
 
@@ -57,7 +57,7 @@ class FormControllerMixin(object):
             main_object.check_access_rights('write')
             main_object.check_access_rule('write')
             can = True
-        except Exception:
+        except exceptions.AccessError:
             if raise_exception:
                 raise
             can = False
@@ -106,7 +106,7 @@ class FormControllerMixin(object):
           it redirects to it.
         * otherwise it just renders the form
         """
-        main_object = None
+        main_object = request.env[model]
         if model_id:
             main_object = request.env[model].browse(model_id)
         self.check_permission(model, main_object)

@@ -2,7 +2,6 @@ odoo.define('cms_status_message.tool', function (require) {
     'use strict';
 
     var Model = require('web.Model');
-    var session = require('web.session');
     var WebsiteModel = new Model('website', session.user_context);
     var core = require('web.core');
     var qweb = core.qweb;
