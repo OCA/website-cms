@@ -95,7 +95,7 @@ class TestCMSSearchForm(FormTestCase):
             self.env.ref('base.it').id,
             self.env.ref('base.fr').id,
         ]
-        data = {'country_id':  ','.join(map(str, countries))}
+        data = {'country_id': ','.join(map(str, countries))}
         form = self.get_search_form(
             data, form_model='cms.form.search.res.partner.multicountry')
         form.form_process()

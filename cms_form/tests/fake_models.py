@@ -50,7 +50,7 @@ class FakeSearchPartnerFormMulti(models.AbstractModel):
 
     @property
     def form_widgets(self):
-        res = super().form_widgets
+        res = super(FakeSearchPartnerFormMulti, self).form_widgets
         res.update({
             'country_id': 'cms.form.widget.many2one.multi',
         })

@@ -264,7 +264,7 @@ class DateWidget(models.AbstractModel):
     _w_template = 'cms_form.field_widget_date'
 
     def widget_init(self, form, fname, field, **kw):
-        widget = super().widget_init(form, fname, field, **kw)
+        widget = super(DateWidget, self).widget_init(form, fname, field, **kw)
         if 'defaultToday' not in widget.w_data:
             # set today's date by default
             widget.w_data['defaultToday'] = True
