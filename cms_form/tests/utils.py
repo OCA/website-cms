@@ -4,15 +4,17 @@
 
 from io import StringIO
 from werkzeug.wrappers import Request
+from werkzeug.contrib.sessions import SessionStore
 import mock
-import urllib
+from urllib import urlencode
 
-from odoo import http
+from odoo import http, api
+from odoo.tests.common import get_db_name
 
 
 def fake_request(form_data=None, query_string=None,
-                 method='GET', content_type=None):
-    data = urllib.urlencode(form_data or {})
+                 method='GET', content_type=None, session=None):
+    data = urlencode(form_data or {})
     query_string = query_string or ''
     content_type = content_type or 'application/x-www-form-urlencoded'
     # werkzeug request
@@ -22,7 +24,7 @@ def fake_request(form_data=None, query_string=None,
         input_stream=StringIO(data.decode('utf-8')),
         content_type=content_type,
         method=method)
-    w_req.session = mock.MagicMock()
+    w_req.session = session if session is not None else mock.MagicMock()
     # odoo request
     o_req = http.HttpRequest(w_req)
     o_req.website = mock.MagicMock()
@@ -30,6 +32,34 @@ def fake_request(form_data=None, query_string=None,
     o_req.httprequest = w_req
     o_req.__testing__ = True
     return o_req
+
+
+class FakeSessionStore(SessionStore):
+
+    def delete(self, session):
+        session.clear()
+        del session
+
+
+session_store = FakeSessionStore(session_class=http.OpenERPSession)
+
+
+def fake_session(env, **kw):
+    db = get_db_name()
+    env = api.Environment(env.cr, env.uid, {})
+    session = session_store.new()
+    session.db = db
+    session.uid = env.uid
+    session.login = env.user.login
+    session.password = ''
+    session.context = dict(env.context)
+    session.context['uid'] = env.uid
+    session._fix_lang(session.context)
+    for k, v in kw.items():
+        if hasattr(session, k):
+            setattr(session, k, v)
+    session.__testing__ = True
+    return session
 
 
 def setup_test_model(env, model_cls):
