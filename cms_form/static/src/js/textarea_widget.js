@@ -1,8 +1,6 @@
 odoo.define('cms_form.textarea_widget', function (require) {
     'use strict';
 
-    require('web.dom_ready');
-
     $(document).ready(function () {
         $('textarea[maxlength]').bind('input propertychange', function(){
             var $self = $(this),

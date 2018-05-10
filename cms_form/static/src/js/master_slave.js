@@ -8,7 +8,6 @@ odoo.define('cms_form.master_slave', function (require) {
     // TODO: this does not work ATM :(
     // var pyeval = require('web.pyeval');
     var animation = require("web_editor.snippets.animation");
-    var $ = require("$");
 
     animation.registry.CMSFormMasterSlave = animation.Class.extend({
       selector: ".cms_form_wrapper form",
