@@ -24,6 +24,11 @@ class CMSFormSearch(models.AbstractModel):
     _form_results_orderby = ''
     # declare fields that must be searched w/ multiple values
     _form_search_fields_multi = ()
+    # declare custom domain computation rules
+    _form_search_domain_rules = {
+        # field name: (leaf field name, operator, format value),
+        # 'product_id': ('product_id.name', 'ilike', '{}'),
+    }
 
     def form_check_permission(self):
         """Just searching, nothing to check here."""
@@ -34,6 +39,13 @@ class CMSFormSearch(models.AbstractModel):
         super().form_update_fields_attributes(_fields)
         for fname, field in _fields.items():
             field['required'] = False
+
+    def form_get_widget_model(self, fname, field):
+        """Search via related field needs a simple char widget."""
+        res = super(CMSFormSearch, self).form_get_widget_model(fname, field)
+        if fname in self._form_search_domain_rules:
+            res = 'cms.form.widget.char'
+        return res
 
     __form_search_results = {}
 
@@ -113,9 +125,6 @@ class CMSFormSearch(models.AbstractModel):
                 leaf = (fname, 'in', value)
                 domain.append(leaf)
                 continue
-            if field['type'] in ('many2one', ) and value < 1:
-                # we need an existing ID here ( > 0)
-                continue
             # TODO: find the way to properly handle this.
             # It would be nice to guess leafs in a clever way.
             operator = '='
@@ -128,15 +137,24 @@ class CMSFormSearch(models.AbstractModel):
                 if not value:
                     continue
                 operator = 'in'
-            elif field['type'] in ('many2one', ) and not value:
-                # we need an existing ID here ( > 0)
-                continue
+            elif field['type'] in ('many2one', ):
+                value = int(value) if value.isdigit() else 0
+                if not value or value < 1:
+                    # we need an existing ID here ( > 0)
+                    continue
             elif field['type'] in ('boolean', ):
                 value = value == 'on' and True
             elif field['type'] in ('date', 'datetime'):
                 if not value:
                     # searching for an empty string breaks search
                     continue
+            if fname in self._form_search_domain_rules:
+                fname, operator, fmt_value = \
+                    self._form_search_domain_rules[fname]
+                if hasattr(fmt_value, '__call__'):
+                    value = fmt_value(field, value, search_values)
+                else:
+                    value = fmt_value.format(value) if fmt_value else value
             leaf = (fname, operator, value)
             domain.append(leaf)
         return domain
