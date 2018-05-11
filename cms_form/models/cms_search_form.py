@@ -84,6 +84,9 @@ class CMSFormSearch(models.AbstractModel):
         url = render_values.get('extra_args', {}).get('pager_url', '')
         if self._form_model:
             url = getattr(self.form_model, 'cms_search_url', url)
+        if not url:
+            # default to current path w/out paging
+            url = self.request.path.decode('utf-8').split('/page')[0]
         pager = self._form_results_pager(count=count, page=page, url=url)
         order = self._form_results_orderby or None
         results = self.form_model.search(
