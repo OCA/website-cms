@@ -12,6 +12,7 @@ setuptools.setup(
         'odoo10-addon-cms_delete_content_example',
         'odoo10-addon-cms_form',
         'odoo10-addon-cms_form_example',
+        'odoo10-addon-cms_info',
         'odoo10-addon-cms_status_message',
         'odoo10-addon-cms_status_message_example',
     ],
