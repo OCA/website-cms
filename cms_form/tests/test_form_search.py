@@ -108,3 +108,17 @@ class TestCMSSearchForm(FormTestCase):
         form = self.get_search_form(
             {}, sudo_uid=self.env.ref('base.public_user').id)
         self.assertTrue(form.form_check_permission())
+
+    def test_search_custom_rules(self):
+        data = {'country_id': 'Italy', }
+        form = self.get_search_form(data)
+        form.form_process()
+        # we find them all since domain is mocked to include all test partners
+        self.assert_results(form, 5, self.expected_partners)
+        # apply custom rules
+        data = {'country_id': 'Italy', }
+        form = self.get_search_form(data, search_domain_rules={
+            'country_id': ('country_id.name', 'ilike', '')
+        })
+        form.form_process()
+        self.assert_results(form, 2, self.expected_partners[:2])
