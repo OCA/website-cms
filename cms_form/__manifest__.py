@@ -6,7 +6,7 @@
     'name': 'CMS Form',
     'summary': """
         Basic content type form""",
-    'version': '10.0.1.4.1',
+    'version': '10.0.1.4.2',
     'license': 'LGPL-3',
     'author': 'Camptocamp, Odoo Community Association (OCA)',
     'depends': [

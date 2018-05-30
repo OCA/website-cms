@@ -2,6 +2,17 @@
 CHANGELOG
 =========
 
+
+10.0.1.4.2 (2018-05-30)
+=======================
+
+Improvements
+------------
+
+* Search form: use safe default for pager url
+* Search form: support quick domain rules via `_form_search_domain_rules`
+
+
 10.0.1.4.1 (2018-05-10)
 =======================
 
@@ -173,3 +184,4 @@ Fixes
 
 * Fix x2m widget value comparison
 * Fix x2m widget load default value empt^^
+
