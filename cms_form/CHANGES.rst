@@ -2,6 +2,16 @@
 CHANGELOG
 =========
 
+11.0.1.4.2 (2018-05-31)
+=======================
+
+Improvements
+------------
+
+* Search form: use safe default for pager url
+* Search form: support quick domain rules via `_form_search_domain_rules`
+
+
 11.0.1.4.1 (2018-04-29)
 =======================
 
