@@ -66,9 +66,11 @@ License LGPL-3.0 or later (http://www.gnu.org/licenses/lgpl.html).
 
 
 <template id="base_form_field_error_block" name="CMS form field error block">
+  <t t-if="errors_message.get(fname)">
     <div class="alert alert-danger error-msg">
       <span t-esc="errors_message[fname]" />
     </div>
+  </t>
 </template>
 
 
