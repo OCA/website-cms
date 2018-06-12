@@ -38,14 +38,24 @@ class FormControllerMixin(object):
         if getattr(main_object, 'parent_id', None):
             # get the parent if any
             parent = main_object.parent_id
-
-        kw.update({
+        # Cleanup render values and remove form fields' values.
+        # When you submit a form and there's an error odoo will give you back
+        # all submitted values into `kw` but:
+        # 1. we don't need them since all values are encapsulated
+        #    into form.form_render_values
+        #    and are already accessible on each widget
+        # 2. this can break website rendering because you might have fields
+        #    w/ a name that overrides a rendering value not related to a form.
+        #    Most common example: field named `website` will override
+        #    odoo record for current website.
+        vals = {k: v for k, v in kw.items() if k not in form.form_fields()}
+        vals.update({
             'form': form,
             'main_object': main_object,
             'parent': parent,
             'controller': self,
         })
-        return kw
+        return vals
 
     def form_model_key(self, model, **kw):
         """Return a valid form model."""
