@@ -63,7 +63,7 @@ The form above can be extended with extra fields that are not part of the ``_for
 
         def form_after_create_or_update(self, values, extra_values):
             if extra_values.get('notify_partner'):
-                # do what you want here...
+                self.something_to_do_in_this_case()
 
 ``notify_partner`` will be included into the form but it will be discarded on create and write.
 Nevertheless you can use it as a control flag before and after the record has been created or updated
