@@ -1,0 +1,30 @@
+# Translation of Odoo Server.
+# This file contains the translation of the following modules:
+#	* cms_info
+#
+msgid ""
+msgstr ""
+"Project-Id-Version: Odoo Server 11.0\n"
+"Report-Msgid-Bugs-To: \n"
+"Last-Translator: <>\n"
+"Language-Team: \n"
+"MIME-Version: 1.0\n"
+"Content-Type: text/plain; charset=UTF-8\n"
+"Content-Transfer-Encoding: \n"
+"Plural-Forms: \n"
+
+#. module: cms_info
+#: model:ir.model.fields,field_description:cms_info.field_cms_delete_content_example_cms_edit_url
+#: model:ir.model.fields,field_description:cms_info.field_cms_toolbar_content_example_cms_edit_url
+#: model:ir.model.fields,field_description:cms_info.field_res_partner_cms_edit_url
+#: model:ir.model.fields,field_description:cms_info.field_res_users_cms_edit_url
+#: model:ir.model.fields,field_description:cms_info.field_website_page_cms_edit_url
+#: model:ir.model.fields,field_description:cms_info.field_website_published_mixin_cms_edit_url
+msgid "CMS edit URL"
+msgstr ""
+
+#. module: cms_info
+#: model:ir.model,name:cms_info.model_website_published_mixin
+msgid "website.published.mixin"
+msgstr ""
+
