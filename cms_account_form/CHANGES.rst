@@ -6,8 +6,7 @@ CHANGELOG
 11.0.1.0.2 (2018-04-17)
 =======================
 
-Fix
----
+**Fix**
 
 * Fix controller: form_model_key now accepts kw args
 
@@ -15,8 +14,7 @@ Fix
 11.0.1.0.1 (2018-04-09)
 =======================
 
-Fix
----
+**Fix**
 
 * Fix validators names
 
