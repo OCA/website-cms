@@ -1,21 +1,17 @@
 # Translation of Odoo Server.
 # This file contains the translation of the following modules:
-# 	* cms_form
+#	* cms_form
 #
 msgid ""
 msgstr ""
-"Project-Id-Version: Odoo Server 9.0c\n"
+"Project-Id-Version: Odoo Server 11.0\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2017-03-30 10:43+0000\n"
-"PO-Revision-Date: 2017-03-30 12:45+0200\n"
 "Last-Translator: <>\n"
 "Language-Team: \n"
-"Language: de\n"
 "MIME-Version: 1.0\n"
 "Content-Type: text/plain; charset=UTF-8\n"
-"Content-Transfer-Encoding: 8bit\n"
+"Content-Transfer-Encoding: \n"
 "Plural-Forms: \n"
-"X-Generator: Poedit 1.8.9\n"
 
 #. module: cms_form
 #: code:addons/cms_form/controllers/main.py:86
@@ -26,19 +22,19 @@ msgstr ""
 #. module: cms_form
 #: model:ir.model,name:cms_form.model_cms_form_mixin
 msgid "CMS Form mixin"
-msgstr "CMS Form mixin"
+msgstr ""
 
 #. module: cms_form
 #: model:ir.ui.view,arch_db:cms_form.base_form_buttons
 msgid "Cancel"
-msgstr "Abbrechen"
+msgstr ""
 
 #. module: cms_form
 #: code:addons/cms_form/models/cms_form.py:40
 #: code:addons/cms_form/models/cms_form.py:45
 #, python-format
 msgid "Create %s"
-msgstr "%s anlegen"
+msgstr ""
 
 #. module: cms_form
 #: model:ir.model.fields,field_description:cms_form.field_cms_form_display_name
@@ -62,13 +58,13 @@ msgstr "%s anlegen"
 #: model:ir.model.fields,field_description:cms_form.field_cms_form_widget_x2m_mixin_display_name
 #: model:ir.model.fields,field_description:cms_form.field_cms_form_wizard_display_name
 msgid "Display Name"
-msgstr "Angezeigter Name"
+msgstr ""
 
 #. module: cms_form
 #: code:addons/cms_form/models/cms_form.py:38
 #, python-format
 msgid "Edit \"%s\""
-msgstr "\"%s\" Bearbeiten"
+msgstr ""
 
 #. module: cms_form
 #: model:ir.ui.view,arch_db:cms_form.fieldsets_as_tabs
@@ -97,24 +93,24 @@ msgstr ""
 #: model:ir.model.fields,field_description:cms_form.field_cms_form_widget_x2m_mixin_id
 #: model:ir.model.fields,field_description:cms_form.field_cms_form_wizard_id
 msgid "ID"
-msgstr "ID"
+msgstr ""
 
 #. module: cms_form
 #: code:addons/cms_form/models/cms_form.py:62
 #, python-format
 msgid "Item created."
-msgstr "Objekt wurde erstellt."
+msgstr ""
 
 #. module: cms_form
 #: code:addons/cms_form/models/cms_form.py:67
 #, python-format
 msgid "Item updated."
-msgstr "Objekt wurde aktualisiert."
+msgstr ""
 
 #. module: cms_form
 #: model:ir.ui.view,arch_db:cms_form.field_widget_image
 msgid "Keep current image"
-msgstr "Aktuelles Bild beibehalten"
+msgstr ""
 
 #. module: cms_form
 #: model:ir.model.fields,field_description:cms_form.field_cms_form___last_update
@@ -138,13 +134,13 @@ msgstr "Aktuelles Bild beibehalten"
 #: model:ir.model.fields,field_description:cms_form.field_cms_form_widget_x2m_mixin___last_update
 #: model:ir.model.fields,field_description:cms_form.field_cms_form_wizard___last_update
 msgid "Last Modified on"
-msgstr "Zuletzt geändert am"
+msgstr ""
 
 #. module: cms_form
 #: model:ir.ui.view,arch_db:cms_form.form_horizontal_field_wrapper
 #: model:ir.ui.view,arch_db:cms_form.form_vertical_field_wrapper
 msgid "Name"
-msgstr "Bezeichnung"
+msgstr ""
 
 #. module: cms_form
 #: model:ir.ui.view,arch_db:cms_form.wizard_form_buttons
@@ -159,42 +155,42 @@ msgstr ""
 #. module: cms_form
 #: model:ir.ui.view,arch_db:cms_form.field_widget_image
 msgid "Replace current image"
-msgstr "Aktuelles Bild ersetzen"
+msgstr ""
 
 #. module: cms_form
 #: model:ir.ui.view,arch_db:cms_form.base_form
 msgid "Required fields"
-msgstr "Pflichtfelder"
+msgstr ""
 
 #. module: cms_form
 #: code:addons/cms_form/models/cms_search_form.py:63
 #: model:ir.ui.view,arch_db:cms_form.search_form_buttons
 #, python-format
 msgid "Search"
-msgstr "Suche"
+msgstr ""
 
 #. module: cms_form
 #: code:addons/cms_form/models/cms_search_form.py:68
 #, python-format
 msgid "Search %s"
-msgstr "%s suchen"
+msgstr ""
 
 #. module: cms_form
 #: code:addons/cms_form/models/cms_form.py:71
 #, python-format
 msgid "Some required fields are empty."
-msgstr "Bitte füllen Sie alle Pflichtfelder aus."
+msgstr ""
 
 #. module: cms_form
 #: model:ir.ui.view,arch_db:cms_form.base_form_buttons
 #: model:ir.ui.view,arch_db:cms_form.wizard_form_buttons
 msgid "Submit"
-msgstr "Absenden"
+msgstr ""
 
 #. module: cms_form
 #: model:ir.ui.view,arch_db:cms_form.field_widget_date
 msgid "YYYY-MM-DD"
-msgstr "JJJJ-MM-TT"
+msgstr ""
 
 #. module: cms_form
 #: code:addons/cms_form/models/cms_form_mixin.py:166
@@ -303,8 +299,3 @@ msgstr ""
 msgid "cms.form.wizard"
 msgstr ""
 
-#~ msgid "CMS edit URL"
-#~ msgstr "CMS edit URL"
-
-#~ msgid "website.published.mixin"
-#~ msgstr "website.published.mixin"
