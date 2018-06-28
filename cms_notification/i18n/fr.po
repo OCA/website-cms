@@ -1,7 +1,7 @@
 # Translation of Odoo Server.
 # This file contains the translation of the following modules:
 # * cms_notification
-# 
+#
 # Translators:
 # Quentin THEURET <odoo@kerpeo.com>, 2017
 msgid ""
@@ -12,10 +12,10 @@ msgstr ""
 "PO-Revision-Date: 2017-11-23 03:53+0000\n"
 "Last-Translator: Quentin THEURET <odoo@kerpeo.com>, 2017\n"
 "Language-Team: French (https://www.transifex.com/oca/teams/23907/fr/)\n"
+"Language: fr\n"
 "MIME-Version: 1.0\n"
 "Content-Type: text/plain; charset=UTF-8\n"
 "Content-Transfer-Encoding: \n"
-"Language: fr\n"
 "Plural-Forms: nplurals=2; plural=(n > 1);\n"
 
 #. module: cms_notification
@@ -39,7 +39,7 @@ msgid "CMS notification control panel"
 msgstr ""
 
 #. module: cms_notification
-#: code:addons/cms_notification/models/notification_panel_form.py:36
+#: code:addons/cms_notification/models/notification_panel_form.py:32
 #, python-format
 msgid "Changes applied."
 msgstr ""
@@ -50,11 +50,6 @@ msgstr ""
 #: model:ir.model.fields,field_description:cms_notification.field_cms_notification_panel_form_display_name
 msgid "Display Name"
 msgstr "Nom affiché"
-
-#. module: cms_notification
-#: model:ir.model.fields,field_description:cms_notification.field_res_users_digest_frequency
-msgid "Frequency"
-msgstr ""
 
 #. module: cms_notification
 #: model:ir.model.fields,field_description:cms_notification.field_res_users_has_unread_notif
@@ -108,7 +103,7 @@ msgid "Message subtypes"
 msgstr ""
 
 #. module: cms_notification
-#: code:addons/cms_notification/models/notification_listing.py:24
+#: code:addons/cms_notification/models/notification_listing.py:21
 #, python-format
 msgid "My notifications"
 msgstr ""
@@ -119,13 +114,12 @@ msgid "No notification."
 msgstr ""
 
 #. module: cms_notification
-#: code:addons/cms_notification/models/notification_panel_form.py:28
+#: code:addons/cms_notification/models/notification_panel_form.py:23
 #, python-format
 msgid "Notification settings."
 msgstr ""
 
 #. module: cms_notification
-#: model:ir.model.fields,field_description:cms_notification.field_res_users_notify_conf_ids
 #: model:ir.ui.view,arch_db:cms_notification.user_menu
 msgid "Notifications"
 msgstr ""
@@ -136,21 +130,15 @@ msgid "Notifications settings"
 msgstr ""
 
 #. module: cms_notification
-#: model:ir.model.fields,field_description:cms_notification.field_res_users_disabled_notify_subtype_ids
-msgid "Partner disabled subtypes"
-msgstr ""
-
-#. module: cms_notification
-#: model:ir.model.fields,field_description:cms_notification.field_res_users_enabled_notify_subtype_ids
-msgid "Partner enabled subtypes"
-msgstr ""
-
-#. module: cms_notification
+#: model:ir.model.fields,field_description:cms_notification.field_mail_compose_message_ref_item_id
+#: model:ir.model.fields,field_description:cms_notification.field_mail_mail_ref_item_id
 #: model:ir.model.fields,field_description:cms_notification.field_mail_message_ref_item_id
 msgid "Referenced item"
 msgstr ""
 
 #. module: cms_notification
+#: model:ir.model.fields,field_description:cms_notification.field_mail_compose_message_ref_model_id
+#: model:ir.model.fields,field_description:cms_notification.field_mail_mail_ref_model_id
 #: model:ir.model.fields,field_description:cms_notification.field_mail_message_ref_model_id
 msgid "Referenced model"
 msgstr ""
@@ -167,8 +155,7 @@ msgstr ""
 
 #. module: cms_notification
 #: model:ir.ui.view,arch_db:cms_notification.notify_email_help_digest
-msgid ""
-"You will receive a summary of the notification in the chosen frequency."
+msgid "You will receive a summary of the notification in the chosen frequency."
 msgstr ""
 
 #. module: cms_notification
