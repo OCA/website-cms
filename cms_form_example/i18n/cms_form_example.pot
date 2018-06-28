@@ -1,0 +1,87 @@
+# Translation of Odoo Server.
+# This file contains the translation of the following modules:
+#	* cms_form_example
+#
+msgid ""
+msgstr ""
+"Project-Id-Version: Odoo Server 11.0\n"
+"Report-Msgid-Bugs-To: \n"
+"Last-Translator: <>\n"
+"Language-Team: \n"
+"MIME-Version: 1.0\n"
+"Content-Type: text/plain; charset=UTF-8\n"
+"Content-Transfer-Encoding: \n"
+"Plural-Forms: \n"
+
+#. module: cms_form_example
+#. openerp-web
+#: code:addons/cms_form_example/static/src/js/cms_form_example.tour.js:33
+#, python-format
+msgid "Continue"
+msgstr ""
+
+#. module: cms_form_example
+#: model:ir.model.fields,field_description:cms_form_example.field_cms_form_res_partner_custom
+#: model:ir.model.fields,field_description:cms_form_example.field_cms_form_res_partner_fset_custom
+#: model:ir.model.fields,field_description:cms_form_example.field_cms_form_res_partner_fset_tabbed_custom
+msgid "Custom"
+msgstr ""
+
+#. module: cms_form_example
+#: model:ir.model.fields,field_description:cms_form_example.field_cms_form_res_partner_display_name
+#: model:ir.model.fields,field_description:cms_form_example.field_cms_form_res_partner_fset_display_name
+#: model:ir.model.fields,field_description:cms_form_example.field_cms_form_res_partner_fset_tabbed_display_name
+#: model:ir.model.fields,field_description:cms_form_example.field_cms_form_search_res_partner_display_name
+msgid "Display Name"
+msgstr ""
+
+#. module: cms_form_example
+#: model:ir.model.fields,field_description:cms_form_example.field_cms_form_res_partner_fset_id
+#: model:ir.model.fields,field_description:cms_form_example.field_cms_form_res_partner_fset_tabbed_id
+#: model:ir.model.fields,field_description:cms_form_example.field_cms_form_res_partner_id
+#: model:ir.model.fields,field_description:cms_form_example.field_cms_form_search_res_partner_id
+msgid "ID"
+msgstr ""
+
+#. module: cms_form_example
+#: model:ir.model.fields,field_description:cms_form_example.field_cms_form_res_partner___last_update
+#: model:ir.model.fields,field_description:cms_form_example.field_cms_form_res_partner_fset___last_update
+#: model:ir.model.fields,field_description:cms_form_example.field_cms_form_res_partner_fset_tabbed___last_update
+#: model:ir.model.fields,field_description:cms_form_example.field_cms_form_search_res_partner___last_update
+msgid "Last Modified on"
+msgstr ""
+
+#. module: cms_form_example
+#. openerp-web
+#: code:addons/cms_form_example/static/src/js/cms_form_example.tour.js:30
+#, python-format
+msgid "Partner created"
+msgstr ""
+
+#. module: cms_form_example
+#. openerp-web
+#: code:addons/cms_form_example/static/src/js/cms_form_example.tour.js:32
+#, python-format
+msgid "This is the new partner. Let's edit it."
+msgstr ""
+
+#. module: cms_form_example
+#: model:ir.model,name:cms_form_example.model_cms_form_res_partner
+msgid "cms.form.res.partner"
+msgstr ""
+
+#. module: cms_form_example
+#: model:ir.model,name:cms_form_example.model_cms_form_res_partner_fset
+msgid "cms.form.res.partner.fset"
+msgstr ""
+
+#. module: cms_form_example
+#: model:ir.model,name:cms_form_example.model_cms_form_res_partner_fset_tabbed
+msgid "cms.form.res.partner.fset.tabbed"
+msgstr ""
+
+#. module: cms_form_example
+#: model:ir.model,name:cms_form_example.model_cms_form_search_res_partner
+msgid "cms.form.search.res.partner"
+msgstr ""
+
