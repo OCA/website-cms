@@ -132,6 +132,9 @@ class CMSFormSearch(models.AbstractModel):
             # It would be nice to guess leafs in a clever way.
             operator = '='
             if field['type'] in ('char', 'text'):
+                # Do not use empty strings
+                if not value:
+                    continue
                 operator = 'ilike'
                 value = '%{}%'.format(value)
             elif field['type'] in ('integer', 'float', 'many2one'):
