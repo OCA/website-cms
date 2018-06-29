@@ -90,6 +90,11 @@ class TestCMSSearchForm(FormTestCase):
         form.form_process()
         self.assert_results(form, 1, self.expected_partners[4:])
 
+        data = {'name': '', 'country_id': self.env.ref('base.fr').id, }
+        form = self.get_search_form(data)
+        form.form_process()
+        self.assert_results(form, 1, self.expected_partners[4:])
+
     def test_search_multi(self):
         countries = [
             self.env.ref('base.it').id,
