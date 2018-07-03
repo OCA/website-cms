@@ -10,6 +10,9 @@ class WebsiteMixin(models.AbstractModel):
 
     @api.model
     def cms_render_toolbar(self, **kw):
+        if self.env.user._is_public():
+            # no anon action
+            return ''
         values = self.cms_info()
         values.update({
             'show_create': values['can_create'],
