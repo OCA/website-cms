@@ -163,14 +163,14 @@ msgid "Required fields"
 msgstr ""
 
 #. module: cms_form
-#: code:addons/cms_form/models/cms_search_form.py:63
+#: code:addons/cms_form/models/cms_search_form.py:64
 #: model:ir.ui.view,arch_db:cms_form.search_form_buttons
 #, python-format
 msgid "Search"
 msgstr ""
 
 #. module: cms_form
-#: code:addons/cms_form/models/cms_search_form.py:68
+#: code:addons/cms_form/models/cms_search_form.py:69
 #, python-format
 msgid "Search %s"
 msgstr ""
