@@ -2,6 +2,7 @@
 # License LGPL-3.0 or later (http://www.gnu.org/licenses/lgpl.html).
 
 from odoo import models, _
+from odoo.tools import pycompat
 
 
 class CMSFormSearch(models.AbstractModel):
@@ -85,7 +86,10 @@ class CMSFormSearch(models.AbstractModel):
             url = getattr(self.form_model, 'cms_search_url', url)
         if not url:
             # default to current path w/out paging
-            url = self.request.path.decode('utf-8').split('/page')[0]
+            path = self.request.path
+            if not isinstance(path, pycompat.text_type):
+                path = path.decode('utf-8')
+            url = path.split('/page')[0]
         pager = self._form_results_pager(count=count, page=page, url=url)
         order = self._form_results_orderby or None
         results = self.form_model.search(
