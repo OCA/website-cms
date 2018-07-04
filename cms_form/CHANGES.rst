@@ -2,6 +2,29 @@
 CHANGELOG
 =========
 
+11.0.1.4.3 (2018-07-04)
+=======================
+
+**Fixes**
+
+* Be defensive on error block render (do not fail if none)
+* Widgets: fix missing `required` attribute
+* Search form: discard empty strings in search domain
+* Cleanup controller render values
+
+  When you submit a form and there's an error Odoo will give you back
+  all submitted values into `kw` but:
+
+  1. we don't need them since all values are encapsulated
+     into form.form_render_values
+     and are already accessible on each widget
+
+  2. this can break website rendering because you might have fields
+     w/ a name that overrides a rendering value not related to a form.
+     Most common example: field named `website` will override
+     odoo record for current website.
+
+
 11.0.1.4.2 (2018-05-31)
 =======================
 
