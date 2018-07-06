@@ -76,6 +76,12 @@ class CharWidget(models.AbstractModel):
     _w_template = 'cms_form.field_widget_char'
 
 
+class HiddenWidget(models.AbstractModel):
+    _name = 'cms.form.widget.hidden'
+    _inherit = 'cms.form.widget.mixin'
+    _w_template = 'cms_form.field_widget_hidden'
+
+
 class IntegerWidget(models.AbstractModel):
     _name = 'cms.form.widget.integer'
     _inherit = 'cms.form.widget.char'
