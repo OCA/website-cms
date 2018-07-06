@@ -5,7 +5,7 @@
     "name": "CMS toolbar",
     "summary":
         """Toolbar for user actions.""",
-    "version": "11.0.1.0.1",
+    "version": "11.0.1.1.0",
     "category": "Website",
     "website": "https://github.com/OCA/website-cms",
     "author": "Camptocamp, Odoo Community Association (OCA)",
