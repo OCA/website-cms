@@ -98,6 +98,23 @@ class TestFormBase(FormTestCase):
         # this one is forced to required in our custom form
         self.assertTrue(fields['country_id']['required'])
 
+    def test_fields_hidden(self):
+        form = self.get_form(
+            'cms.form.res.partner', fields_hidden=('country_id', ))
+        # get all fields (default)
+        fields = form.form_fields()
+        self.assertListEqual(
+            sorted(fields.keys()), ['country_id', 'custom', 'name', ])
+        # country is flagged as hidden
+        self.assertTrue(fields['country_id']['hidden'])
+        # get only visible
+        fields = form.form_fields(hidden=False)
+        self.assertListEqual(sorted(fields.keys()), ['custom', 'name'])
+        # get only hidden
+        fields = form.form_fields(hidden=True)
+        self.assertListEqual(sorted(fields.keys()), ['country_id', ])
+        self.assertTrue(fields['country_id']['hidden'])
+
     def test_get_loader(self):
         form = self.get_form('cms.form.test_fields')
         expected = {}.fromkeys((

@@ -153,8 +153,13 @@ License LGPL-3.0 or later (http://www.gnu.org/licenses/lgpl.html).
         <input type="hidden" name="csrf_token" t-att-value="form.o_request.csrf_token()"/>
     </t>
 
-    <t t-set="form_fields" t-value="form.form_fields()" />
+    <t t-set="form_fields" t-value="form.form_fields(hidden=False)" />
+    <t t-set="form_hidden_fields" t-value="form.form_fields(hidden=True)" />
     <t t-set="form_fieldsets" t-value="form.form_fieldsets()" />
+
+    <t t-foreach="form_hidden_fields" t-as="hidden_fname">
+      <t t-raw="form_hidden_fields[hidden_fname]['widget'].render()" />
+    </t>
 
     <t t-call="#{ form.form_fields_template }" />
 

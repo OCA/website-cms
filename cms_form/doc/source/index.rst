@@ -11,6 +11,7 @@ Welcome to CMS Form's documentation!
    :caption: Contents:
 
    basics.rst
+   advanced.rst
    wizard.rst
 
 
