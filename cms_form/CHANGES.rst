@@ -2,6 +2,17 @@
 CHANGELOG
 =========
 
+11.0.1.5.0 (2018-07-06)
+=======================
+
+**Improvements**
+
+* Handle hidden input automatically
+
+  You can now specify `_form_fields_hidden = ('foo', )`
+  to get hidden inputs. All fields declared here
+  will be rendered as `<input type="hidden" />`.
+
 
 11.0.1.4.4 (2018-07-04)
 =======================
