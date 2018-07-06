@@ -2,9 +2,6 @@
 <odoo>
 
 <template id="toolbar" name="CMS toolbar">
-  <t t-set="show_toolbar" t-value="show_create or show_edit or show_publish or show_delete" />
-  <t t-set="show_left_actions" t-value="show_edit or show_publish or show_delete" />
-  <t t-set="show_right_actions" t-value="show_create" />
   <t t-if="show_toolbar">
     <div t-attf-class="cms_toolbar #{main_object._name.replace('.', '_')}">
       <t id="t_left_actions" t-if="show_left_actions">
@@ -21,12 +18,12 @@
         </div>
       </t>
       <t id="t_right_actions" t-if="show_right_actions">
-        <t t-set="create_url" t-value="create_url or main_object.cms_create_url"/>
-        <t t-if="create_url">
-          <div class="pull-right actions right-actions">
+        <div class="pull-right actions right-actions">
+          <t t-set="create_url" t-value="create_url or main_object.cms_create_url"/>
+          <t t-if="show_create and create_url">
             <a class="btn btn-default create" t-att-href="create_url">Create</a>
-          </div>
-        </t>
+          </t>
+        </div>
       </t>
     </div>
   </t>
