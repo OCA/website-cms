@@ -2,9 +2,6 @@
 <odoo>
 
 <template id="toolbar" name="CMS toolbar">
-  <t t-set="show_toolbar" t-value="show_create or show_edit or show_publish or show_delete" />
-  <t t-set="show_left_actions" t-value="show_edit or show_publish or show_delete" />
-  <t t-set="show_right_actions" t-value="show_create" />
   <t t-if="show_toolbar">
     <div t-attf-class="cms_toolbar #{main_object._name.replace('.', '_')}">
       <t id="t_left_actions" t-if="show_left_actions">

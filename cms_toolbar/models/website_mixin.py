@@ -8,11 +8,7 @@ class WebsiteMixin(models.AbstractModel):
 
     _toolbar_template = 'cms_toolbar.toolbar'
 
-    @api.model
-    def cms_render_toolbar(self, **kw):
-        if self.env.user._is_public():
-            # no anon action
-            return ''
+    def _cms_toolbar_values(self, **kw):
         values = self.cms_info()
         values.update({
             'show_create': values['can_create'],
@@ -23,5 +19,23 @@ class WebsiteMixin(models.AbstractModel):
             'popover_content_template': 'cms_toolbar.popover_html_content',
             'main_object': self,
         })
+        # override w/ custom values if needed
         values.update(kw)
-        return self.env.ref(self._toolbar_template).render(values)
+        # show left actions if
+        show_if = ('show_edit', 'show_publish', 'show_delete')
+        values['show_left_actions'] = any([values[k] for k in show_if])
+        # show right actions if
+        show_if = ('show_create', )
+        values['show_right_actions'] = any([values[k] for k in show_if])
+        # show whole toolbar if
+        show_if = ('show_left_actions', 'show_right_actions', )
+        values['show_toolbar'] = any([values[k] for k in show_if])
+        return values
+
+    @api.model
+    def cms_render_toolbar(self, **kw):
+        if self.env.user._is_public():
+            # no anon action
+            return ''
+        return self.env.ref(
+            self._toolbar_template).render(self._cms_toolbar_values(**kw))
