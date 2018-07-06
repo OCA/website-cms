@@ -76,6 +76,8 @@ class CMSFormMixin(models.AbstractModel):
     _form_fields_whitelist = ()
     # exclude these fields
     _form_fields_blacklist = ()
+    # include fields but make them input[type]=hidden
+    _form_fields_hidden = ()
     # group form fields together
     _form_fieldsets = [
         # {
@@ -214,10 +216,21 @@ class CMSFormMixin(models.AbstractModel):
         # queue_job tries to read properties. Be defensive.
         return self.env.get(self._form_model)
 
-    def form_fields(self):
+    def form_fields(self, hidden=None):
+        """Retrieve form fields.
+
+        :param hidden: whether to include or not hidden inputs.
+            Options:
+            * None, default: include all fields, hidden or not
+            * True: include only hidden fields
+            * False: include all fields but those hidden.
+        """
         _fields = self._form_fields()
         # update fields attributes
         self.form_update_fields_attributes(_fields)
+        if hidden is not None:
+            return {k: v for k, v in _fields.items()
+                    if v.get('hidden', False) == hidden}
         return _fields
 
     @tools.cache('self')
@@ -310,6 +323,8 @@ class CMSFormMixin(models.AbstractModel):
         for fname, field in _fields.items():
             if fname in self._form_required_fields:
                 _fields[fname]['required'] = True
+            if fname in self._form_fields_hidden:
+                _fields[fname]['hidden'] = True
             _fields[fname]['widget'] = self.form_get_widget(fname, field)
 
     @property
@@ -319,6 +334,9 @@ class CMSFormMixin(models.AbstractModel):
 
     def form_get_widget_model(self, fname, field):
         """Retrieve widget model name."""
+        if field.get('hidden'):
+            # special case
+            return 'cms.form.widget.hidden'
         widget_model = 'cms.form.widget.char'
         for key in (field['type'], fname):
             model_key = 'cms.form.widget.' + key
