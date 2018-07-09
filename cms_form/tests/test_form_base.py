@@ -115,6 +115,22 @@ class TestFormBase(FormTestCase):
         self.assertListEqual(sorted(fields.keys()), ['country_id', ])
         self.assertTrue(fields['country_id']['hidden'])
 
+    def test_fields_hidden_keep_order(self):
+        form = self.get_form(
+            'cms.form.res.partner',
+            fields_hidden=('country_id', ),
+            fields_order=['country_id', 'name', 'custom'])
+        fields = form.form_fields(hidden=False)
+        self.assertListEqual(
+            list(fields.keys()), ['name', 'custom'])
+        form = self.get_form(
+            'cms.form.res.partner',
+            fields_hidden=('country_id', ),
+            fields_order=['country_id', 'custom', 'name'])
+        fields = form.form_fields(hidden=False)
+        self.assertListEqual(
+            list(fields.keys()), ['custom', 'name', ])
+
     def test_get_loader(self):
         form = self.get_form('cms.form.test_fields')
         expected = {}.fromkeys((
