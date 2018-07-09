@@ -2,6 +2,17 @@
 CHANGELOG
 =========
 
+11.0.1.5.1 (2018-07-09)
+=======================
+
+* Fix regression fields ordering + hidden
+
+  When calling `form_fields` w/ hidden=True/False
+  the order of the fields was not respected anymore.
+
+  This a regression from commit 56b37ca
+
+
 11.0.1.5.0 (2018-07-06)
 =======================
 
