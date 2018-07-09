@@ -229,8 +229,12 @@ class CMSFormMixin(models.AbstractModel):
         # update fields attributes
         self.form_update_fields_attributes(_fields)
         if hidden is not None:
-            return {k: v for k, v in _fields.items()
-                    if v.get('hidden', False) == hidden}
+            # make sure ordering is preserved
+            filtered = OrderedDict()
+            for k, v in _fields.items():
+                if v.get('hidden', False) == hidden:
+                    filtered[k] = v
+            return filtered
         return _fields
 
     @tools.cache('self')
