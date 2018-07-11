@@ -287,7 +287,10 @@ class CMSFormMixin(models.AbstractModel):
         if self._form_fields_order:
             _sorted_all_fields = OrderedDict()
             for fname in self._form_fields_order:
-                _sorted_all_fields[fname] = _all_fields[fname]
+                # this check is required since you can have `groups` attribute
+                # on a field, making the field unavailable if not satisfied.
+                if fname in _all_fields:
+                    _sorted_all_fields[fname] = _all_fields[fname]
             _all_fields = _sorted_all_fields
         # compute subfields and remove them from all fields if any
         self._form_prepare_subfields(_all_fields)
