@@ -167,6 +167,23 @@ class SelectionWidget(models.AbstractModel):
     _inherit = 'cms.form.widget.mixin'
     _w_template = 'cms_form.field_widget_selection'
 
+    def w_extract(self, **req_values):
+        # Handle case where sel options are integers.
+        # TODO: unify this using marshallers?
+        # Maybe we can have an internal field name
+        # and a widget field name. In any case we should be careful
+        # and not brake existing forms/widgets.
+        value = super().w_extract(**req_values)
+        first_value = None
+        if self.w_field['selection']:
+            # `fields.Selection` does this under the hood
+            # to state the PG column type to be used.
+            first_value = self.w_field['selection'][0][0]
+        # fields.Selection does the same check to determine PG col type
+        if isinstance(first_value, int) and value:
+            value = int(value)
+        return value
+
     @property
     def w_option_items(self):
         return [
