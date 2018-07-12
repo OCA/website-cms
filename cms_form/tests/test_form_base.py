@@ -8,12 +8,20 @@ from odoo import http
 
 from .common import FormTestCase
 from .utils import fake_request
-from .fake_models import FakePartnerForm, FakeFieldsForm
+from .fake_models import (
+    FakePartnerForm,
+    FakeFieldsForm,
+    FakePartnerFormProtectedFields,
+)
 
 
 class TestFormBase(FormTestCase):
 
-    TEST_MODELS_KLASSES = [FakePartnerForm, FakeFieldsForm]
+    TEST_MODELS_KLASSES = [
+        FakePartnerForm,
+        FakeFieldsForm,
+        FakePartnerFormProtectedFields,
+    ]
 
     @classmethod
     def setUpClass(cls):
@@ -130,6 +138,21 @@ class TestFormBase(FormTestCase):
         fields = form.form_fields(hidden=False)
         self.assertListEqual(
             list(fields.keys()), ['custom', 'name', ])
+
+    def test_fields_protected(self):
+        group = self.env.ref('website.group_website_designer')
+        user = self.env.ref('base.user_demo')
+        # user does not have the group
+        self.assertNotIn(group, user.groups_id)
+        form = self.get_form('cms.form.protected.fields', sudo_uid=user.id)
+        fields = form.form_fields()
+        # field is skipped
+        self.assertEqual(list(fields.keys()), ['nogroup'])
+        # now add the group
+        user.write({'groups_id': [(4, group.id)]})
+        fields = form.form_fields()
+        # now we get protected field too
+        self.assertEqual(list(fields.keys()), ['ihaveagroup', 'nogroup', ])
 
     def test_get_loader(self):
         form = self.get_form('cms.form.test_fields')

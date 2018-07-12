@@ -23,6 +23,18 @@ class FakePartnerForm(models.AbstractModel):
         return req_values.get('custom', 'oh yeah!')
 
 
+class FakePartnerFormProtectedFields(models.AbstractModel):
+    """A test model form w/ `groups` protected fields."""
+
+    _name = 'cms.form.protected.fields'
+    _inherit = 'cms.form'
+    # we'll test specifically that ordering won't break
+    _form_fields_order = ['ihaveagroup', 'nogroup']
+
+    nogroup = fields.Char()
+    ihaveagroup = fields.Char(groups='website.group_website_designer')
+
+
 class FakeSearchPartnerForm(models.AbstractModel):
     """A test model search form."""
 
