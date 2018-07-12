@@ -2,8 +2,32 @@
 CHANGELOG
 =========
 
+11.0.1.5.2 (2018-07-12)
+=======================
+
+**Fixes**
+
+* Fix ordering w/ `groups` protected fields
+
+  If `groups` attribute was assigned to a field
+  it made fields ordering crash as the field is not there
+  when groups are not satisfied
+
+* Fix selection widget to handle integer values
+
+  `fields.Selection` can hold both strings and integer values.
+  Till the value was not converted automatically
+  and using selection fields w/ integer values was a bit complex
+  as you had to convert it yourself or use a str selection field.
+
+  Now the widget inspects selection options
+  and converts request value accordingly.
+
+
 11.0.1.5.1 (2018-07-09)
 =======================
+
+**Fixes**
 
 * Fix regression fields ordering + hidden
 
