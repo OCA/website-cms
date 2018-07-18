@@ -81,6 +81,19 @@ class HiddenWidget(models.AbstractModel):
     _inherit = 'cms.form.widget.mixin'
     _w_template = 'cms_form.field_widget_hidden'
 
+    @property
+    def w_html_fname(self):
+        """Field name for final HTML markup."""
+        marshaller = ''
+        if self.w_field['type'] == 'many2one':
+            marshaller = ':int'
+        elif self.w_field['type'] == 'selection' and self.w_field['selection']:
+            first_value = self.w_field['selection'][0][0]
+            # fields.Selection does the same check to determine PG col type
+            if isinstance(first_value, int):
+                marshaller = ':int'
+        return self.w_fname + marshaller
+
 
 class IntegerWidget(models.AbstractModel):
     _name = 'cms.form.widget.integer'
@@ -169,7 +182,7 @@ class SelectionWidget(models.AbstractModel):
 
     def w_extract(self, **req_values):
         # Handle case where sel options are integers.
-        # TODO: unify this using marshallers?
+        # TODO: unify this using marshallers? See 'hidden' widget
         # Maybe we can have an internal field name
         # and a widget field name. In any case we should be careful
         # and not brake existing forms/widgets.
