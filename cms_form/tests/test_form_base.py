@@ -313,3 +313,60 @@ class TestFormBase(FormTestCase):
                 form.form_get_widget(fname, fields[fname]).__class__,
                 self.env[widget_model].__class__
             )
+
+    def test_wrapper_css_klass(self):
+        form = self.get_form('cms.form.res.partner')
+        expected = (
+            'cms_form_wrapper cms_form_res_partner '
+            'res_partner mode_create'
+        )
+        self.assertEqual(
+            form.form_wrapper_css_klass,
+            expected
+        )
+        form._form_wrapper_extra_css_klass = 'foo'
+        expected = (
+            'cms_form_wrapper cms_form_res_partner '
+            'res_partner foo mode_create'
+        )
+        self.assertEqual(
+            form.form_wrapper_css_klass,
+            expected
+        )
+
+    def test_css_klass(self):
+        form = self.get_form('cms.form.res.partner')
+        self.assertEqual(form.form_css_klass, 'form-horizontal')
+        form._form_extra_css_klass = 'cool'
+        self.assertEqual(form.form_css_klass, 'form-horizontal cool')
+        form.form_display_mode = 'vertical'
+        self.assertEqual(form.form_css_klass, 'form-vertical cool')
+
+    def test_field_wrapper_css_klass(self):
+        form = self.get_form('cms.form.res.partner')
+        self.assertEqual(
+            form.form_make_field_wrapper_klass(
+                'foo_field',  {
+                    'type': 'char',
+                    'required': False,
+                }
+            ), 'form-group form-field field-char field-foo_field'
+        )
+        self.assertEqual(
+            form.form_make_field_wrapper_klass(
+                'foo_field_id',  {
+                    'type': 'many2one',
+                    'required': True,
+                }
+            ), ('form-group form-field field-many2one '
+                'field-foo_field_id field-required')
+        )
+        self.assertEqual(
+            form.form_make_field_wrapper_klass(
+                'foo_field',  {
+                    'type': 'float',
+                    'required': True,
+                }, errors={'foo_field': 'bad_value'}
+            ), ('form-group form-field field-float '
+                'field-foo_field field-required has-error')
+        )
