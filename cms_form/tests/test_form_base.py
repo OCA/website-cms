@@ -293,3 +293,23 @@ class TestFormBase(FormTestCase):
         })
         for k, v in values.items():
             self.assertEqual(expected[k], v)
+
+    def test_get_widget(self):
+        form = self.get_form('cms.form.test_fields')
+        expected = {
+            'a_char': 'cms.form.widget.char',
+            'a_number': 'cms.form.widget.integer',
+            'a_float': 'cms.form.widget.float',
+            'a_many2one': 'cms.form.widget.many2one',
+            'a_many2many': 'cms.form.widget.many2many',
+            'a_one2many': 'cms.form.widget.one2many',
+        }
+        fields = form.form_fields()
+        for fname, widget_model in expected.items():
+            self.assertEqual(
+                widget_model, form.form_get_widget_model(fname, fields[fname])
+            )
+            self.assertEqual(
+                form.form_get_widget(fname, fields[fname]).__class__,
+                self.env[widget_model].__class__
+            )
