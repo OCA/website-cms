@@ -552,11 +552,13 @@ class CMSFormMixin(models.AbstractModel):
         """
         klass = ''
         if self.form_display_mode == 'horizontal':
-            klass = 'form-horizontal '
+            klass = 'form-horizontal'
         elif self.form_display_mode == 'vertical':
             # actually not a real BS3 css klass but helps styling
-            klass = 'form-vertical '
-        return klass + self._form_extra_css_klass
+            klass = 'form-vertical'
+        if self._form_extra_css_klass:
+            klass += ' ' + self._form_extra_css_klass
+        return klass
 
     def form_make_field_wrapper_klass(self, fname, field, **kw):
         """Return specific CSS klass for the field wrapper."""
