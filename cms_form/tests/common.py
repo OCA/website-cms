@@ -32,16 +32,11 @@ def get_form(env, form_model, req=None, session=None,
     return model.form_init(request, **kw)
 
 
-class FormTestMixin(object):
-
-    at_install = False
-    post_install = True
+class FakeModelMixin(object):
+    """Mixin to setup fake models just for testing."""
 
     # override this in your test case to inject new models on the fly
     TEST_MODELS_KLASSES = []
-
-    def get_form(self, form_model, **kw):
-        return get_form(self.env, form_model, **kw)
 
     @classmethod
     def _setup_models(cls):
@@ -56,7 +51,8 @@ class FormTestMixin(object):
             teardown_test_model(cls.env, kls)
 
 
-class FormRenderMixin(FormTestMixin):
+class HTMLRenderMixin(object):
+    """Mixin with helpers to test HTML rendering."""
 
     def to_xml_node(self, html_):
         return html.fragments_fromstring(html_)
@@ -74,31 +70,37 @@ class FormRenderMixin(FormTestMixin):
             self.assertEqual(len(self.find_input_name(node, name)), 1)
 
 
-class FormTestCase(SavepointCase, FormTestMixin):
-    """Base class for transaction cases."""
+class FormTestCase(SavepointCase, FakeModelMixin):
+    """Form test cases."""
+
+    at_install = False
+    post_install = True
+
+    def get_form(self, form_model, **kw):
+        return get_form(self.env, form_model, **kw)
 
 
-class FormSessionTestCase(SavepointCase, FormTestMixin):
-    """Base class for transaction cases."""
+class FormSessionTestCase(FormTestCase):
+    """Form test cases where you deal w/ a session."""
 
     def setUp(self):
         super().setUp()
         self.session = fake_session(self.env)
 
     def tearDown(self):
-        # self.session.clear()
         session_store.delete(self.session)
         super().tearDown()
 
 
-class FormRenderTestCase(SavepointCase, FormRenderMixin):
-    """Base class for http cases."""
+class FormRenderTestCase(FormTestCase, HTMLRenderMixin):
+    """Form test cases where you test HTML rendering."""
 
 
-class FormHttpTestCase(HttpCase, FormRenderMixin):
+class FormHttpTestCase(HttpCase, FakeModelMixin, HTMLRenderMixin):
+    """Form test cases where you test HTML rendering and HTTP requests."""
 
     def setUp(self):
-        # HttpCase has no ENV on setUpClass
+        # HttpCase has no ENV on setUpClass we have to setup fake models here
         super().setUp()
         for kls in self.TEST_MODELS_KLASSES:
             setup_test_model(self.env, kls)
