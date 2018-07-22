@@ -22,6 +22,7 @@ class Widget(models.AbstractModel):
                     data=None, subfields=None, template='', css_klass=''):
         widget = self.new()
         widget.w_form = form
+        widget.w_form_model = form.form_model
         widget.w_record = form.main_object
         widget.w_form_values = form.form_render_values
         widget.w_fname = fname
@@ -59,9 +60,11 @@ class Widget(models.AbstractModel):
         """Extract value from form submit."""
         return req_values.get(self.w_fname)
 
-    def w_ids_from_input(self, value):
+    @staticmethod
+    def w_ids_from_input(value):
         """Convert list of ids from form input."""
-        return [int(rec_id) for rec_id in value.split(',') if rec_id.isdigit()]
+        return [int(rec_id.strip())
+                for rec_id in value.split(',') if rec_id.strip().isdigit()]
 
     def w_subfields_by_value(self, value='_all'):
         return self.w_subfields.get(value, {})
@@ -259,7 +262,7 @@ class X2MWidget(models.AbstractModel):
                 value == req_values.get(self.w_fname)):
             # value from request
             # FIXME: the field could come from the form not the model!
-            value = self.w_form.form_model[self.w_fname].browse(
+            value = self.w_form_model[self.w_fname].browse(
                 self.w_ids_from_input(value)).read(['name'])
         value = json.dumps(value)
         return value
