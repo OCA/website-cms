@@ -10,31 +10,38 @@ from .utils import (
 )
 
 
+def get_form(env, form_model, req=None, session=None,
+             ctx=None, sudo_uid=None, **kw):
+    """Retrieve and initialize a form.
+
+    :param form_model: model dotted name
+    :param req: a fake request. Default to base fake request
+    :param session: a fake session. Default to base fake session
+    :param ctx: extra context keys
+    :param sudo_uid: init form w/ another user uid
+    :param kw: extra arguments to init the form
+    """
+    model = env[form_model]
+    if sudo_uid:
+        model = model.sudo(sudo_uid)
+    if ctx:
+        model = model.with_context(**ctx)
+
+    session = session if session is not None else fake_session(env)
+    request = req or fake_request(session=session)
+    return model.form_init(request, **kw)
+
+
 class FormTestMixin(object):
 
     at_install = False
     post_install = True
 
-    def get_form(self, form_model, req=None, session=None,
-                 ctx=None, sudo_uid=None, **kw):
-        """Retrieve and initialize a form.
-
-        :param form_model: model dotted name
-        :param req: a fake request. Default to base fake request
-        :param kw: extra arguments to init the form
-        """
-        model = self.env[form_model]
-        if sudo_uid:
-            model = model.sudo(sudo_uid)
-        if ctx:
-            model = model.with_context(**ctx)
-
-        session = session if session is not None else fake_session(self.env)
-        request = req or fake_request(session=session)
-        return model.form_init(request, **kw)
-
     # override this in your test case to inject new models on the fly
     TEST_MODELS_KLASSES = []
+
+    def get_form(self, form_model, **kw):
+        return get_form(self.env, form_model, **kw)
 
     @classmethod
     def _setup_models(cls):
