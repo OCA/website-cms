@@ -44,11 +44,31 @@ class TestRender(FormRenderTestCase):
             'a_many2many',
             'a_one2many',
         )
+        # all fields are rendered
         self.assertEqual(
             len(node[0].xpath('//input|//select')), len(expected_fields)
         )
         self.assert_match_inputs(node, expected_fields)
 
-    def test_field_attrs(self):
-        # TODO: test all fields rendering
-        pass
+    def test_field_wrapper_attrs(self):
+        form = self.get_form('cms.form.test_fields')
+        form_fields = form.form_fields()
+        html = form.form_render()
+        node = self.to_xml_node(html)[0]
+        expected_fields = (
+            'a_char',
+            'a_float',
+            'a_number',
+            'a_many2one',
+            'a_many2many',
+            'a_one2many',
+        )
+        for fname in expected_fields:
+            fnode = self.find_input_name(node, fname)[0]
+            # catch 2nd one since the 1st is the main `form-fields` wrapper
+            fwrapper = fnode.xpath(
+                "ancestor::div[contains(@class, 'form-field')]")[1]
+            self.assertEqual(
+                fwrapper.attrib['class'],
+                form.form_make_field_wrapper_klass(fname, form_fields[fname])
+            )
