@@ -107,6 +107,36 @@ class FakeFieldsForm(models.AbstractModel):
         return not len(value) > 8, 'Text length must be greater than 8!'
 
 
+class FakeFieldsFormWithFieldsets(models.AbstractModel):
+    """A test model form."""
+
+    _name = 'cms.form.test_fieldsets'
+    _inherit = 'cms.form.test_fields'
+    _form_fieldsets = [
+        {
+            'id': 'main',
+            'fields': ['a_char', ],
+        },
+        {
+            'id': 'numbers',
+            'title': 'Number fields',
+            'description': 'Only number fields here',
+            'fields': ['a_number', 'a_float'],
+            'css_extra_klass': 'best_fieldset',
+        },
+        {
+            'id': 'relations',
+            'title': 'Only relations here',
+            'fields': ['a_many2one', 'a_many2many', 'a_one2many'],
+        },
+        {
+            'id': 'protected',
+            'fields': ['ihaveagroup'],
+        },
+    ]
+    ihaveagroup = fields.Char(groups='website.group_website_designer')
+
+
 FAKE_STORAGE = {}
 
 
