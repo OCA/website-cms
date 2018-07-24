@@ -56,7 +56,7 @@ def marshal_dict(values, orig_key, orig_value):
         `$fname.$dict_key:dict`
 
     Every request key matching `$fname` prefix
-    will be merge into a dict wheres keys will match all `$dict_key`.
+    will be merged into a dict whereas keys will match all `$dict_key`.
 
     Example:
 
@@ -82,7 +82,7 @@ def marshal_dict(values, orig_key, orig_value):
         if not _k.startswith(key):
             continue
         # TODO: `__` will be to support extra marshallers, like:
-        # foo.1:record:int -> get a dictionary w/ integer values
+        # foo.1:dict:int -> get a dictionary w/ integer values
         full_key, _, __ = _k.partition(':dict')
         res[full_key.split('.')[-1]] = _v
     return key, res

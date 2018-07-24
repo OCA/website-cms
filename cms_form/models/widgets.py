@@ -88,7 +88,7 @@ class HiddenWidget(models.AbstractModel):
     def w_html_fname(self):
         """Field name for final HTML markup."""
         marshaller = ''
-        if self.w_field['type'] == 'many2one':
+        if self.w_field['type'] in ('many2one', 'integer'):
             marshaller = ':int'
         elif self.w_field['type'] == 'selection' and self.w_field['selection']:
             first_value = self.w_field['selection'][0][0]
