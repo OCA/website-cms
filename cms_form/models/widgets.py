@@ -157,7 +157,7 @@ class M2OWidget(models.AbstractModel):
         return self.form_to_m2o(value, **req_values)
 
     def form_to_m2o(self, value, **req_values):
-        val = utils.safe_to_integer(value)
+        val = utils.safe_to_integer(value) or 0
         # we don't want m2o value do be < 1
         return val > 0 and val or None
 

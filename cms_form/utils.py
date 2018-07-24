@@ -7,14 +7,14 @@ def safe_to_integer(value, **kw):
     try:
         return int(value)
     except (ValueError, TypeError):
-        return 0
+        return None
 
 
 def safe_to_float(value, **kw):
     try:
         return float(value)
     except (ValueError, TypeError):
-        return 0.0
+        return None
 
 
 def safe_to_date(value, **kw):
