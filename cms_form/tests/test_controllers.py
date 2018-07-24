@@ -1,9 +1,10 @@
 # Copyright 2017-2018 Simone Orsi
 # License LGPL-3.0 or later (http://www.gnu.org/licenses/lgpl.html).
 
-
 from contextlib import contextmanager
 import mock
+import os
+import unittest
 
 from .common import FormHttpTestCase
 from ..controllers import main
@@ -14,6 +15,7 @@ from .utils import fake_request
 IMPORT = 'odoo.addons.cms_form.controllers.main'
 
 
+@unittest.skipIf(os.getenv('SKIP_HTTP_CASE'), 'HTTP case disabled.')
 class TestControllers(FormHttpTestCase):
 
     TEST_MODELS_KLASSES = [
