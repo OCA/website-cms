@@ -5,6 +5,7 @@ import mock
 
 from ..common import HTMLRenderMixin
 
+
 def fake_form(**data):
     """Get a mocked fake form.
 
@@ -35,7 +36,7 @@ def fake_field(name, **kw):
 
 def get_widget(env, fname, field, form=None, widget_model=None, **kw):
     """Retrieve and initialize widget.
-    
+
     :param fname: field name
     :param field: field info matching `form_fields` schema
     :param form: an instance of a cms_form

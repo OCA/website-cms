@@ -366,7 +366,7 @@ class TestFormBase(FormTestCase):
         form = self.get_form('cms.form.res.partner')
         self.assertEqual(
             form.form_make_field_wrapper_klass(
-                'foo_field',  {
+                'foo_field', {
                     'type': 'char',
                     'required': False,
                 }
@@ -374,7 +374,7 @@ class TestFormBase(FormTestCase):
         )
         self.assertEqual(
             form.form_make_field_wrapper_klass(
-                'foo_field_id',  {
+                'foo_field_id', {
                     'type': 'many2one',
                     'required': True,
                 }
@@ -383,7 +383,7 @@ class TestFormBase(FormTestCase):
         )
         self.assertEqual(
             form.form_make_field_wrapper_klass(
-                'foo_field',  {
+                'foo_field', {
                     'type': 'float',
                     'required': True,
                 }, errors={'foo_field': 'bad_value'}

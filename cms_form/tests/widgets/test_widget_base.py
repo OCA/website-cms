@@ -32,7 +32,7 @@ class TestWidgetBase(TestWidgetCase, FakeModelMixin):
         self.assertEqual(widget.w_field_value, None)
         self.assertEqual(widget.w_data, {})
         self.assertEqual(widget.w_subfields, {})
-    
+
     def test_w_load(self):
         name, field = fake_field('foo')
         widget = self.get_widget(
