@@ -29,7 +29,6 @@ class TestWidgetChar(TestWidgetCase):
             self.assertEqual(node_input[0].attrib[attr_name], attr_value)
         self.assertNotIn('required', node_input[0].attrib)
 
-
     def test_widget_char_input_required(self):
         self.widget.w_field['required'] = True
         node = self.to_xml_node(self.widget.render())[0]
