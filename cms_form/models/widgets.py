@@ -90,11 +90,15 @@ class HiddenWidget(models.AbstractModel):
         marshaller = ''
         if self.w_field['type'] in ('many2one', 'integer'):
             marshaller = ':int'
+        elif self.w_field['type'] in ('float', ):
+            marshaller = ':float'
         elif self.w_field['type'] == 'selection' and self.w_field['selection']:
             first_value = self.w_field['selection'][0][0]
             # fields.Selection does the same check to determine PG col type
             if isinstance(first_value, int):
                 marshaller = ':int'
+            elif isinstance(first_value, float):
+                marshaller = ':float'
         return self.w_fname + marshaller
 
 
