@@ -95,7 +95,7 @@ License LGPL-3.0 or later (http://www.gnu.org/licenses/lgpl.html).
 </template>
 
 <template id="single_field" name="CMS form single field">
-    <t t-if="not form_fields[fname].get('is_subfield')">
+    <t t-if="form_fields.get(fname) and not form_fields[fname].get('is_subfield')">
       <!-- this template is computed in `form_render`
       based on `form_display_mode`
       -->
