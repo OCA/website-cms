@@ -19,7 +19,7 @@ class TestMarshallers(unittest.TestCase):
         self.assertEqual(marshalled['b'], '2')
         self.assertEqual(marshalled['c'], '3')
 
-    def test_mashal_list(self):
+    def test_marshal_list(self):
         data = MultiDict([
             ('a', '1'),
             ('b:list', '1'),
@@ -32,7 +32,7 @@ class TestMarshallers(unittest.TestCase):
         self.assertListEqual(marshalled['b'], ['1', '2', '3'])
         self.assertEqual(marshalled['c'], '3')
 
-    def test_mashal_int(self):
+    def test_marshal_int(self):
         data = MultiDict([
             ('a', '1'),
             ('b:int', '2'),
@@ -45,7 +45,7 @@ class TestMarshallers(unittest.TestCase):
         self.assertEqual(marshalled['c'], 3)
         self.assertEqual(marshalled['d'], 'bad')
 
-    def test_mashal_dict(self):
+    def test_marshal_dict(self):
         data = MultiDict([
             ('a', '1'),
             ('b.x:dict', '1'),
