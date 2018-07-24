@@ -258,6 +258,7 @@ class TestFormBase(FormTestCase):
         for k, v in data.items():
             self.assertEqual(defaults[k], v)
 
+    # TODO: test marshallers integration
     def test_extract_from_request(self):
         form = self.get_form('cms.form.test_fields')
         # values from request
