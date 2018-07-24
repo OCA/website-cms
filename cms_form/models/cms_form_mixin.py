@@ -316,7 +316,14 @@ class CMSFormMixin(models.AbstractModel):
             _all_fields.pop(fname, None)
 
     def form_fieldsets(self):
-        return self._form_fieldsets
+        # exclude empty ones
+        form_fields = self._form_fields()
+        res = []
+        for fset in self._form_fieldsets:
+            if any([form_fields.get(fname) for fname in fset['fields']]):
+                # at least one field is here
+                res.append(fset)
+        return res
 
     @property
     def form_fieldsets_wrapper_klass(self):
