@@ -295,6 +295,25 @@ class TestFormBase(FormTestCase):
         for k, v in values.items():
             self.assertEqual(expected[k], v)
 
+    def test_extract_from_request_no_value(self):
+        """If you submit no value for a field it gets ignored."""
+        form = self.get_form('cms.form.test_fields')
+        # values from request
+        data = {
+            # not convertable value -> we'll get None
+            'a_float': '5/0',
+            'a_number': '10A',
+        }
+        request = fake_request(form_data=data)
+        form = self.get_form('cms.form.test_fields', req=request)
+        values = form.form_extract_values()
+        # these are converted to `None` and ignored
+        for fname in ['a_char', 'a_number', 'a_float', 'a_many2one', ]:
+            self.assertNotIn(fname, values)
+        # special case: when you don't submit a value form x2m we wipe it
+        for fname in ['a_many2many', 'a_one2many', ]:
+            self.assertEqual(values[fname], [(5, )])
+
     def test_get_widget(self):
         form = self.get_form('cms.form.test_fields')
         expected = {
