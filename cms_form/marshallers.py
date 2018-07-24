@@ -8,6 +8,7 @@ def marshal_request_values(values):
     Available marshallers:
 
     * `:int` transform to integer
+    * `:float` transform to float
     * `:list` transform to list of values
     * `:dict` transform to dictionary of values
     """
@@ -30,6 +31,10 @@ def marshal_request_values(values):
             k, v = marshal_int(values, k, v)
             res[k] = v
             continue
+        if k.endswith(':float'):
+            k, v = marshal_float(values, k, v)
+            res[k] = v
+            continue
         res[k] = v
     return res
 
@@ -45,6 +50,16 @@ def marshal_int(values, orig_key, orig_value):
     """Transform `foo:int` inputs to integer values."""
     k = orig_key[:-len(':int')]
     v = int(orig_value) if orig_value and orig_value.isdigit() else orig_value
+    return k, v
+
+
+def marshal_float(values, orig_key, orig_value):
+    """Transform `foo:float` inputs to float values."""
+    k = orig_key[:-len(':float')]
+    try:
+        v = float(orig_value.replace(',', '.'))
+    except (ValueError, TypeError):
+        v = orig_value
     return k, v
 
 
