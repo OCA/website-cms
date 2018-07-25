@@ -7,4 +7,6 @@ from . import test_form_search
 from . import test_form_wizard
 from . import test_loaders
 from . import test_marshallers
-from .widgets import *
+from .widgets import test_widget_base
+from .widgets import test_widget_char
+from .widgets import test_widget_hidden
