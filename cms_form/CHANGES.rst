@@ -2,6 +2,59 @@
 CHANGELOG
 =========
 
+11.0.1.6.0 (2018-07-25)
+=======================
+
+**Improvements**
+
+* Add `:float` marshaller
+
+  You can now use `$foo:float` as field name to cast value to float.
+
+* Hidden input respect field type value
+
+  Hidden input values pass through requests as chars.
+  This means that any m2o or selection field with integer/float values
+  won't be really happy on create/write.
+
+  Now we rely on request marshallers to convert those values
+  to correct values based on field type.
+
+  NOTE: this is the preliminary step for adopting marshallers
+  for all field types/widgets when needed.
+
+
+**Fixes**
+
+* Fix `safe_to_date` to make form extractor happy
+
+  Form extractor ignores non required fields if their values is `None`.
+  In the case of the date field, the util was returning `False`
+  even if the value was not submitted, leading to an ORM error
+  whenever the missing field was required.
+
+  Now we return `None` and let the extractor deal with proper values
+  and validation.
+
+**Coverage**
+
+* Test field wrapper rendering
+* Test css klass methods
+* Test `get_widget`
+* Test conversion of no value
+* Test fieldsets rendering
+
+  Make sure fieldsets are not rendered if they have no fields.
+
+* Allow to skip HttpCase on demand
+
+  Super-useful when you use pytest which does not support them.
+
+* Add basic tests for widget
+* Add test for hidden widget
+* Add test for char widget
+
+
 11.0.1.5.2 (2018-07-12)
 =======================
 
