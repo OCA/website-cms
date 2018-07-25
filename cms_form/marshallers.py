@@ -8,6 +8,7 @@ def marshal_request_values(values):
     Available marshallers:
 
     * `:int` transform to integer
+    * `:float` transform to float
     * `:list` transform to list of values
     * `:dict` transform to dictionary of values
     """
@@ -30,6 +31,10 @@ def marshal_request_values(values):
             k, v = marshal_int(values, k, v)
             res[k] = v
             continue
+        if k.endswith(':float'):
+            k, v = marshal_float(values, k, v)
+            res[k] = v
+            continue
         res[k] = v
     return res
 
@@ -48,6 +53,16 @@ def marshal_int(values, orig_key, orig_value):
     return k, v
 
 
+def marshal_float(values, orig_key, orig_value):
+    """Transform `foo:float` inputs to float values."""
+    k = orig_key[:-len(':float')]
+    try:
+        v = float(orig_value.replace(',', '.'))
+    except (ValueError, TypeError):
+        v = orig_value
+    return k, v
+
+
 def marshal_dict(values, orig_key, orig_value):
     """Transform `foo:dict` inputs to dictionary values.
 
@@ -56,7 +71,7 @@ def marshal_dict(values, orig_key, orig_value):
         `$fname.$dict_key:dict`
 
     Every request key matching `$fname` prefix
-    will be merge into a dict wheres keys will match all `$dict_key`.
+    will be merged into a dict whereas keys will match all `$dict_key`.
 
     Example:
 
@@ -82,7 +97,7 @@ def marshal_dict(values, orig_key, orig_value):
         if not _k.startswith(key):
             continue
         # TODO: `__` will be to support extra marshallers, like:
-        # foo.1:record:int -> get a dictionary w/ integer values
+        # foo.1:dict:int -> get a dictionary w/ integer values
         full_key, _, __ = _k.partition(':dict')
         res[full_key.split('.')[-1]] = _v
     return key, res

@@ -258,6 +258,7 @@ class TestFormBase(FormTestCase):
         for k, v in data.items():
             self.assertEqual(defaults[k], v)
 
+    # TODO: test marshallers integration
     def test_extract_from_request(self):
         form = self.get_form('cms.form.test_fields')
         # values from request
@@ -293,3 +294,99 @@ class TestFormBase(FormTestCase):
         })
         for k, v in values.items():
             self.assertEqual(expected[k], v)
+
+    def test_extract_from_request_no_value(self):
+        """If you submit no value for a field it gets ignored."""
+        form = self.get_form('cms.form.test_fields')
+        # values from request
+        data = {
+            # not convertable value -> we'll get None
+            'a_float': '5/0',
+            'a_number': '10A',
+        }
+        request = fake_request(form_data=data)
+        form = self.get_form('cms.form.test_fields', req=request)
+        values = form.form_extract_values()
+        # these are converted to `None` and ignored
+        for fname in ['a_char', 'a_number', 'a_float', 'a_many2one', ]:
+            self.assertNotIn(fname, values)
+        # special case: when you don't submit a value form x2m we wipe it
+        for fname in ['a_many2many', 'a_one2many', ]:
+            self.assertEqual(values[fname], [(5, )])
+
+    def test_get_widget(self):
+        form = self.get_form('cms.form.test_fields')
+        expected = {
+            'a_char': 'cms.form.widget.char',
+            'a_number': 'cms.form.widget.integer',
+            'a_float': 'cms.form.widget.float',
+            'a_many2one': 'cms.form.widget.many2one',
+            'a_many2many': 'cms.form.widget.many2many',
+            'a_one2many': 'cms.form.widget.one2many',
+        }
+        fields = form.form_fields()
+        for fname, widget_model in expected.items():
+            self.assertEqual(
+                widget_model, form.form_get_widget_model(fname, fields[fname])
+            )
+            self.assertEqual(
+                form.form_get_widget(fname, fields[fname]).__class__,
+                self.env[widget_model].__class__
+            )
+
+    def test_wrapper_css_klass(self):
+        form = self.get_form('cms.form.res.partner')
+        expected = (
+            'cms_form_wrapper cms_form_res_partner '
+            'res_partner mode_create'
+        )
+        self.assertEqual(
+            form.form_wrapper_css_klass,
+            expected
+        )
+        form._form_wrapper_extra_css_klass = 'foo'
+        expected = (
+            'cms_form_wrapper cms_form_res_partner '
+            'res_partner foo mode_create'
+        )
+        self.assertEqual(
+            form.form_wrapper_css_klass,
+            expected
+        )
+
+    def test_css_klass(self):
+        form = self.get_form('cms.form.res.partner')
+        self.assertEqual(form.form_css_klass, 'form-horizontal')
+        form._form_extra_css_klass = 'cool'
+        self.assertEqual(form.form_css_klass, 'form-horizontal cool')
+        form.form_display_mode = 'vertical'
+        self.assertEqual(form.form_css_klass, 'form-vertical cool')
+
+    def test_field_wrapper_css_klass(self):
+        form = self.get_form('cms.form.res.partner')
+        self.assertEqual(
+            form.form_make_field_wrapper_klass(
+                'foo_field', {
+                    'type': 'char',
+                    'required': False,
+                }
+            ), 'form-group form-field field-char field-foo_field'
+        )
+        self.assertEqual(
+            form.form_make_field_wrapper_klass(
+                'foo_field_id', {
+                    'type': 'many2one',
+                    'required': True,
+                }
+            ), ('form-group form-field field-many2one '
+                'field-foo_field_id field-required')
+        )
+        self.assertEqual(
+            form.form_make_field_wrapper_klass(
+                'foo_field', {
+                    'type': 'float',
+                    'required': True,
+                }, errors={'foo_field': 'bad_value'}
+            ), ('form-group form-field field-float '
+                'field-foo_field field-required has-error')
+        )

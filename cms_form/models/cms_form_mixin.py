@@ -316,7 +316,14 @@ class CMSFormMixin(models.AbstractModel):
             _all_fields.pop(fname, None)
 
     def form_fieldsets(self):
-        return self._form_fieldsets
+        # exclude empty ones
+        form_fields = self._form_fields()
+        res = []
+        for fset in self._form_fieldsets:
+            if any([form_fields.get(fname) for fname in fset['fields']]):
+                # at least one field is here
+                res.append(fset)
+        return res
 
     @property
     def form_fieldsets_wrapper_klass(self):
@@ -552,11 +559,13 @@ class CMSFormMixin(models.AbstractModel):
         """
         klass = ''
         if self.form_display_mode == 'horizontal':
-            klass = 'form-horizontal '
+            klass = 'form-horizontal'
         elif self.form_display_mode == 'vertical':
             # actually not a real BS3 css klass but helps styling
-            klass = 'form-vertical '
-        return klass + self._form_extra_css_klass
+            klass = 'form-vertical'
+        if self._form_extra_css_klass:
+            klass += ' ' + self._form_extra_css_klass
+        return klass
 
     def form_make_field_wrapper_klass(self, fname, field, **kw):
         """Return specific CSS klass for the field wrapper."""

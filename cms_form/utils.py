@@ -7,20 +7,22 @@ def safe_to_integer(value, **kw):
     try:
         return int(value)
     except (ValueError, TypeError):
-        return 0
+        return None
 
 
 def safe_to_float(value, **kw):
     try:
         return float(value)
     except (ValueError, TypeError):
-        return 0.0
+        return None
 
 
 def safe_to_date(value, **kw):
     if not value:
-        # make sure we do not return empty string which breaks the ORM
-        return False
+        # 1. make sure we do not return empty string which breaks the ORM
+        # 2. return `None` so that request extractor ignores the field
+        # if it's not required
+        return None
     return value
 
 

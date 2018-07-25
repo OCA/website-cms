@@ -22,6 +22,7 @@ class Widget(models.AbstractModel):
                     data=None, subfields=None, template='', css_klass=''):
         widget = self.new()
         widget.w_form = form
+        widget.w_form_model = form.form_model
         widget.w_record = form.main_object
         widget.w_form_values = form.form_render_values
         widget.w_fname = fname
@@ -59,9 +60,11 @@ class Widget(models.AbstractModel):
         """Extract value from form submit."""
         return req_values.get(self.w_fname)
 
-    def w_ids_from_input(self, value):
+    @staticmethod
+    def w_ids_from_input(value):
         """Convert list of ids from form input."""
-        return [int(rec_id) for rec_id in value.split(',') if rec_id.isdigit()]
+        return [int(rec_id.strip())
+                for rec_id in value.split(',') if rec_id.strip().isdigit()]
 
     def w_subfields_by_value(self, value='_all'):
         return self.w_subfields.get(value, {})
@@ -80,6 +83,23 @@ class HiddenWidget(models.AbstractModel):
     _name = 'cms.form.widget.hidden'
     _inherit = 'cms.form.widget.mixin'
     _w_template = 'cms_form.field_widget_hidden'
+
+    @property
+    def w_html_fname(self):
+        """Field name for final HTML markup."""
+        marshaller = ''
+        if self.w_field['type'] in ('many2one', 'integer'):
+            marshaller = ':int'
+        elif self.w_field['type'] in ('float', ):
+            marshaller = ':float'
+        elif self.w_field['type'] == 'selection' and self.w_field['selection']:
+            first_value = self.w_field['selection'][0][0]
+            # fields.Selection does the same check to determine PG col type
+            if isinstance(first_value, int):
+                marshaller = ':int'
+            elif isinstance(first_value, float):
+                marshaller = ':float'
+        return self.w_fname + marshaller
 
 
 class IntegerWidget(models.AbstractModel):
@@ -137,7 +157,7 @@ class M2OWidget(models.AbstractModel):
         return self.form_to_m2o(value, **req_values)
 
     def form_to_m2o(self, value, **req_values):
-        val = utils.safe_to_integer(value)
+        val = utils.safe_to_integer(value) or 0
         # we don't want m2o value do be < 1
         return val > 0 and val or None
 
@@ -169,7 +189,7 @@ class SelectionWidget(models.AbstractModel):
 
     def w_extract(self, **req_values):
         # Handle case where sel options are integers.
-        # TODO: unify this using marshallers?
+        # TODO: unify this using marshallers? See 'hidden' widget
         # Maybe we can have an internal field name
         # and a widget field name. In any case we should be careful
         # and not brake existing forms/widgets.
@@ -246,7 +266,7 @@ class X2MWidget(models.AbstractModel):
                 value == req_values.get(self.w_fname)):
             # value from request
             # FIXME: the field could come from the form not the model!
-            value = self.w_form.form_model[self.w_fname].browse(
+            value = self.w_form_model[self.w_fname].browse(
                 self.w_ids_from_input(value)).read(['name'])
         value = json.dumps(value)
         return value
