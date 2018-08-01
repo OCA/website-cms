@@ -6,4 +6,17 @@
   a.btn, button, .js_publish_management {
     display: inline-block;
   }
+  .js_state_manager {
+    display: inline;
+    .action-disabled {
+      display: none;
+    }
+    [data-action="publish"] {
+      .btn-danger;
+    }
+    [data-action="unpublish"] {
+      background-color: green;
+      .btn-success;
+    }
+  }
 }

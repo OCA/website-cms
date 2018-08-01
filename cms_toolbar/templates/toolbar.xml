@@ -3,17 +3,18 @@
 
 <template id="toolbar" name="CMS toolbar">
   <t t-if="show_toolbar">
-    <div t-attf-class="cms_toolbar #{main_object._name.replace('.', '_')}">
+    <div t-attf-class="cms_toolbar #{main_object._name.replace('.', '_')}"
+         t-att-data-model="main_object._name" t-att-data-id="main_object.id">
       <t id="t_left_actions" t-if="show_left_actions">
         <div class="pull-left actions left-actions">
           <t t-if="show_edit">
-            <a class="btn btn-default edit" t-att-href="edit_url or main_object.cms_edit_url">Edit</a>
+            <a class="btn btn-default edit js_toolbar_action" t-att-href="edit_url or main_object.cms_edit_url">Edit</a>
           </t>
           <t t-if="show_publish">
             <t t-call="cms_toolbar.publish"/>
           </t>
           <t t-if="show_delete">
-            <a class="btn btn-danger delete cms_delete_confirm" t-att-href="main_object.cms_delete_confirm_url">Delete</a>
+            <a class="btn btn-danger delete js_toolbar_action cms_delete_confirm" t-att-href="main_object.cms_delete_confirm_url">Delete</a>
           </t>
         </div>
       </t>
@@ -21,7 +22,7 @@
         <div class="pull-right actions right-actions">
           <t t-set="create_url" t-value="create_url or main_object.cms_create_url"/>
           <t t-if="show_create and create_url">
-            <a class="btn btn-default create" t-att-href="create_url">Create</a>
+            <a class="btn btn-default js_toolbar_action create" t-att-href="create_url">Create</a>
           </t>
         </div>
       </t>
@@ -31,13 +32,21 @@
 
 
 <template id="publish" name="CMS toolbar publish widget">
-  <div t-attf-class="js_publish_management #{main_object.website_published and 'css_published' or 'css_unpublished'}"
-       t-att-data-id="main_object.id" t-att-data-object="main_object._name" t-att-data-controller="publish_controller" t-ignore="true">
-    <button type="button" class="btn js_publish_btn css_publish popover_sticky publish"
+  <t t-set="is_published" t-value="main_object.website_published" />
+  <t t-set="state" t-value="'published' if is_published else 'unpublished'" />
+  <div t-attf-class="js_state_manager css_state_#{state}"
+       t-att-data-id="main_object.id"
+       t-att-data-model="main_object._name"
+       t-att-data-state="state"
+       t-att-data-controller="publish_controller"
+       t-ignore="true">
+    <button type="button"
+            t-attf-class="btn js_toolbar_action js_state_action action-#{'enabled' if state == 'unpublished' else 'disabled'} popover_sticky"
             data-container="body" data-toggle="popover" data-placement="bottom"
             t-att-data-htmlcontent="show_popover and '#popover_html_content'"
             data-action="publish">Publish</button>
-    <button class="btn js_publish_btn css_unpublish" data-action="unpublish">Unpublish</button>
+    <button t-attf-class="btn js_toolbar_action js_state_action action-#{'enabled' if state == 'published' else 'disabled'}"
+            data-action="unpublish">Unpublish</button>
     <t t-if="show_popover">
       <div id="popover_html_content" style="display:none!important">
         <t t-call="#{ popover_content_template }" />

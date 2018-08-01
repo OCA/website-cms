@@ -11,8 +11,7 @@ License LGPL-3.0 or later (http://www.gnu.org/licenses/lgpl.html).
       <link rel="stylesheet" type="text/less" href="/cms_toolbar/static/src/less/toolbar.less"/>
     </xpath>
     <xpath expr="//script[last()]" position="after">
-      <script type="text/javascript" src="/cms_toolbar/static/src/js/tooltips.js"></script>
-      <script type="text/javascript" src="/cms_toolbar/static/src/js/publish.js"></script>
+      <script type="text/javascript" src="/cms_toolbar/static/src/js/toolbar.js"></script>
     </xpath>
 
   </template>
