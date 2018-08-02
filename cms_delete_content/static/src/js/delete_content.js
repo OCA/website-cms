@@ -6,8 +6,11 @@ odoo.define('cms_delete_content.delete_confirm', function (require) {
         sAnimation = require('website.content.snippets.animation');
     var _t = core._t;
 
-    sAnimation.registry.cms_delete_confirm = sAnimation.Class.extend({
+    sAnimation.registry.CMSDeleteConfirm = sAnimation.Class.extend({
       selector: ".cms_delete_confirm",
+      events: _.extend({}, sAnimation.Class.prototype.events || {}, {
+        'click .cms_delete_confirm': 'handle_click'
+      }),
       start: function () {
         this.modal_url = this.$el.attr('href');
         this.$el.on('click', $.proxy(this.handle_click, this));
