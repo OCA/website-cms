@@ -44,6 +44,7 @@ class MailMessage(models.Model):
     def _reference_models_search(self):
         return self.env["ir.model"].search([])
 
+    # TODO: shall we check if the partner is a recipient?
     def is_unread(self, partner=None):
         partner = partner or self.env.user.partner_id
         return partner in self.needaction_partner_ids

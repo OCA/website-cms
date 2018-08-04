@@ -17,11 +17,11 @@ class CMSNotificationListing(models.AbstractModel):
     form_search_results_template = 'cms_notification.listing'
 
     @property
-    def form_title(self):
+    def form_title(self):  # pragma: no cover
         return _('My notifications')
 
     @property
-    def form_description(self):
+    def form_description(self):  # pragma: no cover
         # no description needed, at least for now :)
         return ''
 
@@ -34,7 +34,7 @@ class CMSNotificationListing(models.AbstractModel):
         domain.extend(default_domain)
         return domain
 
-    def check_view_permission(self, item):
+    def check_view_permission(self, item):  # pragma: no cover
         """Check read permission on given item.
 
         We could list messages that are attached to other records.
