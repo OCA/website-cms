@@ -5,16 +5,13 @@ License LGPL-3.0 or later (http://www.gnu.org/licenses/lgpl.html).
 -->
 <odoo>
 
-  <template id="notify_email_help_always" name="CMS notification form - notify_email help `all`">
+  <template id="notify_email_help_email" name="CMS notification form - notify_email help `Email`">
     <p>You will receive an email for every notification.</p>
   </template>
 
-  <template id="notify_email_help_digest" name="CMS notification form - notify_email help `digest`">
-    <p>You will receive a summary of the notification in the chosen frequency.</p>
-  </template>
-
-  <template id="notify_email_help_none" name="CMS notification form - notify_email help `never`">
-    <p>I don't want to get notification emails.</p>
+  <template id="notify_email_help_inbox" name="CMS notification form - notify_email help `Inbox`">
+    <p>You will not receive notifications via email.</p>
+    <p>You will receive them only via system notifications.</p>
   </template>
 
 </odoo>

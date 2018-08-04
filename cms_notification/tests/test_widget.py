@@ -25,6 +25,14 @@ class TestWidget(TestWidgetCase):
             w_name, w_field, form=form,
             widget_model='cms.form.widget.notif_radio')
 
+    def test_default_templates(self):
+        # the widget is fault tolerant if no help templates are found
+        # since you may won't to drop them.
+        for notif_type in ('email', 'inbox'):
+            self.assertTrue(
+                self.env.ref(self.widget.help_tmpl_prefix + notif_type)
+            )
+
     def _test_option(self, node, attrs):
         for attr_name, attr_value in attrs.items():
             self.assertEqual(node.attrib[attr_name], attr_value)
