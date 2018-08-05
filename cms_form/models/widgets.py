@@ -370,6 +370,8 @@ class BinaryWidget(models.AbstractModel):
         return self.form_to_binary(value, **req_values)
 
     def form_to_binary(self, value, **req_values):
+        if self.w_fname not in req_values:
+            return None
         _value = False
         if req_values.get(self.w_fname + '_keepcheck') == 'yes':
             # prevent discarding image
