@@ -23,6 +23,6 @@ class MyAccount(CustomerPortal, FormControllerMixin):
 
     # TODO: just for test/comparison
     @http.route(['/my/account-old'], type='http', auth='user', website=True)
-    def account_old(self, **kw):
+    def account_old(self, **kw):  # pragma: no cover
         """Replace with cms form."""
         return super().account(**kw)
