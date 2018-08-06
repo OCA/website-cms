@@ -15,7 +15,10 @@ License LGPL-3.0 or later (http://www.gnu.org/licenses/lgpl).
     <template id="message_listing_wrapper" name="CMS status_message listing wrapper">
       <div class="container-fluid status_message">
         <t t-foreach="status_message" t-as="msg">
-          <div t-attf-class="alert alert-#{msg['type']} #{msg['dismissible'] and 'alert-dismissible' or ''}" role="alert">
+          <div t-attf-class="alert alert-#{msg['type']} #{msg['dismissible'] and 'alert-dismissible' or ''}"
+               t-att-data-autodismiss="msg.get('dismiss_options', {}).get('autodismiss')"
+               t-att-data-autodismiss-timeout="msg.get('dismiss_options', {}).get('autodismissTimeout')"
+               role="alert">
             <t t-if="msg['dismissible']">
                 <button type="button" class="close" data-dismiss="alert" aria-label="Close">
                   <span t-translation="off" aria-hidden="true" class="fa fa-remove"></span>
