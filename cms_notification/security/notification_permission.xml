@@ -14,12 +14,13 @@
 
 
   <record model="ir.rule" id="portal_users_can_write_only_their_user">
-    <field name="name">Users can edit their own user record only</field>
+    <field name="name">Portal users can edit their own user record only</field>
     <field name="model_id" ref="base.model_res_users"/>
     <field name="perm_read" eval="False"/>
     <field name="perm_create" eval="False"/>
     <field name="perm_write" eval="True"/>
     <field name="perm_unlink" eval="False"/>
+    <field name="groups" eval="[(4, ref('base.group_portal'))]"/>
     <field name="domain_force">[('id', '=', user.id)]</field>
   </record>
 
