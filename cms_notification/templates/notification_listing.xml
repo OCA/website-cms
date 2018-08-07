@@ -61,19 +61,21 @@ License LGPL-3.0 or later (http://www.gnu.org/licenses/lgpl.html).
             Still, reading the message could be useful.
             -->
             <t t-if="ref and can_view_ref">
+              <!-- need higher permission to read model attributes  -->
+              <t t-set="model_rec" t-value="item.sudo().ref_model_id" />
               <div class="ref">
                 <t t-if="'website_url' in ref">
                   <a class="ref_link" t-att-href="ref.website_url">
                     <span class="view_related_label">View related</span>
-                    <span t-translation="off" class="model_name" t-esc="item.ref_model_id.name" />
-                    <span class="ref_item" t-translation="off" t-esc="item.ref_item_id.display_name" />
+                    <span t-translation="off" class="model_name" t-esc="model_rec.name" />
+                    <span class="ref_item" t-translation="off" t-esc="model_rec.display_name" />
                   </a>
                 </t>
                 <t t-if="'website_url' not in ref">
                   <span class="ref_no_link">
                     <span class="view_attached_label">Attached to</span>
-                    <span t-translation="off" class="model_name" t-esc="item.ref_model_id.name" />:
-                    <span class="ref_item" t-translation="off" t-esc="item.ref_item_id.display_name" />
+                    <span t-translation="off" class="model_name" t-esc="model_rec.name" />:
+                    <span class="ref_item" t-translation="off" t-esc="model_rec.display_name" />
                   </span>
                 </t>
               </div>
