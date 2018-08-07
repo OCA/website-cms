@@ -2,6 +2,21 @@
 CHANGELOG
 =========
 
+11.0.1.3.0 (2018-08-07)
+=======================
+
+**Improvements**
+
+* Get rid of example package
+
+  The example package was there only to show how a message would look like.
+  But in real life you want always to verify how they look like
+  with your theme styles applied.
+
+  Now we have a new route `/cms/status-message/display-test` to check them.
+  `cms_status_message_example` module has been removed.
+
+
 11.0.1.2.0 (2018-08-07)
 =======================
 
