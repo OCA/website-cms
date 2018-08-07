@@ -13,6 +13,7 @@
     'data': [
         'templates/assets.xml',
         'templates/status_message.xml',
+        'templates/display_test.xml',
     ],
     'installable': True,
 }
