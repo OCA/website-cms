@@ -55,6 +55,30 @@ Messages will be displayed like this:
 
 .. image:: ./images/preview.png
 
+Autodismiss
+-----------
+
+By default messages will be auto-dismissed after 8 seconds.
+You can turn this off by setting an ir.config_param like::
+
+    cms_status_message.autodismiss = 0
+
+You can customize the timeout by setting the key::
+
+    cms_status_message.autodismiss_timeout = 3000  # milliseconds
+
+
+You can also customize this on demand when you create the message:
+
+
+.. code:: python
+
+    msg = _('I will disappear more slowly')
+    options = {'autodismissTimeout': 10000}
+    if request.website:
+        request.website.add_status_message(msg, dismiss_options=options)
+
+
 Javascript code
 ---------------
 
