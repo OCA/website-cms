@@ -14,6 +14,11 @@ msgstr ""
 "Plural-Forms: \n"
 
 #. module: cms_status_message
+#: model:ir.ui.view,arch_db:cms_status_message.display_test
+msgid "Enter a message and submit the form. <br/>You'll see your message rendered as a status message."
+msgstr ""
+
+#. module: cms_status_message
 #: code:addons/cms_status_message/models/website.py:17
 #, python-format
 msgid "Error"
@@ -26,9 +31,24 @@ msgid "Info"
 msgstr ""
 
 #. module: cms_status_message
+#: model:ir.ui.view,arch_db:cms_status_message.display_test
+msgid "Message"
+msgstr ""
+
+#. module: cms_status_message
+#: model:ir.ui.view,arch_db:cms_status_message.display_test
+msgid "Status message display test"
+msgstr ""
+
+#. module: cms_status_message
 #: code:addons/cms_status_message/models/website.py:16
 #, python-format
 msgid "Success"
+msgstr ""
+
+#. module: cms_status_message
+#: model:ir.ui.view,arch_db:cms_status_message.display_test
+msgid "Test"
 msgstr ""
 
 #. module: cms_status_message
