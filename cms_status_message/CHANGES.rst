@@ -2,12 +2,29 @@
 CHANGELOG
 =========
 
+11.0.1.2.0 (2018-08-07)
+=======================
+
+**Improvements**
+
+* Add auto-dimiss option
+
+  By default messages will be auto-dismissed after 8 seconds.
+  You can turn this off by setting an ir.config_param like::
+
+    cms_status_message.autodismiss = 0
+
+  You can customize the timeout by setting the key::
+
+    cms_status_message.autodismiss_timeout = 3000  # milliseconds
+
+  Check README for further info.
+
 
 11.0.1.1.0 (2018-04-22)
 =======================
 
-Improve
--------
+**Improvements**
 
 * Improve JS API
 
