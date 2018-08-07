@@ -4,17 +4,19 @@
 from odoo import http
 
 
-class CMSStatusMsgController(http.Controller):
-    """CMS status messge testing route."""
+class CMSStatusMsgTest(http.Controller):
+    """CMS status messge testing routes."""
+
+    display_test_template = 'cms_status_message.display_test'
 
     @http.route([
-        '/status-msg/test',
-    ], type='http', auth='public', website=True)
-    def cms_form(self, **kw):
-        """Test the cms status message."""
+        '/cms/status-message/display-test',
+    ], type='http', auth='public', website=True, sitemap=False)
+    def display_test(self, **kw):  # pragma: no cover
+        """Test the cms status messages."""
         msg = http.request.httprequest.args.get('message', 'yes it works')
         msg_title = 'Title'
         for type_ in ('success', 'warning', 'danger', 'info'):
             http.request.website.add_status_message(
                 msg, type_=type_, title=msg_title)
-        return http.request.render('cms_status_message_example.test_form_page')
+        return http.request.render(self.display_test_template)

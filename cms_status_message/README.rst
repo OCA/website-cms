@@ -124,6 +124,14 @@ By default the alert box is added on top of ``<main />`` content. If you
 want to customize this behavior just override or disable
 ``cms_status_message.add_status_message`` template.
 
+
+Test your theme look and feel
+-----------------------------
+
+Go to `/cms/status-message/display-test` to see how messages will look like
+when your theme is applied.
+
+
 Bug Tracker
 ===========
 
