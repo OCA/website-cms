@@ -2,6 +2,25 @@
 CHANGELOG
 =========
 
+11.0.1.6.1 (2018-08-07)
+=======================
+
+**Fixes**
+
+* Date widget JS datepicker options custom
+
+  You can now override all the options of the datepicker via `data`.
+  For instance:
+
+      def form_get_widget(self, fname, field, **kw):
+          """Customize datepicker."""
+          if fname == 'date':
+              kw['data'] = {
+                  'minDate': '2018-01-01'
+              }
+          return super().form_get_widget(fname, field, **kw)
+
+
 11.0.1.6.0 (2018-07-25)
 =======================
 
