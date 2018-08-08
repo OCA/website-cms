@@ -10,7 +10,7 @@ CHANGELOG
 * Date widget JS datepicker options custom
 
   You can now override all the options of the datepicker via `data`.
-  For instance:
+  For instance::
 
       def form_get_widget(self, fname, field, **kw):
           """Customize datepicker."""
