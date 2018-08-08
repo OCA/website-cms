@@ -16,7 +16,6 @@ setuptools.setup(
         'odoo11-addon-cms_info',
         'odoo11-addon-cms_notification',
         'odoo11-addon-cms_status_message',
-        'odoo11-addon-cms_status_message_example',
         'odoo11-addon-cms_toolbar',
         'odoo11-addon-cms_toolbar_example',
     ],
