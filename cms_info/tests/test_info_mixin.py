@@ -82,8 +82,22 @@ class TestInfoMixin(test_common.SavepointCase):
         self.assertTrue(self.record.cms_can_delete())
         self.assertFalse(self.record.sudo(self.user1).cms_can_delete())
 
-    def test_info(self):
+    def test_info_on_record(self):
         info = self.record.cms_info()
+        keys = (
+            'is_owner',
+            'can_edit',
+            'can_create',
+            'can_publish',
+            'can_delete',
+            'create_url',
+            'edit_url',
+            'delete_url',
+        )
+        self.assertEqual(sorted(keys), sorted(info.keys()))
+
+    def test_info_on_model(self):
+        info = self.record.browse().cms_info()
         keys = (
             'is_owner',
             'can_edit',
