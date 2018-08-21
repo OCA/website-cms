@@ -2,6 +2,17 @@
 CHANGELOG
 =========
 
+
+11.0.1.6.2 (2018-08-21)
+=======================
+
+**Fixes**
+
+* Date widget JS datepicker default date regression
+
+  Make sure we use today date unless specified otherwise.
+
+
 11.0.1.6.1 (2018-08-07)
 =======================
 
