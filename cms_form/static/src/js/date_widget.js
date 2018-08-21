@@ -21,12 +21,16 @@ odoo.define('cms_form.date_widget', function (require) {
       )
       $input.datepicker(options);
       var defaultDate = $input.data('params').defaultDate;
-      if (!defaultDate) {
-        defaultDate = $input.data('params').defaultToday;
+      if (defaultDate) {
+        // use custom date
+        defaultDate = new Date(defaultDate);
+      } else if ($input.data('params').defaultToday) {
+        // unless blocked go for today date
+        defaultDate = new Date();
       }
       if (defaultDate && !$input.val()) {
         $input.datepicker(
-            "setDate", new Date(defaultDate)
+          "setDate", defaultDate
         );
       }
       $input
