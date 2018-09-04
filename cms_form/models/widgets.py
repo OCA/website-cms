@@ -4,6 +4,7 @@
 import json
 import werkzeug
 import base64
+from datetime import datetime
 
 from odoo.tools.mimetypes import guess_mimetype
 from odoo import models
@@ -305,11 +306,38 @@ class DateWidget(models.AbstractModel):
     _inherit = 'cms.form.widget.mixin'
     _w_template = 'cms_form.field_widget_date'
 
+    w_data_format = "yy-mm-dd"  # jquery.ui data widget format
+    w_form_date_format = "%Y-%m-%d"  # python date format
+    w_data_date_format = "%Y-%m-%d"  # python date format
+    w_placeholder = "YYYY-MM-DD"
+
+    def data_to_form_date_format(self, date_str):
+        """ Convert from w_data_date_format to w_form_date_format """
+        date = datetime.strptime(date_str, self.w_data_date_format)
+        return date.strftime(self.w_form_date_format)
+
+    def form_to_data_date_format(self, date_str):
+        """ Convert from w_form_date_format to w_data_date_format """
+        date = datetime.strptime(date_str, self.w_form_date_format)
+        return date.strftime(self.w_data_date_format)
+
+    def is_ui_date_format(self, date_str):
+        is_ui_format = True
+        try:
+            datetime.strptime(date_str, self.w_form_date_format)
+        except ValueError:
+            is_ui_format = False
+        return is_ui_format
+
     def widget_init(self, form, fname, field, **kw):
         widget = super().widget_init(form, fname, field, **kw)
         if 'defaultToday' not in widget.w_data:
             # set today's date by default
             widget.w_data['defaultToday'] = True
+        if '_default' in field and \
+                not self.is_ui_date_format(field['_default']):
+            field['_default'] = self.data_to_form_date_format(
+                field['_default'])
         return widget
 
     def w_extract(self, **req_values):
@@ -317,7 +345,10 @@ class DateWidget(models.AbstractModel):
         return self.form_to_date(value, **req_values)
 
     def form_to_date(self, value, **req_values):
-        return utils.safe_to_date(value)
+        value = utils.safe_to_date(value)
+        if value:
+            value = self.form_to_data_date_format(value)
+        return value
 
 
 class TextWidget(models.AbstractModel):
