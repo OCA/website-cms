@@ -29,6 +29,10 @@ class Widget(models.AbstractModel):
         widget.w_field = field
         widget.w_field_value = widget.w_form_values.get(
             'form_data', {}).get(fname)
+        # you can hide placeholder by setting it to empty string
+        # we default to field's label
+        placeholder = field.get('placeholder', field.get('string', ''))
+        widget.w_placeholder = (placeholder + '...') if placeholder else None
         widget.w_data = data or {}
         widget.w_subfields = subfields or field.get('subfields', {})
         widget._w_template = template or self._w_template
@@ -137,6 +141,7 @@ class X2XWidgetMixin(models.AbstractModel):
             'search_field': 'name',
             'display_name': widget._w_display_field,
             'fields': ['name', ],
+            'placeholder': widget.w_placeholder,
         }
         for k, v in data_defaults.items():
             if k not in widget.w_data:
