@@ -181,6 +181,9 @@ class M2OWidget(models.AbstractModel):
             _name = value and value[fname] or ''
         elif isinstance(value, int):
             _value = value
+        else:
+            # could not convert to usable value
+            _value = None
         if _value:
             if not _name:
                 _name = self.w_comodel.browse(_value)[fname]

@@ -239,7 +239,10 @@ class TestFormBase(FormTestCase):
         defaults = form.form_load_defaults()
         expected = {
             'name': 'John Wayne',
-            'country_id': 5,
+            'country_id': {
+                'id': main_object.country_id.id,
+                'name': main_object.country_id.name
+            },
             'custom': 'oh yeah!'
         }
         for k, v in expected.items():
@@ -255,6 +258,10 @@ class TestFormBase(FormTestCase):
         form = self.get_form(
             'cms.form.res.partner', req=request, main_object=main_object)
         defaults = form.form_load_defaults()
+        data['country_id'] = {
+            'id': 7,
+            'name': self.env['res.country'].browse(7).name,
+        }
         for k, v in data.items():
             self.assertEqual(defaults[k], v)
 
