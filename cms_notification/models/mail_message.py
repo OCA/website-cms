@@ -44,10 +44,51 @@ class MailMessage(models.Model):
     def _reference_models_search(self):
         return self.env["ir.model"].search([])
 
+    def _get_notifications(self, partner_id, is_read=False):
+        return self.env['mail.notification'].sudo().search([
+            ('mail_message_id', 'in', self.ids),
+            ('res_partner_id', '=', partner_id),
+            ('is_read', '=', is_read)
+        ])
+
     def is_unread(self, partner=None):
         partner = partner or self.env.user.partner_id
-        return partner in self.needaction_partner_ids
+        return bool(self._get_notifications(partner.id))
 
     def is_read(self, partner=None):
         partner = partner or self.env.user.partner_id
-        return partner not in self.needaction_partner_ids
+        return bool(self._get_notifications(partner.id, is_read=True))
+
+    # TODO: explain why we need this override!
+
+    # @api.multi
+    # def mark_as_unread(self, channel_ids=None):
+    #     """ Add needactions to messages for the current partner. """
+    #     partner_id = self.env.user.partner_id.id
+    #     for message in self:
+    #         message.write({'needaction_partner_ids': [(4, partner_id)]})
+
+    #     ids = [m.id for m in self]
+    #     notification = {'type': 'mark_as_unread',
+    #     'message_ids': ids, 'channel_ids': channel_ids}
+    #     self.env['bus.bus'].sendone(
+    #         (self._cr.dbname, 'res.partner', 
+    #         self.env.user.partner_id.id), notification)
+
+    @api.multi
+    def mark_as_unread(self, channel_ids=None):
+        partner_id = self.env.user.partner_id.id
+        notifs = self._get_notifications(partner_id, is_read=True)
+        notifs.write({'is_read': False})
+        notification = {
+            'type': 'mark_as_unread',
+            'message_ids': self.ids,
+            'channel_ids': channel_ids
+        }
+        self.env['bus.bus'].sendone((
+            self.env.cr.dbname,
+            'res.partner', 
+            partner_id
+        ), notification)
+
+

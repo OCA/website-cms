@@ -16,13 +16,15 @@ class ResUsers(models.Model):
     @api.multi
     @api.depends()
     def _compute_has_unread_notif(self):
-        msg_model = self.env['mail.message']
+        notification_model = self.env['mail.notification']
         for item in self:
             if not item.partner_id:
                 continue
             domain = [
-                ('partner_ids', 'in', item.partner_id.id),
-                ('needaction_partner_ids', 'in', item.partner_id.id),
-                ('subtype_id.cms_type', '=', True),
+                ('res_partner_id', '=', item.partner_id.id),
+                ('mail_message_id.subtype_id.cms_type', '=', True),
+                ('is_read', '=', False),
             ]
-            item.has_unread_notif = bool(msg_model.search(domain, limit=1))
+            item.has_unread_notif = bool(
+                notification_model.search(domain, limit=1)
+            )
