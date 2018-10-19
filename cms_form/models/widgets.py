@@ -195,7 +195,9 @@ class SelectionWidget(models.AbstractModel):
         # and not brake existing forms/widgets.
         value = super().w_extract(**req_values)
         first_value = None
-        if self.w_field['selection']:
+        # use `get` as you might want to use the selection widget
+        # for non-Selection fields
+        if self.w_field.get('selection'):
             # `fields.Selection` does this under the hood
             # to state the PG column type to be used.
             first_value = self.w_field['selection'][0][0]
