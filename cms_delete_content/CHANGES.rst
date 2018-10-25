@@ -5,8 +5,7 @@ CHANGELOG
 10.0.1.0.2 (2018-05-10)
 =======================
 
-Fixes
------
+**Fixes**
 
 * Fix tests: use real fake models
 
@@ -19,8 +18,7 @@ Fixes
 10.0.1.0.1 (2018-05-10)
 =======================
 
-Fixes
------
+**Fixes**
 
 * Update JS according to `cms_status_message` updates
 
