@@ -1,0 +1,30 @@
+# Translation of Odoo Server.
+# This file contains the translation of the following modules:
+#	* cms_status_message_example
+#
+msgid ""
+msgstr ""
+"Project-Id-Version: Odoo Server 10.0\n"
+"Report-Msgid-Bugs-To: \n"
+"Last-Translator: <>\n"
+"Language-Team: \n"
+"MIME-Version: 1.0\n"
+"Content-Type: text/plain; charset=UTF-8\n"
+"Content-Transfer-Encoding: \n"
+"Plural-Forms: \n"
+
+#. module: cms_status_message_example
+#: model:ir.ui.view,arch_db:cms_status_message_example.test_form_page
+msgid "Enter a message and submit the form. You'll see your message rendered as a status message."
+msgstr ""
+
+#. module: cms_status_message_example
+#: model:ir.ui.view,arch_db:cms_status_message_example.test_form_page
+msgid "Message"
+msgstr ""
+
+#. module: cms_status_message_example
+#: model:ir.ui.view,arch_db:cms_status_message_example.test_form_page
+msgid "Test"
+msgstr ""
+
