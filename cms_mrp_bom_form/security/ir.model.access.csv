@@ -1,2 +1,2 @@
 "id","name","model_id:id","group_id:id","perm_read","perm_write","perm_create","perm_unlink"
-mrp_bom_read,mrp_bom read,product.model_product_template,base.group_public,1,0,0,0
+cms_mrp_bom_form_product_template_read,mrp_bom read,product.model_product_template,base.group_public,1,0,0,0

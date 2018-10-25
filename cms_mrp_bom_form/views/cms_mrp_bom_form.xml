@@ -5,10 +5,10 @@
         <xpath expr="//h3[hasclass('item-name')]" position="replace">
           <h3 class="item-name">
             <t t-if="'website_url' in item and 'website_url' != '#'">
-              <a t-att-href="item.website_url" t-field="item.name" />
+              <a t-att-href="item.website_url" t-field="item.product_tmpl_id.name" />
             </t>
             <t t-if="'website_url' not in item or 'website_url' == '#'">
-              <span t-field="item.name"/>
+              <span t-field="item.product_tmpl_id.name"/>
             </t>
           </h3>
         </xpath>
