@@ -6,8 +6,7 @@ CHANGELOG
 10.0.1.4.2 (2018-05-30)
 =======================
 
-Improvements
-------------
+**Improvements**
 
 * Search form: use safe default for pager url
 * Search form: support quick domain rules via `_form_search_domain_rules`
@@ -16,8 +15,7 @@ Improvements
 10.0.1.4.1 (2018-05-10)
 =======================
 
-Docs
-----
+**Docs**
 
 * Move documentation from README to `doc` folder
 
@@ -25,8 +23,7 @@ Docs
 10.0.1.4.0 (2018-05-10)
 =======================
 
-Improvements
-------------
+**Improvements**
 
 * Include wizard name in form wrapper klass
 * Add request marshallers and tests
@@ -40,8 +37,7 @@ Improvements
 * Rely on `cms_info` for permission and URLs
 
 
-Fixes
------
+**Fixes**
 
 * Fix `fake_session` helper in form tests common
 
@@ -49,8 +45,7 @@ Fixes
 10.0.1.3.1 (2018-05-10)
 =======================
 
-Improvements
-------------
+**Improvements**
 
 * Wizard: ease customization of stored values
 
@@ -60,8 +55,7 @@ Improvements
 10.0.1.3.0 (2018-05-10)
 =======================
 
-Improvements
-------------
+**Improvements**
 
 * Add wizard support to easily create custom wizards
 
@@ -69,8 +63,7 @@ Improvements
 10.0.1.2.1 (2018-05-10)
 =======================
 
-Fixes
------
+**Fixes**
 
 * Fix search form regression on permission check
 
@@ -81,8 +74,7 @@ Fixes
 10.0.1.2.0 (2018-05-10)
 =======================
 
-Improvements
-------------
+**Improvements**
 
 * Add error msg block for validation errors right below field
 * Support multiple values for same field
@@ -123,8 +115,7 @@ Improvements
   Before this change you had to override the controller to gain control on it.
 
 
-Fixes
------
+**Fixes**
 
 * Fix required attr on boolean widget (was not considered)
 * `_form_create` + `_form_write` use a copy of values to avoid pollution by Odoo
@@ -135,8 +126,7 @@ Fixes
 10.0.1.1.1 (2018-05-10)
 =======================
 
-Fixes
------
+**Fixes**
 
 * Fix date widget: default today only if empty
 
@@ -144,16 +134,14 @@ Fixes
 10.0.1.1.0 (2018-05-10)
 =======================
 
-Improvements
-------------
+**Improvements**
 
 * Delegate field wrapper class computation to form
 * Add vertical fields option
 * Add multi value widget for search forms
 * Improve date widget: allow custom default today
 
-Fixes
------
+**Fixes**
 
 * Fix fieldset support for search forms
 * Fix date search w/ empty value
@@ -163,8 +151,7 @@ Fixes
 10.0.1.0.4 (2018-05-10)
 =======================
 
-Improvements
-------------
+**Improvements**
 
 * Ease override of JSON info
 * Add fieldsets support
@@ -174,8 +161,7 @@ Improvements
 10.0.1.0.3 (2018-05-10)
 =======================
 
-Improvements
-------------
+**Improvements**
 
 * Form controller: main_object defaults to empty recordset
 

@@ -6,8 +6,7 @@ CHANGELOG
 10.0.1.1.0 (2018-05-10)
 =======================
 
-Improve
--------
+**Improvements**
 
 * Improve JS API
 
