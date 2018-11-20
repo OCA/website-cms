@@ -9,34 +9,36 @@ msgstr ""
 "Project-Id-Version: Odoo Server 9.0c\n"
 "Report-Msgid-Bugs-To: \n"
 "POT-Creation-Date: 2017-11-23 03:53+0000\n"
-"PO-Revision-Date: 2017-11-23 03:53+0000\n"
-"Last-Translator: OCA Transbot <transbot@odoo-community.org>, 2017\n"
+"PO-Revision-Date: 2018-11-21 18:09+0000\n"
+"Last-Translator: Peter Schubert <psc@saco.info>\n"
 "Language-Team: German (https://www.transifex.com/oca/teams/23907/de/)\n"
 "Language: de\n"
 "MIME-Version: 1.0\n"
 "Content-Type: text/plain; charset=UTF-8\n"
 "Content-Transfer-Encoding: \n"
-"Plural-Forms: nplurals=2; plural=(n != 1);\n"
+"Plural-Forms: nplurals=2; plural=n != 1;\n"
+"X-Generator: Weblate 3.2.2\n"
 
 #. module: cms_notification
 #: model:ir.ui.view,arch_db:cms_notification.listing
 msgid "<span class=\"view_attached_label\">Attached to</span>"
-msgstr ""
+msgstr "<span class=\"view_attached_label\">Zugehörig zu</span>"
 
 #. module: cms_notification
 #: model:ir.ui.view,arch_db:cms_notification.listing
+#, fuzzy
 msgid "<span class=\"view_related_label\">View related</span>"
-msgstr ""
+msgstr "<span class=\"view_related_label\">Zeige Verbundene</span>"
 
 #. module: cms_notification
 #: model:ir.model,name:cms_notification.model_cms_notification_listing
 msgid "CMS notification"
-msgstr "CMS notification"
+msgstr "CMS Benachrichtigung"
 
 #. module: cms_notification
 #: model:ir.model,name:cms_notification.model_cms_notification_panel_form
 msgid "CMS notification control panel"
-msgstr "CMS notification control panel"
+msgstr "CMS Benachrichtigungen Einstellungen"
 
 #. module: cms_notification
 #: code:addons/cms_notification/models/notification_panel_form.py:32
@@ -54,7 +56,7 @@ msgstr "Anzeigename"
 #. module: cms_notification
 #: model:ir.model.fields,field_description:cms_notification.field_res_users_has_unread_notif
 msgid "Has unread notif"
-msgstr ""
+msgstr "Hat ungelesene Benachrichtigung"
 
 #. module: cms_notification
 #: model:ir.ui.view,arch_db:cms_notification.notify_email_help_none
@@ -70,12 +72,13 @@ msgstr "ID"
 
 #. module: cms_notification
 #: model:ir.model.fields,help:cms_notification.field_mail_message_subtype_cms_type
+#, fuzzy
 msgid ""
 "If active, this message subtype will be visible in users' notifications "
 "control panel."
 msgstr ""
-"If active, this message subtype will be visible in users' notifications "
-"control panel."
+"Wenn aktiviert, ist dieser Nachrichten Untertyp sichtbar im notifications "
+"control panel der Benutzer."
 
 #. module: cms_notification
 #: model:ir.model.fields,field_description:cms_notification.field_cms_form_widget_notif_radio___last_update
@@ -87,17 +90,18 @@ msgstr "Zuletzt geändert am"
 #. module: cms_notification
 #: model:ir.ui.view,arch_db:cms_notification.listing
 msgid "Mark as read"
-msgstr ""
+msgstr "als gelesen markieren"
 
 #. module: cms_notification
 #: model:ir.ui.view,arch_db:cms_notification.listing
+#, fuzzy
 msgid "Mark as unread"
-msgstr ""
+msgstr "als ungelesen markieren"
 
 #. module: cms_notification
 #: model:ir.model,name:cms_notification.model_mail_message
 msgid "Message"
-msgstr ""
+msgstr "Nachricht"
 
 #. module: cms_notification
 #: model:ir.model,name:cms_notification.model_mail_message_subtype
@@ -113,7 +117,7 @@ msgstr "Meine Benachrichtigungen"
 #. module: cms_notification
 #: model:ir.ui.view,arch_db:cms_notification.listing
 msgid "No notification."
-msgstr ""
+msgstr "Keine Benachrichtigung."
 
 #. module: cms_notification
 #: code:addons/cms_notification/models/notification_panel_form.py:23
@@ -124,36 +128,37 @@ msgstr "Benachrichtigungseinstellungen."
 #. module: cms_notification
 #: model:ir.ui.view,arch_db:cms_notification.user_menu
 msgid "Notifications"
-msgstr ""
+msgstr "Benachrichtigungen"
 
 #. module: cms_notification
 #: model:ir.ui.view,arch_db:cms_notification.user_menu
 msgid "Notifications settings"
-msgstr ""
+msgstr "Benachrichtigungseinstellungen"
 
 #. module: cms_notification
 #: model:ir.model.fields,field_description:cms_notification.field_mail_compose_message_ref_item_id
 #: model:ir.model.fields,field_description:cms_notification.field_mail_mail_ref_item_id
 #: model:ir.model.fields,field_description:cms_notification.field_mail_message_ref_item_id
 msgid "Referenced item"
-msgstr ""
+msgstr "Referenziertes Objekt"
 
 #. module: cms_notification
 #: model:ir.model.fields,field_description:cms_notification.field_mail_compose_message_ref_model_id
 #: model:ir.model.fields,field_description:cms_notification.field_mail_mail_ref_model_id
 #: model:ir.model.fields,field_description:cms_notification.field_mail_message_ref_model_id
 msgid "Referenced model"
-msgstr ""
+msgstr "referenziertes Modell"
 
 #. module: cms_notification
 #: model:ir.model,name:cms_notification.model_res_users
 msgid "Users"
-msgstr ""
+msgstr "Benutzer"
 
 #. module: cms_notification
 #: model:ir.model.fields,field_description:cms_notification.field_mail_message_subtype_cms_type
+#, fuzzy
 msgid "Visible in CMS control panel"
-msgstr "Visible in CMS control panel"
+msgstr "Sichtbar im CMS control panel"
 
 #. module: cms_notification
 #: model:ir.ui.view,arch_db:cms_notification.notify_email_help_digest
