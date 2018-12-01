@@ -82,3 +82,8 @@ class HTMLCase(FormRenderTestCase):
         html = self.record.cms_render_toolbar(show_popover=False)
         expected = ('edit', 'create', 'publish', 'delete')
         self._test_render(html, expected, popover=False)
+
+    def test_render_public(self):
+        # public users have nothing to render
+        self.env.user.groups_id += self.env.ref('base.group_public')
+        self.assertFalse(self.record.cms_render_toolbar())
