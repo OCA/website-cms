@@ -49,6 +49,7 @@ msgstr "%s anlegen"
 #: model:ir.model.fields,field_description:cms_form.field_cms_form_widget_char_display_name
 #: model:ir.model.fields,field_description:cms_form.field_cms_form_widget_date_display_name
 #: model:ir.model.fields,field_description:cms_form.field_cms_form_widget_float_display_name
+#: model:ir.model.fields,field_description:cms_form.field_cms_form_widget_hidden_display_name
 #: model:ir.model.fields,field_description:cms_form.field_cms_form_widget_image_display_name
 #: model:ir.model.fields,field_description:cms_form.field_cms_form_widget_integer_display_name
 #: model:ir.model.fields,field_description:cms_form.field_cms_form_widget_many2many_display_name
@@ -84,6 +85,7 @@ msgstr ""
 #: model:ir.model.fields,field_description:cms_form.field_cms_form_widget_char_id
 #: model:ir.model.fields,field_description:cms_form.field_cms_form_widget_date_id
 #: model:ir.model.fields,field_description:cms_form.field_cms_form_widget_float_id
+#: model:ir.model.fields,field_description:cms_form.field_cms_form_widget_hidden_id
 #: model:ir.model.fields,field_description:cms_form.field_cms_form_widget_image_id
 #: model:ir.model.fields,field_description:cms_form.field_cms_form_widget_integer_id
 #: model:ir.model.fields,field_description:cms_form.field_cms_form_widget_many2many_id
@@ -125,6 +127,7 @@ msgstr "Aktuelles Bild beibehalten"
 #: model:ir.model.fields,field_description:cms_form.field_cms_form_widget_char___last_update
 #: model:ir.model.fields,field_description:cms_form.field_cms_form_widget_date___last_update
 #: model:ir.model.fields,field_description:cms_form.field_cms_form_widget_float___last_update
+#: model:ir.model.fields,field_description:cms_form.field_cms_form_widget_hidden___last_update
 #: model:ir.model.fields,field_description:cms_form.field_cms_form_widget_image___last_update
 #: model:ir.model.fields,field_description:cms_form.field_cms_form_widget_integer___last_update
 #: model:ir.model.fields,field_description:cms_form.field_cms_form_widget_many2many___last_update
@@ -167,14 +170,14 @@ msgid "Required fields"
 msgstr "Pflichtfelder"
 
 #. module: cms_form
-#: code:addons/cms_form/models/cms_search_form.py:63
+#: code:addons/cms_form/models/cms_search_form.py:64
 #: model:ir.ui.view,arch_db:cms_form.search_form_buttons
 #, python-format
 msgid "Search"
 msgstr "Suche"
 
 #. module: cms_form
-#: code:addons/cms_form/models/cms_search_form.py:68
+#: code:addons/cms_form/models/cms_search_form.py:69
 #, python-format
 msgid "Search %s"
 msgstr "%s suchen"
@@ -197,13 +200,13 @@ msgid "YYYY-MM-DD"
 msgstr "JJJJ-MM-TT"
 
 #. module: cms_form
-#: code:addons/cms_form/models/cms_form_mixin.py:166
+#: code:addons/cms_form/models/cms_form_mixin.py:168
 #, python-format
 msgid "You are not allowed to create any record for the model `%s`."
 msgstr ""
 
 #. module: cms_form
-#: code:addons/cms_form/models/cms_form_mixin.py:156
+#: code:addons/cms_form/models/cms_form_mixin.py:158
 #, python-format
 msgid "You cannot edit this record. Model: %s, ID: %s."
 msgstr ""
@@ -241,6 +244,11 @@ msgstr ""
 #. module: cms_form
 #: model:ir.model,name:cms_form.model_cms_form_widget_float
 msgid "cms.form.widget.float"
+msgstr ""
+
+#. module: cms_form
+#: model:ir.model,name:cms_form.model_cms_form_widget_hidden
+msgid "cms.form.widget.hidden"
 msgstr ""
 
 #. module: cms_form
