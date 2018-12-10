@@ -14,6 +14,8 @@ class ProductsFormSearch(models.AbstractModel):
     _form_model_fields = ('name', )
     _form_required_fields = ('name', )
 
+    form_search_results_template = 'cms_product_form.search_results'
+
     default_code = fields.Char()
 
     @property
