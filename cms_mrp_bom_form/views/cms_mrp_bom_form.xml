@@ -1,16 +1,29 @@
 <?xml version="1.0" encoding="utf-8"?>
 
 <odoo>
-    <template id="mrp_bom_search_results" inherit_id="cms_form.search_results" name="CMS BoM form search results">
-        <xpath expr="//h3[hasclass('item-name')]" position="replace">
-          <h3 class="item-name">
-            <t t-if="'website_url' in item and 'website_url' != '#'">
-              <a t-att-href="item.website_url" t-field="item.product_tmpl_id.name" />
+    <template id="search_results" name="CMS mrp bom form search results">
+        <t t-foreach="form.form_search_results['results']" t-as="item">
+            <div t-attf-id="list_item_#{item.id}" class="list_item"
+                 t-attf-data-item='{"id": #{item.id}}'>
+                <h3 class="item-name">
+                    <t t-if="'website_url' in item and 'website_url' != '#'">
+                        <a t-att-href="item.website_url"
+                           t-field="item.product_tmpl_id.name"/>
+                    </t>
+                    <t t-if="'website_url' not in item or 'website_url' == '#'">
+                        <span t-field="item.product_tmpl_id.name"/>
+                    </t>
+                </h3>
+                <t t-if="'website_description' in item">
+                    <p class="item-description"
+                       t-field="item.website_description"></p>
+                </t>
+            </div>
+        </t>
+        <div class="text-center mb32">
+            <t t-call="website.pager">
+                <t t-set="pager" t-value="form.form_search_results['pager']"/>
             </t>
-            <t t-if="'website_url' not in item or 'website_url' == '#'">
-              <span t-field="item.product_tmpl_id.name"/>
-            </t>
-          </h3>
-        </xpath>
+        </div>
     </template>
 </odoo>

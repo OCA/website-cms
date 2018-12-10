@@ -11,6 +11,7 @@ class MrpBomFormSearch(models.AbstractModel):
     _inherit = 'cms.form.search'
     _form_model = 'mrp.bom'
     _form_model_fields = ('name', 'code', )
+    form_search_results_template = 'cms_mrp_bom_form.search_results'
 
     def form_search_domain(self, search_values):
         domain = super().form_search_domain(search_values)
