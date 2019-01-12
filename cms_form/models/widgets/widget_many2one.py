@@ -32,7 +32,7 @@ class M2OWidget(models.AbstractModel):
         # in a select input in form widget template.
         if isinstance(value, str) and value.isdigit():
             # number as string
-            return int(value) > 0 and int(value)
+            return int(value) if int(value) > 0 else None
         elif isinstance(value, models.BaseModel):
             return value and value.id or None
         elif isinstance(value, int):
@@ -46,13 +46,14 @@ class M2OWidget(models.AbstractModel):
     def form_to_m2o(self, value, **req_values):
         val = utils.safe_to_integer(value) or 0
         # we don't want m2o value do be < 1
-        return val > 0 and val or None
+        return val if val > 0 else None
 
 
 class M2OMultiWidget(models.AbstractModel):
     _name = 'cms.form.widget.many2one.multi'
     _inherit = 'cms.form.widget.many2one'
     _w_template = 'cms_form.field_widget_m2o_multi'
+    # TODO: not used ATM
     w_diplay_field = 'display_name'
 
     def m2o_to_form(self, value, **req_values):
@@ -60,6 +61,7 @@ class M2OMultiWidget(models.AbstractModel):
             return json.dumps([])
         if isinstance(value, str) and value == req_values.get(self.w_fname):
             value = self.w_comodel.browse(
+                # TODO: we should allow customizations of fields to read
                 self.w_ids_from_input(value)).read(['name'])
         value = json.dumps(value)
         return value
