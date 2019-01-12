@@ -70,3 +70,18 @@ class TestWidgetBase(TestWidgetCase, FakeModelMixin):
         # not valid values are skipped
         self.assertEqual(widget.w_ids_from_input(
             '1,2,3,#4, 70, 1XX, 200'), [1, 2, 3, 70, 200])
+
+    def test_subfields_get(self):
+        form = get_form(
+            self.env,
+            'cms.form.res.partner',
+            sub_fields={
+                'name': {'_all': ('custom', )},
+            }
+        )
+        fields = form.form_fields()
+        widget = self.get_widget('name', fields['name'], form=form)
+        self.assertEqual(
+            widget.w_subfields_by_value(),
+            {'custom': fields['custom']}
+        )

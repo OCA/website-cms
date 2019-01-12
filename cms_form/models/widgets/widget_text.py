@@ -20,5 +20,5 @@ class TextWidget(models.AbstractModel):
         widget = super().widget_init(
             form, fname, field, **kw
         )
-        widget.w_maxlength = kw.get('maxlength')
+        widget.w_maxlength = field.get('maxlength') or kw.get('maxlength')
         return widget
