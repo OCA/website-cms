@@ -22,8 +22,9 @@ class SelectionWidget(models.AbstractModel):
             # to state the PG column type to be used.
             first_value = self.w_field['selection'][0][0]
         # fields.Selection does the same check to determine PG col type
-        if isinstance(first_value, int) and value:
-            value = int(value)
+        if first_value and value:
+            # convert to same type
+            value = type(first_value)(value)
         return value
 
     @property
@@ -34,7 +35,7 @@ class SelectionWidget(models.AbstractModel):
         ]
 
 
-class RadioSelectionWidget(SelectionWidget):
+class RadioSelectionWidget(models.AbstractModel):
     _name = 'cms.form.widget.radio'
     _inherit = 'cms.form.widget.selection'
     _w_template = 'cms_form.field_widget_radio_selection'

@@ -57,7 +57,7 @@ License LGPL-3.0 or later (http://www.gnu.org/licenses/lgpl.html).
 
     <xpath expr="//t[@t-foreach]/option" position="replace">
       <option t-att-value="opt_item['value']"
-             t-att-selected="opt_item['value'] == widget.w_field_value">
+              t-att-selected="'selected' if opt_item['value'] == widget.w_field_value else None">
         <t t-esc="opt_item['label']"/>
       </option>
     </xpath>
@@ -75,7 +75,7 @@ License LGPL-3.0 or later (http://www.gnu.org/licenses/lgpl.html).
                  t-att-name="widget.w_fname"
                  t-attf-id="#{widget.w_fname}_#{opt_item_index}"
                  t-att-value="opt_item['value']"
-                 t-att-checked="opt_item['value'] == widget.w_field_value"
+                 t-att-checked="'checked' if opt_item['value'] == widget.w_field_value else None"
                  t-att-required="widget.w_field['required'] and '1' or None"
                  />
           <span t-esc="opt_item['label']" />
@@ -103,7 +103,7 @@ License LGPL-3.0 or later (http://www.gnu.org/licenses/lgpl.html).
          t-att-data-model="widget.w_field['relation']"
          data-display_name="name" data-fields='["name"]'
          t-att-placeholder="widget.w_field['string'] + '...'"
-         t-att-data-domain="widget.w_field.get('domain') or []"
+         t-att-data-domain="widget.w_field.get('domain') or '[]'"
          t-att-required="widget.w_field['required'] and '1' or None"
          />
 
@@ -114,7 +114,7 @@ License LGPL-3.0 or later (http://www.gnu.org/licenses/lgpl.html).
           inherit_id="field_widget_x2m" primary="True">
 
   <xpath expr="//input" position="attributes">
-    <attribute name="t-attf-class" add=" m2o" />
+    <attribute name="t-attf-class" add="m2o" separator=" " />
   </xpath>
 </template>
 
@@ -160,7 +160,7 @@ License LGPL-3.0 or later (http://www.gnu.org/licenses/lgpl.html).
 
     <input type="checkbox"
            t-att-name="widget.w_fname" t-att-id="widget.w_fname"
-           t-att-checked="widget.w_field_value or None"
+           t-att-checked="'checked' if widget.w_field_value else None"
            t-attf-class="form-control #{widget.w_css_klass}"
            t-att-required="widget.w_field['required'] and '1' or None"
            />

@@ -12,6 +12,8 @@ class DateWidget(models.AbstractModel):
     _inherit = 'cms.form.widget.mixin'
     _w_template = 'cms_form.field_widget_date'
 
+    # TODO: allow customization of date format
+
     def widget_init(self, form, fname, field, **kw):
         widget = super().widget_init(form, fname, field, **kw)
         if 'defaultToday' not in widget.w_data:
@@ -24,4 +26,5 @@ class DateWidget(models.AbstractModel):
         return self.form_to_date(value, **req_values)
 
     def form_to_date(self, value, **req_values):
+        # TODO: should be validated by current format
         return utils.safe_to_date(value)
