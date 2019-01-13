@@ -13,11 +13,7 @@ class FakePartnerForm(models.AbstractModel):
     _form_model_fields = ('name', 'country_id')
     _form_required_fields = ('name', 'country_id')
 
-    def form_check_permission(self, raise_exception=True):
-        # no need for this
-        pass
-
-    custom = fields.Char()
+    custom = fields.Char(default=lambda self: 'I am your default')
 
     def _form_load_custom(self, fname, field, value, **req_values):
         return req_values.get('custom', 'oh yeah!')
