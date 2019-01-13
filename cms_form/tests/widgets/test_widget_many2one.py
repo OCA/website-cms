@@ -30,6 +30,7 @@ class TestWidgetM2O(TestWidgetCase):
             widget.w_option_items, self.partners)
 
     def test_widget_many2one_base_load(self):
+        # TODO: test load value from form record
         w_name, w_field = fake_field(
             'm2o_field',
             type='many2one',
@@ -78,6 +79,7 @@ class TestWidgetM2O(TestWidgetCase):
         widget = self.get_widget(w_name, w_field, form=self.form,
                                  widget_model='cms.form.widget.many2one')
         expected_attrs = {
+            'id': 'm2o_field',
             'name': 'm2o_field',
         }
         self._test_widget_attributes(widget, 'select', expected_attrs)
@@ -94,6 +96,7 @@ class TestWidgetM2O(TestWidgetCase):
         widget = self.get_widget(w_name, w_field, form=self.form,
                                  widget_model='cms.form.widget.many2one.multi')
         expected_attrs = {
+            'id': 'm2o_field',
             'name': 'm2o_field',
             'class': 'form-control js_select2_m2m_widget  m2o',
             'placeholder': 'M2o field...',
