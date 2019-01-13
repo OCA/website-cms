@@ -186,11 +186,21 @@ License LGPL-3.0 or later (http://www.gnu.org/licenses/lgpl.html).
       <div t-attf-id="#{prefix}_keepbox" class="keepbox text-center">
         <div class="form-group">
           <label class="checkbox inline" t-attf-for="#{prefix}_keepcheck_yes">
-            <input type="radio" t-attf-id="#{prefix}_keepcheck_yes" t-attf-name="#{prefix}_keepcheck" checked="1" value="yes"/>
+            <input type="radio"
+                   t-attf-id="#{prefix}_keepcheck_yes"
+                   t-attf-name="#{prefix}_keepcheck"
+                   checked="'checked' if not widget.w_field_value.get('from_request') else None"
+                   value="yes"
+                   />
             Keep current image
           </label>
           <label class="checkbox inline" t-attf-for="#{prefix}_keepcheck_no">
-            <input type="radio" t-attf-id="#{prefix}_keepcheck_no" t-attf-name="#{prefix}_keepcheck" value="no"/>
+            <input type="radio"
+                   t-attf-id="#{prefix}_keepcheck_no"
+                   t-attf-name="#{prefix}_keepcheck"
+                   checked="'checked' if widget.w_field_value.get('from_request') else None"
+                   value="no"
+                   />
             Replace current image
           </label>
         </div>

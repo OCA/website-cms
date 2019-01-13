@@ -4,6 +4,7 @@
 import werkzeug
 import base64
 
+from odoo.tools import pycompat
 from odoo.tools.mimetypes import guess_mimetype
 from odoo import models
 
@@ -22,18 +23,25 @@ class BinaryWidget(models.AbstractModel):
             # 'raw_value': '',
             # 'mimetype': '',
         }
+        from_request = False
         if value:
             if isinstance(value, werkzeug.datastructures.FileStorage):
-                # value from request, we cannot set a value for input field
-                value = ''
-                mimetype = ''
+                from_request = True
+                byte_content = value.read()
+                value = base64.b64encode(byte_content)
+                if not isinstance(value, pycompat.text_type):
+                    value = pycompat.to_text(value)
             else:
-                value = str(value, 'utf-8')
-                mimetype = guess_mimetype(base64.b64decode(value))
+                if not isinstance(
+                        value, pycompat.text_type):  # pragma: no cover
+                    value = value.encode()
+                byte_content = base64.b64decode(value)
+            mimetype = guess_mimetype(byte_content)
             _value = {
                 'value': value,
                 'raw_value': value,
                 'mimetype': mimetype,
+                'from_request': from_request,
             }
             if mimetype.startswith('image/'):
                 _value['value'] = 'data:{};base64,{}'.format(mimetype, value)
@@ -47,16 +55,21 @@ class BinaryWidget(models.AbstractModel):
         if self.w_fname not in req_values:
             return None
         _value = False
-        if req_values.get(self.w_fname + '_keepcheck') == 'yes':
+        keepcheck_flag = req_values.get(self.w_fname + '_keepcheck')
+        if not keepcheck_flag or keepcheck_flag == 'yes':
+            # no flag or flag marked as "keep current value"
             # prevent discarding image
             req_values.pop(self.w_fname, None)
-            req_values.pop(self.w_fname + '_keepcheck')
+            req_values.pop(self.w_fname + '_keepcheck', None)
             return None
         if value:
             if hasattr(value, 'read'):
                 file_content = value.read()
-                _value = base64.encodestring(file_content)
+                _value = base64.b64encode(file_content)
+                if not isinstance(value, pycompat.text_type):
+                    _value = pycompat.to_text(_value)
             else:
+                # like 'data:image/jpeg;base64,jRyRuUm2VP...
                 _value = value.split(',')[-1]
         return _value
 
