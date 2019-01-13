@@ -27,6 +27,7 @@ class TestWidgetSelection(TestWidgetCase):
         widget = self.get_widget(w_name, w_field, form=self.form,
                                  widget_model='cms.form.widget.selection')
         expected_attrs = {
+            'id': 'selection_char_field',
             'name': 'selection_char_field',
         }
         self._test_widget_attributes(widget, 'select', expected_attrs)
@@ -48,6 +49,7 @@ class TestWidgetSelection(TestWidgetCase):
         widget = self.get_widget(w_name, w_field, form=self.form,
                                  widget_model='cms.form.widget.selection')
         expected_attrs = {
+            'id': 'selection_char_field',
             'name': 'selection_char_field',
         }
         node = self._test_widget_attributes(widget, 'select', expected_attrs)
@@ -84,6 +86,7 @@ class TestWidgetSelection(TestWidgetCase):
         widget = self.get_widget(w_name, w_field, form=self.form,
                                  widget_model='cms.form.widget.selection')
         expected_attrs = {
+            'id': 'selection_integer_field',
             'name': 'selection_integer_field',
         }
         node = self._test_widget_attributes(widget, 'select', expected_attrs)
@@ -120,6 +123,7 @@ class TestWidgetSelection(TestWidgetCase):
         widget = self.get_widget(w_name, w_field, form=self.form,
                                  widget_model='cms.form.widget.selection')
         expected_attrs = {
+            'id': 'selection_float_field',
             'name': 'selection_float_field',
         }
         node = self._test_widget_attributes(widget, 'select', expected_attrs)

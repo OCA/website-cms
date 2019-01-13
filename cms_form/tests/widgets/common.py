@@ -6,7 +6,7 @@ import mock
 from ..common import HTMLRenderMixin
 
 
-def fake_form(**data):
+def fake_form(main_object=None, **data):
     """Get a mocked fake form.
 
     :param data: kw args for setting form values
@@ -14,6 +14,7 @@ def fake_form(**data):
     form = mock.MagicMock(name='FakeForm')
     form_values = mock.PropertyMock(return_value={'form_data': data})
     type(form).form_render_values = form_values
+    form.main_object = main_object
     return form
 
 
