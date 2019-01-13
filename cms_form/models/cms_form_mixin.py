@@ -178,11 +178,13 @@ class CMSFormMixin(models.AbstractModel):
         if self._form_model:
             return self.form_model.check_access_rights(
                 'create', raise_exception=raise_exception)
+        # just a safe fallback if you call this method directly
         return True
 
     def _can_edit(self, raise_exception=True):
         """Check that current user can edit main object if any."""
         if not self.main_object:
+            # just a safe fallback if you call this method directly
             return True
         try:
             self.main_object.check_access_rights('write')
@@ -196,11 +198,11 @@ class CMSFormMixin(models.AbstractModel):
 
     @property
     def form_title(self):
-        return ''
+        return ''  # pragma: no cover
 
     @property
     def form_description(self):
-        return ''
+        return ''  # pragma: no cover
 
     @property
     def form_mode(self):
@@ -300,15 +302,16 @@ class CMSFormMixin(models.AbstractModel):
         """Add subfields to related main fields."""
         # TODO: test this
         for mainfield, subfields in self._form_sub_fields.items():
-            if mainfield in _all_fields:
-                _subfields = {}
-                for val, subs in subfields.items():
-                    _subfields[val] = {}
-                    for sub in subs:
-                        if sub in _all_fields:
-                            _subfields[val][sub] = _all_fields[sub]
-                            _all_fields[sub]['is_subfield'] = True
-                _all_fields[mainfield]['subfields'] = _subfields
+            if mainfield not in _all_fields:
+                continue
+            _subfields = {}
+            for val, subs in subfields.items():
+                _subfields[val] = {}
+                for sub in subs:
+                    if sub in _all_fields:
+                        _subfields[val][sub] = _all_fields[sub]
+                        _all_fields[sub]['is_subfield'] = True
+            _all_fields[mainfield]['subfields'] = _subfields
 
     def _form_remove_uwanted(self, _all_fields):
         """Remove fields from form fields."""
@@ -522,11 +525,11 @@ class CMSFormMixin(models.AbstractModel):
 
     def form_process_GET(self, render_values):
         """Process GET requests."""
-        return render_values
+        return render_values  # pragma: no cover
 
     def form_process_POST(self, render_values):
         """Process POST requests."""
-        raise NotImplementedError()
+        raise NotImplementedError()  # pragma: no cover
 
     @property
     def form_wrapper_css_klass(self):
