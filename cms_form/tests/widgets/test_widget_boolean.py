@@ -21,6 +21,7 @@ class TestWidgetBoolean(TestWidgetCase):
         self.assertFalse(widget.w_field_value)
         expected_attrs = {
             'type': 'checkbox',
+            'id': 'a_boolean_field',
             'name': 'a_boolean_field',
             'class': 'form-control ',
         }
@@ -32,6 +33,7 @@ class TestWidgetBoolean(TestWidgetCase):
         widget.w_field['required'] = True
         expected_attrs = {
             'type': 'checkbox',
+            'id': 'a_boolean_field',
             'name': 'a_boolean_field',
             'class': 'form-control ',
             'required': '1',
@@ -43,6 +45,7 @@ class TestWidgetBoolean(TestWidgetCase):
         self.assertTrue(widget.w_field_value)
         expected_attrs = {
             'type': 'checkbox',
+            'id': 'a_boolean_field',
             'name': 'a_boolean_field',
             'class': 'form-control ',
             'checked': 'checked',
