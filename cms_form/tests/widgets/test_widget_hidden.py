@@ -26,6 +26,7 @@ class TestWidgetHidden(TestWidgetCase):
                                  widget_model='cms.form.widget.hidden')
         expected_attrs = {
             'type': 'hidden',
+            'id': 'char_field',
             'name': 'char_field',
             'value': 'abc',
         }
@@ -43,6 +44,7 @@ class TestWidgetHidden(TestWidgetCase):
                                  widget_model='cms.form.widget.hidden')
         expected_attrs = {
             'type': 'hidden',
+            'id': 'int_field',
             'name': 'int_field:int',
             'value': '5',
         }
@@ -55,6 +57,7 @@ class TestWidgetHidden(TestWidgetCase):
                                  widget_model='cms.form.widget.hidden')
         expected_attrs = {
             'type': 'hidden',
+            'id': 'float_field',
             'name': 'float_field:float',
             'value': '5.0',
         }
@@ -70,6 +73,7 @@ class TestWidgetHidden(TestWidgetCase):
                                  widget_model='cms.form.widget.hidden')
         expected_attrs = {
             'type': 'hidden',
+            'id': 'selection_str_field',
             'name': 'selection_str_field',
             'value': '1',
         }
@@ -85,6 +89,7 @@ class TestWidgetHidden(TestWidgetCase):
                                  widget_model='cms.form.widget.hidden')
         expected_attrs = {
             'type': 'hidden',
+            'id': 'selection_integer_field',
             'name': 'selection_integer_field:int',
             'value': '2',
         }
@@ -100,6 +105,7 @@ class TestWidgetHidden(TestWidgetCase):
                                  widget_model='cms.form.widget.hidden')
         expected_attrs = {
             'type': 'hidden',
+            'id': 'selection_float_field',
             'name': 'selection_float_field:float',
             'value': '4.0',
         }
@@ -112,6 +118,7 @@ class TestWidgetHidden(TestWidgetCase):
                                  widget_model='cms.form.widget.hidden')
         expected_attrs = {
             'type': 'hidden',
+            'id': 'many2one_field',
             'name': 'many2one_field:int',
             'value': '10',
         }

@@ -26,6 +26,7 @@ class TestWidgetTxt(TestWidgetCase):
             form=self.form, widget_model='cms.form.widget.char')
         expected_attrs = {
             'type': 'text',
+            'id': 'a_char_field',
             'name': 'a_char_field',
             'placeholder': 'A char field...',
             'value': 'Just a string',
@@ -42,6 +43,7 @@ class TestWidgetTxt(TestWidgetCase):
             w_name, w_field,
             form=self.form, widget_model='cms.form.widget.text')
         expected_attrs = {
+            'id': 'a_text_field',
             'name': 'a_text_field',
             'class': 'form-control ',
         }
@@ -62,6 +64,7 @@ class TestWidgetTxt(TestWidgetCase):
         self.assertEqual(len(node_items), 2)
         node_textarea = node_items[0]
         expected_attrs = {
+            'id': 'a_text_field',
             'name': 'a_text_field',
             'class': 'form-control ',
             'maxlength': '100',
@@ -72,6 +75,7 @@ class TestWidgetTxt(TestWidgetCase):
         node_counter = node_items[1]
         expected_attrs = {
             'type': 'text',
+            'id': 'a_text_field_counter',
             'name': 'a_text_field_counter',
             'size': '3',
             'class': 'form-control text-counter',

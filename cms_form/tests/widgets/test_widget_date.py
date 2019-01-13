@@ -17,6 +17,7 @@ class TestWidgetDate(TestWidgetCase):
     def test_widget_date_input(self):
         expected_attrs = {
             'type': 'text',
+            'id': 'a_date_field',
             'name': 'a_date_field',
             'placeholder': 'YYYY-MM-DD',
             'value': '2019-01-12',
@@ -29,6 +30,7 @@ class TestWidgetDate(TestWidgetCase):
         self.widget.w_field['required'] = True
         expected_attrs = {
             'type': 'text',
+            'id': 'a_date_field',
             'name': 'a_date_field',
             'placeholder': 'YYYY-MM-DD',
             'value': '2019-01-12',

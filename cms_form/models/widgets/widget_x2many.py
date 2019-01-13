@@ -17,6 +17,11 @@ class X2MWidget(models.AbstractModel):
         widget.w_domain = widget.w_field.get('domain', [])
         return widget
 
+    # TODO: rename all widget-specific methods like:
+    #    `x2many_to_form` -> `_w_orm_to_form`
+    #    `form_to_x2many` -> `_w_form_to_orm`
+    # and make mixin's `w_load` and `w_extract` methods use them.
+    # In this way we remove all the overrides on `w_load` and `w_extract`.
     def w_load(self, **req_values):
         value = super().w_load(**req_values)
         return self.x2many_to_form(value, **req_values)
@@ -33,20 +38,19 @@ class X2MWidget(models.AbstractModel):
     def x2many_to_form(self, value, **req_values):
         if self._is_not_valued(value):
             return json.dumps([])
-        if not isinstance(value, str) \
-                and self.w_record and self.w_record[self.w_fname] == value:
-            # value from record
-            value = [
-                {'id': x.id, 'name': x[self.w_diplay_field]}
-                for x in value or []
-            ]
-        elif isinstance(value, str) and value == req_values.get(self.w_fname):
-            # value from request
-            # FIXME: the field could come from the form not the model!
-            value = self.w_form_model[self.w_fname].browse(
-                self.w_ids_from_input(value)).read(['name'])
-        value = json.dumps(value)
-        return value
+        ids = []
+        if isinstance(value, type(self.w_comodel)):
+            ids = value.ids
+        elif isinstance(value, str):
+            ids = self.w_ids_from_input(value)
+        req_val = self.w_ids_from_input(req_values.get(self.w_fname, ''))
+        if req_val:
+            # request value take precedence
+            ids = req_val[:]
+        read_fields = [self.w_diplay_field, ]
+        if 'name' in self.w_comodel:
+            read_fields.append('name')
+        return json.dumps(self.w_comodel.browse(ids).read(read_fields))
 
     def w_extract(self, **req_values):
         value = super().w_extract(**req_values)
