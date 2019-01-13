@@ -1,7 +1,7 @@
 # Copyright 2017-2018 Simone Orsi
 # License LGPL-3.0 or later (http://www.gnu.org/licenses/lgpl.html).
 
-
+import mock
 from werkzeug.wrappers import Request
 
 from odoo import http
@@ -51,6 +51,14 @@ class TestFormBase(FormTestCase):
         form = self.get_form('cms.form.mixin', **overrides)
         for k, v in overrides.items():
             self.assertEqual(getattr(form, '_form_' + k), v)
+
+    def test_form_mode(self):
+        form = self.get_form('cms.form.mixin')
+        self.assertEqual(form.form_mode, 'create')
+        form = self.get_form('cms.form.mixin', main_object=object())
+        self.assertEqual(form.form_mode, 'edit')
+        form = self.get_form('cms.form.mixin', mode='custom')
+        self.assertEqual(form.form_mode, 'custom')
 
     def test_fields_load(self):
         form = self.get_form('cms.form.res.partner')
@@ -106,6 +114,13 @@ class TestFormBase(FormTestCase):
         # this one is forced to required in our custom form
         self.assertTrue(fields['country_id']['required'])
 
+    def test_fields_defaults(self):
+        form = self.get_form('cms.form.res.partner')
+        self.env['ir.default'].set('res.partner', 'name', 'DEFAULT NAME')
+        fields = form.form_fields()
+        self.assertEqual(fields['name']['_default'], 'DEFAULT NAME')
+        self.assertEqual(fields['custom']['_default'], 'I am your default')
+
     def test_fields_hidden(self):
         form = self.get_form(
             'cms.form.res.partner', fields_hidden=('country_id', ))
@@ -138,6 +153,28 @@ class TestFormBase(FormTestCase):
         fields = form.form_fields(hidden=False)
         self.assertListEqual(
             list(fields.keys()), ['custom', 'name', ])
+
+    def test_subfields(self):
+        form = self.get_form(
+            'cms.form.res.partner',
+            sub_fields={
+                'name': {'_all': ('custom', )},
+                'do_not_exists': {'_all': ('foo', )}  # skipped
+            }
+        )
+        fields = form.form_fields()
+        self.assertEqual(
+            fields['name']['subfields'],
+            {'_all': {'custom': fields['custom']}}
+        )
+        self.assertTrue(fields['custom']['is_subfield'])
+
+    def test_fields_binary(self):
+        form = self.get_form(
+            'cms.form.res.partner',
+            model_fields=['name', 'image']
+        )
+        self.assertEqual(list(form.form_file_fields.keys()), ['image', ])
 
     def test_fields_protected(self):
         group = self.env.ref('website.group_website_designer')
@@ -314,6 +351,40 @@ class TestFormBase(FormTestCase):
         for fname in ['a_many2many', 'a_one2many', ]:
             self.assertEqual(values[fname], [(5, )])
 
+    def test_extract_from_request_custom_extractor(self):
+        # test custom extractor integration w/ form_extract_values
+        form = self.get_form('cms.form.test_fields')
+        # values from request
+        data = {
+            'a_char': 'Jack White',
+            'a_number': '10',
+            'a_float': '5',
+            'a_many2one': '123',
+            'a_many2many': '1,2,3',
+            'a_one2many': '4,5,6',
+        }
+        request = fake_request(form_data=data)
+        # write mode
+        form = self.get_form('cms.form.test_fields', req=request)
+
+        def custom_extractor(form, fname, value, **request_values):
+            return 'custom for: ' + fname
+
+        # by type
+        form._form_extract_a_char = custom_extractor
+        form._form_extract_a_number = custom_extractor
+        values = form.form_extract_values()
+        expected = {
+            'a_char': 'custom for: a_char',
+            'a_number': 'custom for: a_number',
+            'a_float': 5.0,
+            'a_many2one': 123,
+            'a_many2many': [(6, False, [1, 2, 3]), ],
+            'a_one2many': [(6, False, [4, 5, 6]), ],
+        }
+        for k, v in values.items():
+            self.assertEqual(expected[k], v)
+
     def test_get_widget(self):
         form = self.get_form('cms.form.test_fields')
         expected = {
@@ -390,3 +461,10 @@ class TestFormBase(FormTestCase):
             ), ('form-group form-field field-float '
                 'field-foo_field field-required has-error')
         )
+
+    def test_info_merge_call(self):
+        form = self.get_form('cms.form.res.partner')
+        with mock.patch('odoo.addons.cms_form'
+                        '.models.cms_form_mixin.utils.data_merge') as mocked:
+            form._form_info_merge({'a': '1'}, {'b': '2'})
+            mocked.assert_called_with({'a': '1'}, {'b': '2'})
