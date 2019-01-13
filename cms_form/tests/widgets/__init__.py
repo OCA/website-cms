@@ -9,3 +9,4 @@ from . import test_widget_boolean
 from . import test_widget_date
 from . import test_widget_many2one
 from . import test_widget_x2many
+from . import test_widget_binary

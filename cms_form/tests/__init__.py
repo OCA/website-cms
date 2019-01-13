@@ -18,3 +18,4 @@ from .widgets import test_widget_boolean
 from .widgets import test_widget_date
 from .widgets import test_widget_many2one
 from .widgets import test_widget_x2many
+from .widgets import test_widget_binary
