@@ -63,12 +63,15 @@ def data_merge(a, b):
                     else:
                         a[key] = b[key]
             else:
-                raise Exception(
-                    'Cannot merge non-dict "%s" into dict "%s"' % (b, a))
+                raise ValueError(
+                    'Cannot merge non-dict "%s" into dict "%s"' % (b, a)
+                )
         else:
-            raise Exception('NOT IMPLEMENTED "%s" into "%s"' % (b, a))
-    except TypeError as e:
-        raise Exception(
-            'TypeError "%s" in key "%s" '
-            'when merging "%s" into "%s"' % (e, key, b, a))
+            raise NotImplementedError(
+                'NOT IMPLEMENTED "%s" into "%s"' % (b, a)
+            )
+    except TypeError as e:  # pragma: no cover
+        raise TypeError(
+            '"%s" in key "%s" when merging "%s" into "%s"' % (e, key, b, a)
+        )
     return a
