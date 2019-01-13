@@ -1,12 +1,14 @@
 # Copyright 2017-2018 Simone Orsi
 # License LGPL-3.0 or later (http://www.gnu.org/licenses/lgpl.html).
 
-
-from io import StringIO
-from werkzeug.wrappers import Request
-from werkzeug.contrib.sessions import SessionStore
+import base64
+from contextlib import contextmanager
+import io
 import mock
 import urllib.parse
+from werkzeug.wrappers import Request
+from werkzeug.contrib.sessions import SessionStore
+from werkzeug.datastructures import FileStorage
 
 from odoo import http, api
 from odoo.tests.common import get_db_name
@@ -21,7 +23,7 @@ def fake_request(form_data=None, query_string=None,
     w_req = Request.from_values(
         query_string=query_string,
         content_length=len(data),
-        input_stream=StringIO(data),
+        input_stream=io.StringIO(data),
         content_type=content_type,
         method=method)
     w_req.session = session if session is not None else mock.MagicMock()
@@ -83,3 +85,19 @@ def teardown_test_model(env, model_cls):
     if not getattr(model_cls, '_teardown_no_delete', False):
         del env.registry.models[model_cls._name]
     env.registry.setup_models(env.cr)
+
+
+@contextmanager
+def b64_as_stream(b64_content):
+    stream = io.BytesIO()
+    stream.write(base64.b64decode(b64_content))
+    stream.seek(0)
+    yield stream
+    stream.close()
+
+
+def fake_file_from_request(input_name, stream, **kw):
+    return FileStorage(
+        name=input_name,
+        stream=stream, **kw
+    )
