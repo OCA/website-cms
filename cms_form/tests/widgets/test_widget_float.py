@@ -20,6 +20,7 @@ class TestWidgetFloat(TestWidgetCase):
         self.assertEqual(len(node_input), 1)
         expected_attrs = {
             'type': 'text',
+            'id': 'a_float_field',
             'name': 'a_float_field',
             'placeholder': 'A float field...',
             'value': '2.0',
@@ -36,6 +37,7 @@ class TestWidgetFloat(TestWidgetCase):
         self.assertEqual(len(node_input), 1)
         expected_attrs = {
             'type': 'text',
+            'id': 'a_float_field',
             'name': 'a_float_field',
             'placeholder': 'A float field...',
             'value': '2.0',
