@@ -148,3 +148,14 @@ class TestWidgetSelection(TestWidgetCase):
         # test conversion
         extracted = widget.w_extract(selection_float_field='3.0')
         self.assertTrue(isinstance(extracted, float))
+
+    def test_widget_selection_non_selection_field(self):
+        w_name, w_field = fake_field(
+            'selection_char_field',
+            type='selection',
+            # do not pass `selection`
+        )
+        widget = self.get_widget(w_name, w_field, form=self.form,
+                                 widget_model='cms.form.widget.selection')
+        # no selection found: should not fail and give back an empty list
+        self.assertEqual(widget.w_option_items, [])
