@@ -13,6 +13,8 @@ class DateWidget(models.AbstractModel):
     _w_template = 'cms_form.field_widget_date'
 
     # TODO: allow customization of date format
+    # TODO: adopt this attr to control placeholders on all widgets
+    w_placeholder = 'YYYY-MM-DD'
 
     def widget_init(self, form, fname, field, **kw):
         widget = super().widget_init(form, fname, field, **kw)
