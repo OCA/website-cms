@@ -17,7 +17,9 @@ class SelectionWidget(models.AbstractModel):
         # and not brake existing forms/widgets.
         value = super().w_extract(**req_values)
         first_value = None
-        if self.w_field['selection']:
+        # use `get` as you might want to use the selection widget
+        # for non-Selection fields and just pass options via `w_option_items`.
+        if self.w_field.get('selection'):
             # `fields.Selection` does this under the hood
             # to state the PG column type to be used.
             first_value = self.w_field['selection'][0][0]
@@ -31,7 +33,7 @@ class SelectionWidget(models.AbstractModel):
     def w_option_items(self):
         return [
             {'value': x[0], 'label': x[1]}
-            for x in self.w_field['selection']
+            for x in self.w_field.get('selection', [])
         ]
 
 
