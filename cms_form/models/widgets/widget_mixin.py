@@ -13,7 +13,8 @@ class Widget(models.AbstractModel):
     _w_css_klass = ''
 
     def widget_init(self, form, fname, field,
-                    data=None, subfields=None, template='', css_klass=''):
+                    data=None, subfields=None,
+                    template='', css_klass='', **kw):
         widget = self.new()
         widget.w_form = form
         widget.w_form_model = form.form_model
@@ -64,4 +65,4 @@ class Widget(models.AbstractModel):
         return self.w_subfields.get(value, {})
 
     def w_data_json(self):
-        return json.dumps(self.w_data)
+        return json.dumps(self.w_data, sort_keys=True)
