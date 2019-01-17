@@ -15,10 +15,8 @@ class FakeNotificationPanel(models.AbstractModel):
 
     @property
     def _form_subtype_fields(self):
-        res = super()._form_subtype_fields
-        res.update({
+        return {
             'enable_1': 'cms_notification.test_subtype1',
             'enable_2': 'cms_notification.test_subtype2',
             'enable_3': 'cms_notification.test_subtype3',
-        })
-        return res
+        }

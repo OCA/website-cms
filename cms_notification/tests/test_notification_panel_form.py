@@ -1,4 +1,4 @@
-# Copyright 2017-2018 Simone Orsi
+# Copyright 2018 Simone Orsi
 # License LGPL-3.0 or later (http://www.gnu.org/licenses/lgpl).
 
 from odoo.addons.cms_form.tests.common import FormTestCase
@@ -67,6 +67,15 @@ class CMSNotificationCase(FormTestCase):
     def _assert_values(self, expected, values):
         for k, v in expected.items():
             self.assertEqual(values[k], v)
+
+    def test_form_next_url(self):
+        form = self.get_form('cms.notification.panel.form')
+        self.assertEqual(form.form_next_url(), '/my/settings/notifications')
+
+    def test_form_next_url_redirect(self):
+        req = fake_request(query_string='redirect=/foo')
+        form = self.get_form('cms.notification.panel.form', req=req)
+        self.assertEqual(form.form_next_url(), '/foo')
 
     def test_form_defaults(self):
         form = self.get_form(

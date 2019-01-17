@@ -18,8 +18,6 @@ class ResUsers(models.Model):
     def _compute_has_unread_notif(self):
         msg_model = self.env['mail.message']
         for item in self:
-            if not item.partner_id:
-                continue
             domain = [
                 ('partner_ids', 'in', item.partner_id.id),
                 ('needaction_partner_ids', 'in', item.partner_id.id),

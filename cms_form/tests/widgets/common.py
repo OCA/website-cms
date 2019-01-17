@@ -6,7 +6,7 @@ import mock
 from ..common import HTMLRenderMixin
 
 
-def fake_form(**data):
+def fake_form(main_object=None, **data):
     """Get a mocked fake form.
 
     :param data: kw args for setting form values
@@ -14,6 +14,7 @@ def fake_form(**data):
     form = mock.MagicMock(name='FakeForm')
     form_values = mock.PropertyMock(return_value={'form_data': data})
     type(form).form_render_values = form_values
+    form.main_object = main_object
     return form
 
 
@@ -60,3 +61,25 @@ class TestWidgetCase(SavepointCase, HTMLRenderMixin):
     @classmethod
     def get_widget(cls, fname, field, **kw):
         return get_widget(cls.env, fname, field, **kw)
+
+    def _test_widget_attributes(self, widget, tag, expected, text=None):
+        node = self.to_xml_node(widget.render())[0]
+        node_input = self.find_input_name(node, expected['name'])
+        self.assertEqual(len(node_input), 1)
+        node_input = node_input[0]
+        self._test_element_attributes(node_input, tag, expected, text=text)
+        # return node for further testing
+        return node_input
+
+    def _test_element_attributes(self, node, tag, expected, text=None):
+        self.assertEqual(node.tag, tag)
+        for attr_name, attr_value in expected.items():
+            self.assertEqual(node.attrib[attr_name], attr_value)
+        # special attrs that should be set or not completely
+        for attr_name in ('required', 'checked'):
+            if expected.get(attr_name):
+                self.assertIn(attr_name, node.attrib)
+            else:
+                self.assertNotIn(attr_name, node.attrib)
+        if text:
+            self.assertEqual(node.text.strip(), text)

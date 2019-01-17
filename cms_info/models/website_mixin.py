@@ -56,16 +56,28 @@ class WebsiteMixin(models.AbstractModel):
         # TODO: improve this
         return self.cms_can_edit()
 
+    @api.multi
     def cms_info(self):
-        info = {
-            'is_owner': self.cms_is_owner(),
-            'can_edit': self.cms_can_edit(),
-            'can_create': self.cms_can_create(),
-            'can_publish': self.cms_can_publish(),
-            'can_delete': self.cms_can_delete(),
+        # do not use `ensure_one` so we can use this on an empty recordset
+        info = {}.fromkeys((
+            'is_owner', 'can_edit', 'can_create', 'can_publish',
+            'can_delete', 'create_url', 'edit_url', 'delete_url',
+        ), None)
+        if self:
+            # we have a record indeed
+            info.update({
+                # make sure it works even on empty recordsets
+                'is_owner': self.cms_is_owner() if self else None,
+                'can_edit': self.cms_can_edit(),
+                'can_publish': self.cms_can_publish(),
+                'can_delete': self.cms_can_delete(),
+                'edit_url': self.cms_edit_url,
+                # delete/delete confirm URLs come from `cms_delete_content`
+                'delete_url': self.cms_delete_confirm_url,
+            })
+        info.update({
+            # class-level info
             'create_url': self.cms_create_url,
-            'edit_url': self.cms_edit_url,
-            # delete/delete confirm URLs come from `cms_delete_content`
-            'delete_url': self.cms_delete_confirm_url,
-        }
+            'can_create': self.cms_can_create(),
+        })
         return info

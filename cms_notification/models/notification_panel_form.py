@@ -19,16 +19,16 @@ class CMSNotificationPanel(models.AbstractModel):
     )
 
     @property
-    def form_title(self):
+    def form_title(self):  # pragma: no cover
         return _('Notification settings.')
 
     @property
-    def form_description(self):
+    def form_description(self):  # pragma: no cover
         # no description needed, at least for now :)
         return ''
 
     @property
-    def form_msg_success_updated(self):
+    def form_msg_success_updated(self):  # pragma: no cover
         return _('Changes applied.')
 
     def form_next_url(self, main_object=None):
@@ -43,7 +43,7 @@ class CMSNotificationPanel(models.AbstractModel):
             'notification_type': 'cms.form.widget.notif_radio',
         }
 
-    def _form_master_slave_info(self):
+    def _form_master_slave_info(self):  # pragma: no cover
         info = super()._form_master_slave_info()
         info.update({
             'notification_type': {
@@ -68,7 +68,7 @@ class CMSNotificationPanel(models.AbstractModel):
         return info
 
     @property
-    def _form_subtype_fields(self):
+    def _form_subtype_fields(self):  # pragma: no cover
         """Return mapping from boolean form field to subtype xmlid.
 
         CMS form does not support o2m fields in an advanced way

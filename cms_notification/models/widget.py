@@ -12,13 +12,13 @@ class NotificationSelectionWidget(models.AbstractModel):
     help_tmpl_prefix = 'cms_notification.notify_email_help_'
 
     @property
-    def w_option_items(self):
+    def w_option_items(self):  # pragma: no cover
         """Change options order and inject help text."""
         items = []
         sel = dict(self.w_field['selection'])
         for item in ('inbox', 'email', ):
             template = self.env.ref(
-                self.help_tmpl_prefix + item, raise_if_not_found=0)
+                self.help_tmpl_prefix + item, raise_if_not_found=False)
             _help = None
             if template:
                 _help = template.render({'sel': sel, 'field': self.w_field})

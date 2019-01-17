@@ -8,7 +8,7 @@ import logging
 _logger = logging.getLogger(__name__)
 try:
     from validate_email import validate_email
-except ImportError:
+except ImportError:  # pragma: no cover
     _logger.debug("Cannot import `validate_email`.")
 
 
@@ -37,11 +37,11 @@ class AccountForm(models.AbstractModel):
     )
 
     @property
-    def form_title(self):
+    def form_title(self):  # pragma: no cover
         return _('My account')
 
     @property
-    def form_msg_success_updated(self):
+    def form_msg_success_updated(self):  # pragma: no cover
         return _('Profile updated.')
 
     def form_next_url(self, main_object=None):

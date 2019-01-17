@@ -82,8 +82,8 @@ class TestCMSForm(FormTestCase):
             values = form.form_process_POST({})
         self.assertTrue(
             # custom modules can provide different errors for constraints
-            '_integrity' in values['errors'] or
-            '_validation' in values['errors']
+            '_integrity' in values['errors'] \
+            or '_validation' in values['errors']
         )
 
     def test_purge_non_model_fields(self):
