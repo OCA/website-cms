@@ -2,6 +2,18 @@
 CHANGELOG
 =========
 
+11.0.1.6.3 (2019-01-18)
+=======================
+
+**Fixes**
+
+* binary widget test cov + fix value handling
+* x2many widget test cov + fix value handling
+* fix selection widget w/ non-Selection field
+* cms.form.mixin test cov 100%
+* utils test cov 100%
+* widgets test cov 100%
+
 
 11.0.1.6.2 (2018-08-21)
 =======================
