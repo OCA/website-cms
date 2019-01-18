@@ -4,7 +4,7 @@
 {
     'name': 'CMS Account Form',
     'summary': """CMS replacement for user's account form.""",
-    'version': '11.0.1.0.2',
+    'version': '11.0.1.0.3',
     'license': 'LGPL-3',
     'author': 'Camptocamp,Odoo Community Association (OCA)',
     'depends': [

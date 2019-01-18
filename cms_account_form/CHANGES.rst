@@ -3,10 +3,18 @@ CHANGELOG
 =========
 
 
+11.0.1.0.3 (2019-01-18)
+=======================
+
+**Fixes**
+
+* Test coverage 100%
+
+
 11.0.1.0.2 (2018-04-17)
 =======================
 
-**Fix**
+**Fixes**
 
 * Fix controller: form_model_key now accepts kw args
 
@@ -14,7 +22,7 @@ CHANGELOG
 11.0.1.0.1 (2018-04-09)
 =======================
 
-**Fix**
+**Fixes**
 
 * Fix validators names
 
