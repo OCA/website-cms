@@ -6,8 +6,10 @@ import mock
 
 from .common import FormTestCase
 from .fake_models import (
-    FakePublishModel,
-    FakePublishModelForm,
+    FakePubModel,
+    FakePubModelForm,
+    FakeNonPubModel,
+    FakeNonPubModelForm,
     FakePartnerForm,
 )
 
@@ -15,8 +17,10 @@ from .fake_models import (
 class TestFormPermCheck(FormTestCase):
 
     TEST_MODELS_KLASSES = [
-        FakePublishModel,
-        FakePublishModelForm,
+        FakePubModel,
+        FakePubModelForm,
+        FakeNonPubModel,
+        FakeNonPubModelForm,
         FakePartnerForm,
     ]
 
@@ -24,7 +28,7 @@ class TestFormPermCheck(FormTestCase):
     def setUpClass(cls):
         super().setUpClass()
         cls._setup_models()
-        cls.record = cls.env[FakePublishModel._name].create({'name': 'Foo'})
+        cls.record = cls.env[FakePubModel._name].create({'name': 'Foo'})
 
     @classmethod
     def tearDownClass(cls):
@@ -36,7 +40,7 @@ class TestFormPermCheck(FormTestCase):
 
     def test_form_check_permission_can_create(self):
         form = self.get_form(
-            FakePublishModelForm._name, main_object=None)
+            FakePubModelForm._name, main_object=None)
         with mock.patch(self.mixin_path + '.cms_can_create') as patched:
             patched.return_value = True
             self.assertTrue(form.form_check_permission())
@@ -44,7 +48,7 @@ class TestFormPermCheck(FormTestCase):
 
     def test_form_check_permission_cannot_create(self):
         form = self.get_form(
-            FakePublishModelForm._name, main_object=None)
+            FakePubModelForm._name, main_object=None)
         with mock.patch(self.mixin_path + '.cms_can_create') as patched:
             patched.return_value = False
             try:
@@ -52,12 +56,12 @@ class TestFormPermCheck(FormTestCase):
             except exceptions.AccessError as err:
                 patched.assert_called()
                 msg = ('You are not allowed to create any record '
-                       'for the model `%s`.') % FakePublishModel._name
+                       'for the model `%s`.') % FakePubModel._name
                 self.assertEqual(err.name, msg)
 
     def test_form_check_permission_can_edit(self):
         form = self.get_form(
-            FakePublishModelForm._name,
+            FakePubModelForm._name,
             main_object=self.record)
         with mock.patch(self.mixin_path + '.cms_can_edit') as patched:
             patched.return_value = True
@@ -66,7 +70,7 @@ class TestFormPermCheck(FormTestCase):
 
     def test_form_check_permission_cannot_edit(self):
         form = self.get_form(
-            FakePublishModelForm._name, main_object=self.record)
+            FakePubModelForm._name, main_object=self.record)
         with mock.patch(self.mixin_path + '.cms_can_edit') as patched:
             patched.return_value = False
             try:
@@ -79,12 +83,12 @@ class TestFormPermCheck(FormTestCase):
                 self.assertEqual(err.name, msg)
 
     def test_form_check_permission_no_ws_mixin_can_create(self):
-        form = self.get_form(FakePartnerForm._name, main_object=None)
+        form = self.get_form(FakeNonPubModelForm._name, main_object=None)
         self.assertTrue(form.form_check_permission())
 
     def test_form_check_permission_no_ws_mixin_can_edit(self):
-        partner = self.env['res.partner'].search([], limit=1)
-        form = self.get_form(FakePartnerForm._name, main_object=partner)
+        rec = self.env[FakeNonPubModel._name].create({'name': 'Foo'})
+        form = self.get_form(FakeNonPubModelForm._name, main_object=rec)
         self.assertTrue(form.form_check_permission())
 
     def test_form_check_permission_no_record_no_model_can_edit_create(self):
