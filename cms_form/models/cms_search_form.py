@@ -27,8 +27,12 @@ class CMSFormSearch(models.AbstractModel):
     _form_search_fields_multi = ()
     # declare custom domain computation rules
     _form_search_domain_rules = {
-        # field name: (leaf field name, operator, format value),
-        # 'product_id': ('product_id.name', 'ilike', '{}'),
+        # opt 1: `field name: (leaf field name, operator, format value)`
+        # `format_value` is a formatting compatible string
+        # 'product_id': ('product_id.name', 'ilike', '{}')
+
+        # opt 2: function that give back `(fname, operator, value)``
+        # 'foo': lambda field, value, search_values: ('foo', 'not like', value)
     }
 
     def form_check_permission(self):
@@ -81,15 +85,7 @@ class CMSFormSearch(models.AbstractModel):
         domain = self.form_search_domain(search_values)
         count = self.form_model.search_count(domain)
         page = render_values.get('extra_args', {}).get('page', 0)
-        url = render_values.get('extra_args', {}).get('pager_url', '')
-        if self._form_model:
-            url = getattr(self.form_model, 'cms_search_url', url)
-        if not url:
-            # default to current path w/out paging
-            path = self.request.path
-            if not isinstance(path, pycompat.text_type):
-                path = path.decode('utf-8')
-            url = path.split('/page')[0]
+        url = self._form_get_url_for_pager(render_values)
         pager = self._form_results_pager(count=count, page=page, url=url)
         order = self._form_results_orderby or None
         results = self.form_model.search(
@@ -104,6 +100,17 @@ class CMSFormSearch(models.AbstractModel):
             'pager': pager,
         }
         return self.form_search_results
+
+    def _form_get_url_for_pager(self, render_values):
+        # default to current path w/out paging
+        path = pycompat.to_text(self.request.path)
+        url = path.split('/page')[0]
+        if self._form_model:
+            # rely on model's cms search url
+            url = getattr(self.form_model, 'cms_search_url', None) or url
+        # override via controller/request specific value
+        url = render_values.get('extra_args', {}).get('pager_url', url)
+        return url
 
     def pager(self, **kw):
         return self.env['website'].pager(**kw)
@@ -147,11 +154,6 @@ class CMSFormSearch(models.AbstractModel):
                 if not value:
                     continue
                 operator = 'in'
-            elif field['type'] in ('many2one', ):
-                value = int(value) if value.isdigit() else 0
-                if not value or value < 1:
-                    # we need an existing ID here ( > 0)
-                    continue
             elif field['type'] in ('boolean', ):
                 value = value == 'on' and True
             elif field['type'] in ('date', 'datetime'):
@@ -159,11 +161,11 @@ class CMSFormSearch(models.AbstractModel):
                     # searching for an empty string breaks search
                     continue
             if fname in self._form_search_domain_rules:
-                fname, operator, fmt_value = \
-                    self._form_search_domain_rules[fname]
-                if hasattr(fmt_value, '__call__'):
-                    value = fmt_value(field, value, search_values)
+                rule = self._form_search_domain_rules[fname]
+                if hasattr(rule, '__call__'):
+                    fname, operator, value = rule(field, value, search_values)
                 else:
+                    fname, operator, fmt_value = rule
                     value = fmt_value.format(value) if fmt_value else value
             leaf = (fname, operator, value)
             domain.append(leaf)
