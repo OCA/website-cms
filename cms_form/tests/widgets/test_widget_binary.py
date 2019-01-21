@@ -157,3 +157,52 @@ class TestWidgetBinary(TestWidgetCase):
             self.assertEqual(
                 widget.w_extract(image=req_val, image_keepcheck='no'),
                 TEST_IMAGE_JPG)
+
+    def test_widget_binary_check_empty(self):
+        w_name, w_field = fake_field(
+            'image', type='binary',
+        )
+        widget = self.get_widget(w_name, w_field, form=self.form,
+                                 widget_model='cms.form.widget.image')
+
+        # no value at all -> empty
+        self.assertIs(widget.w_check_empty_value(''), True)
+        self.assertIs(widget.w_check_empty_value(False), True)
+        # behavior w/ file value
+        with b64_as_stream(TEST_IMAGE_JPG) as stream:
+            req_val = fake_file_from_request(
+                'image', stream=stream,
+                content_type='image/jpeg'
+            )
+            # no filename -> empty
+            self.assertIs(widget.w_check_empty_value(req_val), True)
+            # no filename and keep flag -> empty, since we want to preserve
+            self.assertIs(
+                widget.w_check_empty_value(req_val, image_keepcheck='yes'),
+                False
+            )
+            req_val = fake_file_from_request(
+                'image', stream=stream,
+                filename='foo.jpg', content_type='image/jpeg'
+            )
+            # got file w/ filename and no keep flag -> not empty
+            self.assertIs(widget.w_check_empty_value(req_val), False)
+            req_val = fake_file_from_request(
+                'image', stream=stream,
+                filename='foo.jpg', content_type='image/jpeg'
+            )
+            # got file w/ filename and yes keep flag -> not empty
+            self.assertIs(
+                widget.w_check_empty_value(req_val, image_keepcheck='yes'),
+                False
+            )
+            # got file w/ filename and no keep flag -> not empty
+            self.assertIs(
+                widget.w_check_empty_value(req_val, image_keepcheck='no'),
+                False
+            )
+            # got file w/ filename and yes keep flag -> not empty
+            self.assertIs(
+                widget.w_check_empty_value(req_val, image_keepcheck='yes'),
+                False
+            )

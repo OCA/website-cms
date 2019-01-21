@@ -110,7 +110,7 @@ class CMSFormWizard(models.AbstractModel):
         try:
             return self.wiz_configure_steps()[step]
         except KeyError:
-            raise ValueError('Step `%d` does not exists.' % step)
+            raise ValueError('Step `%s` does not exists.' % str(step))
 
     def wiz_current_step(self):
         return self.wiz_storage_get().get('current') or 1
@@ -142,6 +142,7 @@ class CMSFormWizard(models.AbstractModel):
         step = step or self.wiz_current_step()
         storage = self.wiz_storage_get()
         if step not in storage['steps']:
+            # safely re-init step
             storage['steps'][step] = {}
         storage['steps'][step].update(values)
 

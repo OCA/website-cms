@@ -19,6 +19,13 @@ class TestMarshallers(unittest.TestCase):
         self.assertEqual(marshalled['b'], '2')
         self.assertEqual(marshalled['c'], '3')
 
+    def test_skip_csrf_token(self):
+        data = MultiDict([
+            ('csrf_token', 'whatever'),
+        ])
+        marshalled = marshallers.marshal_request_values(data)
+        self.assertEqual(marshalled, {})
+
     def test_marshal_list(self):
         data = MultiDict([
             ('a', '1'),

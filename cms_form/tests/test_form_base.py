@@ -353,7 +353,6 @@ class TestFormBase(FormTestCase):
 
     def test_extract_from_request_custom_extractor(self):
         # test custom extractor integration w/ form_extract_values
-        form = self.get_form('cms.form.test_fields')
         # values from request
         data = {
             'a_char': 'Jack White',
@@ -384,6 +383,95 @@ class TestFormBase(FormTestCase):
         }
         for k, v in values.items():
             self.assertEqual(expected[k], v)
+
+    def test_form_process_GET(self):
+        form = self.get_form('cms.form.test_fields')
+        self.assertEqual(
+            form.form_render_values, {
+                'main_object': None,
+                'form': form,
+                'form_data': {},
+                'errors': {},
+                'errors_messages': {},
+            }
+        )
+        with mock.patch.object(type(form), 'form_process_GET') as handler:
+            handler.return_value = {
+                'extra_key1': 'foo',
+                'extra_key2': 'baz',
+            }
+            form.form_process()
+            # the right process method has been called
+            handler.assert_called()
+            # and got called w/ the right render values
+            default_form_data = {
+                'a_char': None,
+                'a_float': None,
+                'a_many2many': '[]',
+                'a_many2one': None,
+                'a_number': None,
+                'a_one2many': '[]'
+            }
+            expected = {
+                'main_object': None,
+                'form': form,
+                'form_data': default_form_data,
+                'errors': {},
+                'errors_messages': {},
+            }
+            handler.assert_called_with(expected)
+            # and the result of the handler is injected into render values
+            self.assertEqual(form.form_render_values, {
+                # extra args have been injected
+                'extra_key1': 'foo',
+                'extra_key2': 'baz',
+                'main_object': None,
+                'form': form,
+                'form_data': default_form_data,
+                'errors': {},
+                'errors_messages': {},
+            })
+
+    def test_form_process_POST(self):
+        request = fake_request(method='POST')
+        form = self.get_form('cms.form.test_fields', req=request)
+        with mock.patch.object(type(form), 'form_process_POST') as handler:
+            handler.return_value = {
+                'extra_key3': 'foo',
+                'extra_key4': 'baz',
+            }
+            form.form_process()
+            # the right process method has been called
+            handler.assert_called()
+            # and got called w/ the right render values
+            default_form_data = {
+                'a_char': None,
+                'a_float': None,
+                'a_many2many': '[]',
+                'a_many2one': None,
+                'a_number': None,
+                'a_one2many': '[]'
+            }
+            expected = {
+                'main_object': None,
+                'form': form,
+                'form_data': default_form_data,
+                'errors': {},
+                'errors_messages': {},
+            }
+            handler.assert_called_with(expected)
+            # self.assert_nested_dict_equal(call_args, expected)
+            # and the result of the handler is injected into render values
+            self.assertEqual(form.form_render_values, {
+                # extra args have been injected
+                'extra_key3': 'foo',
+                'extra_key4': 'baz',
+                'main_object': None,
+                'form': form,
+                'form_data': default_form_data,
+                'errors': {},
+                'errors_messages': {},
+            })
 
     def test_get_widget(self):
         form = self.get_form('cms.form.test_fields')

@@ -1,7 +1,6 @@
 # Copyright 2017-2018 Simone Orsi
 # License LGPL-3.0 or later (http://www.gnu.org/licenses/lgpl.html).
 
-import werkzeug
 from psycopg2 import IntegrityError
 
 from odoo import models, exceptions, _
@@ -90,18 +89,10 @@ class CMSForm(models.AbstractModel):
             return main_object.website_url
         return self.request.referrer or '/'
 
-    def form_check_empty_field(self, fname, field, value, **req_values):
+    def form_check_empty_value(self, fname, field, value, **req_values):
         """Return True if passed field value is really empty."""
-        if isinstance(value, werkzeug.datastructures.FileStorage):
-            has_value = bool(value.filename)
-            if not has_value and req_values.get(fname + '_keepcheck') == 'yes':
-                # no value, but we want to preserve existing one
-                return False
-            # file field w/ no content
-            # TODO: this is not working sometime...
-            # return not bool(value.content_length)
-            return not has_value
-        return value in (False, '')
+        # delegate to each specific widget
+        return field['widget'].w_check_empty_value(value, **req_values)
 
     def form_validate(self, request_values=None):
         """Validate submitted values."""
@@ -113,9 +104,8 @@ class CMSForm(models.AbstractModel):
         for fname, field in self.form_fields().items():
             value = request_values.get(fname)
             error = False
-            if field['required'] \
-                    and self.form_check_empty_field(
-                        fname, field, value, **request_values):
+            if field['required'] and self.form_check_empty_value(
+                    fname, field, value, **request_values):
                 errors[fname] = 'missing'
                 missing = True
             validator = self.form_get_validator(fname, field)

@@ -6,6 +6,7 @@ from .utils import fake_request
 from .fake_models import (
     FakePartnerForm, FakeSearchPartnerForm, FakeSearchPartnerFormMulti
 )
+import mock
 
 
 class TestCMSSearchForm(FormTestCase):
@@ -69,6 +70,80 @@ class TestCMSSearchForm(FormTestCase):
         form.test_record_ids = self.expected_partners_ids
         return form
 
+    def test_form_base_attrs(self):
+        form = self.get_search_form({})
+        self.assertEqual(form.form_mode, 'search')
+        self.assertEqual(form.form_title, 'Search Contact')
+
+    def test_search_domain(self):
+        form = self.get_search_form({})
+        form.test_record_ids = []
+        form._form_search_domain_rules = {
+            'float_field': lambda field, value, search_values: (
+                'float_field', '>', value
+            )
+        }
+
+        def mock_fields(form):
+            return {
+                'char_field': {
+                    'type': 'char',
+                },
+                'text_field': {
+                    'type': 'text',
+                },
+                'int_field': {
+                    'type': 'integer',
+                },
+                'float_field': {
+                    'type': 'float',
+                },
+                'm2o_field': {
+                    'type': 'many2one',
+                },
+                'bool_field': {
+                    'type': 'boolean',
+                },
+                'date_field': {
+                    'type': 'date',
+                },
+                'datetime_field': {
+                    'type': 'date',
+                },
+                'o2m_field': {
+                    'type': 'one2many',
+                },
+                'm2m_field': {
+                    'type': 'many2many',
+                },
+            }
+        with mock.patch.object(type(form), 'form_fields', mock_fields):
+            search_values = {
+                'char_field': 'foo',
+                'text_field': '',
+                'int_field': 2,
+                'float_field': 1.0,
+                'm2o_field': 3,
+                'bool_field': 'on',
+                'date_field': '2019-01-26',
+                'datetime_field': '',
+                'o2m_field': [1, 2, 3],
+                'm2m_field': '',
+            }
+            expected = [
+                ('char_field', 'ilike', '%foo%'),
+                ('int_field', '=', 2),
+                ('float_field', '>', 1.0),
+                ('m2o_field', '=', 3),
+                ('bool_field', '=', True),
+                ('date_field', '=', '2019-01-26'),
+                ('o2m_field', 'in', [1, 2, 3]),
+            ]
+            self.assertEqual(
+                sorted(form.form_search_domain(search_values)),
+                sorted(expected),
+            )
+
     def test_search(self):
         data = {'name': 'Salmo', }
         form = self.get_search_form(data)
@@ -94,6 +169,51 @@ class TestCMSSearchForm(FormTestCase):
         form = self.get_search_form(data)
         form.form_process()
         self.assert_results(form, 1, self.expected_partners[4:])
+
+    def test_search_no_result(self):
+        form = self.get_search_form({}, show_results_no_submit=False)
+        form.form_process()
+        self.assertEqual(form.form_search_results, {})
+
+    def test_pager_url(self):
+        data = {'name': 'Salmo', }
+        form = self.get_search_form(data)
+        # value from rendering
+        render_values = {'extra_args': {'pager_url': '/foo'}}
+        self.assertEqual(
+            form._form_get_url_for_pager(render_values),
+            '/foo'
+        )
+        # value from model's `cms_search_url` if available
+        form = self.get_search_form(data)
+        # add fake cms_search_url on current model
+        # NOTE: when website_partner is installed this mocking is useless
+        # but we need it here just to demonstrate we are handling it
+        with mock.patch.object(
+            type(form.form_model),
+            'cms_search_url',
+            property(lambda x: '/cms/search/res.partner'),
+            create=True,
+        ):
+            self.assertEqual(
+                form._form_get_url_for_pager({}),
+                '/cms/search/res.partner'
+            )
+        # value from request path
+        request = fake_request(url='/search/custom/page/1?foo=baz')
+        form = self.get_form('cms.form.search.res.partner', req=request)
+        # on the contrary, here, we make sure `cms_search_url` is empty
+        # so that the default via request path is used
+        with mock.patch.object(
+            type(form.form_model),
+            'cms_search_url',
+            property(lambda x: ''),
+            create=True,
+        ):
+            self.assertEqual(
+                form._form_get_url_for_pager({}),
+                '/search/custom'
+            )
 
     def test_search_multi(self):
         countries = [

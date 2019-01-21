@@ -43,7 +43,7 @@ class Widget(models.AbstractModel):
     def w_load(self, **req_values):
         """Load value for current field in current request."""
         value = self.w_field.get('_default')
-        # we could have form-only fields (like `custom` in test form below)
+        # we could have form-only fields
         if self.w_record and self.w_fname in self.w_record:
             value = self.w_record[self.w_fname] or value
         # maybe a POST request with new values: override item value
@@ -53,6 +53,10 @@ class Widget(models.AbstractModel):
     def w_extract(self, **req_values):
         """Extract value from form submit."""
         return req_values.get(self.w_fname)
+
+    def w_check_empty_value(self, value, **req_values):
+        # `None` values are meant to be ignored as not changed
+        return value in (False, '')
 
     @staticmethod
     def w_ids_from_input(value):

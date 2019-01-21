@@ -34,10 +34,6 @@ class FormControllerMixin(object):
         You can override this to inject more values.
         """
         main_object = form.main_object
-        parent = None
-        if getattr(main_object, 'parent_id', None):
-            # get the parent if any
-            parent = main_object.parent_id
         # Cleanup render values and remove form fields' values.
         # When you submit a form and there's an error odoo will give you back
         # all submitted values into `kw` but:
@@ -52,7 +48,6 @@ class FormControllerMixin(object):
         vals.update({
             'form': form,
             'main_object': main_object,
-            'parent': parent,
             'controller': self,
         })
         return vals
