@@ -14,13 +14,14 @@ from odoo import http, api
 from odoo.tests.common import get_db_name
 
 
-def fake_request(form_data=None, query_string=None,
+def fake_request(form_data=None, query_string=None, url='/fake/path',
                  method='GET', content_type=None, session=None):
     data = urllib.parse.urlencode(form_data or {})
     query_string = query_string or ''
     content_type = content_type or 'application/x-www-form-urlencoded'
     # werkzeug request
     w_req = Request.from_values(
+        url,
         query_string=query_string,
         content_length=len(data),
         input_stream=io.StringIO(data),

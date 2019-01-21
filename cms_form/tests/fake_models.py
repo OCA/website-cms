@@ -68,6 +68,16 @@ class FakeSearchPartnerFormMulti(models.AbstractModel):
         return res
 
 
+class FakePartnerChannelForm(models.AbstractModel):
+    """A test model form."""
+
+    _name = 'cms.form.mail.channel.partner'
+    _inherit = 'cms.form'
+    # This model has `_rec_name = 'partner_id'` and allows us
+    # to test a specific case for form_title computation
+    _form_model = 'mail.channel.partner'
+
+
 class FakeFieldsForm(models.AbstractModel):
     """A test model form."""
 
@@ -193,16 +203,33 @@ WIZ_KLASSES = [
 
 
 # `AbstractModel` or `TransientModel` needed to make ACL check happy`
-class FakePublishModel(models.TransientModel):
+class FakePubModel(models.TransientModel):
     _name = 'fake.publishable'
     _inherit = [
         'website.published.mixin',
     ]
     name = fields.Char()
 
+    def _compute_website_url(self):
+        for item in self:
+            item.website_url = '/publishable/%d' % item.id
 
-class FakePublishModelForm(models.AbstractModel):
+
+class FakePubModelForm(models.AbstractModel):
     _name = 'cms.form.fake.publishable'
     _inherit = 'cms.form'
     _form_model = 'fake.publishable'
+    _form_model_fields = ('name', )
+
+
+# `AbstractModel` or `TransientModel` needed to make ACL check happy`
+class FakeNonPubModel(models.TransientModel):
+    _name = 'fake.non.publishable'
+    name = fields.Char()
+
+
+class FakeNonPubModelForm(models.AbstractModel):
+    _name = 'cms.form.fake.non.publishable'
+    _inherit = 'cms.form'
+    _form_model = 'fake.non.publishable'
     _form_model_fields = ('name', )
