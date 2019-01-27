@@ -57,11 +57,6 @@ msgid "Has unread notif"
 msgstr ""
 
 #. module: cms_notification
-#: model:ir.ui.view,arch_db:cms_notification.notify_email_help_none
-msgid "I don't want to get notification emails."
-msgstr ""
-
-#. module: cms_notification
 #: model:ir.model.fields,field_description:cms_notification.field_cms_form_widget_notif_radio_id
 #: model:ir.model.fields,field_description:cms_notification.field_cms_notification_listing_id
 #: model:ir.model.fields,field_description:cms_notification.field_cms_notification_panel_form_id
@@ -154,13 +149,18 @@ msgid "Visible in CMS control panel"
 msgstr ""
 
 #. module: cms_notification
-#: model:ir.ui.view,arch_db:cms_notification.notify_email_help_digest
-msgid "You will receive a summary of the notification in the chosen frequency."
+#: model:ir.ui.view,arch_db:cms_notification.notify_email_help_inbox
+msgid "You will not receive notifications via email."
 msgstr ""
 
 #. module: cms_notification
-#: model:ir.ui.view,arch_db:cms_notification.notify_email_help_always
+#: model:ir.ui.view,arch_db:cms_notification.notify_email_help_email
 msgid "You will receive an email for every notification."
+msgstr ""
+
+#. module: cms_notification
+#: model:ir.ui.view,arch_db:cms_notification.notify_email_help_inbox
+msgid "You will receive them only via system notifications."
 msgstr ""
 
 #. module: cms_notification

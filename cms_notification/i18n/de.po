@@ -59,11 +59,6 @@ msgid "Has unread notif"
 msgstr "Hat ungelesene Benachrichtigung"
 
 #. module: cms_notification
-#: model:ir.ui.view,arch_db:cms_notification.notify_email_help_none
-msgid "I don't want to get notification emails."
-msgstr "Ich möchte keine Benachrichtigungen erhalten."
-
-#. module: cms_notification
 #: model:ir.model.fields,field_description:cms_notification.field_cms_form_widget_notif_radio_id
 #: model:ir.model.fields,field_description:cms_notification.field_cms_notification_listing_id
 #: model:ir.model.fields,field_description:cms_notification.field_cms_notification_panel_form_id
@@ -161,18 +156,32 @@ msgid "Visible in CMS control panel"
 msgstr "Sichtbar im CMS control panel"
 
 #. module: cms_notification
-#: model:ir.ui.view,arch_db:cms_notification.notify_email_help_digest
-msgid "You will receive a summary of the notification in the chosen frequency."
-msgstr ""
-"Sie erhalten eine Übersicht der Benachrichtigungen entsprechend der "
-"gewählten Häufigkeit."
+#: model:ir.ui.view,arch_db:cms_notification.notify_email_help_inbox
+#, fuzzy
+msgid "You will not receive notifications via email."
+msgstr "Sie erhalten eine Email für jede Benachrichtigung."
 
 #. module: cms_notification
-#: model:ir.ui.view,arch_db:cms_notification.notify_email_help_always
+#: model:ir.ui.view,arch_db:cms_notification.notify_email_help_email
 msgid "You will receive an email for every notification."
+msgstr "Sie erhalten eine Email für jede Benachrichtigung."
+
+#. module: cms_notification
+#: model:ir.ui.view,arch_db:cms_notification.notify_email_help_inbox
+#, fuzzy
+msgid "You will receive them only via system notifications."
 msgstr "Sie erhalten eine Email für jede Benachrichtigung."
 
 #. module: cms_notification
 #: model:ir.model,name:cms_notification.model_cms_form_widget_notif_radio
 msgid "cms.form.widget.notif_radio"
 msgstr ""
+
+#~ msgid "I don't want to get notification emails."
+#~ msgstr "Ich möchte keine Benachrichtigungen erhalten."
+
+#~ msgid ""
+#~ "You will receive a summary of the notification in the chosen frequency."
+#~ msgstr ""
+#~ "Sie erhalten eine Übersicht der Benachrichtigungen entsprechend der "
+#~ "gewählten Häufigkeit."
