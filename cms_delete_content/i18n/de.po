@@ -7,15 +7,15 @@ msgstr ""
 "Project-Id-Version: Odoo Server 9.0c\n"
 "Report-Msgid-Bugs-To: \n"
 "POT-Creation-Date: 2017-01-10 16:41+0000\n"
-"PO-Revision-Date: 2017-01-10 17:43+0100\n"
-"Last-Translator: <>\n"
+"PO-Revision-Date: 2019-02-22 15:51+0000\n"
+"Last-Translator: Malin Kienke <malin.kienke@initos.com>\n"
 "Language-Team: \n"
 "Language: de\n"
 "MIME-Version: 1.0\n"
 "Content-Type: text/plain; charset=UTF-8\n"
 "Content-Transfer-Encoding: 8bit\n"
-"Plural-Forms: \n"
-"X-Generator: Poedit 1.8.9\n"
+"Plural-Forms: nplurals=2; plural=n != 1;\n"
+"X-Generator: Weblate 3.4\n"
 
 #. module: cms_delete_content
 #: code:addons/cms_delete_content/models/website_published.py:48
@@ -53,7 +53,7 @@ msgstr "Abbrechen"
 #. module: cms_delete_content
 #: model:ir.ui.view,arch_db:cms_delete_content.delete_confirm
 msgid "Click here to delete this item"
-msgstr "Click here to delete this item"
+msgstr "Hier klicken, um das Element zu löschen"
 
 #. module: cms_delete_content
 #: model:ir.ui.view,arch_db:cms_delete_content.delete_confirm
@@ -65,7 +65,7 @@ msgstr "Bestätigen"
 #: code:addons/cms_delete_content/static/src/js/delete_content.js:56
 #, python-format
 msgid "Info"
-msgstr ""
+msgstr "Info"
 
 #. module: cms_delete_content
 #: code:addons/cms_delete_content/controllers/main.py:21
