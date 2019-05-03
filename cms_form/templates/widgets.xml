@@ -123,15 +123,20 @@ License LGPL-3.0 or later (http://www.gnu.org/licenses/lgpl.html).
 
 
 <template id="field_widget_date" name="CMS form date field widget">
-
   <div class="input-group">
-    <!-- TODO: show date in user locale and convert value server side -->
-    <input t-att-name="widget.w_fname" t-att-id="widget.w_fname"
+    <!-- This will hold the value displayed to users -->
+    <input type="text"
+           t-attf-name="#{widget.w_fname}_display"
+           t-attf-id="#{widget.w_fname}_display"
            t-attf-class="form-control js_datepicker #{widget.w_css_klass}"
-           type="text" data-format="yy-mm-dd" placeholder="YYYY-MM-DD"
+           t-att-placeholder="widget.w_placeholder"
            t-att-data-params='widget.w_data_json()'
-           t-att-value="widget.w_field_value"
            t-att-required="widget.w_field['required'] and '1' or None"
+           />
+    <!-- This will hold server-side value -->
+    <input type="hidden" t-att-name="widget.w_fname"
+           t-att-id="widget.w_fname"
+           t-att-value="widget.w_field_value"
            />
     <span class="input-group-addon js_datepicker_trigger">
       <span class="fa fa-calendar"></span>
