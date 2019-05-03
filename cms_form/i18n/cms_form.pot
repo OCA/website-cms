@@ -14,7 +14,7 @@ msgstr ""
 "Plural-Forms: \n"
 
 #. module: cms_form
-#: code:addons/cms_form/controllers/main.py:86
+#: code:addons/cms_form/controllers/main.py:81
 #, python-format
 msgid "%s model has no CMS form registered."
 msgstr ""
@@ -30,8 +30,8 @@ msgid "Cancel"
 msgstr ""
 
 #. module: cms_form
-#: code:addons/cms_form/models/cms_form.py:40
-#: code:addons/cms_form/models/cms_form.py:45
+#: code:addons/cms_form/models/cms_form.py:39
+#: code:addons/cms_form/models/cms_form.py:44
 #, python-format
 msgid "Create %s"
 msgstr ""
@@ -62,7 +62,7 @@ msgid "Display Name"
 msgstr ""
 
 #. module: cms_form
-#: code:addons/cms_form/models/cms_form.py:38
+#: code:addons/cms_form/models/cms_form.py:37
 #, python-format
 msgid "Edit \"%s\""
 msgstr ""
@@ -98,13 +98,13 @@ msgid "ID"
 msgstr ""
 
 #. module: cms_form
-#: code:addons/cms_form/models/cms_form.py:62
+#: code:addons/cms_form/models/cms_form.py:61
 #, python-format
 msgid "Item created."
 msgstr ""
 
 #. module: cms_form
-#: code:addons/cms_form/models/cms_form.py:67
+#: code:addons/cms_form/models/cms_form.py:66
 #, python-format
 msgid "Item updated."
 msgstr ""
@@ -166,20 +166,20 @@ msgid "Required fields"
 msgstr ""
 
 #. module: cms_form
-#: code:addons/cms_form/models/cms_search_form.py:64
+#: code:addons/cms_form/models/cms_search_form.py:68
 #: model:ir.ui.view,arch_db:cms_form.search_form_buttons
 #, python-format
 msgid "Search"
 msgstr ""
 
 #. module: cms_form
-#: code:addons/cms_form/models/cms_search_form.py:69
+#: code:addons/cms_form/models/cms_search_form.py:73
 #, python-format
 msgid "Search %s"
 msgstr ""
 
 #. module: cms_form
-#: code:addons/cms_form/models/cms_form.py:71
+#: code:addons/cms_form/models/cms_form.py:70
 #, python-format
 msgid "Some required fields are empty."
 msgstr ""
@@ -188,11 +188,6 @@ msgstr ""
 #: model:ir.ui.view,arch_db:cms_form.base_form_buttons
 #: model:ir.ui.view,arch_db:cms_form.wizard_form_buttons
 msgid "Submit"
-msgstr ""
-
-#. module: cms_form
-#: model:ir.ui.view,arch_db:cms_form.field_widget_date
-msgid "YYYY-MM-DD"
 msgstr ""
 
 #. module: cms_form
