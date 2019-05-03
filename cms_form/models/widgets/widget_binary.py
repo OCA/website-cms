@@ -73,6 +73,19 @@ class BinaryWidget(models.AbstractModel):
                 _value = value.split(',')[-1]
         return _value
 
+    def w_check_empty_value(self, value, **req_values):
+        if isinstance(value, werkzeug.datastructures.FileStorage):
+            has_value = bool(value.filename)
+            keep_flag = req_values.get(self.w_fname + '_keepcheck')
+            if not has_value and keep_flag == 'yes':
+                # no value, but we want to preserve existing one
+                return False
+            # file field w/ no content
+            # TODO: this is not working sometime...
+            # return not bool(value.content_length)
+            return not has_value
+        return super().w_check_empty_value(value, **req_values)
+
 
 class ImageWidget(models.AbstractModel):
     _name = 'cms.form.widget.image'

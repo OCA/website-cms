@@ -1,7 +1,6 @@
 # Copyright 2017-2018 Simone Orsi
 # License LGPL-3.0 or later (http://www.gnu.org/licenses/lgpl.html).
 
-
 from lxml import html
 from odoo.tests.common import SavepointCase, HttpCase
 from .utils import (
@@ -114,3 +113,6 @@ class FormHttpTestCase(HttpCase, FakeModelMixin, HTMLRenderMixin):
     def html_get(self, url):
         resp = self.url_open(url, timeout=30)
         return html.document_fromstring(resp.content)
+
+    def get_form(self, form_model, **kw):
+        return get_form(self.env, form_model, **kw)
