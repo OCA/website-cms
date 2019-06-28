@@ -36,6 +36,13 @@ if not testing:
         _form_model = 'res.partner'
         _form_model_fields = ('name', 'country_id', )
 
+    class PartnerSearchFormAjax(models.AbstractModel):
+        """Partner model search form with ajax."""
+        _inherit = 'cms.form.search.res.partner'
+        _name = 'cms.form.search.res.partner.ajax'
+        _form_ajax = True
+        _form_ajax_onchange = True
+
     class ExamplePartnerFormWithFieldsets(models.AbstractModel):
         _name = 'cms.form.res.partner.fset'
         _inherit = 'cms.form.res.partner'

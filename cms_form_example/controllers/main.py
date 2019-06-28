@@ -65,3 +65,18 @@ class PartnerListing(http.Controller, SearchFormControllerMixin):
     def market(self, **kw):
         model = 'res.partner'
         return self.make_response(model, **kw)
+
+
+class PartnerListingAjax(http.Controller, SearchFormControllerMixin):
+    """Partner search form controller."""
+
+    @http.route([
+        '/partnersAjax',
+        '/partnersAjax/page/<int:page>',
+    ], type='http', auth="public", website=True)
+    def list(self, **kw):
+        model = 'res.partner'
+        return self.make_response(model, **kw)
+
+    def form_model_key(self, model, **kw):
+        return 'cms.form.search.' + model + '.ajax'
