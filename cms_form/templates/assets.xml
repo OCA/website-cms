@@ -18,6 +18,7 @@ License LGPL-3.0 or later (http://www.gnu.org/licenses/lgpl.html).
 			<script type="text/javascript" src="/cms_form/static/src/js/textarea_widget.js"></script>
 			<script type="text/javascript" src="/cms_form/static/src/js/master_slave.js"></script>
 			<script type="text/javascript" src="/cms_form/static/src/js/lock_copy_paste.js"></script>
+			<script type="text/javascript" src="/cms_form/static/src/js/ajax.js"></script>
 		</xpath>
 
 	</template>

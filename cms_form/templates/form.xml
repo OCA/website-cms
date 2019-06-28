@@ -147,7 +147,9 @@ License LGPL-3.0 or later (http://www.gnu.org/licenses/lgpl.html).
   <form t-att-action="form.form_action" t-att-method="form.form_method"
         t-att-data-form="form.form_json_info()"
         t-att-class="form.form_css_klass"
-        enctype="multipart/form-data">
+        enctype="multipart/form-data"
+        t-att-data-ajax="form._form_ajax or None"
+        t-att-data-ajax-onchange="form._form_ajax_onchange or None">
 
     <t t-if="form.form_method == 'POST'">
         <input type="hidden" name="csrf_token" t-att-value="form.o_request.csrf_token()"/>
@@ -198,7 +200,9 @@ License LGPL-3.0 or later (http://www.gnu.org/licenses/lgpl.html).
     <t t-if="form.form_show_search_form">
       <t t-raw="form.form_render()" />
     </t>
-    <t t-call="#{ form.form_search_results_template }" />
+    <div class="form_content">
+        <t t-call="#{ form.form_search_results_template }" />
+    </div>
   </xpath>
 
 </template>
@@ -215,6 +219,24 @@ License LGPL-3.0 or later (http://www.gnu.org/licenses/lgpl.html).
      </div>
   </xpath>
 
+</template>
+
+
+<template id="search_results_pager" name="CMS form pager"
+          inherit_id="website.pager" primary="True">
+    <xpath expr="./ul/li[1]/a" position="attributes">
+        <attribute name="t-att-data-page">
+            pager['page']['num'] - 1 if pager['page']['num'] > 1 else None
+        </attribute>
+    </xpath>
+    <xpath expr="./ul/t/li/a" position="attributes">
+        <attribute name="t-att-data-page">page['num']</attribute>
+    </xpath>
+    <xpath expr="./ul/li[2]/a" position="attributes">
+        <attribute name="t-att-data-page">
+            pager['page']['num'] + 1 if pager['page']['num'] &lt; pager['page_count'] else None
+        </attribute>
+    </xpath>
 </template>
 
 
@@ -235,7 +257,7 @@ License LGPL-3.0 or later (http://www.gnu.org/licenses/lgpl.html).
     </div>
   </t>
   <div class="text-center mb32">
-    <t t-call="website.pager">
+    <t t-call="cms_form.search_results_pager">
     <t t-set="pager" t-value="form.form_search_results['pager']" />
     </t>
   </div>

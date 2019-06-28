@@ -190,6 +190,7 @@ class TestControllers(FormHttpTestCase):
         self._check_route('/cms/create/res.partner')
         self._check_route('/cms/edit/res.partner/1')
         self._check_route('/cms/search/res.partner')
+        self._check_route('/cms/ajax/search/res.partner')
 
     def test_default_create_rendering(self):
         dom = self.html_get('/cms/create/res.partner')

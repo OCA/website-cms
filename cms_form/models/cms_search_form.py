@@ -34,6 +34,8 @@ class CMSFormSearch(models.AbstractModel):
         # opt 2: function that give back `(fname, operator, value)``
         # 'foo': lambda field, value, search_values: ('foo', 'not like', value)
     }
+    # jQuery selector to find container of search results
+    _form_content_selector = '.form_content'
 
     def form_check_permission(self):
         """Just searching, nothing to check here."""

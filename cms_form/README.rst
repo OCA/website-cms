@@ -45,6 +45,7 @@ Known issues / Roadmap
 * x2x fields: allow sub-items creation
 * handle api onchanges
 * support python expressions into master/slave rules
+* the ajax UI blocking/spinner could be more beautiful
 
 
 Bug Tracker
