@@ -110,6 +110,11 @@ class CMSFormMixin(models.AbstractModel):
     __form_fields_ignore = IGNORED_FORM_FIELDS
     # current edit object if any
     __form_main_object = None
+    # default is to post the form and have a full reload. Set to true to keep
+    # the search form as it is and only replace the result pane
+    _form_ajax = False
+    # submit the form for every change event
+    _form_ajax_onchange = False
 
     @property
     def main_object(self):
@@ -586,7 +591,11 @@ class CMSFormMixin(models.AbstractModel):
     def _form_json_info(self):
         info = {}
         info.update({
-            'master_slave': self._form_master_slave_info()
+            'master_slave': self._form_master_slave_info(),
+            'model': self._form_model,
+            'form_content_selector': getattr(
+                self, '_form_content_selector', None,
+            ),
         })
         return info
 
