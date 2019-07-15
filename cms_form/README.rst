@@ -68,6 +68,7 @@ Contributors
 ------------
 
 * Simone Orsi <simone.orsi@camptocamp.com>
+* Holger Brunn <hbrunn@therp.nl>
 
 Maintainer
 ----------

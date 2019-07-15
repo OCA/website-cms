@@ -5,8 +5,7 @@ odoo.define('cms_form.master_slave', function (require) {
     TODO: explain behavior.
     */
 
-    // TODO: this does not work ATM :(
-    // var pyeval = require('web.pyeval');
+    var pyeval = require('web.pyeval');
     var sAnimation = require('website.content.snippets.animation');
 
     sAnimation.registry.CMSFormMasterSlave = sAnimation.Class.extend({
@@ -41,9 +40,7 @@ odoo.define('cms_form.master_slave', function (require) {
                   val = $input.is(':checked');
                 }
                 $.each(mapping, function(slave_fname, values){
-                  if (_.contains(values, val)) {
-                    handler(slave_fname);
-                  }
+                  self.eval_master_slave(val, values, handler, slave_fname);
                 });
               }).filter(
                 'select,[type=checkbox],[type=radio]:checked,[type=text]'
@@ -52,6 +49,25 @@ odoo.define('cms_form.master_slave', function (require) {
             }
           });
         });
+      },
+      eval_master_slave: function (master_value, values, handler, slave) {
+        if (typeof(values) === 'string') {
+          if (pyeval.py_eval(values, this.eval_master_slave_context())) {
+              handler(slave);
+          }
+        }
+        else if (_.contains(values, master_value)) {
+          handler(slave);
+        }
+      },
+      eval_master_slave_context: function () {
+        var values = this.$el.serializeArray();
+
+        return {
+            form: _.object(
+                _.pluck(values, 'name'), _.pluck(values, 'value')
+            ),
+        };
       },
       handle_hide: function(slave_fname){
         $('[name="' + slave_fname +'"]').closest('.form-group').hide();

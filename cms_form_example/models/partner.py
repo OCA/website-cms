@@ -69,3 +69,25 @@ if not testing:
         _name = 'cms.form.res.partner.fset.tabbed'
         _inherit = 'cms.form.res.partner.fset'
         _form_fieldsets_display = 'tabs'
+
+        def _form_master_slave_info(self):
+            info = super()._form_master_slave_info()
+            info.update({
+                'category_id': {
+                    'hide': {
+                        'country_id': 'form.category_id == "5"',
+                    },
+                    'show': {
+                        'country_id': 'form.category_id != "5"',
+                    },
+                },
+                'name': {
+                    'readonly': {
+                        'category_id': 'form.name == "YourCompany"',
+                    },
+                    'no_readonly': {
+                        'category_id': 'form.name == "YourCompany2"',
+                    },
+                },
+            })
+            return info

@@ -17,17 +17,18 @@ For the simplest cases you don't have to write a single line of JS. You can do i
         _form_model_fields = ('name', 'type', 'foo')
 
         def _form_master_slave_info(self):
-            info = self._super._form_master_slave_info()
+            info = super()._form_master_slave_info()
             info.update({
                 # master field
                 'type':{
                     # actions
                     'hide': {
-                        # slave field: action values
+                        # slave field: list values of master field to trigger action
                         'foo': ('contact', ),
                     },
                     'show': {
-                        'foo': ('address', 'invoice', ),
+                        # or write python code that will be evaluated by pyeval
+                        'foo': 'form.type in ["address", "invoice"]',
                     }
                 },
             })
