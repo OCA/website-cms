@@ -45,7 +45,7 @@ class TestInfoMixin(test_common.SavepointCase):
 
     def test_is_owner(self):
         self.record._test_create_ACL(
-            groups_id=[(4, self.env.ref('base.group_system').id)]
+            group_id=self.env.ref('base.group_portal').id
         )
         self.assertTrue(self.record.cms_is_owner())
         self.assertFalse(self.record.sudo(self.user1).cms_is_owner())
@@ -58,7 +58,7 @@ class TestInfoMixin(test_common.SavepointCase):
 
     def test_can_edit(self):
         self.record._test_create_ACL(
-            groups_id=[(4, self.env.ref('base.group_portal').id)],
+            group_id=self.env.ref('base.group_portal').id,
             perm_write=False,
         )
         self.assertTrue(self.record.cms_can_edit())
@@ -67,7 +67,7 @@ class TestInfoMixin(test_common.SavepointCase):
     def test_can_publish(self):
         # this permission by default is just a proxy to "can edit"
         self.record._test_create_ACL(
-            groups_id=[(4, self.env.ref('base.group_portal').id)],
+            group_id=self.env.ref('base.group_portal').id,
             perm_write=False,
         )
         self.assertTrue(self.record.cms_can_publish())
@@ -75,7 +75,7 @@ class TestInfoMixin(test_common.SavepointCase):
 
     def test_can_delete(self):
         self.record._test_create_ACL(
-            groups_id=[(4, self.env.ref('base.group_portal').id)],
+            group_id=self.env.ref('base.group_portal').id,
             perm_write=False,
             perm_unlink=False,
         )
