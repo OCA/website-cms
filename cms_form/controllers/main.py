@@ -1,6 +1,7 @@
 # Copyright 2017-2018 Simone Orsi
 # License LGPL-3.0 or later (http://www.gnu.org/licenses/lgpl.html).
 
+import json
 import werkzeug
 
 from odoo import http, _
@@ -117,6 +118,18 @@ class FormControllerMixin(object):
             headers={'Cache-Control': 'no-cache'}
         )
 
+    def make_response_ajax(self, model, model_id=None, **kw):
+        """Return only results to replace the current result with"""
+        response = self.make_response(model, model_id=model_id, **kw)
+        data = {
+            'content': self._make_response_ajax_content(response),
+        }
+        return json.dumps(data)
+
+    def _make_response_ajax_content(self, response):
+        """Return a HTML string to be passed to the client"""
+        raise NotImplementedError()
+
 
 class CMSFormController(http.Controller, FormControllerMixin):
     """CMS form controller."""
@@ -188,4 +201,18 @@ class CMSSearchFormController(http.Controller, SearchFormControllerMixin):
     def cms_form(self, model, **kw):
         """Handle a search `form` route.
         """
-        return self.make_response(model, **kw)
+        response = self.make_response(model, **kw)
+        return response
+
+    @http.route([
+        '/cms/ajax/search/<string:model>',
+        '/cms/ajax/search/<string:model>/<int:model_id>',
+    ], type='http', auth='user', website=True)
+    def ajax(self, model, model_id=None, **kw):
+        """handle an ajax request"""
+        return self.make_response_ajax(model, **kw)
+
+    def _make_response_ajax_content(self, response):
+        return request.env.ref(
+            response.qcontext['form'].form_search_results_template
+        ).render(response.qcontext).decode('utf8')

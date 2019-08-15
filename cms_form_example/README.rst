@@ -15,6 +15,7 @@ Usage
 Go on the website app of Odoo. Then you can reach the following pages:
 
 * /partners: shows you a nice form to search partners
+* /partnersAjax: shows you the above form but with AJAX enabled
 * /partners/add: shows you a nice form to add a new partner
 * /partners/$ID/edit: shows you a nice form to edit partner with matching $ID
 
