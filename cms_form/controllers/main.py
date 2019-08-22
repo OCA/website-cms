@@ -207,7 +207,7 @@ class CMSSearchFormController(http.Controller, SearchFormControllerMixin):
     @http.route([
         '/cms/ajax/search/<string:model>',
         '/cms/ajax/search/<string:model>/<int:model_id>',
-    ], type='http', auth='user', website=True)
+    ], type='http', auth='public', website=True)
     def ajax(self, model, model_id=None, **kw):
         """handle an ajax request"""
         return self.make_response_ajax(model, **kw)
