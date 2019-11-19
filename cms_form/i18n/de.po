@@ -18,7 +18,7 @@ msgstr ""
 "X-Generator: Poedit 1.8.9\n"
 
 #. module: cms_form
-#: code:addons/cms_form/controllers/main.py:81
+#: code:addons/cms_form/controllers/main.py:82
 #, python-format
 msgid "%s model has no CMS form registered."
 msgstr ""
@@ -41,9 +41,16 @@ msgid "Create %s"
 msgstr "%s anlegen"
 
 #. module: cms_form
+#: model:ir.model.fields,field_description:cms_form.field_cms_form_res_partner_custom
+msgid "Custom"
+msgstr ""
+
+#. module: cms_form
 #: model:ir.model.fields,field_description:cms_form.field_cms_form_display_name
 #: model:ir.model.fields,field_description:cms_form.field_cms_form_mixin_display_name
+#: model:ir.model.fields,field_description:cms_form.field_cms_form_res_partner_display_name
 #: model:ir.model.fields,field_description:cms_form.field_cms_form_search_display_name
+#: model:ir.model.fields,field_description:cms_form.field_cms_form_search_res_partner_display_name
 #: model:ir.model.fields,field_description:cms_form.field_cms_form_widget_binary_mixin_display_name
 #: model:ir.model.fields,field_description:cms_form.field_cms_form_widget_boolean_display_name
 #: model:ir.model.fields,field_description:cms_form.field_cms_form_widget_char_display_name
@@ -79,7 +86,9 @@ msgstr ""
 #. module: cms_form
 #: model:ir.model.fields,field_description:cms_form.field_cms_form_id
 #: model:ir.model.fields,field_description:cms_form.field_cms_form_mixin_id
+#: model:ir.model.fields,field_description:cms_form.field_cms_form_res_partner_id
 #: model:ir.model.fields,field_description:cms_form.field_cms_form_search_id
+#: model:ir.model.fields,field_description:cms_form.field_cms_form_search_res_partner_id
 #: model:ir.model.fields,field_description:cms_form.field_cms_form_widget_binary_mixin_id
 #: model:ir.model.fields,field_description:cms_form.field_cms_form_widget_boolean_id
 #: model:ir.model.fields,field_description:cms_form.field_cms_form_widget_char_id
@@ -121,7 +130,9 @@ msgstr "Aktuelles Bild beibehalten"
 #. module: cms_form
 #: model:ir.model.fields,field_description:cms_form.field_cms_form___last_update
 #: model:ir.model.fields,field_description:cms_form.field_cms_form_mixin___last_update
+#: model:ir.model.fields,field_description:cms_form.field_cms_form_res_partner___last_update
 #: model:ir.model.fields,field_description:cms_form.field_cms_form_search___last_update
+#: model:ir.model.fields,field_description:cms_form.field_cms_form_search_res_partner___last_update
 #: model:ir.model.fields,field_description:cms_form.field_cms_form_widget_binary_mixin___last_update
 #: model:ir.model.fields,field_description:cms_form.field_cms_form_widget_boolean___last_update
 #: model:ir.model.fields,field_description:cms_form.field_cms_form_widget_char___last_update
@@ -170,14 +181,14 @@ msgid "Required fields"
 msgstr "Pflichtfelder"
 
 #. module: cms_form
-#: code:addons/cms_form/models/cms_search_form.py:68
+#: code:addons/cms_form/models/cms_search_form.py:70
 #: model:ir.ui.view,arch_db:cms_form.search_form_buttons
 #, python-format
 msgid "Search"
 msgstr "Suche"
 
 #. module: cms_form
-#: code:addons/cms_form/models/cms_search_form.py:73
+#: code:addons/cms_form/models/cms_search_form.py:75
 #, python-format
 msgid "Search %s"
 msgstr "%s suchen"
@@ -195,13 +206,13 @@ msgid "Submit"
 msgstr "Absenden"
 
 #. module: cms_form
-#: code:addons/cms_form/models/cms_form_mixin.py:168
+#: code:addons/cms_form/models/cms_form_mixin.py:173
 #, python-format
 msgid "You are not allowed to create any record for the model `%s`."
 msgstr ""
 
 #. module: cms_form
-#: code:addons/cms_form/models/cms_form_mixin.py:158
+#: code:addons/cms_form/models/cms_form_mixin.py:163
 #, python-format
 msgid "You cannot edit this record. Model: %s, ID: %s."
 msgstr ""
@@ -212,8 +223,53 @@ msgid "cms.form"
 msgstr ""
 
 #. module: cms_form
+#: model:ir.model,name:cms_form.model_cms_form_fake_non_publishable
+msgid "cms.form.fake.non.publishable"
+msgstr ""
+
+#. module: cms_form
+#: model:ir.model,name:cms_form.model_cms_form_fake_publishable
+msgid "cms.form.fake.publishable"
+msgstr ""
+
+#. module: cms_form
+#: model:ir.model,name:cms_form.model_cms_form_mail_channel_partner
+msgid "cms.form.mail.channel.partner"
+msgstr ""
+
+#. module: cms_form
+#: model:ir.model,name:cms_form.model_cms_form_protected_fields
+msgid "cms.form.protected.fields"
+msgstr ""
+
+#. module: cms_form
+#: model:ir.model,name:cms_form.model_cms_form_res_partner
+msgid "cms.form.res.partner"
+msgstr ""
+
+#. module: cms_form
 #: model:ir.model,name:cms_form.model_cms_form_search
 msgid "cms.form.search"
+msgstr ""
+
+#. module: cms_form
+#: model:ir.model,name:cms_form.model_cms_form_search_res_partner
+msgid "cms.form.search.res.partner"
+msgstr ""
+
+#. module: cms_form
+#: model:ir.model,name:cms_form.model_cms_form_search_res_partner_multicountry
+msgid "cms.form.search.res.partner.multicountry"
+msgstr ""
+
+#. module: cms_form
+#: model:ir.model,name:cms_form.model_cms_form_test_fields
+msgid "cms.form.test_fields"
+msgstr ""
+
+#. module: cms_form
+#: model:ir.model,name:cms_form.model_cms_form_test_fieldsets
+msgid "cms.form.test_fieldsets"
 msgstr ""
 
 #. module: cms_form
@@ -304,6 +360,36 @@ msgstr ""
 #. module: cms_form
 #: model:ir.model,name:cms_form.model_cms_form_wizard
 msgid "cms.form.wizard"
+msgstr ""
+
+#. module: cms_form
+#: model:ir.model,name:cms_form.model_fake_non_publishable
+msgid "fake.non.publishable"
+msgstr ""
+
+#. module: cms_form
+#: model:ir.model,name:cms_form.model_fake_publishable
+msgid "fake.publishable"
+msgstr ""
+
+#. module: cms_form
+#: model:ir.model,name:cms_form.model_fake_wiz
+msgid "fake.wiz"
+msgstr ""
+
+#. module: cms_form
+#: model:ir.model,name:cms_form.model_fake_wiz_step1_country
+msgid "fake.wiz.step1.country"
+msgstr ""
+
+#. module: cms_form
+#: model:ir.model,name:cms_form.model_fake_wiz_step2_partner
+msgid "fake.wiz.step2.partner"
+msgstr ""
+
+#. module: cms_form
+#: model:ir.model,name:cms_form.model_fake_wiz_step3_partner
+msgid "fake.wiz.step3.partner"
 msgstr ""
 
 #~ msgid "YYYY-MM-DD"
