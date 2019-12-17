@@ -2,6 +2,8 @@
 # Copyright 2018 Simone Orsi
 # License LGPL-3.0 or later (http://www.gnu.org/licenses/lgpl.html).
 
+import cgi
+
 
 def marshal_request_values(values):
     """Transform given request values using marshallers.
@@ -16,6 +18,7 @@ def marshal_request_values(values):
     # TODO: support combinations like `:list:int` or `:dict:int`
     res = {}
     for k, v in values.items():
+        v = cgi.escape(v)
         if k in ('csrf_token', ):
             continue
         # fields w/ multiple values
