@@ -37,6 +37,11 @@ msgid "Create %s"
 msgstr ""
 
 #. module: cms_form
+#: model:ir.model.fields,field_description:cms_form.field_cms_form_res_partner_custom
+msgid "Custom"
+msgstr ""
+
+#. module: cms_form
 #: model:ir.model.fields,field_description:cms_form.field_cms_form_display_name
 #: model:ir.model.fields,field_description:cms_form.field_cms_form_mixin_display_name
 #: model:ir.model.fields,field_description:cms_form.field_cms_form_search_display_name
