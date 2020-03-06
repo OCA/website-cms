@@ -17,7 +17,7 @@ addon | version | summary
 --- | --- | ---
 [cms_delete_content](cms_delete_content/) | 10.0.1.0.2 | Basic features for handling content deletion via frontend.
 [cms_delete_content_example](cms_delete_content_example/) | 10.0.1.0.0 | Basic content to showcase the CMS delete content
-[cms_form](cms_form/) | 10.0.1.4.2 | Basic content type form
+[cms_form](cms_form/) | 10.0.1.4.3 | Basic content type form
 [cms_form_example](cms_form_example/) | 10.0.1.0.0 | Basic content type form example
 [cms_info](cms_info/) | 10.0.1.0.0 | A set of basic information needed on all published records.
 [cms_status_message](cms_status_message/) | 10.0.1.1.0 | Basic status messages for your CMS system
