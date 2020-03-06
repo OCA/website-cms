@@ -153,12 +153,18 @@ class CMSFormSearch(models.AbstractModel):
                     # searching for an empty string breaks search
                     continue
             if fname in self._form_search_domain_rules:
-                fname, operator, fmt_value = \
+                domain_fname, operator, fmt_value = \
                     self._form_search_domain_rules[fname]
+                # If the custom domain uses a relation to search through, and
+                # there is no value to search on, skip it
+                if fname != domain_fname and not value:
+                    continue
                 if hasattr(fmt_value, '__call__'):
                     value = fmt_value(field, value, search_values)
                 else:
                     value = fmt_value.format(value) if fmt_value else value
-            leaf = (fname, operator, value)
+            else:
+                domain_fname = fname
+            leaf = (domain_fname, operator, value)
             domain.append(leaf)
         return domain

@@ -122,3 +122,19 @@ class TestCMSSearchForm(FormTestCase):
         })
         form.form_process()
         self.assert_results(form, 2, self.expected_partners[:2])
+        # Custom rules with no parameter in the search should return everything
+        data = {'country_id': '', }
+        form = self.get_search_form(data, search_domain_rules={
+            'country_id': ('country_id.name', 'ilike', '')
+        })
+        form.form_process()
+        self.assert_results(form, 5, self.expected_partners)
+        # Custom rules with no parameter in the search should return everything
+        # even if partner has no country defined
+        self.expected_partners[-1].country_id = False
+        data = {'country_id': '', }
+        form = self.get_search_form(data, search_domain_rules={
+            'country_id': ('country_id.name', 'ilike', '')
+        })
+        form.form_process()
+        self.assert_results(form, 5, self.expected_partners)
