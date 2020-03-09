@@ -1,0 +1,22 @@
+<?xml version="1.0" encoding="utf-8" ?>
+<odoo>
+
+  <template id="display_test" name="CMS status message display test">
+
+    <t t-call="website.layout">
+      <div class="container mt64 text-center">
+        <h1>Status message display test</h1>
+        <form class="form" method="GET">
+          <p>Enter a message and submit the form. <br />You'll see your message rendered as a status message.</p>
+          <div>
+            <label for="message">Message</label>
+            <input type="text" id="message" name="message"/>
+          </div>
+          <button type="submit">Test</button>
+        </form>
+      </div>
+    </t>
+
+  </template>
+
+</odoo>

@@ -1,0 +1,54 @@
+<?xml version="1.0" encoding="utf-8" ?>
+<!--
+Copyright 2017-2018 Camptocamp - Simone Orsi
+License LGPL-3.0 or later (http://www.gnu.org/licenses/lgpl).
+-->
+<odoo>
+
+    <template id="status_message" name="CMS status_message">
+        <t t-set="status_message" t-value="website.get_status_message()" />
+        <t t-if="status_message">
+          <t t-call="cms_status_message.message_listing_wrapper" />
+        </t>
+    </template>
+
+    <template id="message_listing_wrapper" name="CMS status_message listing wrapper">
+      <div class="container-fluid status_message">
+        <t t-foreach="status_message" t-as="msg">
+          <div t-attf-class="alert alert-#{msg['type']} #{msg['dismissible'] and 'alert-dismissible' or ''}"
+               t-att-data-autodismiss="msg.get('dismiss_options', {}).get('autodismiss')"
+               t-att-data-autodismiss-timeout="msg.get('dismiss_options', {}).get('autodismissTimeout')"
+               role="alert">
+            <t t-if="msg['dismissible']">
+                <button type="button" class="close" data-dismiss="alert" aria-label="Close">
+                  <span t-translation="off" aria-hidden="true" class="fa fa-remove"></span>
+                </button>
+            </t>
+            <t t-call="cms_status_message.message_wrapper" />
+          </div>
+        </t>
+      </div>
+    </template>
+
+    <template id="message_wrapper" name="CMS status_message single message wrapper">
+      <div class="msg-wrapper row">
+        <t t-if="msg['title']">
+          <div class="title col-md-3">
+            <strong t-esc="msg['title']" />
+          </div>
+        </t>
+        <div t-attf-class="msg #{msg['title'] and 'col-md-9' or 'col-md-12'}">
+          <t t-raw="msg['msg']" />
+        </div>
+      </div>
+    </template>
+
+    <template id="add_status_message" inherit_id="website.layout" name="Add status message">
+
+      <xpath expr="//div[@id='wrapwrap']/main/*" position="before">
+        <t t-call="cms_status_message.status_message" />
+      </xpath>
+
+    </template>
+
+</odoo>

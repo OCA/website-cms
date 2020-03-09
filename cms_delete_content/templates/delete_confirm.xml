@@ -1,0 +1,34 @@
+<?xml version="1.0" encoding="utf-8" ?>
+<!--
+Copyright 2017-2018 Camptocamp - Simone Orsi
+License LGPL-3.0 or later (http://www.gnu.org/licenses/lgpl).
+-->
+
+<odoo>
+
+    <template id="delete_confirm" name="CMS default delete confirm">
+
+      <div id="modal_delete_confirm" class="modal fade delete_confirm" tabindex="-1" role="dialog" aria-labelledby="delete_confirm">
+        <div class="modal-dialog modal-lg">
+          <div class="modal-content">
+            <div class="modal-header">
+              <button type="button" class="close" data-dismiss="modal" aria-hidden="true"><i class="fa fa-times" t-translate="off"></i></button>
+              <h4 class="modal-title" id="delete_confirm" t-esc="main_object.msg_content_delete_confirm()" />
+            </div>
+            <div class="modal-body">
+              <form id="delete_confirm_form" t-att-action="delete_url" method="POST">
+                <input type="hidden" name="csrf_token" t-att-value="request.csrf_token()" />
+                <input type="hidden" name="redirect" t-att-value="redirect" />
+                <button type="submit" name="confirm"
+                        class="btn btn-danger" title="Click here to delete this item" value="confirm">Confirm</button>
+                <button type="button" class="btn btn-default ml16" title="Cancel" data-dismiss="modal">Cancel</button>
+              </form>
+            </div>
+          </div>
+        </div>
+      </div>
+
+    </template>
+
+
+</odoo>

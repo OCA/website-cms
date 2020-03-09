@@ -1,0 +1,17 @@
+<?xml version="1.0" encoding="utf-8" ?>
+<!--
+Copyright 2017-2018 Camptocamp - Simone Orsi
+License LGPL-3.0 or later (http://www.gnu.org/licenses/lgpl).
+-->
+
+<odoo>
+
+	<template id="assets_frontend" name="CMS delete content frontend assets" inherit_id="website.assets_frontend">
+
+		<xpath expr="." position="inside">
+			<script type="text/javascript" src="/cms_delete_content/static/src/js/delete_content.js"></script>
+		</xpath>
+
+	</template>
+
+</odoo>
