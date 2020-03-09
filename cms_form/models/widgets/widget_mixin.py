@@ -7,6 +7,7 @@ from odoo import models
 
 class Widget(models.AbstractModel):
     _name = 'cms.form.widget.mixin'
+    _description = 'CMS Form widget'
 
     # use `w_` prefix as a namespace for all widget properties
     _w_template = ''

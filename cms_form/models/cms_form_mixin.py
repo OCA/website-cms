@@ -24,6 +24,7 @@ IGNORED_FORM_FIELDS = [
     'message_needaction_counter',
     'website_message_ids',
     'website_published',
+    'is_published'
 ] + models.MAGIC_COLUMNS
 
 
