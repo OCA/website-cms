@@ -32,9 +32,6 @@ class BinaryWidget(models.AbstractModel):
                 if not isinstance(value, pycompat.text_type):
                     value = pycompat.to_text(value)
             else:
-                if not isinstance(
-                        value, pycompat.text_type):  # pragma: no cover
-                    value = value.encode()
                 byte_content = base64.b64decode(value)
             mimetype = guess_mimetype(byte_content)
             _value = {
