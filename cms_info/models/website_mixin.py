@@ -18,12 +18,10 @@ class WebsiteMixin(models.AbstractModel):
         string="CMS edit URL", compute="_compute_cms_edit_url", readonly=True,
     )
 
-    @api.multi
     def _compute_cms_edit_url(self):
         for item in self:
             item.cms_edit_url = "/cms/edit/{}/{}".format(item._name, item.id)
 
-    @api.multi
     def cms_is_owner(self, uid=None):
         self.ensure_one()
         uid = uid or self.env.user.id
@@ -33,7 +31,6 @@ class WebsiteMixin(models.AbstractModel):
     def cms_can_create(self):
         return self.check_access_rights("create", raise_exception=False)
 
-    @api.multi
     def _cms_check_perm(self, mode):
         self.ensure_one()
         try:
@@ -54,7 +51,6 @@ class WebsiteMixin(models.AbstractModel):
         # TODO: improve this
         return self.cms_can_edit()
 
-    @api.multi
     def cms_info(self):
         # do not use `ensure_one` so we can use this on an empty recordset
         info = {}.fromkeys(
