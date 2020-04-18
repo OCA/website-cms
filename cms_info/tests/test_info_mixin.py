@@ -54,12 +54,12 @@ class TestInfoMixin(test_common.SavepointCase):
             group_id=self.env.ref("base.group_portal").id
         )
         self.assertTrue(self.record.cms_is_owner())
-        self.assertFalse(self.record.sudo(self.user1).cms_is_owner())
+        self.assertFalse(self.record.with_user(self.user1).cms_is_owner())
 
     def test_can_create(self):
         self.assertTrue(self.env[FakeModel._name].cms_can_create())
         self.assertFalse(
-            self.env[FakeModel._name].sudo(self.user1).cms_can_create()
+            self.env[FakeModel._name].with_user(self.user1).cms_can_create()
         )
 
     def test_can_edit(self):
@@ -67,7 +67,7 @@ class TestInfoMixin(test_common.SavepointCase):
             group_id=self.env.ref("base.group_portal").id, perm_write=False,
         )
         self.assertTrue(self.record.cms_can_edit())
-        self.assertFalse(self.record.sudo(self.user1).cms_can_edit())
+        self.assertFalse(self.record.with_user(self.user1).cms_can_edit())
 
     def test_can_publish(self):
         # this permission by default is just a proxy to "can edit"
@@ -75,7 +75,7 @@ class TestInfoMixin(test_common.SavepointCase):
             group_id=self.env.ref("base.group_portal").id, perm_write=False,
         )
         self.assertTrue(self.record.cms_can_publish())
-        self.assertFalse(self.record.sudo(self.user1).cms_can_publish())
+        self.assertFalse(self.record.with_user(self.user1).cms_can_publish())
 
     def test_can_delete(self):
         self.record._test_create_ACL(
@@ -84,7 +84,7 @@ class TestInfoMixin(test_common.SavepointCase):
             perm_unlink=False,
         )
         self.assertTrue(self.record.cms_can_delete())
-        self.assertFalse(self.record.sudo(self.user1).cms_can_delete())
+        self.assertFalse(self.record.with_user(self.user1).cms_can_delete())
 
     def test_info_on_record(self):
         info = self.record.cms_info()
