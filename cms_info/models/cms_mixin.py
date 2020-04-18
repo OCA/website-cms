@@ -4,7 +4,7 @@ from odoo import models, api, exceptions, fields
 
 
 class CMSInfoMixin(models.AbstractModel):
-    _inherit = "cms.info.mixin"
+    _name = "cms.info.mixin"
 
     @property
     def cms_create_url(self):
@@ -16,7 +16,7 @@ class CMSInfoMixin(models.AbstractModel):
 
     @property
     def cms_edit_url_base(self):
-        return "/cms/delete/{}".format(self._name)
+        return "/cms/edit/{}".format(self._name)
 
     @property
     def cms_delete_url_base(self):
@@ -47,7 +47,6 @@ class CMSInfoMixin(models.AbstractModel):
         for item in self:
             item.cms_edit_url = "{}/{}".format(base_url, item.id)
 
-    @api.multi
     def _compute_cms_delete_url(self):
         base_url = self.cms_delete_url_base
         for item in self:
