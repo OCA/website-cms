@@ -7,8 +7,8 @@ from odoo import models, exceptions, _
 
 
 class CMSForm(models.AbstractModel):
-    _name = 'cms.form'
-    _inherit = 'cms.form.mixin'
+    _name = "cms.form"
+    _inherit = "cms.form.mixin"
 
     # default validators by field type
     _form_validators = {
@@ -29,19 +29,22 @@ class CMSForm(models.AbstractModel):
     @property
     def form_title(self):
         if not self._form_model:
-            return ''
+            return ""
         if self.main_object:
             rec_field = self.main_object[self.form_model._rec_name]
-            if hasattr(rec_field, 'id'):
+            if hasattr(rec_field, "id"):
                 rec_field = rec_field.name
             title = _('Edit "%s"') % rec_field
         else:
-            title = _('Create %s')
+            title = _("Create %s")
             if self._form_model:
-                model = self.env['ir.model'].sudo().search(
-                    [('model', '=', self._form_model)])
-                name = model and model.name or ''
-                title = _('Create %s') % name
+                model = (
+                    self.env["ir.model"]
+                    .sudo()
+                    .search([("model", "=", self._form_model)])
+                )
+                name = model and model.name or ""
+                title = _("Create %s") % name
         return title
 
     # internal flag for turning on redirection
@@ -58,41 +61,41 @@ class CMSForm(models.AbstractModel):
     @property
     def form_msg_success_created(self):
         # TODO: include form model name if any
-        msg = _('Item created.')
+        msg = _("Item created.")
         return msg
 
     @property
     def form_msg_success_updated(self):
-        return _('Item updated.')
+        return _("Item updated.")
 
     @property
     def form_msg_error_missing(self):
-        return _('Some required fields are empty.')
+        return _("Some required fields are empty.")
 
     def form_next_url(self, main_object=None):
         """URL to redirect to after successful form submission."""
-        if self.request.args.get('redirect'):
+        if self.request.args.get("redirect"):
             # redirect overridden
-            return self.request.args.get('redirect')
+            return self.request.args.get("redirect")
         main_object = main_object or self.main_object
-        if main_object and 'website_url' in main_object:
+        if main_object and "website_url" in main_object:
             return main_object.website_url
-        return '/'
+        return "/"
 
     def form_cancel_url(self, main_object=None):
         """URL to redirect to after click on "cancel" button."""
-        if self.request.args.get('redirect'):
+        if self.request.args.get("redirect"):
             # redirect overridden
-            return self.request.args.get('redirect')
+            return self.request.args.get("redirect")
         main_object = main_object or self.main_object
-        if main_object and 'website_url' in main_object:
+        if main_object and "website_url" in main_object:
             return main_object.website_url
-        return self.request.referrer or '/'
+        return self.request.referrer or "/"
 
     def form_check_empty_value(self, fname, field, value, **req_values):
         """Return True if passed field value is really empty."""
         # delegate to each specific widget
-        return field['widget'].w_check_empty_value(value, **req_values)
+        return field["widget"].w_check_empty_value(value, **req_values)
 
     def form_validate(self, request_values=None):
         """Validate submitted values."""
@@ -104,9 +107,10 @@ class CMSForm(models.AbstractModel):
         for fname, field in self.form_fields().items():
             value = request_values.get(fname)
             error = False
-            if field['required'] and self.form_check_empty_value(
-                    fname, field, value, **request_values):
-                errors[fname] = 'missing'
+            if field["required"] and self.form_check_empty_value(
+                fname, field, value, **request_values
+            ):
+                errors[fname] = "missing"
                 missing = True
             validator = self.form_get_validator(fname, field)
             if validator:
@@ -118,19 +122,17 @@ class CMSForm(models.AbstractModel):
         # error message for empty required fields
         if missing and self.o_request.website:
             msg = self.form_msg_error_missing
-            self.o_request.website.add_status_message(msg, type_='danger')
+            self.o_request.website.add_status_message(msg, type_="danger")
         return errors, errors_message
 
     def form_get_validator(self, fname, field):
         """Retrieve field validator."""
         # 1nd lookup for a default type validator
-        validator = self._form_validators.get(field['type'], None)
+        validator = self._form_validators.get(field["type"], None)
         # 2nd lookup for a specific type validator
-        validator = getattr(
-            self, '_form_validate_' + field['type'], validator)
+        validator = getattr(self, "_form_validate_" + field["type"], validator)
         # 3rd lookup and override by named validator if any
-        validator = getattr(
-            self, '_form_validate_' + fname, validator)
+        validator = getattr(self, "_form_validate_" + fname, validator)
         return validator
 
     def form_before_create_or_update(self, values, extra_values):
@@ -146,9 +148,12 @@ class CMSForm(models.AbstractModel):
         extra_values = {}
         if not self._form_model:
             return extra_values
-        _model_fields = list(self.form_model.fields_get(
-            self._form_model_fields,
-            attributes=self._form_fields_attributes).keys())
+        _model_fields = list(
+            self.form_model.fields_get(
+                self._form_model_fields,
+                attributes=self._form_fields_attributes,
+            ).keys()
+        )
         submitted_keys = list(values.keys())
         for fname in submitted_keys:
             if fname not in _model_fields:
@@ -196,20 +201,22 @@ class CMSForm(models.AbstractModel):
                 # sounds like there's no way to validate fields
                 # before calling write or create,
                 # hence we are forced to do it here.
-                errors['_validation'] = True
+                errors["_validation"] = True
                 # err message can be something like
                 # u'Error while validating constraint\n
                 #    \nEnd Date cannot be set before Start Date.\nNone'
-                errors_message['_validation'] = '<br />'.join([
-                    x for x in err.name.replace('None', '').split('\n')
-                    if x.strip()
-                ])
+                errors_message["_validation"] = "<br />".join(
+                    [
+                        x
+                        for x in err.name.replace("None", "").split("\n")
+                        if x.strip()
+                    ]
+                )
             except IntegrityError as err:
-                errors['_integrity'] = True
-                errors_message['_integrity'] = '<br />'.join([
-                    x for x in str(err).split('\n')
-                    if x.strip()
-                ])
+                errors["_integrity"] = True
+                errors_message["_integrity"] = "<br />".join(
+                    [x for x in str(err).split("\n") if x.strip()]
+                )
 
         # TODO: how to handle validation error on create?
         # If you use @api.constrains to validate fields' value
@@ -224,15 +231,16 @@ class CMSForm(models.AbstractModel):
 
         self.form_success = False
         # handle ORM validation error
-        orm_error = errors.get('_validation') or errors.get('_integrity')
+        orm_error = errors.get("_validation") or errors.get("_integrity")
         if orm_error:
-            msg = errors_message.get('_validation') \
-                or errors_message.get('_integrity')
+            msg = errors_message.get("_validation") or errors_message.get(
+                "_integrity"
+            )
             if msg and self.o_request.website:
                 self.o_request.website.add_status_message(
-                    msg, type_='danger', title=None)
-        render_values.update({
-            'errors': errors,
-            'errors_message': errors_message,
-        })
+                    msg, type_="danger", title=None
+                )
+        render_values.update(
+            {"errors": errors, "errors_message": errors_message,}
+        )
         return render_values

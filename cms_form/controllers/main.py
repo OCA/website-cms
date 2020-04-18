@@ -11,7 +11,7 @@ from odoo.http import request
 class FormControllerMixin(object):
 
     # default template
-    template = 'cms_form.form_wrapper'
+    template = "cms_form.form_wrapper"
 
     def get_template(self, form, **kw):
         """Retrieve rendering template.
@@ -22,7 +22,7 @@ class FormControllerMixin(object):
         """
         template = self.template
 
-        if getattr(form, 'form_wrapper_template', None):
+        if getattr(form, "form_wrapper_template", None):
             template = form.form_wrapper_template
 
         if not template:
@@ -46,20 +46,18 @@ class FormControllerMixin(object):
         #    Most common example: field named `website` will override
         #    odoo record for current website.
         vals = {k: v for k, v in kw.items() if k not in form.form_fields()}
-        vals.update({
-            'form': form,
-            'main_object': main_object,
-            'controller': self,
-        })
+        vals.update(
+            {"form": form, "main_object": main_object, "controller": self,}
+        )
         return vals
 
     def form_model_key(self, model, **kw):
         """Return a valid form model."""
-        return 'cms.form.' + model
+        return "cms.form." + model
 
     def get_form(self, model, model_id=None, **kw):
         """Retrieve form for given model and initialize it."""
-        form_model_key = kw.pop('form_model_key', None)
+        form_model_key = kw.pop("form_model_key", None)
         if not form_model_key:
             form_model_key = self.form_model_key(model, **kw)
         if form_model_key in request.env:
@@ -73,13 +71,14 @@ class FormControllerMixin(object):
                 # So here we mock main_object to the form model recordset
                 main_object = request.env[form_model_key]
             form = request.env[form_model_key].form_init(
-                request, main_object=main_object, **kw)
+                request, main_object=main_object, **kw
+            )
         else:
             # TODO: enable form by default?
             # How? with a flag on ir.model.model?
             # And which fields to include automatically?
             raise NotImplementedError(
-                _('%s model has no CMS form registered.') % model
+                _("%s model has no CMS form registered.") % model
             )
         return form
 
@@ -103,10 +102,11 @@ class FormControllerMixin(object):
         form = self.get_form(model, model_id=model_id, **kw)
         form.form_check_permission()
         # pass only specific extra args, to not pollute form render values
-        form.form_process(extra_args={'page': kw.get('page')})
+        form.form_process(extra_args={"page": kw.get("page")})
         # search forms do not need these attrs
-        if getattr(form, 'form_success', None) \
-                and getattr(form, 'form_redirect', None):
+        if getattr(form, "form_success", None) and getattr(
+            form, "form_redirect", None
+        ):
             # anything went fine, redirect to next url
             # https://developer.mozilla.org/en-US/docs/Web/HTTP/Status/303
             return werkzeug.utils.redirect(form.form_next_url(), code=303)
@@ -115,14 +115,14 @@ class FormControllerMixin(object):
         return request.render(
             self.get_template(form, **kw),
             values,
-            headers={'Cache-Control': 'no-cache'}
+            headers={"Cache-Control": "no-cache"},
         )
 
     def make_response_ajax(self, model, model_id=None, **kw):
         """Return only results to replace the current result with"""
         response = self.make_response(model, model_id=model_id, **kw)
         data = {
-            'content': self._make_response_ajax_content(response),
+            "content": self._make_response_ajax_content(response),
         }
         return json.dumps(data)
 
@@ -134,10 +134,15 @@ class FormControllerMixin(object):
 class CMSFormController(http.Controller, FormControllerMixin):
     """CMS form controller."""
 
-    @http.route([
-        '/cms/create/<string:model>',
-        '/cms/edit/<string:model>/<int:model_id>',
-    ], type='http', auth='user', website=True)
+    @http.route(
+        [
+            "/cms/create/<string:model>",
+            "/cms/edit/<string:model>/<int:model_id>",
+        ],
+        type="http",
+        auth="user",
+        website=True,
+    )
     def cms_form(self, model, model_id=None, **kw):
         """Handle a `form` route.
         """
@@ -146,7 +151,7 @@ class CMSFormController(http.Controller, FormControllerMixin):
 
 class WizardFormControllerMixin(FormControllerMixin):
 
-    template = 'cms_form.wizard_form_wrapper'
+    template = "cms_form.wizard_form_wrapper"
 
     def make_response(self, wiz_model, model_id=None, page=1, **kw):
         """Custom response.
@@ -158,18 +163,21 @@ class WizardFormControllerMixin(FormControllerMixin):
         wiz = request.env[wiz_model].form_init(request, page=page, **kw)
         step_info = wiz.wiz_get_step_info(page)
         # retrieve form model for current step
-        form_model = step_info['form_model']
+        form_model = step_info["form_model"]
         model = request.env[form_model]._form_model
-        kw['form_model_key'] = form_model
+        kw["form_model_key"] = form_model
         return super().make_response(model, model_id=model_id, page=page, **kw)
 
 
 class CMSWizardFormController(http.Controller, WizardFormControllerMixin):
     """CMS wizard controller."""
 
-    @http.route([
-        '/cms/wiz/<string:wiz_model>/page/<int:page>',
-    ], type='http', auth='user', website=True)
+    @http.route(
+        ["/cms/wiz/<string:wiz_model>/page/<int:page>",],
+        type="http",
+        auth="user",
+        website=True,
+    )
     def cms_wiz(self, wiz_model, model_id=None, **kw):
         """Handle a wizard route.
         """
@@ -178,41 +186,55 @@ class CMSWizardFormController(http.Controller, WizardFormControllerMixin):
 
 class SearchFormControllerMixin(FormControllerMixin):
 
-    template = 'cms_form.search_form_wrapper'
+    template = "cms_form.search_form_wrapper"
 
     def form_model_key(self, model, **kw):
-        return 'cms.form.search.' + model
+        return "cms.form.search." + model
 
     def get_render_values(self, form, **kw):
         values = super().get_render_values(form, **kw)
-        values.update({
-            'pager': form.form_search_results['pager'],
-        })
+        values.update(
+            {"pager": form.form_search_results["pager"],}
+        )
         return values
 
 
 class CMSSearchFormController(http.Controller, SearchFormControllerMixin):
     """CMS form controller."""
 
-    @http.route([
-        '/cms/search/<string:model>',
-        '/cms/search/<string:model>/page/<int:page>',
-    ], type='http', auth='public', website=True)
+    @http.route(
+        [
+            "/cms/search/<string:model>",
+            "/cms/search/<string:model>/page/<int:page>",
+        ],
+        type="http",
+        auth="public",
+        website=True,
+    )
     def cms_form(self, model, **kw):
         """Handle a search `form` route.
         """
         response = self.make_response(model, **kw)
         return response
 
-    @http.route([
-        '/cms/ajax/search/<string:model>',
-        '/cms/ajax/search/<string:model>/<int:model_id>',
-    ], type='http', auth='public', website=True)
+    @http.route(
+        [
+            "/cms/ajax/search/<string:model>",
+            "/cms/ajax/search/<string:model>/<int:model_id>",
+        ],
+        type="http",
+        auth="public",
+        website=True,
+    )
     def ajax(self, model, model_id=None, **kw):
         """handle an ajax request"""
         return self.make_response_ajax(model, **kw)
 
     def _make_response_ajax_content(self, response):
-        return request.env.ref(
-            response.qcontext['form'].form_search_results_template
-        ).render(response.qcontext).decode('utf8')
+        return (
+            request.env.ref(
+                response.qcontext["form"].form_search_results_template
+            )
+            .render(response.qcontext)
+            .decode("utf8")
+        )

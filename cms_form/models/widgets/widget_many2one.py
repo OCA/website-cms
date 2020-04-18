@@ -8,14 +8,14 @@ from ... import utils
 
 
 class M2OWidget(models.AbstractModel):
-    _name = 'cms.form.widget.many2one'
-    _inherit = 'cms.form.widget.mixin'
-    _w_template = 'cms_form.field_widget_m2o'
+    _name = "cms.form.widget.many2one"
+    _inherit = "cms.form.widget.mixin"
+    _w_template = "cms_form.field_widget_m2o"
 
     def widget_init(self, form, fname, field, **kw):
         widget = super().widget_init(form, fname, field, **kw)
-        widget.w_comodel = self.env[widget.w_field['relation']]
-        widget.w_domain = widget.w_field.get('domain', [])
+        widget.w_comodel = self.env[widget.w_field["relation"]]
+        widget.w_domain = widget.w_field.get("domain", [])
         return widget
 
     @property
@@ -50,11 +50,11 @@ class M2OWidget(models.AbstractModel):
 
 
 class M2OMultiWidget(models.AbstractModel):
-    _name = 'cms.form.widget.many2one.multi'
-    _inherit = 'cms.form.widget.many2one'
-    _w_template = 'cms_form.field_widget_m2o_multi'
+    _name = "cms.form.widget.many2one.multi"
+    _inherit = "cms.form.widget.many2one"
+    _w_template = "cms_form.field_widget_m2o_multi"
     # TODO: not used ATM
-    w_diplay_field = 'display_name'
+    w_diplay_field = "display_name"
 
     def m2o_to_form(self, value, **req_values):
         if not value:
@@ -62,7 +62,8 @@ class M2OMultiWidget(models.AbstractModel):
         if isinstance(value, str) and value == req_values.get(self.w_fname):
             value = self.w_comodel.browse(
                 # TODO: we should allow customizations of fields to read
-                self.w_ids_from_input(value)).read(['name'])
+                self.w_ids_from_input(value)
+            ).read(["name"])
         value = json.dumps(value)
         return value
 

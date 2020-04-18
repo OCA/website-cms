@@ -11,8 +11,8 @@ def fake_form(main_object=None, **data):
 
     :param data: kw args for setting form values
     """
-    form = mock.MagicMock(name='FakeForm')
-    form_values = mock.PropertyMock(return_value={'form_data': data})
+    form = mock.MagicMock(name="FakeForm")
+    form_values = mock.PropertyMock(return_value={"form_data": data})
     type(form).form_render_values = form_values
     form.main_object = main_object
     return form
@@ -25,11 +25,11 @@ def fake_field(name, **kw):
     :param kw: kw args to override some values
     """
     info = {
-        'type': 'char',
-        'required': False,
-        'string': name.capitalize().replace('_', ' '),
-        'readonly': False,
-        'help': 'Help for %s' % name,
+        "type": "char",
+        "required": False,
+        "string": name.capitalize().replace("_", " "),
+        "readonly": False,
+        "help": "Help for %s" % name,
     }
     info.update(kw)
     return name, info
@@ -48,9 +48,7 @@ def get_widget(env, fname, field, form=None, widget_model=None, **kw):
         form = fake_form()
     if not widget_model:
         widget_model = form.form_get_widget_model(fname, field)
-    return env[widget_model].widget_init(
-        form, fname, field, **kw
-    )
+    return env[widget_model].widget_init(form, fname, field, **kw)
 
 
 class TestWidgetCase(SavepointCase, HTMLRenderMixin):
@@ -64,7 +62,7 @@ class TestWidgetCase(SavepointCase, HTMLRenderMixin):
 
     def _test_widget_attributes(self, widget, tag, expected, text=None):
         node = self.to_xml_node(widget.render())[0]
-        node_input = self.find_input_name(node, expected['name'])
+        node_input = self.find_input_name(node, expected["name"])
         self.assertEqual(len(node_input), 1)
         node_input = node_input[0]
         self._test_element_attributes(node_input, tag, expected, text=text)
@@ -76,7 +74,7 @@ class TestWidgetCase(SavepointCase, HTMLRenderMixin):
         for attr_name, attr_value in expected.items():
             self.assertEqual(node.attrib[attr_name], attr_value)
         # special attrs that should be set or not completely
-        for attr_name in ('required', 'checked'):
+        for attr_name in ("required", "checked"):
             if expected.get(attr_name):
                 self.assertIn(attr_name, node.attrib)
             else:

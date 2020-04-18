@@ -6,15 +6,15 @@ from odoo import models
 
 
 class X2MWidget(models.AbstractModel):
-    _name = 'cms.form.widget.x2m.mixin'
-    _inherit = 'cms.form.widget.mixin'
-    _w_template = 'cms_form.field_widget_x2m'
-    w_diplay_field = 'display_name'
+    _name = "cms.form.widget.x2m.mixin"
+    _inherit = "cms.form.widget.mixin"
+    _w_template = "cms_form.field_widget_x2m"
+    w_diplay_field = "display_name"
 
     def widget_init(self, form, fname, field, **kw):
         widget = super().widget_init(form, fname, field, **kw)
-        widget.w_comodel = self.env[widget.w_field['relation']]
-        widget.w_domain = widget.w_field.get('domain', [])
+        widget.w_comodel = self.env[widget.w_field["relation"]]
+        widget.w_domain = widget.w_field.get("domain", [])
         return widget
 
     # TODO: rename all widget-specific methods like:
@@ -43,13 +43,15 @@ class X2MWidget(models.AbstractModel):
             ids = value.ids
         elif isinstance(value, str):
             ids = self.w_ids_from_input(value)
-        req_val = self.w_ids_from_input(req_values.get(self.w_fname, ''))
+        req_val = self.w_ids_from_input(req_values.get(self.w_fname, ""))
         if req_val:
             # request value take precedence
             ids = req_val[:]
-        read_fields = [self.w_diplay_field, ]
-        if 'name' in self.w_comodel:
-            read_fields.append('name')
+        read_fields = [
+            self.w_diplay_field,
+        ]
+        if "name" in self.w_comodel:
+            read_fields.append("name")
         return json.dumps(self.w_comodel.browse(ids).read(read_fields))
 
     def w_extract(self, **req_values):
@@ -58,12 +60,12 @@ class X2MWidget(models.AbstractModel):
 
     def form_to_x2many(self, value, **req_values):
         _value = False
-        if self.w_form._form_extract_value_mode == 'write':
+        if self.w_form._form_extract_value_mode == "write":
             if value:
                 _value = [(6, False, self.w_ids_from_input(value))]
             else:
                 # wipe them
-                _value = [(5, )]
+                _value = [(5,)]
         else:
             _value = value and self.w_ids_from_input(value) or []
         return _value
@@ -71,10 +73,10 @@ class X2MWidget(models.AbstractModel):
 
 # TODO: handle advanced editing via table view and subform for such fields
 class O2ManyWidget(models.AbstractModel):
-    _name = 'cms.form.widget.one2many'
-    _inherit = 'cms.form.widget.x2m.mixin'
+    _name = "cms.form.widget.one2many"
+    _inherit = "cms.form.widget.x2m.mixin"
 
 
 class M2MWidget(models.AbstractModel):
-    _name = 'cms.form.widget.many2many'
-    _inherit = 'cms.form.widget.x2m.mixin'
+    _name = "cms.form.widget.many2many"
+    _inherit = "cms.form.widget.x2m.mixin"

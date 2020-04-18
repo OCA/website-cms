@@ -15,5 +15,5 @@
         "templates/form.xml",
         "templates/widgets.xml",
     ],
-    "installable": False,
+    "installable": True,
 }
