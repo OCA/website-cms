@@ -26,7 +26,15 @@ def safe_to_date(value, **kw):
     return value
 
 
-TRUE_VALUES = ('on', 'yes', 'ok', 'true', True, 1, '1', )
+TRUE_VALUES = (
+    "on",
+    "yes",
+    "ok",
+    "true",
+    True,
+    1,
+    "1",
+)
 
 
 def string_to_bool(value, true_values=TRUE_VALUES):

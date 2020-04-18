@@ -7,8 +7,8 @@ from ... import utils
 
 
 class IntegerWidget(models.AbstractModel):
-    _name = 'cms.form.widget.integer'
-    _inherit = 'cms.form.widget.char'
+    _name = "cms.form.widget.integer"
+    _inherit = "cms.form.widget.char"
 
     def w_extract(self, **req_values):
         value = super().w_extract(**req_values)
@@ -16,8 +16,8 @@ class IntegerWidget(models.AbstractModel):
 
 
 class FloatWidget(models.AbstractModel):
-    _name = 'cms.form.widget.float'
-    _inherit = 'cms.form.widget.char'
+    _name = "cms.form.widget.float"
+    _inherit = "cms.form.widget.char"
 
     def w_extract(self, **req_values):
         value = super().w_extract(**req_values)

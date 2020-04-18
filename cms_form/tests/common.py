@@ -4,13 +4,17 @@
 from lxml import html
 from odoo.tests.common import SavepointCase, HttpCase
 from .utils import (
-    fake_request, fake_session, session_store,
-    setup_test_model, teardown_test_model
+    fake_request,
+    fake_session,
+    session_store,
+    setup_test_model,
+    teardown_test_model,
 )
 
 
-def get_form(env, form_model, req=None, session=None,
-             ctx=None, sudo_uid=None, **kw):
+def get_form(
+    env, form_model, req=None, session=None, ctx=None, sudo_uid=None, **kw
+):
     """Retrieve and initialize a form.
 
     :param form_model: model dotted name
@@ -58,7 +62,8 @@ class HTMLRenderMixin(object):
 
     def find_input_name(self, node, name):
         return node.xpath(
-            '(//input|//select|//textarea)[@name="{}"]'.format(name))
+            '(//input|//select|//textarea)[@name="{}"]'.format(name)
+        )
 
     def assert_match_attrs(self, value, expected):
         for k, v in expected.items():
