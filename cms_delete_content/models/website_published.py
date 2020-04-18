@@ -14,7 +14,6 @@ class WebsitePublishedMixin(models.AbstractModel):
         readonly=True,
     )
 
-    @api.multi
     def _compute_cms_delete_url(self):
         for item in self:
             item.cms_delete_url = "/cms/delete/{}/{}".format(
@@ -27,7 +26,6 @@ class WebsitePublishedMixin(models.AbstractModel):
         readonly=True,
     )
 
-    @api.multi
     def _compute_cms_delete_confirm_url(self):
         for item in self:
             item.cms_delete_confirm_url = "/cms/delete/{}/{}/confirm".format(
@@ -38,12 +36,10 @@ class WebsitePublishedMixin(models.AbstractModel):
     def cms_after_delete_url(self):
         return "/"
 
-    @api.multi
     def msg_content_delete_confirm(self):
         self.ensure_one()
         return _("Are you sure you want to delete this item?")
 
-    @api.multi
     def msg_content_deleted(self):
         self.ensure_one()
         return _("%s deleted.") % self._description
