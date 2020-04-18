@@ -6,9 +6,9 @@ from odoo import fields, models
 
 # `AbstractModel` or `TransientModel` needed to make ACL check happy`
 class FakePublishModel(models.TransientModel):
-    _name = 'fake.publishable'
-    _description = 'Fake publishable'
+    _name = "fake.publishable"
+    _description = "Fake publishable"
     _inherit = [
-        'website.published.mixin',
+        "website.published.mixin",
     ]
     name = fields.Char()
