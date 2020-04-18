@@ -14,11 +14,17 @@ from odoo import http, api
 from odoo.tests.common import get_db_name
 
 
-def fake_request(form_data=None, query_string=None, url='/fake/path',
-                 method='GET', content_type=None, session=None):
+def fake_request(
+    form_data=None,
+    query_string=None,
+    url="/fake/path",
+    method="GET",
+    content_type=None,
+    session=None,
+):
     data = urllib.parse.urlencode(form_data or {})
-    query_string = query_string or ''
-    content_type = content_type or 'application/x-www-form-urlencoded'
+    query_string = query_string or ""
+    content_type = content_type or "application/x-www-form-urlencoded"
     # werkzeug request
     w_req = Request.from_values(
         url,
@@ -26,7 +32,8 @@ def fake_request(form_data=None, query_string=None, url='/fake/path',
         content_length=len(data),
         input_stream=io.StringIO(data),
         content_type=content_type,
-        method=method)
+        method=method,
+    )
     w_req.session = session if session is not None else mock.MagicMock()
     # odoo request
     o_req = http.HttpRequest(w_req)
@@ -38,7 +45,6 @@ def fake_request(form_data=None, query_string=None, url='/fake/path',
 
 
 class FakeSessionStore(SessionStore):
-
     def delete(self, session):
         session.clear()
         del session
@@ -54,9 +60,9 @@ def fake_session(env, **kw):
     session.db = db
     session.uid = env.uid
     session.login = env.user.login
-    session.password = ''
+    session.password = ""
     session.context = dict(env.context)
-    session.context['uid'] = env.uid
+    session.context["uid"] = env.uid
     session._fix_lang(session.context)
     for k, v in kw.items():
         if hasattr(session, k):
@@ -73,8 +79,7 @@ def setup_test_model(env, model_cls):
     model_cls._build_model(env.registry, env.cr)
     env.registry.setup_models(env.cr)
     env.registry.init_models(
-        env.cr, [model_cls._name],
-        dict(env.context, update_custom_fields=True)
+        env.cr, [model_cls._name], dict(env.context, update_custom_fields=True)
     )
 
 
@@ -83,7 +88,7 @@ def teardown_test_model(env, model_cls):
 
     Courtesy of SBidoul from https://github.com/OCA/mis-builder :)
     """
-    if not getattr(model_cls, '_teardown_no_delete', False):
+    if not getattr(model_cls, "_teardown_no_delete", False):
         del env.registry.models[model_cls._name]
     env.registry.setup_models(env.cr)
 
@@ -98,7 +103,4 @@ def b64_as_stream(b64_content):
 
 
 def fake_file_from_request(input_name, stream, **kw):
-    return FileStorage(
-        name=input_name,
-        stream=stream, **kw
-    )
+    return FileStorage(name=input_name, stream=stream, **kw)

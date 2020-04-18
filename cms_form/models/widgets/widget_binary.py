@@ -10,8 +10,8 @@ from odoo import models
 
 
 class BinaryWidget(models.AbstractModel):
-    _name = 'cms.form.widget.binary.mixin'
-    _inherit = 'cms.form.widget.mixin'
+    _name = "cms.form.widget.binary.mixin"
+    _inherit = "cms.form.widget.mixin"
 
     def w_load(self, **req_values):
         value = super().w_load(**req_values)
@@ -33,18 +33,19 @@ class BinaryWidget(models.AbstractModel):
                     value = pycompat.to_text(value)
             else:
                 if not isinstance(
-                        value, pycompat.text_type):  # pragma: no cover
+                    value, pycompat.text_type
+                ):  # pragma: no cover
                     value = value.encode()
                 byte_content = base64.b64decode(value)
             mimetype = guess_mimetype(byte_content)
             _value = {
-                'value': value,
-                'raw_value': value,
-                'mimetype': mimetype,
-                'from_request': from_request,
+                "value": value,
+                "raw_value": value,
+                "mimetype": mimetype,
+                "from_request": from_request,
             }
-            if mimetype.startswith('image/'):
-                _value['value'] = 'data:{};base64,{}'.format(mimetype, value)
+            if mimetype.startswith("image/"):
+                _value["value"] = "data:{};base64,{}".format(mimetype, value)
         return _value
 
     def w_extract(self, **req_values):
@@ -55,29 +56,29 @@ class BinaryWidget(models.AbstractModel):
         if self.w_fname not in req_values:
             return None
         _value = False
-        keepcheck_flag = req_values.get(self.w_fname + '_keepcheck')
-        if not keepcheck_flag or keepcheck_flag == 'yes':
+        keepcheck_flag = req_values.get(self.w_fname + "_keepcheck")
+        if not keepcheck_flag or keepcheck_flag == "yes":
             # no flag or flag marked as "keep current value"
             # prevent discarding image
             req_values.pop(self.w_fname, None)
-            req_values.pop(self.w_fname + '_keepcheck', None)
+            req_values.pop(self.w_fname + "_keepcheck", None)
             return None
         if value:
-            if hasattr(value, 'read'):
+            if hasattr(value, "read"):
                 file_content = value.read()
                 _value = base64.b64encode(file_content)
                 if not isinstance(value, pycompat.text_type):
                     _value = pycompat.to_text(_value)
             else:
                 # like 'data:image/jpeg;base64,jRyRuUm2VP...
-                _value = value.split(',')[-1]
+                _value = value.split(",")[-1]
         return _value
 
     def w_check_empty_value(self, value, **req_values):
         if isinstance(value, werkzeug.datastructures.FileStorage):
             has_value = bool(value.filename)
-            keep_flag = req_values.get(self.w_fname + '_keepcheck')
-            if not has_value and keep_flag == 'yes':
+            keep_flag = req_values.get(self.w_fname + "_keepcheck")
+            if not has_value and keep_flag == "yes":
                 # no value, but we want to preserve existing one
                 return False
             # file field w/ no content
@@ -88,6 +89,6 @@ class BinaryWidget(models.AbstractModel):
 
 
 class ImageWidget(models.AbstractModel):
-    _name = 'cms.form.widget.image'
-    _inherit = 'cms.form.widget.binary.mixin'
-    _w_template = 'cms_form.field_widget_image'
+    _name = "cms.form.widget.image"
+    _inherit = "cms.form.widget.binary.mixin"
+    _w_template = "cms_form.field_widget_image"
