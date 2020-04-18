@@ -10,5 +10,8 @@
     "author": "Camptocamp, Odoo Community Association (OCA)",
     "license": "LGPL-3",
     "installable": True,
-    "depends": ["website", "cms_delete_content",],
+    # TODO: think about make cms stuff independent from `website`.
+    # If you want to use these features in portal only it shouldn't be required
+    # to install `website`.
+    "depends": ["website", ],
 }
