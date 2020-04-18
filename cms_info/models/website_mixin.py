@@ -4,26 +4,24 @@ from odoo import models, api, exceptions, fields
 
 
 class WebsiteMixin(models.AbstractModel):
-    _inherit = 'website.published.mixin'
+    _inherit = "website.published.mixin"
 
     @property
     def cms_create_url(self):
-        return '/cms/create/{}'.format(self._name)
+        return "/cms/create/{}".format(self._name)
 
     @property
     def cms_search_url(self):
-        return '/cms/search/{}'.format(self._name)
+        return "/cms/search/{}".format(self._name)
 
     cms_edit_url = fields.Char(
-        string='CMS edit URL',
-        compute='_compute_cms_edit_url',
-        readonly=True,
+        string="CMS edit URL", compute="_compute_cms_edit_url", readonly=True,
     )
 
     @api.multi
     def _compute_cms_edit_url(self):
         for item in self:
-            item.cms_edit_url = '/cms/edit/{}/{}'.format(item._name, item.id)
+            item.cms_edit_url = "/cms/edit/{}/{}".format(item._name, item.id)
 
     @api.multi
     def cms_is_owner(self, uid=None):
@@ -33,7 +31,7 @@ class WebsiteMixin(models.AbstractModel):
 
     @api.model
     def cms_can_create(self):
-        return self.check_access_rights('create', raise_exception=False)
+        return self.check_access_rights("create", raise_exception=False)
 
     @api.multi
     def _cms_check_perm(self, mode):
@@ -47,10 +45,10 @@ class WebsiteMixin(models.AbstractModel):
         return can
 
     def cms_can_edit(self):
-        return self._cms_check_perm('write')
+        return self._cms_check_perm("write")
 
     def cms_can_delete(self):
-        return self._cms_check_perm('unlink')
+        return self._cms_check_perm("unlink")
 
     def cms_can_publish(self):
         # TODO: improve this
@@ -59,25 +57,38 @@ class WebsiteMixin(models.AbstractModel):
     @api.multi
     def cms_info(self):
         # do not use `ensure_one` so we can use this on an empty recordset
-        info = {}.fromkeys((
-            'is_owner', 'can_edit', 'can_create', 'can_publish',
-            'can_delete', 'create_url', 'edit_url', 'delete_url',
-        ), None)
+        info = {}.fromkeys(
+            (
+                "is_owner",
+                "can_edit",
+                "can_create",
+                "can_publish",
+                "can_delete",
+                "create_url",
+                "edit_url",
+                "delete_url",
+            ),
+            None,
+        )
         if self:
             # we have a record indeed
-            info.update({
-                # make sure it works even on empty recordsets
-                'is_owner': self.cms_is_owner() if self else None,
-                'can_edit': self.cms_can_edit(),
-                'can_publish': self.cms_can_publish(),
-                'can_delete': self.cms_can_delete(),
-                'edit_url': self.cms_edit_url,
-                # delete/delete confirm URLs come from `cms_delete_content`
-                'delete_url': self.cms_delete_confirm_url,
-            })
-        info.update({
-            # class-level info
-            'create_url': self.cms_create_url,
-            'can_create': self.cms_can_create(),
-        })
+            info.update(
+                {
+                    # make sure it works even on empty recordsets
+                    "is_owner": self.cms_is_owner() if self else None,
+                    "can_edit": self.cms_can_edit(),
+                    "can_publish": self.cms_can_publish(),
+                    "can_delete": self.cms_can_delete(),
+                    "edit_url": self.cms_edit_url,
+                    # delete/delete confirm URLs come from `cms_delete_content`
+                    "delete_url": self.cms_delete_confirm_url,
+                }
+            )
+        info.update(
+            {
+                # class-level info
+                "create_url": self.cms_create_url,
+                "can_create": self.cms_can_create(),
+            }
+        )
         return info
