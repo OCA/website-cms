@@ -4,7 +4,7 @@
 {
     "name": "CMS info",
     "summary": """A set of basic information needed on all published records.""",
-    "version": "11.0.1.0.2",
+    "version": "13.0.1.0.0",
     "category": "Website",
     "website": "https://github.com/OCA/website-cms",
     "author": "Camptocamp, Odoo Community Association (OCA)",
