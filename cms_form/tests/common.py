@@ -26,7 +26,7 @@ def get_form(
     """
     model = env[form_model]
     if sudo_uid:
-        model = model.sudo(sudo_uid)
+        model = model.with_user(sudo_uid)
     if ctx:
         model = model.with_context(**ctx)
 
