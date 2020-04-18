@@ -49,6 +49,20 @@ class TestInfoMixin(test_common.SavepointCase):
             "/cms/edit/fake.model/%s" % self.record.id,
         )
 
+    def test_delete_url(self):
+        self.assertEqual(
+            self.record.cms_delete_url,
+            "/cms/delete/fake.model/%s" % self.record.id,
+        )
+        self.assertEqual(
+            self.record.cms_delete_confirm_url,
+            "/cms/delete/fake.model/%s/confirm" % self.record.id,
+        )
+        self.assertEqual(
+            self.record.cms_after_delete_url,
+            "/",
+        )
+
     def test_is_owner(self):
         self.record._test_create_ACL(
             group_id=self.env.ref("base.group_portal").id
