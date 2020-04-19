@@ -2,10 +2,12 @@
 # License LGPL-3.0 or later (http://www.gnu.org/licenses/lgpl).
 
 
-from odoo import http, _
-from odoo.http import request
 import json
+
 import werkzeug
+
+from odoo import _, http
+from odoo.http import request
 
 
 class DeleteMixin(object):
@@ -16,9 +18,7 @@ class DeleteMixin(object):
         main_object = request.env[model].browse(model_id)
         if main_object.exists():
             return main_object
-        raise werkzeug.exceptions.NotFound(
-            _("model: %s id: %s") % (model, model_id)
-        )
+        raise werkzeug.exceptions.NotFound(_("model: %s id: %s") % (model, model_id))
 
     def handle_delete_confirm(self, model, model_id, **kwargs):
         """Render modal for delete confirmation. Called via JS.
@@ -33,9 +33,7 @@ class DeleteMixin(object):
             {
                 "main_object": main_object,
                 "delete_url": main_object.cms_delete_url,
-                "redirect": kwargs.get(
-                    "redirect", main_object.cms_after_delete_url
-                ),
+                "redirect": kwargs.get("redirect", main_object.cms_after_delete_url),
             }
         )
 
