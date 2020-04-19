@@ -13,5 +13,5 @@
     # TODO: think about make cms stuff independent from `website`.
     # If you want to use these features in portal only it shouldn't be required
     # to install `website`.
-    "depends": ["website", ],
+    "depends": ["website"],
 }
