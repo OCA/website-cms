@@ -2,34 +2,43 @@
 # License LGPL-3.0 or later (http://www.gnu.org/licenses/lgpl).
 
 
-import werkzeug
-from lxml import html
-import mock
 import json
 from contextlib import contextmanager
 
-from odoo.addons.cms_form.tests.common import FormHttpTestCase
-from ..controllers import main
-from .fake_models import FakePublishModel
+import mock
+import werkzeug
+from lxml import html
+from odoo_test_helper import FakeModelLoader
 
+import odoo
+
+from ..controllers import main
 
 IMPORT = "odoo.addons.cms_delete_content.controllers.main"
 
 
-class TestDelete(FormHttpTestCase):
-
-    TEST_MODELS_KLASSES = [
-        FakePublishModel,
-    ]
+class TestDelete(odoo.tests.HttpCase):
 
     at_install = False
     post_install = True
 
     def setUp(self):
         super().setUp()
+        self.loader = FakeModelLoader(self.env, self.__module__)
+        self.loader.backup_registry()
+        from .fake_models import FakePublishModel
+
+        self.fake_model = FakePublishModel
+        self.loader.update_registry((self.fake_model,))
         self.authenticate("admin", "admin")
         self.delete_controller = main.DeleteController()
-        self.record = self.env[FakePublishModel._name].create({"name": "New"})
+        if not getattr(self, "record", None):
+            # avoid creation for each test
+            self.record = self.env[self.fake_model._name].create({"name": "New"})
+
+    def tearDown(self):
+        self.loader.restore_registry()
+        super().tearDown()
 
     @contextmanager
     def mock_request(self, impot_to_mock, mock_get=True):
@@ -52,21 +61,17 @@ class TestDelete(FormHttpTestCase):
         with self.mock_request(IMPORT, mock_get=False):
             with self.assertRaises(werkzeug.exceptions.NotFound):
                 # obj does not exists
-                self.delete_controller.get_main_object(
-                    FakePublishModel._name, 9999999
-                )
+                self.delete_controller.get_main_object(self.fake_model._name, 9999999)
             self.assertEqual(
                 self.delete_controller.get_main_object(
-                    FakePublishModel._name, self.record.id
+                    self.fake_model._name, self.record.id
                 ),
                 self.record,
             )
 
     def test_delete_confirm(self):
         with self.mock_request(IMPORT):
-            response = self.url_open(
-                self.record.cms_delete_confirm_url, timeout=30
-            )
+            response = self.url_open(self.record.cms_delete_confirm_url, timeout=30)
             content = response.content
             node = self.to_xml_node(content)
             self.assertEqual(
@@ -77,13 +82,13 @@ class TestDelete(FormHttpTestCase):
     def test_delete(self):
         with self.mock_request(IMPORT):
             resp = self.delete_controller.handle_delete(
-                FakePublishModel._name, self.record.id
+                self.fake_model._name, self.record.id
             )
             self.assertEqual(
                 json.loads(resp),
                 {
                     "redirect": "",
-                    "message": "%s deleted." % FakePublishModel._description,
+                    "message": "%s deleted." % self.fake_model._description,
                 },
             )
             self.assertFalse(self.record.exists())
