@@ -6,7 +6,4 @@ from odoo import models
 class WebsiteMixin(models.AbstractModel):
     _name = "website.published.mixin"
     # Apply cms mixin to website published one
-    _inherit = [
-        "website.published.mixin",
-        "cms.info.mixin"
-    ]
+    _inherit = ["website.published.mixin", "cms.info.mixin"]
