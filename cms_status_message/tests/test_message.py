@@ -1,12 +1,13 @@
 # Copyright 2017-2018 Camptocamp - Simone Orsi
 # License LGPL-3.0 or later (http://www.gnu.org/licenses/lgpl).
 
-from odoo.tests.common import HttpCase
-
 import logging
-from lxml import html
 from contextlib import contextmanager
+
 import mock
+from lxml import html
+
+from odoo.tests.common import HttpCase
 
 _logger = logging.getLogger(__name__)
 
@@ -80,13 +81,9 @@ class HTMLCase(HttpCase):
             html_ = self.html_get_doc("/")
             msg = html_.find_class("alert")[0]
             self.assertEqual(msg.attrib["role"], "alert")
-            self.assertEqual(
-                msg.attrib["class"], "alert alert-info alert-dismissible"
-            )
+            self.assertEqual(msg.attrib["class"], "alert alert-info alert-dismissible")
             self.assertEqual(msg.find_class("msg")[0].text.strip(), "oh yeah!")
-            self.assertEqual(
-                msg.find_class("title")[0].text_content().strip(), "Info"
-            )
+            self.assertEqual(msg.find_class("title")[0].text_content().strip(), "Info")
 
     def test_message_render_types(self):
         with self.mock_assets() as assets:
@@ -127,9 +124,7 @@ class HTMLCase(HttpCase):
             )
             html_ = self.html_get_doc("/")
             msg = html_.find_class("alert")[0]
-            self.assertEqual(
-                msg.find_class("msg")[0].text.strip(), "no title pls!"
-            )
+            self.assertEqual(msg.find_class("msg")[0].text.strip(), "no title pls!")
             self.assertFalse(msg.find_class("title"))
 
     def test_message_render_dismissible(self):

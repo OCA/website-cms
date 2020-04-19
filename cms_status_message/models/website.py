@@ -1,7 +1,7 @@
 # Copyright 2017-2018 Camptocamp - Simone Orsi
 # License LGPL-3.0 or later (http://www.gnu.org/licenses/lgpl).
 
-from odoo import models, api, _
+from odoo import _, api, models
 from odoo.http import request
 
 
@@ -80,14 +80,10 @@ class Website(models.Model):
         else:
             # default ON
             autodismiss = True
-        timeout = (
-            params.get_param("cms_status_message.autodismiss_timeout") or ""
-        )
+        timeout = params.get_param("cms_status_message.autodismiss_timeout") or ""
         config = {
             "autodismiss": autodismiss,
-            "autodismissTimeout": int(timeout.strip())
-            if timeout.strip()
-            else 8000,
+            "autodismissTimeout": int(timeout.strip()) if timeout.strip() else 8000,
         }
         return config
 
