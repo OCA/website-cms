@@ -10,7 +10,7 @@ class CMSStatusMsgTest(http.Controller):
     display_test_template = "cms_status_message.display_test"
 
     @http.route(
-        ["/cms/status-message/display-test",],
+        "/cms/status-message/display-test",
         type="http",
         auth="public",
         website=True,
@@ -21,7 +21,5 @@ class CMSStatusMsgTest(http.Controller):
         msg = http.request.httprequest.args.get("message", "yes it works")
         msg_title = "Title"
         for type_ in ("success", "warning", "danger", "info"):
-            http.request.website.add_status_message(
-                msg, type_=type_, title=msg_title
-            )
+            http.request.website.add_status_message(msg, type_=type_, title=msg_title)
         return http.request.render(self.display_test_template)
