@@ -1,6 +1,6 @@
 # Copyright 2018 Simone Orsi (Camptocamp)
 # License LGPL-3.0 or later (http://www.gnu.org/licenses/lgpl.html).
-from odoo import models, api, exceptions, fields
+from odoo import api, exceptions, fields, models
 
 
 class CMSInfoMixin(models.AbstractModel):
@@ -21,24 +21,22 @@ class CMSInfoMixin(models.AbstractModel):
     @property
     def cms_delete_url_base(self):
         return "/cms/delete/{}".format(self._name)
-    
+
     @property
     def cms_after_delete_url(self):
-        return '/'
+        return "/"
 
     cms_edit_url = fields.Char(
         string="CMS edit URL", compute="_compute_cms_edit_url", readonly=True,
     )
-    
+
     cms_delete_url = fields.Char(
-        string='CMS delete URL',
-        compute='_compute_cms_delete_url',
-        readonly=True,
+        string="CMS delete URL", compute="_compute_cms_delete_url", readonly=True,
     )
 
     cms_delete_confirm_url = fields.Char(
-        string='CMS delete confirm URL',
-        compute='_compute_cms_delete_url',
+        string="CMS delete confirm URL",
+        compute="_compute_cms_delete_url",
         readonly=True,
     )
 
@@ -50,10 +48,12 @@ class CMSInfoMixin(models.AbstractModel):
     def _compute_cms_delete_url(self):
         base_url = self.cms_delete_url_base
         for item in self:
-            item.update({
-                "cms_delete_url": '{}/{}'.format(base_url, item.id),
-                "cms_delete_confirm_url": '{}/{}/confirm'.format(base_url, item.id),
-            })
+            item.update(
+                {
+                    "cms_delete_url": "{}/{}".format(base_url, item.id),
+                    "cms_delete_confirm_url": "{}/{}/confirm".format(base_url, item.id),
+                }
+            )
 
     def cms_is_owner(self, uid=None):
         self.ensure_one()
