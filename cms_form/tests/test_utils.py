@@ -24,10 +24,6 @@ class TestUtils(unittest.TestCase):
         self.assertEqual(utils.safe_to_float('0'), 0.0)
         self.assertEqual(utils.safe_to_float('10'), 10.0)
 
-    def test_safe_to_date(self):
-        self.assertEqual(utils.safe_to_date(''), None)
-        self.assertEqual(utils.safe_to_date('2019-01-13'), '2019-01-13')
-
     def test_string_to_bool(self):
         for val in ('on', 'yes', 'ok', 'true', True, 1, '1', ):
             self.assertTrue(utils.string_to_bool(val))

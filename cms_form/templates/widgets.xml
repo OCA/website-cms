@@ -132,16 +132,20 @@ License LGPL-3.0 or later (http://www.gnu.org/licenses/lgpl.html).
            t-att-placeholder="widget.w_placeholder"
            t-att-data-params='widget.w_data_json()'
            t-att-required="widget.w_field['required'] and '1' or None"
-           />
-    <!-- This will hold server-side value -->
-    <input type="hidden" t-att-name="widget.w_fname"
-           t-att-id="widget.w_fname"
-           t-att-value="widget.w_field_value"
-           />
-    <span class="input-group-addon js_datepicker_trigger">
-      <span class="fa fa-calendar"></span>
-    </span>
+    />
+      <!-- This will hold server-side value -->
+      <input type="hidden" t-att-name="widget.w_fname"
+             t-att-id="widget.w_fname"
+             t-att-value="widget.w_field_value"
+      />
   </div>
+
+    <!-- This can hold an error message in case an invalid date is entered -->
+    <div id="date-error" class="alert alert-danger error-msg" style="display: none">
+        <span>Date should follow the format
+            <t t-esc="widget.w_placeholder"/>
+        </span>
+    </div>
 
 </template>
 

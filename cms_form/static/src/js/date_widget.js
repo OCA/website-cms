@@ -25,17 +25,16 @@ odoo.define('cms_form.date_widget', function (require) {
         // will fail on it if non recognized params are there.
         this.$el.data('params').dp || {},
         {
-          icons: {
-            time: 'fa fa-clock-o',
-            date: 'fa fa-calendar',
-            up: 'fa fa-chevron-up',
-            down: 'fa fa-chevron-down'
-          },
-          locale: moment.locale(),
+          locale: 'en-us',
           format: time_utils.getLangDateFormat(),
-          useCurrent: false
+          uiLibrary: 'bootstrap4',
         }
       )
+      // Convert gijgo datepicker format to jquery datepicker format for date parsing
+        this.picker_options.jquery_format = this.picker_options.format
+            .replace(/yy/g, "y")
+            .replace(/dddd/g, "DD").replace(/ddd/g, "D")
+            .replace(/mmmm/g, "MM").replace(/mmm/g, "M");
     },
     setup_datepicker: function() {
       var self = this;
@@ -54,38 +53,34 @@ odoo.define('cms_form.date_widget', function (require) {
         this.$el.attr('placeholder', time_utils.getLangDateFormat());
       }
       // init bootstrap-datetimepicker
-      this.$el.datetimepicker(this.picker_options);
-      this.picker = this.$el.data('DateTimePicker');
-      this.$el.on('dp.change', function(e){
-        // Update real value field.
-        // WARNING: this format should not be touched, it matches server side.
-        var real_val = '';
-        // e.date is false when no value is set
-        if (e.date) {
-          real_val = e.date.format('YYYY-MM-DD');
-        }
-        self.$realField.val(real_val);
-      });
+
+      this.picker = this.$el.datepicker(_.defaults(
+        this.picker_options, {
+            change: function(e) {
+                // Update real value field.
+                // WARNING: this format should not be touched, it matches server side.
+                var real_val = '';
+                if (e.target.value) {
+                    try {
+                        var parsed_date = $.datepicker.parseDate(self.picker_options.jquery_format, e.target.value);
+                        real_val = $.datepicker.formatDate('yy-mm-dd', parsed_date);
+                        $("#date-error").hide();
+                    } catch (err) {
+                        // Display error below field, probably a wrong format
+                        console.log(err);
+                        $("#date-error").show();
+                    }
+                }
+                self.$realField.val(real_val);
+        }}));
       this._init_date();
-      // enable calendar icon trigger
-      this.$el
-        .closest('.input-group')
-        .find('.js_datepicker_trigger')
-        .click(function () {
-          self.picker.show();
-        });
     },
     _init_date: function () {
       var self = this;
       // retrieve current date from real field
       var defaultDate = self.$realField.val();
-      if (defaultDate) {
-        defaultDate = new Date(defaultDate);
-      } else if (self.options.defaultToday) {
-        defaultDate = new Date();
-      }
       if (defaultDate && !self.$el.val()) {
-        this.picker.date(defaultDate)
+        this.picker.value($.datepicker.formatDate(self.picker_options.jquery_format, new Date(defaultDate)));
       }
     },
     destroy: function() {
@@ -93,5 +88,7 @@ odoo.define('cms_form.date_widget', function (require) {
       this._super.apply(this, arguments);
     }
   });
+
+  return sAnimation.registry.CMSDateWidget;
 
 });

@@ -67,7 +67,7 @@ class TestWidgetDate(TestWidgetCase):
         self.assertEqual(widget.w_placeholder, 'Custom')
         self.assertEqual(
             widget.w_data_json(),
-            '{"defaultToday": true, "dp": {"format": "%m.%Y"}}'
+            '{"dp": {"format": "%m.%Y"}}'
         )
 
     def test_widget_date_input_all_elems(self):
