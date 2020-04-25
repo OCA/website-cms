@@ -1,12 +1,13 @@
 # Copyright 2017-2018 Simone Orsi
 # License LGPL-3.0 or later (http://www.gnu.org/licenses/lgpl.html).
 
-import werkzeug
 import base64
 
+import werkzeug
+
+from odoo import models
 from odoo.tools import pycompat
 from odoo.tools.mimetypes import guess_mimetype
-from odoo import models
 
 
 class BinaryWidget(models.AbstractModel):
@@ -32,9 +33,7 @@ class BinaryWidget(models.AbstractModel):
                 if not isinstance(value, pycompat.text_type):
                     value = pycompat.to_text(value)
             else:
-                if not isinstance(
-                    value, pycompat.text_type
-                ):  # pragma: no cover
+                if not isinstance(value, pycompat.text_type):  # pragma: no cover
                     value = value.encode()
                 byte_content = base64.b64decode(value)
             mimetype = guess_mimetype(byte_content)

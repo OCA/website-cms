@@ -2,18 +2,19 @@
 # License LGPL-3.0 or later (http://www.gnu.org/licenses/lgpl.html).
 
 import mock
+
 from odoo import exceptions
 from odoo.tools import mute_logger
 
 from .common import FormTestCase
-from .utils import fake_request
 from .fake_models import (
-    FakePartnerForm,
     FakeFieldsForm,
     FakePartnerChannelForm,
+    FakePartnerForm,
     FakePubModel,
     FakePubModelForm,
 )
+from .utils import fake_request
 
 
 class TestCMSForm(FormTestCase):
@@ -53,7 +54,7 @@ class TestCMSForm(FormTestCase):
         # now edit a record that has a m2o as rec name
         partner.name = "Johnny"
         partner_channel = self.env["mail.channel.partner"].create(
-            {"partner_id": partner.id,}
+            {"partner_id": partner.id}
         )
         form = self.get_form(
             "cms.form.mail.channel.partner", main_object=partner_channel

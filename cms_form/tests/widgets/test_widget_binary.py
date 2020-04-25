@@ -1,10 +1,8 @@
 # Copyright 2019 Simone Orsi
 # License LGPL-3.0 or later (http://www.gnu.org/licenses/lgpl.html).
-from odoo.addons.cms_form.tests.utils import (
-    fake_file_from_request,
-    b64_as_stream,
-)
-from .common import TestWidgetCase, fake_form, fake_field
+from odoo.addons.cms_form.tests.utils import b64_as_stream, fake_file_from_request
+
+from .common import TestWidgetCase, fake_field, fake_form
 
 TEST_IMAGE_GIF = (
     "iVBORw0KGgoAAAANSUhEUgAAAA4AAAAPCAYAAADUFP50AAAABmJLR0QA/wD/AP+gvaeTAAAAC"
@@ -51,10 +49,7 @@ class TestWidgetBinary(TestWidgetCase):
     def test_widget_binary_base(self):
         w_name, w_field = fake_field("image", type="binary",)
         widget = self.get_widget(
-            w_name,
-            w_field,
-            form=self.form,
-            widget_model="cms.form.widget.image",
+            w_name, w_field, form=self.form, widget_model="cms.form.widget.image",
         )
         node_items = self.to_xml_node(widget.render())
         self.assertEqual(len(node_items), 1)
@@ -83,10 +78,7 @@ class TestWidgetBinary(TestWidgetCase):
     def test_widget_binary_load_from_record(self):
         w_name, w_field = fake_field("image", type="binary",)
         widget = self.get_widget(
-            w_name,
-            w_field,
-            form=self.form,
-            widget_model="cms.form.widget.image",
+            w_name, w_field, form=self.form, widget_model="cms.form.widget.image",
         )
         # test conversion
         self.assertEqual(widget.w_load(image=False), {})
@@ -105,27 +97,19 @@ class TestWidgetBinary(TestWidgetCase):
     def test_widget_binary_load_from_request(self):
         w_name, w_field = fake_field("image", type="binary",)
         widget = self.get_widget(
-            w_name,
-            w_field,
-            form=self.form,
-            widget_model="cms.form.widget.image",
+            w_name, w_field, form=self.form, widget_model="cms.form.widget.image",
         )
         # test conversion
         self.assertEqual(widget.w_load(image=False), {})
 
         with b64_as_stream(TEST_IMAGE_JPG) as stream:
             req_image = fake_file_from_request(
-                "image",
-                stream=stream,
-                filename="foo.jpg",
-                content_type="image/jpeg",
+                "image", stream=stream, filename="foo.jpg", content_type="image/jpeg",
             )
             self.assertEqual(
                 widget.w_load(image=req_image),
                 {
-                    "value": "data:image/jpeg;base64,{}".format(
-                        TEST_IMAGE_JPG
-                    ),
+                    "value": "data:image/jpeg;base64,{}".format(TEST_IMAGE_JPG),
                     "raw_value": TEST_IMAGE_JPG,
                     "mimetype": "image/jpeg",
                     "from_request": True,
@@ -135,10 +119,7 @@ class TestWidgetBinary(TestWidgetCase):
     def test_widget_binary_extract_string(self):
         w_name, w_field = fake_field("image", type="binary",)
         widget = self.get_widget(
-            w_name,
-            w_field,
-            form=self.form,
-            widget_model="cms.form.widget.image",
+            w_name, w_field, form=self.form, widget_model="cms.form.widget.image",
         )
 
         # no value in request -> None
@@ -148,44 +129,31 @@ class TestWidgetBinary(TestWidgetCase):
         # value in request but no check flag -> None
         self.assertEqual(widget.w_extract(image=req_val), None)
         # value in request but keep flag is ON -> None
-        self.assertEqual(
-            widget.w_extract(image=req_val, image_keepcheck="yes"), None
-        )
+        self.assertEqual(widget.w_extract(image=req_val, image_keepcheck="yes"), None)
         # value in request but keep flag is ON -> None
         self.assertEqual(
-            widget.w_extract(image=req_val, image_keepcheck="no"),
-            TEST_IMAGE_JPG,
+            widget.w_extract(image=req_val, image_keepcheck="no"), TEST_IMAGE_JPG,
         )
 
     def test_widget_binary_extract_filestorage(self):
         w_name, w_field = fake_field("image", type="binary",)
         widget = self.get_widget(
-            w_name,
-            w_field,
-            form=self.form,
-            widget_model="cms.form.widget.image",
+            w_name, w_field, form=self.form, widget_model="cms.form.widget.image",
         )
 
         # value in request but no check flag -> None
         with b64_as_stream(TEST_IMAGE_JPG) as stream:
             req_val = fake_file_from_request(
-                "image",
-                stream=stream,
-                filename="foo.jpg",
-                content_type="image/jpeg",
+                "image", stream=stream, filename="foo.jpg", content_type="image/jpeg",
             )
             self.assertEqual(
-                widget.w_extract(image=req_val, image_keepcheck="no"),
-                TEST_IMAGE_JPG,
+                widget.w_extract(image=req_val, image_keepcheck="no"), TEST_IMAGE_JPG,
             )
 
     def test_widget_binary_check_empty(self):
         w_name, w_field = fake_field("image", type="binary",)
         widget = self.get_widget(
-            w_name,
-            w_field,
-            form=self.form,
-            widget_model="cms.form.widget.image",
+            w_name, w_field, form=self.form, widget_model="cms.form.widget.image",
         )
 
         # no value at all -> empty
@@ -200,35 +168,25 @@ class TestWidgetBinary(TestWidgetCase):
             self.assertIs(widget.w_check_empty_value(req_val), True)
             # no filename and keep flag -> empty, since we want to preserve
             self.assertIs(
-                widget.w_check_empty_value(req_val, image_keepcheck="yes"),
-                False,
+                widget.w_check_empty_value(req_val, image_keepcheck="yes"), False,
             )
             req_val = fake_file_from_request(
-                "image",
-                stream=stream,
-                filename="foo.jpg",
-                content_type="image/jpeg",
+                "image", stream=stream, filename="foo.jpg", content_type="image/jpeg",
             )
             # got file w/ filename and no keep flag -> not empty
             self.assertIs(widget.w_check_empty_value(req_val), False)
             req_val = fake_file_from_request(
-                "image",
-                stream=stream,
-                filename="foo.jpg",
-                content_type="image/jpeg",
+                "image", stream=stream, filename="foo.jpg", content_type="image/jpeg",
             )
             # got file w/ filename and yes keep flag -> not empty
             self.assertIs(
-                widget.w_check_empty_value(req_val, image_keepcheck="yes"),
-                False,
+                widget.w_check_empty_value(req_val, image_keepcheck="yes"), False,
             )
             # got file w/ filename and no keep flag -> not empty
             self.assertIs(
-                widget.w_check_empty_value(req_val, image_keepcheck="no"),
-                False,
+                widget.w_check_empty_value(req_val, image_keepcheck="no"), False,
             )
             # got file w/ filename and yes keep flag -> not empty
             self.assertIs(
-                widget.w_check_empty_value(req_val, image_keepcheck="yes"),
-                False,
+                widget.w_check_empty_value(req_val, image_keepcheck="yes"), False,
             )

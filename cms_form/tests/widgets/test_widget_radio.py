@@ -1,6 +1,6 @@
 # Copyright 2019 Simone Orsi
 # License LGPL-3.0 or later (http://www.gnu.org/licenses/lgpl.html).
-from .common import TestWidgetCase, fake_form, fake_field
+from .common import TestWidgetCase, fake_field, fake_form
 
 
 class TestWidgetRadio(TestWidgetCase):
@@ -22,10 +22,7 @@ class TestWidgetRadio(TestWidgetCase):
             "radio_field", type="selection", selection=select_options,
         )
         widget = self.get_widget(
-            w_name,
-            w_field,
-            form=self.form,
-            widget_model="cms.form.widget.radio",
+            w_name, w_field, form=self.form, widget_model="cms.form.widget.radio",
         )
         node = self.to_xml_node(widget.render())[0]
         self.assertIn("radio-select", node.attrib["class"])

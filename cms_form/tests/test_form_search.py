@@ -1,14 +1,15 @@
 # Copyright 2017-2018 Simone Orsi
 # License LGPL-3.0 or later (http://www.gnu.org/licenses/lgpl.html).
 
+import mock
+
 from .common import FormTestCase
-from .utils import fake_request
 from .fake_models import (
     FakePartnerForm,
     FakeSearchPartnerForm,
     FakeSearchPartnerFormMulti,
 )
-import mock
+from .utils import fake_request
 
 
 class TestCMSSearchForm(FormTestCase):
@@ -32,9 +33,7 @@ class TestCMSSearchForm(FormTestCase):
 
     @classmethod
     def _setup_records(cls):
-        cls.partner_model = cls.env["res.partner"].with_context(
-            tracking_disable=True
-        )
+        cls.partner_model = cls.env["res.partner"].with_context(tracking_disable=True)
 
         cls.expected_partners = []
         cls.expected_partners_ids = []
@@ -48,13 +47,9 @@ class TestCMSSearchForm(FormTestCase):
 
         for name, country_id in cls._expected_partners:
             cls.expected_partners_ids.append(
-                cls.partner_model.create(
-                    {"name": name, "country_id": country_id,}
-                ).id
+                cls.partner_model.create({"name": name, "country_id": country_id}).id
             )
-        cls.expected_partners = cls.partner_model.browse(
-            cls.expected_partners_ids
-        )
+        cls.expected_partners = cls.partner_model.browse(cls.expected_partners_ids)
 
     def assert_results(self, form, count, expected):
         self.assertTrue("results" in form.form_search_results)
@@ -67,9 +62,7 @@ class TestCMSSearchForm(FormTestCase):
             sorted(expected.mapped("id")),
         )
 
-    def get_search_form(
-        self, data, form_model="cms.form.search.res.partner", **kw
-    ):
+    def get_search_form(self, data, form_model="cms.form.search.res.partner", **kw):
         request = fake_request(form_data=data)
         form = self.get_form(form_model, req=request, **kw)
         # restrict search results to these ids
@@ -94,16 +87,16 @@ class TestCMSSearchForm(FormTestCase):
 
         def mock_fields(form):
             return {
-                "char_field": {"type": "char",},
-                "text_field": {"type": "text",},
-                "int_field": {"type": "integer",},
-                "float_field": {"type": "float",},
-                "m2o_field": {"type": "many2one",},
-                "bool_field": {"type": "boolean",},
-                "date_field": {"type": "date",},
-                "datetime_field": {"type": "date",},
-                "o2m_field": {"type": "one2many",},
-                "m2m_field": {"type": "many2many",},
+                "char_field": {"type": "char"},
+                "text_field": {"type": "text"},
+                "int_field": {"type": "integer"},
+                "float_field": {"type": "float"},
+                "m2o_field": {"type": "many2one"},
+                "bool_field": {"type": "boolean"},
+                "date_field": {"type": "date"},
+                "datetime_field": {"type": "date"},
+                "o2m_field": {"type": "one2many"},
+                "m2m_field": {"type": "many2many"},
             }
 
         with mock.patch.object(type(form), "form_fields", mock_fields):
@@ -129,8 +122,7 @@ class TestCMSSearchForm(FormTestCase):
                 ("o2m_field", "in", [1, 2, 3]),
             ]
             self.assertEqual(
-                sorted(form.form_search_domain(search_values)),
-                sorted(expected),
+                sorted(form.form_search_domain(search_values)), sorted(expected),
             )
 
     def test_search(self):
@@ -208,9 +200,7 @@ class TestCMSSearchForm(FormTestCase):
             property(lambda x: ""),
             create=True,
         ):
-            self.assertEqual(
-                form._form_get_url_for_pager({}), "/search/custom"
-            )
+            self.assertEqual(form._form_get_url_for_pager({}), "/search/custom")
 
     def test_search_multi(self):
         countries = [
@@ -228,9 +218,7 @@ class TestCMSSearchForm(FormTestCase):
         self.assert_results(form, 3, expected)
 
     def test_search_form_bypass_security_check(self):
-        form = self.get_search_form(
-            {}, sudo_uid=self.env.ref("base.public_user").id
-        )
+        form = self.get_search_form({}, sudo_uid=self.env.ref("base.public_user").id)
         self.assertTrue(form.form_check_permission())
 
     def test_search_custom_rules(self):
@@ -246,10 +234,7 @@ class TestCMSSearchForm(FormTestCase):
             "country_id": "Italy",
         }
         form = self.get_search_form(
-            data,
-            search_domain_rules={
-                "country_id": ("country_id.name", "ilike", "")
-            },
+            data, search_domain_rules={"country_id": ("country_id.name", "ilike", "")},
         )
         form.form_process()
         self.assert_results(form, 2, self.expected_partners[:2])

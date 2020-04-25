@@ -1,7 +1,8 @@
 # Copyright 2018 Simone Orsi
 # License LGPL-3.0 or later (http://www.gnu.org/licenses/lgpl.html).
-from odoo.tests.common import SavepointCase
 import mock
+
+from odoo.tests.common import SavepointCase
 
 from ..common import HTMLRenderMixin
 

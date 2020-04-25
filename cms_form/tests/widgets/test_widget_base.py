@@ -37,17 +37,13 @@ class TestWidgetBase(TestWidgetCase, FakeModelMixin):
 
     def test_w_load(self):
         name, field = fake_field("foo")
-        widget = self.get_widget(
-            name, field, widget_model="cms.form.widget.char"
-        )
+        widget = self.get_widget(name, field, widget_model="cms.form.widget.char")
         # no value from default, nor from request, nor from record
         self.assertEqual(widget.w_load(), None)
         # get value from default. Default values from ORM
         # are stored into internal key `_default` by `cms.form.mixin`
         field["_default"] = "oh yeah"
-        widget = self.get_widget(
-            name, field, widget_model="cms.form.widget.char"
-        )
+        widget = self.get_widget(name, field, widget_model="cms.form.widget.char")
         self.assertEqual(widget.w_load(), "oh yeah")
         # get value from request and it has precedence over default
         self.assertEqual(widget.w_load(foo="daje"), "daje")
@@ -61,33 +57,26 @@ class TestWidgetBase(TestWidgetCase, FakeModelMixin):
 
     def test_w_extract(self):
         name, field = fake_field("foo")
-        widget = self.get_widget(
-            name, field, widget_model="cms.form.widget.char"
-        )
+        widget = self.get_widget(name, field, widget_model="cms.form.widget.char")
         # no val in request
         self.assertEqual(widget.w_extract(), None)
         self.assertEqual(widget.w_extract(foo="yo!"), "yo!")
 
     def test_w_ids_from_input(self):
         name, field = fake_field("foo")
-        widget = self.get_widget(
-            name, field, widget_model="cms.form.widget.char"
-        )
+        widget = self.get_widget(name, field, widget_model="cms.form.widget.char")
         self.assertEqual(widget.w_ids_from_input(""), [])
         # not valid values are skipped
         self.assertEqual(
-            widget.w_ids_from_input("1,2,3,#4, 70, 1XX, 200"),
-            [1, 2, 3, 70, 200],
+            widget.w_ids_from_input("1,2,3,#4, 70, 1XX, 200"), [1, 2, 3, 70, 200],
         )
 
     def test_subfields_get(self):
         form = get_form(
             self.env,
             "cms.form.res.partner",
-            sub_fields={"name": {"_all": ("custom",)},},
+            sub_fields={"name": {"_all": ("custom",)}},
         )
         fields = form.form_fields()
         widget = self.get_widget("name", fields["name"], form=form)
-        self.assertEqual(
-            widget.w_subfields_by_value(), {"custom": fields["custom"]}
-        )
+        self.assertEqual(widget.w_subfields_by_value(), {"custom": fields["custom"]})
