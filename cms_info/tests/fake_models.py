@@ -6,7 +6,7 @@ from odoo import fields, models
 
 class FakeModel(models.TransientModel):
     _name = "fake.model"
-    _inherit = "website.published.mixin"
-    _test_setup_ACL = True
+    _description = "Testing fake model"
+    _inherit = "cms.info.mixin"
 
     name = fields.Char()
