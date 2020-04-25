@@ -4,23 +4,30 @@ from odoo import api, exceptions, fields, models
 
 
 class CMSInfoMixin(models.AbstractModel):
+    """Provide core information for CMS records.
+    """
+
     _name = "cms.info.mixin"
+    _description = "CMS Info mixin"
+
+    def _cms_make_url(self, action):
+        return "/cms/{}/{}".format(action, self._name)
 
     @property
     def cms_create_url(self):
-        return "/cms/create/{}".format(self._name)
+        return self._cms_make_url("create")
 
     @property
     def cms_search_url(self):
-        return "/cms/search/{}".format(self._name)
+        return self._cms_make_url("search")
 
     @property
     def cms_edit_url_base(self):
-        return "/cms/edit/{}".format(self._name)
+        return self._cms_make_url("edit")
 
     @property
     def cms_delete_url_base(self):
-        return "/cms/delete/{}".format(self._name)
+        return self._cms_make_url("delete")
 
     @property
     def cms_after_delete_url(self):
