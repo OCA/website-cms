@@ -2,7 +2,9 @@
 # License LGPL-3.0 or later (http://www.gnu.org/licenses/lgpl.html).
 
 from lxml import html
-from odoo.tests.common import SavepointCase, HttpCase
+
+from odoo.tests.common import HttpCase, SavepointCase
+
 from .utils import (
     fake_request,
     fake_session,
@@ -12,9 +14,7 @@ from .utils import (
 )
 
 
-def get_form(
-    env, form_model, req=None, session=None, ctx=None, sudo_uid=None, **kw
-):
+def get_form(env, form_model, req=None, session=None, ctx=None, sudo_uid=None, **kw):
     """Retrieve and initialize a form.
 
     :param form_model: model dotted name
@@ -61,9 +61,7 @@ class HTMLRenderMixin(object):
         return html.fragments_fromstring(html_)
 
     def find_input_name(self, node, name):
-        return node.xpath(
-            '(//input|//select|//textarea)[@name="{}"]'.format(name)
-        )
+        return node.xpath('(//input|//select|//textarea)[@name="{}"]'.format(name))
 
     def assert_match_attrs(self, value, expected):
         for k, v in expected.items():

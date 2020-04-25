@@ -2,6 +2,7 @@
 # License LGPL-3.0 or later (http://www.gnu.org/licenses/lgpl.html).
 
 import unittest
+
 from .. import utils
 
 
@@ -55,4 +56,4 @@ class TestUtils(unittest.TestCase):
         with self.assertRaises(ValueError):
             utils.data_merge({"a": {"x": 1, "y": 2}}, {"a": ["not", "compat"]})
         with self.assertRaises(NotImplementedError):
-            utils.data_merge({"a": set([1, 2, 3])}, {"a": set([4,])})
+            utils.data_merge({"a": {1, 2, 3}}, {"a": {4}})

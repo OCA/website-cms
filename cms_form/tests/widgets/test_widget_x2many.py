@@ -1,7 +1,8 @@
 # Copyright 2019 Simone Orsi
 # License LGPL-3.0 or later (http://www.gnu.org/licenses/lgpl.html).
 import json
-from .common import TestWidgetCase, fake_form, fake_field
+
+from .common import TestWidgetCase, fake_field, fake_form
 
 
 class TestWidgetX2M(TestWidgetCase):
@@ -23,10 +24,7 @@ class TestWidgetX2M(TestWidgetCase):
             domain=[("id", "in", self.partners.ids)],
         )
         widget = self.get_widget(
-            w_name,
-            w_field,
-            form=self.form,
-            widget_model="cms.form.widget.many2many",
+            w_name, w_field, form=self.form, widget_model="cms.form.widget.many2many",
         )
         self.assertEqual(widget.w_comodel, self.env["res.partner"])
         self.assertEqual(widget.w_domain, [("id", "in", self.partners.ids)])
@@ -36,10 +34,7 @@ class TestWidgetX2M(TestWidgetCase):
             "m2m_field", type="many2many", relation="res.partner",
         )
         widget = self.get_widget(
-            w_name,
-            w_field,
-            form=self.form,
-            widget_model="cms.form.widget.many2many",
+            w_name, w_field, form=self.form, widget_model="cms.form.widget.many2many",
         )
         expected_attrs = {
             "id": "m2m_field",
@@ -58,10 +53,7 @@ class TestWidgetX2M(TestWidgetCase):
             "m2m_field", type="many2many", relation="res.partner",
         )
         widget = self.get_widget(
-            w_name,
-            w_field,
-            form=self.form,
-            widget_model="cms.form.widget.many2many",
+            w_name, w_field, form=self.form, widget_model="cms.form.widget.many2many",
         )
         # test conversion
         self.assertEqual(widget.w_load(m2m_field=False), "[]")
@@ -81,10 +73,7 @@ class TestWidgetX2M(TestWidgetCase):
             "category_id", type="many2many", relation=categs._name,
         )
         widget = self.get_widget(
-            w_name,
-            w_field,
-            form=form,
-            widget_model="cms.form.widget.many2many",
+            w_name, w_field, form=form, widget_model="cms.form.widget.many2many",
         )
         # flush categories if any
         partner.category_id = False
@@ -108,10 +97,7 @@ class TestWidgetX2M(TestWidgetCase):
             "m2m_field", type="many2many", relation="res.partner",
         )
         widget = self.get_widget(
-            w_name,
-            w_field,
-            form=self.form,
-            widget_model="cms.form.widget.many2many",
+            w_name, w_field, form=self.form, widget_model="cms.form.widget.many2many",
         )
         # test conversion
         self.assertEqual(widget.w_extract(m2m_field="1,2,3"), [1, 2, 3])
@@ -121,10 +107,7 @@ class TestWidgetX2M(TestWidgetCase):
             "m2m_field", type="many2many", relation="res.partner",
         )
         widget = self.get_widget(
-            w_name,
-            w_field,
-            form=self.form,
-            widget_model="cms.form.widget.many2many",
+            w_name, w_field, form=self.form, widget_model="cms.form.widget.many2many",
         )
         self.assertEqual(widget.w_load(m2m_field=""), "[]")
         # empty value from default_get

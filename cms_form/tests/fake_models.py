@@ -44,9 +44,7 @@ class FakeSearchPartnerForm(models.AbstractModel):
 
     def form_search_domain(self, search_values):
         """Force domain to include only test-created records."""
-        domain = super(FakeSearchPartnerForm, self).form_search_domain(
-            search_values
-        )
+        domain = super(FakeSearchPartnerForm, self).form_search_domain(search_values)
         # we use this attr in tests to limit search results
         # to test records' scope
         include_only_ids = getattr(self, "test_record_ids", [])
@@ -65,9 +63,7 @@ class FakeSearchPartnerFormMulti(models.AbstractModel):
     @property
     def form_widgets(self):
         res = super().form_widgets
-        res.update(
-            {"country_id": "cms.form.widget.many2one.multi",}
-        )
+        res.update({"country_id": "cms.form.widget.many2one.multi"})
         return res
 
 
@@ -122,7 +118,7 @@ class FakeFieldsFormWithFieldsets(models.AbstractModel):
     _name = "cms.form.test_fieldsets"
     _inherit = "cms.form.test_fields"
     _form_fieldsets = [
-        {"id": "main", "fields": ["a_char",],},
+        {"id": "main", "fields": ["a_char"]},
         {
             "id": "numbers",
             "title": "Number fields",
@@ -135,7 +131,7 @@ class FakeFieldsFormWithFieldsets(models.AbstractModel):
             "title": "Only relations here",
             "fields": ["a_many2one", "a_many2many", "a_one2many"],
         },
-        {"id": "protected", "fields": ["ihaveagroup"],},
+        {"id": "protected", "fields": ["ihaveagroup"]},
     ]
     ihaveagroup = fields.Char(groups="website.group_website_designer")
 

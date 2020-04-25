@@ -1,7 +1,6 @@
 # Copyright 2018 Simone Orsi
 # License LGPL-3.0 or later (http://www.gnu.org/licenses/lgpl.html).
-from .common import TestWidgetCase, fake_form, fake_field
-
+from .common import TestWidgetCase, fake_field, fake_form
 
 TXT = """Lorem ipsum dolor sit amet, mea te propriae verterem.
 Soluta viderer no vis. Ut populo suscipit vel.
@@ -18,10 +17,7 @@ class TestWidgetTxt(TestWidgetCase):
     def test_widget_char_input(self):
         w_name, w_field = fake_field("a_char_field")
         widget = self.get_widget(
-            w_name,
-            w_field,
-            form=self.form,
-            widget_model="cms.form.widget.char",
+            w_name, w_field, form=self.form, widget_model="cms.form.widget.char",
         )
         expected_attrs = {
             "type": "text",
@@ -39,34 +35,22 @@ class TestWidgetTxt(TestWidgetCase):
     def test_widget_text_input(self):
         w_name, w_field = fake_field("a_text_field", type="text")
         widget = self.get_widget(
-            w_name,
-            w_field,
-            form=self.form,
-            widget_model="cms.form.widget.text",
+            w_name, w_field, form=self.form, widget_model="cms.form.widget.text",
         )
         expected_attrs = {
             "id": "a_text_field",
             "name": "a_text_field",
             "class": "form-control ",
         }
-        self._test_widget_attributes(
-            widget, "textarea", expected_attrs, text=TXT
-        )
+        self._test_widget_attributes(widget, "textarea", expected_attrs, text=TXT)
         widget.w_field["required"] = True
         expected_attrs["required"] = "1"
-        self._test_widget_attributes(
-            widget, "textarea", expected_attrs, text=TXT
-        )
+        self._test_widget_attributes(widget, "textarea", expected_attrs, text=TXT)
 
     def test_widget_text_input_maxlength(self):
-        w_name, w_field = fake_field(
-            "a_text_field", type="text", maxlength=100
-        )
+        w_name, w_field = fake_field("a_text_field", type="text", maxlength=100)
         widget = self.get_widget(
-            w_name,
-            w_field,
-            form=self.form,
-            widget_model="cms.form.widget.text",
+            w_name, w_field, form=self.form, widget_model="cms.form.widget.text",
         )
         node_items = self.to_xml_node(widget.render())
         self.assertEqual(len(node_items), 2)

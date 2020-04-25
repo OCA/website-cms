@@ -2,15 +2,16 @@
 # License LGPL-3.0 or later (http://www.gnu.org/licenses/lgpl.html).
 
 import base64
-from contextlib import contextmanager
 import io
-import mock
 import urllib.parse
-from werkzeug.wrappers import Request
+from contextlib import contextmanager
+
+import mock
 from werkzeug.contrib.sessions import SessionStore
 from werkzeug.datastructures import FileStorage
+from werkzeug.wrappers import Request
 
-from odoo import http, api
+from odoo import api, http
 from odoo.tests.common import get_db_name
 
 

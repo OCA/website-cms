@@ -2,6 +2,7 @@
 # License LGPL-3.0 or later (http://www.gnu.org/licenses/lgpl.html).
 
 import json
+
 from odoo import models
 
 
@@ -30,9 +31,7 @@ class Widget(models.AbstractModel):
         widget.w_form_values = form.form_render_values
         widget.w_fname = fname
         widget.w_field = field
-        widget.w_field_value = widget.w_form_values.get("form_data", {}).get(
-            fname
-        )
+        widget.w_field_value = widget.w_form_values.get("form_data", {}).get(fname)
         widget.w_data = data or {}
         widget.w_subfields = subfields or field.get("subfields", {})
         widget._w_template = template or self._w_template

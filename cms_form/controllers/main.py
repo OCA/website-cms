@@ -2,9 +2,10 @@
 # License LGPL-3.0 or later (http://www.gnu.org/licenses/lgpl.html).
 
 import json
+
 import werkzeug
 
-from odoo import http, _
+from odoo import _, http
 from odoo.http import request
 
 
@@ -46,9 +47,7 @@ class FormControllerMixin(object):
         #    Most common example: field named `website` will override
         #    odoo record for current website.
         vals = {k: v for k, v in kw.items() if k not in form.form_fields()}
-        vals.update(
-            {"form": form, "main_object": main_object, "controller": self,}
-        )
+        vals.update({"form": form, "main_object": main_object, "controller": self})
         return vals
 
     def form_model_key(self, model, **kw):
@@ -77,9 +76,7 @@ class FormControllerMixin(object):
             # TODO: enable form by default?
             # How? with a flag on ir.model.model?
             # And which fields to include automatically?
-            raise NotImplementedError(
-                _("%s model has no CMS form registered.") % model
-            )
+            raise NotImplementedError(_("%s model has no CMS form registered.") % model)
         return form
 
     def make_response(self, model, model_id=None, **kw):
@@ -104,9 +101,7 @@ class FormControllerMixin(object):
         # pass only specific extra args, to not pollute form render values
         form.form_process(extra_args={"page": kw.get("page")})
         # search forms do not need these attrs
-        if getattr(form, "form_success", None) and getattr(
-            form, "form_redirect", None
-        ):
+        if getattr(form, "form_success", None) and getattr(form, "form_redirect", None):
             # anything went fine, redirect to next url
             # https://developer.mozilla.org/en-US/docs/Web/HTTP/Status/303
             return werkzeug.utils.redirect(form.form_next_url(), code=303)
@@ -135,10 +130,7 @@ class CMSFormController(http.Controller, FormControllerMixin):
     """CMS form controller."""
 
     @http.route(
-        [
-            "/cms/create/<string:model>",
-            "/cms/edit/<string:model>/<int:model_id>",
-        ],
+        ["/cms/create/<string:model>", "/cms/edit/<string:model>/<int:model_id>"],
         type="http",
         auth="user",
         website=True,
@@ -173,7 +165,7 @@ class CMSWizardFormController(http.Controller, WizardFormControllerMixin):
     """CMS wizard controller."""
 
     @http.route(
-        ["/cms/wiz/<string:wiz_model>/page/<int:page>",],
+        ["/cms/wiz/<string:wiz_model>/page/<int:page>"],
         type="http",
         auth="user",
         website=True,
@@ -193,9 +185,7 @@ class SearchFormControllerMixin(FormControllerMixin):
 
     def get_render_values(self, form, **kw):
         values = super().get_render_values(form, **kw)
-        values.update(
-            {"pager": form.form_search_results["pager"],}
-        )
+        values.update({"pager": form.form_search_results["pager"]})
         return values
 
 
@@ -203,10 +193,7 @@ class CMSSearchFormController(http.Controller, SearchFormControllerMixin):
     """CMS form controller."""
 
     @http.route(
-        [
-            "/cms/search/<string:model>",
-            "/cms/search/<string:model>/page/<int:page>",
-        ],
+        ["/cms/search/<string:model>", "/cms/search/<string:model>/page/<int:page>"],
         type="http",
         auth="public",
         website=True,
@@ -232,9 +219,7 @@ class CMSSearchFormController(http.Controller, SearchFormControllerMixin):
 
     def _make_response_ajax_content(self, response):
         return (
-            request.env.ref(
-                response.qcontext["form"].form_search_results_template
-            )
+            request.env.ref(response.qcontext["form"].form_search_results_template)
             .render(response.qcontext)
             .decode("utf8")
         )

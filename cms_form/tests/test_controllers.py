@@ -1,16 +1,16 @@
 # Copyright 2017-2018 Simone Orsi
 # License LGPL-3.0 or later (http://www.gnu.org/licenses/lgpl.html).
 
-from contextlib import contextmanager
-import mock
 import os
 import unittest
+from contextlib import contextmanager
 
-from .common import FormHttpTestCase
+import mock
+
 from ..controllers import main
-from .fake_models import FakePartnerForm, FakeSearchPartnerForm, WIZ_KLASSES
+from .common import FormHttpTestCase
+from .fake_models import WIZ_KLASSES, FakePartnerForm, FakeSearchPartnerForm
 from .utils import fake_request
-
 
 IMPORT = "odoo.addons.cms_form.controllers.main"
 
@@ -18,10 +18,7 @@ IMPORT = "odoo.addons.cms_form.controllers.main"
 @unittest.skipIf(os.getenv("SKIP_HTTP_CASE"), "HTTP case disabled.")
 class TestControllers(FormHttpTestCase):
 
-    TEST_MODELS_KLASSES = [
-        FakePartnerForm,
-        FakeSearchPartnerForm,
-    ] + WIZ_KLASSES
+    TEST_MODELS_KLASSES = [FakePartnerForm, FakeSearchPartnerForm] + WIZ_KLASSES
 
     def setUp(self):
         super().setUp()
@@ -47,14 +44,11 @@ class TestControllers(FormHttpTestCase):
             form = self.form_controller.get_form("res.partner")
             # default
             self.assertEqual(
-                self.form_controller.get_template(form),
-                "cms_form.form_wrapper",
+                self.form_controller.get_template(form), "cms_form.form_wrapper",
             )
             # custom on form
             form.form_wrapper_template = "foo.baz"
-            self.assertEqual(
-                self.form_controller.get_template(form), "foo.baz"
-            )
+            self.assertEqual(self.form_controller.get_template(form), "foo.baz")
             self.form_controller.template = None
             form.form_wrapper_template = None
             with self.assertRaises(NotImplementedError):
@@ -74,9 +68,7 @@ class TestControllers(FormHttpTestCase):
             )
             # get a main obj
             partner = self.env.ref("base.res_partner_12")
-            form = self.form_controller.get_form(
-                "res.partner", model_id=partner.id
-            )
+            form = self.form_controller.get_form("res.partner", model_id=partner.id)
             self.assertEqual(
                 self.form_controller.get_render_values(form),
                 {
@@ -127,9 +119,7 @@ class TestControllers(FormHttpTestCase):
             # we have a specific form here
             form = self.form_search_controller.get_form("res.partner")
             self.assertTrue(
-                isinstance(
-                    form, self.env["cms.form.search.res.partner"].__class__
-                )
+                isinstance(form, self.env["cms.form.search.res.partner"].__class__)
             )
             self.assertEqual(form._form_model, "res.partner")
             self.assertEqual(form.form_mode, "search")
@@ -193,23 +183,15 @@ class TestControllers(FormHttpTestCase):
 
     def test_default_create_rendering(self):
         dom = self.html_get("/cms/create/res.partner")
-        self._check_rendering(
-            dom, "cms.form.res.partner", "res.partner", "create"
-        )
+        self._check_rendering(dom, "cms.form.res.partner", "res.partner", "create")
 
     def test_default_edit_rendering(self):
         partner = self.env.ref("base.res_partner_1")
         dom = self.html_get("/cms/edit/res.partner/{}".format(partner.id))
-        self._check_rendering(
-            dom, "cms.form.res.partner", "res.partner", "edit"
-        )
+        self._check_rendering(dom, "cms.form.res.partner", "res.partner", "edit")
 
-    def _check_wiz_rendering(
-        self, dom, form_model, model, mode, extra_klass=""
-    ):
-        self._check_rendering(
-            dom, form_model, model, mode, extra_klass=extra_klass
-        )
+    def _check_wiz_rendering(self, dom, form_model, model, mode, extra_klass=""):
+        self._check_rendering(dom, form_model, model, mode, extra_klass=extra_klass)
         # TODO: check more (paging etc)
 
     def test_default_wiz_rendering(self):

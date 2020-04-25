@@ -1,6 +1,6 @@
 # Copyright 2018 Simone Orsi
 # License LGPL-3.0 or later (http://www.gnu.org/licenses/lgpl.html).
-from .common import TestWidgetCase, fake_form, fake_field
+from .common import TestWidgetCase, fake_field, fake_form
 
 
 class TestWidgetBoolean(TestWidgetCase):

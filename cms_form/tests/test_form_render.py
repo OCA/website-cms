@@ -45,9 +45,7 @@ class TestRender(FormRenderTestCase):
             "a_one2many",
         )
         # all fields are rendered
-        self.assertEqual(
-            len(node[0].xpath("//input|//select")), len(expected_fields)
-        )
+        self.assertEqual(len(node[0].xpath("//input|//select")), len(expected_fields))
         self.assert_match_inputs(node, expected_fields)
 
     def test_field_wrapper_attrs(self):
@@ -66,9 +64,7 @@ class TestRender(FormRenderTestCase):
         for fname in expected_fields:
             fnode = self.find_input_name(node, fname)[0]
             # catch 2nd one since the 1st is the main `form-fields` wrapper
-            fwrapper = fnode.xpath(
-                "ancestor::div[contains(@class, 'form-field')]"
-            )[1]
+            fwrapper = fnode.xpath("ancestor::div[contains(@class, 'form-field')]")[1]
             self.assertEqual(
                 fwrapper.attrib["class"],
                 form.form_make_field_wrapper_klass(fname, form_fields[fname]),
@@ -90,9 +86,7 @@ class TestRender(FormRenderTestCase):
             "a_one2many",
         )
         # all fields are rendered
-        self.assertEqual(
-            len(node[0].xpath("//input|//select")), len(expected_fields)
-        )
+        self.assertEqual(len(node[0].xpath("//input|//select")), len(expected_fields))
         self.assert_match_inputs(node, expected_fields)
         # and they are organized by fieldset
         for fset in form.form_fieldsets():
@@ -104,9 +98,7 @@ class TestRender(FormRenderTestCase):
                 desc_node = fset_node.find('p[@class="fieldset-description"]')
                 self.assertEqual(desc_node.text, fset["description"])
             if fset.get("css_extra_klass"):
-                self.assertEqual(
-                    fset_node.attrib["class"], fset["css_extra_klass"]
-                )
+                self.assertEqual(fset_node.attrib["class"], fset["css_extra_klass"])
             # check all fields are contained into it
             self.assert_match_inputs(fset_node, fset["fields"])
 
@@ -127,9 +119,7 @@ class TestRender(FormRenderTestCase):
             "a_one2many",
         )
         # all fields are rendered
-        self.assertEqual(
-            len(node[0].xpath("//input|//select")), len(expected_fields)
-        )
+        self.assertEqual(len(node[0].xpath("//input|//select")), len(expected_fields))
         self.assert_match_inputs(node, expected_fields)
         # protected field is not there
         self.assertFalse(node[0].xpath('//input[@name="ihaveagroup"]'))

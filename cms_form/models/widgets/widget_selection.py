@@ -32,8 +32,7 @@ class SelectionWidget(models.AbstractModel):
     @property
     def w_option_items(self):
         return [
-            {"value": x[0], "label": x[1]}
-            for x in self.w_field.get("selection", [])
+            {"value": x[0], "label": x[1]} for x in self.w_field.get("selection", [])
         ]
 
 
@@ -46,8 +45,6 @@ class RadioSelectionWidget(models.AbstractModel):
     w_options_help = {}
 
     def widget_init(self, form, fname, field, **kw):
-        widget = super(RadioSelectionWidget, self).widget_init(
-            form, fname, field, **kw
-        )
+        widget = super(RadioSelectionWidget, self).widget_init(form, fname, field, **kw)
         widget.w_options_help = kw.get("options_help") or {}
         return widget
