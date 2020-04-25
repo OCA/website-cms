@@ -10,6 +10,7 @@ from ... import utils
 class DateWidget(models.AbstractModel):
     _name = "cms.form.widget.date"
     _inherit = "cms.form.widget.mixin"
+    _description = "CMS Form date widget"
     _w_template = "cms_form.field_widget_date"
 
     # Both default to current lang format.

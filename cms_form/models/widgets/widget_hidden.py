@@ -7,6 +7,7 @@ from odoo import models
 class HiddenWidget(models.AbstractModel):
     _name = "cms.form.widget.hidden"
     _inherit = "cms.form.widget.mixin"
+    _description = "CMS Form hidden widget"
     _w_template = "cms_form.field_widget_hidden"
 
     @property

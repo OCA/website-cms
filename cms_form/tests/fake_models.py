@@ -9,6 +9,7 @@ class FakePartnerForm(models.AbstractModel):
 
     _name = "cms.form.res.partner"
     _inherit = "cms.form"
+    _description = "CMS Form test partner form"
     _form_model = "res.partner"
     _form_model_fields = ("name", "country_id")
     _form_required_fields = ("name", "country_id")
@@ -24,6 +25,7 @@ class FakePartnerFormProtectedFields(models.AbstractModel):
 
     _name = "cms.form.protected.fields"
     _inherit = "cms.form"
+    _description = "CMS Form test partner protected fields form"
     # we'll test specifically that ordering won't break
     _form_fields_order = ["ihaveagroup", "nogroup"]
 
@@ -36,6 +38,7 @@ class FakeSearchPartnerForm(models.AbstractModel):
 
     _name = "cms.form.search.res.partner"
     _inherit = "cms.form.search"
+    _description = "CMS Form test partner search form"
     _form_model = "res.partner"
     _form_model_fields = (
         "name",
@@ -58,6 +61,7 @@ class FakeSearchPartnerFormMulti(models.AbstractModel):
 
     _name = "cms.form.search.res.partner.multicountry"
     _inherit = "cms.form.search.res.partner"
+    _description = "CMS Form test partner search multi form"
     _form_search_fields_multi = ("country_id",)
 
     @property
@@ -72,6 +76,7 @@ class FakePartnerChannelForm(models.AbstractModel):
 
     _name = "cms.form.mail.channel.partner"
     _inherit = "cms.form"
+    _description = "CMS Form test partner channel form"
     # This model has `_rec_name = 'partner_id'` and allows us
     # to test a specific case for form_title computation
     _form_model = "mail.channel.partner"
@@ -82,6 +87,7 @@ class FakeFieldsForm(models.AbstractModel):
 
     _name = "cms.form.test_fields"
     _inherit = "cms.form"
+    _description = "CMS Form test fields form"
 
     a_char = fields.Char()
     a_number = fields.Integer()
@@ -117,6 +123,7 @@ class FakeFieldsFormWithFieldsets(models.AbstractModel):
 
     _name = "cms.form.test_fieldsets"
     _inherit = "cms.form.test_fields"
+    _description = "CMS Form test fieldsets form"
     _form_fieldsets = [
         {"id": "main", "fields": ["a_char"]},
         {
@@ -144,6 +151,7 @@ class FakeWiz(models.AbstractModel):
 
     _name = "fake.wiz"
     _inherit = "cms.form.wizard"
+    _description = "CMS Form test wizard form"
     _wiz_name = _name
 
     def form_check_permission(self, raise_exception=True):
@@ -166,6 +174,7 @@ class FakeWizStep1Country(models.AbstractModel):
 
     _name = "fake.wiz.step1.country"
     _inherit = "fake.wiz"
+    _description = "CMS Form test wizard form step 1"
     _form_model = "res.country"
     _form_model_fields = ("name",)
 
@@ -174,6 +183,7 @@ class FakeWizStep2Partner(models.AbstractModel):
 
     _name = "fake.wiz.step2.partner"
     _inherit = "fake.wiz"
+    _description = "CMS Form test wizard form step 2"
     _form_model = "res.partner"
     _form_model_fields = (
         "name",
@@ -188,6 +198,7 @@ class FakeWizStep3Partner(models.AbstractModel):
 
     _name = "fake.wiz.step3.partner"
     _inherit = "fake.wiz"
+    _description = "CMS Form test wizard form step 3"
     _form_model = "res.partner"
     _form_model_fields = ("name",)
 
@@ -206,6 +217,7 @@ class FakePubModel(models.TransientModel):
     _inherit = [
         "website.published.mixin",
     ]
+    _description = "CMS Form fake publishable model form"
     name = fields.Char()
 
     def _compute_website_url(self):
@@ -216,6 +228,7 @@ class FakePubModel(models.TransientModel):
 class FakePubModelForm(models.AbstractModel):
     _name = "cms.form.fake.publishable"
     _inherit = "cms.form"
+    _description = "CMS Form fake publishable form"
     _form_model = "fake.publishable"
     _form_model_fields = ("name",)
 
@@ -223,11 +236,13 @@ class FakePubModelForm(models.AbstractModel):
 # `AbstractModel` or `TransientModel` needed to make ACL check happy`
 class FakeNonPubModel(models.TransientModel):
     _name = "fake.non.publishable"
+    _description = "CMS Form fake non publishable model"
     name = fields.Char()
 
 
 class FakeNonPubModelForm(models.AbstractModel):
     _name = "cms.form.fake.non.publishable"
     _inherit = "cms.form"
+    _description = "CMS Form fake non publishable model form"
     _form_model = "fake.non.publishable"
     _form_model_fields = ("name",)

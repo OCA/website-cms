@@ -8,6 +8,7 @@ from odoo import _, exceptions, models
 
 class CMSForm(models.AbstractModel):
     _name = "cms.form"
+    _description = "CMS Form"
     _inherit = "cms.form.mixin"
 
     # default validators by field type

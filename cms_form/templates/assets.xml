@@ -12,13 +12,13 @@ License LGPL-3.0 or later (http://www.gnu.org/licenses/lgpl.html).
         <xpath expr="//link[last()]" position="after">
             <link
                 rel="stylesheet"
-                type="text/css"
-                href="/cms_form/static/src/less/cms_form.less"
+                type="text/scss"
+                href="/cms_form/static/src/scss/cms_form.scss"
             />
             <link
                 rel="stylesheet"
-                type="text/css"
-                href="/cms_form/static/src/less/progressbar.less"
+                type="text/scss"
+                href="/cms_form/static/src/scss/progressbar.scss"
             />
         </xpath>
         <xpath expr="//script[last()]" position="after">

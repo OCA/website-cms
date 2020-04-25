@@ -9,6 +9,7 @@ from odoo import models
 class X2MWidget(models.AbstractModel):
     _name = "cms.form.widget.x2m.mixin"
     _inherit = "cms.form.widget.mixin"
+    _description = "CMS Form X2M widget"
     _w_template = "cms_form.field_widget_x2m"
     w_diplay_field = "display_name"
 
@@ -76,8 +77,10 @@ class X2MWidget(models.AbstractModel):
 class O2ManyWidget(models.AbstractModel):
     _name = "cms.form.widget.one2many"
     _inherit = "cms.form.widget.x2m.mixin"
+    _description = "CMS Form O2M widget"
 
 
 class M2MWidget(models.AbstractModel):
     _name = "cms.form.widget.many2many"
     _inherit = "cms.form.widget.x2m.mixin"
+    _description = "CMS Form M2M widget"

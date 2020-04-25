@@ -16,6 +16,7 @@ class CMSFormWizard(models.AbstractModel):
     """
 
     _name = "cms.form.wizard"
+    _description = "CMS Form wizard"
     _inherit = "cms.form"
     _form_mode = "wizard"
     _wiz_name = _name

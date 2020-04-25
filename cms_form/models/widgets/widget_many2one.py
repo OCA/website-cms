@@ -11,6 +11,7 @@ from ... import utils
 class M2OWidget(models.AbstractModel):
     _name = "cms.form.widget.many2one"
     _inherit = "cms.form.widget.mixin"
+    _description = "CMS Form M2O widget"
     _w_template = "cms_form.field_widget_m2o"
 
     def widget_init(self, form, fname, field, **kw):
@@ -53,6 +54,7 @@ class M2OWidget(models.AbstractModel):
 class M2OMultiWidget(models.AbstractModel):
     _name = "cms.form.widget.many2one.multi"
     _inherit = "cms.form.widget.many2one"
+    _description = "CMS Form M2O multi widget"
     _w_template = "cms_form.field_widget_m2o_multi"
     # TODO: not used ATM
     w_diplay_field = "display_name"
