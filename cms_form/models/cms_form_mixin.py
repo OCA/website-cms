@@ -5,11 +5,9 @@ import inspect
 import json
 from collections import OrderedDict
 
-from odoo import models, tools, exceptions, _
+from odoo import _, exceptions, models, tools
 
-from .. import utils
-from .. import marshallers
-
+from .. import marshallers, utils
 
 IGNORED_FORM_FIELDS = [
     "display_name",
@@ -179,10 +177,7 @@ class CMSFormMixin(models.AbstractModel):
                     # not `website.published.mixin` model
                     res = self._can_create(raise_exception=False)
                 msg = (
-                    _(
-                        "You are not allowed to create any record "
-                        "for the model `%s`."
-                    )
+                    _("You are not allowed to create any record " "for the model `%s`.")
                     % self._form_model
                 )
         if raise_exception and not res:
@@ -272,8 +267,7 @@ class CMSFormMixin(models.AbstractModel):
         _model_fields = {}
         if self._form_model:
             _model_fields = self.form_model.fields_get(
-                self._form_model_fields,
-                attributes=self._form_fields_attributes,
+                self._form_model_fields, attributes=self._form_fields_attributes,
             )
             # inject defaults
             defaults = self.form_model.default_get(self._form_model_fields)
@@ -388,11 +382,7 @@ class CMSFormMixin(models.AbstractModel):
     @property
     def form_file_fields(self):
         """File fields."""
-        return {
-            k: v
-            for k, v in self.form_fields().items()
-            if v["type"] == "binary"
-        }
+        return {k: v for k, v in self.form_fields().items() if v["type"] == "binary"}
 
     def form_get_request_values(self):
         """Retrieve fields values from current request."""
@@ -426,20 +416,14 @@ class CMSFormMixin(models.AbstractModel):
             value = field["widget"].w_load(**request_values)
             # override via specific form loader when needed
             loader = self.form_get_loader(
-                fname,
-                field,
-                main_object=main_object,
-                value=value,
-                **request_values
+                fname, field, main_object=main_object, value=value, **request_values
             )
             if loader:
                 value = loader(fname, field, value, **request_values)
             defaults[fname] = value
         return defaults
 
-    def form_get_loader(
-        self, fname, field, main_object=None, value=None, **req_values
-    ):
+    def form_get_loader(self, fname, field, main_object=None, value=None, **req_values):
         """Retrieve form value loader.
 
         :param fname: field name
@@ -520,9 +504,9 @@ class CMSFormMixin(models.AbstractModel):
         """
         values = self.form_render_values.copy()
         values.update(kw)
-        values[
-            "field_wrapper_template"
-        ] = "cms_form.form_{}_field_wrapper".format(self.form_display_mode)
+        values["field_wrapper_template"] = "cms_form.form_{}_field_wrapper".format(
+            self.form_display_mode
+        )
         return self.env.ref(self.form_template).render(values)
 
     def form_process(self, **kw):
@@ -609,9 +593,7 @@ class CMSFormMixin(models.AbstractModel):
             {
                 "master_slave": self._form_master_slave_info(),
                 "model": self._form_model,
-                "form_content_selector": getattr(
-                    self, "_form_content_selector", None,
-                ),
+                "form_content_selector": getattr(self, "_form_content_selector", None,),
             }
         )
         return info

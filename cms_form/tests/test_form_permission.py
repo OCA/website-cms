@@ -1,16 +1,17 @@
 # Copyright 2017-2018 Simone Orsi
 # License LGPL-3.0 or later (http://www.gnu.org/licenses/lgpl.html).
 
-from odoo import exceptions
 import mock
+
+from odoo import exceptions
 
 from .common import FormTestCase
 from .fake_models import (
-    FakePubModel,
-    FakePubModelForm,
     FakeNonPubModel,
     FakeNonPubModelForm,
     FakePartnerForm,
+    FakePubModel,
+    FakePubModelForm,
 )
 
 
@@ -54,8 +55,7 @@ class TestFormPermCheck(FormTestCase):
             except exceptions.AccessError as err:
                 patched.assert_called()
                 msg = (
-                    "You are not allowed to create any record "
-                    "for the model `%s`."
+                    "You are not allowed to create any record " "for the model `%s`."
                 ) % FakePubModel._name
                 self.assertEqual(err.name, msg)
 
@@ -97,9 +97,7 @@ class TestFormPermCheck(FormTestCase):
 
     def test_form_check_permission_form_cannot_edit(self):
         form = self.get_form(FakePartnerForm._name, main_object=self.record)
-        with mock.patch.object(
-            type(self.record), "check_access_rights"
-        ) as patched:
+        with mock.patch.object(type(self.record), "check_access_rights") as patched:
             patched.side_effect = exceptions.AccessError("boom")
             with self.assertRaises(exceptions.AccessError):
                 form._can_edit()

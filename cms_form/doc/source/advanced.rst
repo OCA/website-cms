@@ -58,9 +58,9 @@ To achieve this just use `_form_fields_hidden`:
 Field "foo" will be rendered at the top of the form markup with an hidden input.
 For create forms, you might want to pass a default value to it, like:
 
-    
+
 .. code-block:: python
-    
+
     class PartnerForm(models.AbstractModel):
         [...]
         def form_load_defaults(self, main_object=None, request_values=None):

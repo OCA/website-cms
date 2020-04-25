@@ -3,7 +3,7 @@
 
 from psycopg2 import IntegrityError
 
-from odoo import models, exceptions, _
+from odoo import _, exceptions, models
 
 
 class CMSForm(models.AbstractModel):
@@ -150,8 +150,7 @@ class CMSForm(models.AbstractModel):
             return extra_values
         _model_fields = list(
             self.form_model.fields_get(
-                self._form_model_fields,
-                attributes=self._form_fields_attributes,
+                self._form_model_fields, attributes=self._form_fields_attributes,
             ).keys()
         )
         submitted_keys = list(values.keys())
@@ -206,11 +205,7 @@ class CMSForm(models.AbstractModel):
                 # u'Error while validating constraint\n
                 #    \nEnd Date cannot be set before Start Date.\nNone'
                 errors_message["_validation"] = "<br />".join(
-                    [
-                        x
-                        for x in err.name.replace("None", "").split("\n")
-                        if x.strip()
-                    ]
+                    [x for x in err.name.replace("None", "").split("\n") if x.strip()]
                 )
             except IntegrityError as err:
                 errors["_integrity"] = True
@@ -233,14 +228,10 @@ class CMSForm(models.AbstractModel):
         # handle ORM validation error
         orm_error = errors.get("_validation") or errors.get("_integrity")
         if orm_error:
-            msg = errors_message.get("_validation") or errors_message.get(
-                "_integrity"
-            )
+            msg = errors_message.get("_validation") or errors_message.get("_integrity")
             if msg and self.o_request.website:
                 self.o_request.website.add_status_message(
                     msg, type_="danger", title=None
                 )
-        render_values.update(
-            {"errors": errors, "errors_message": errors_message,}
-        )
+        render_values.update({"errors": errors, "errors_message": errors_message})
         return render_values

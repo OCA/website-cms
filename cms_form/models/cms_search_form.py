@@ -1,7 +1,7 @@
 # Copyright 2017-2018 Simone Orsi
 # License LGPL-3.0 or later (http://www.gnu.org/licenses/lgpl.html).
 
-from odoo import models, _
+from odoo import _, models
 from odoo.tools import pycompat
 
 
@@ -43,12 +43,12 @@ class CMSFormSearch(models.AbstractModel):
     def form_update_fields_attributes(self, _fields):
         """No field should be mandatory."""
         super().form_update_fields_attributes(_fields)
-        for fname, field in _fields.items():
+        for _fname, field in _fields.items():
             field["required"] = False
 
     def form_get_widget_model(self, fname, field):
         """Search via related field needs a simple char widget."""
-        res = super(CMSFormSearch, self).form_get_widget_model(fname, field)
+        res = super().form_get_widget_model(fname, field)
         if fname in self._form_search_domain_rules:
             res = "cms.form.widget.char"
         return res
@@ -69,9 +69,7 @@ class CMSFormSearch(models.AbstractModel):
         title = _("Search")
         if self._form_model:
             model = (
-                self.env["ir.model"]
-                .sudo()
-                .search([("model", "=", self._form_model)])
+                self.env["ir.model"].sudo().search([("model", "=", self._form_model)])
             )
             name = model and model.name or ""
             title = _("Search %s") % name
@@ -166,7 +164,7 @@ class CMSFormSearch(models.AbstractModel):
                     continue
             if fname in self._form_search_domain_rules:
                 rule = self._form_search_domain_rules[fname]
-                if hasattr(rule, "__call__"):
+                if callable(rule):
                     fname, operator, value = rule(field, value, search_values)
                 else:
                     fname, operator, fmt_value = rule

@@ -2,14 +2,14 @@
 # License LGPL-3.0 or later (http://www.gnu.org/licenses/lgpl.html).
 
 from .common import FormSessionTestCase
-from .utils import fake_request
 from .fake_models import (
+    FAKE_STORAGE,
     FakeWiz,
     FakeWizStep1Country,
     FakeWizStep2Partner,
     FakeWizStep3Partner,
-    FAKE_STORAGE,
 )
+from .utils import fake_request
 
 
 class TestCMSFormWizard(FormSessionTestCase):
@@ -64,9 +64,7 @@ class TestCMSFormWizard(FormSessionTestCase):
     def test_wiz_use_session_by_default(self):
         req = fake_request(session=self.session)
         form = self.get_form("cms.form.wizard", req=req)
-        self.assertEqual(
-            form._wiz_storage.__class__.__name__, "OpenERPSession"
-        )
+        self.assertEqual(form._wiz_storage.__class__.__name__, "OpenERPSession")
 
     def test_wiz_configure_steps(self):
         form = self.get_form("cms.form.wizard")
@@ -178,5 +176,5 @@ class TestCMSFormWizard(FormSessionTestCase):
         self.assertEqual(main_object.name, "John Doe")
         step_values = form.wiz_load_step()
         self.assertDictEqual(
-            step_values, {"name": "John Doe", "to_be_stored": "Whatever",}
+            step_values, {"name": "John Doe", "to_be_stored": "Whatever"}
         )

@@ -1,7 +1,8 @@
 # Copyright 2019 Simone Orsi
 # License LGPL-3.0 or later (http://www.gnu.org/licenses/lgpl.html).
 import json
-from .common import TestWidgetCase, fake_form, fake_field
+
+from .common import TestWidgetCase, fake_field, fake_form
 
 
 class TestWidgetM2O(TestWidgetCase):
@@ -22,10 +23,7 @@ class TestWidgetM2O(TestWidgetCase):
             domain=[("id", "in", self.partners.ids)],
         )
         widget = self.get_widget(
-            w_name,
-            w_field,
-            form=self.form,
-            widget_model="cms.form.widget.many2one",
+            w_name, w_field, form=self.form, widget_model="cms.form.widget.many2one",
         )
         self.assertEqual(widget.w_comodel, self.env["res.partner"])
         self.assertEqual(widget.w_domain, [("id", "in", self.partners.ids)])
@@ -37,19 +35,14 @@ class TestWidgetM2O(TestWidgetCase):
             "m2o_field", type="many2one", relation="res.partner",
         )
         widget = self.get_widget(
-            w_name,
-            w_field,
-            form=self.form,
-            widget_model="cms.form.widget.many2one",
+            w_name, w_field, form=self.form, widget_model="cms.form.widget.many2one",
         )
 
         self.assertEqual(widget.w_load(m2o_field="1"), 1)
         self.assertEqual(widget.w_load(m2o_field="0"), None)
         self.assertEqual(widget.w_load(m2o_field="a"), None)
         self.assertEqual(widget.w_load(m2o_field=1), 1)
-        self.assertEqual(
-            widget.w_load(m2o_field=self.partners[0]), self.partners[0].id
-        )
+        self.assertEqual(widget.w_load(m2o_field=self.partners[0]), self.partners[0].id)
         self.assertEqual(widget.w_load(m2o_field=""), None)
         self.assertEqual(widget.w_load(m2o_field=None), None)
         self.assertEqual(widget.w_load(m2o_field=False), False)
@@ -59,10 +52,7 @@ class TestWidgetM2O(TestWidgetCase):
             "m2o_field", type="many2one", relation="res.partner",
         )
         widget = self.get_widget(
-            w_name,
-            w_field,
-            form=self.form,
-            widget_model="cms.form.widget.many2one",
+            w_name, w_field, form=self.form, widget_model="cms.form.widget.many2one",
         )
 
         self.assertEqual(widget.w_extract(m2o_field="1"), 1)
@@ -83,10 +73,7 @@ class TestWidgetM2O(TestWidgetCase):
             "m2o_field", type="many2one", relation="res.partner",
         )
         widget = self.get_widget(
-            w_name,
-            w_field,
-            form=self.form,
-            widget_model="cms.form.widget.many2one",
+            w_name, w_field, form=self.form, widget_model="cms.form.widget.many2one",
         )
         expected_attrs = {
             "id": "m2o_field",

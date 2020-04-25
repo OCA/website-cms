@@ -2,6 +2,7 @@
 # License LGPL-3.0 or later (http://www.gnu.org/licenses/lgpl.html).
 
 from odoo import models
+
 from ... import utils
 
 
@@ -21,9 +22,7 @@ class DateWidget(models.AbstractModel):
             # set today's date by default
             widget.w_data["defaultToday"] = True
         if kw.get("format", widget.w_date_format):
-            widget.w_data["dp"] = {
-                "format": kw.get("format", widget.w_date_format)
-            }
+            widget.w_data["dp"] = {"format": kw.get("format", widget.w_date_format)}
         widget.w_placeholder = kw.get("placeholder", widget.w_placeholder)
         return widget
 
