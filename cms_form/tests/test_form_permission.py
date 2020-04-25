@@ -37,7 +37,7 @@ class TestFormPermCheck(FormTestCase):
         cls._teardown_models()
         super().tearDownClass()
 
-    mixin_path = "odoo.addons.cms_info.models.website_mixin.WebsiteMixin"
+    mixin_path = "odoo.addons.cms_info.models.cms_mixin.CMSInfoMixin"
 
     def test_form_check_permission_can_create(self):
         form = self.get_form(FakePubModelForm._name, main_object=None)

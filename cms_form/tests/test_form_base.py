@@ -159,8 +159,10 @@ class TestFormBase(FormTestCase):
         self.assertTrue(fields["custom"]["is_subfield"])
 
     def test_fields_binary(self):
-        form = self.get_form("cms.form.res.partner", model_fields=["name", "image"])
-        self.assertEqual(list(form.form_file_fields.keys()), ["image"])
+        form = self.get_form(
+            "cms.form.res.partner", model_fields=["name", "image_1024"]
+        )
+        self.assertEqual(list(form.form_file_fields.keys()), ["image_1024"])
 
     def test_fields_protected(self):
         group = self.env.ref("website.group_website_designer")

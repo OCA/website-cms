@@ -158,12 +158,7 @@ class CMSFormMixin(models.AbstractModel):
             if hasattr(self.main_object, "cms_can_edit"):
                 res = self.main_object.cms_can_edit()
             else:
-                # not `website.published.mixin` model
-                # TODO: probably is better to move such methods
-                # defined in `cms_info` to `base` model instead.
-                # You might want to use a form on an a non-website model.
-                # This should be considered if we move away from `website`
-                # as a base and rely only on `portal` features.
+                # `cms.info.mixin` not provided by model.
                 res = self._can_edit(raise_exception=False)
             msg = _("You cannot edit this record. Model: %s, ID: %s.") % (
                 self.main_object._name,
@@ -177,7 +172,7 @@ class CMSFormMixin(models.AbstractModel):
                     # not `website.published.mixin` model
                     res = self._can_create(raise_exception=False)
                 msg = (
-                    _("You are not allowed to create any record " "for the model `%s`.")
+                    _("You are not allowed to create any record for the model `%s`.")
                     % self._form_model
                 )
         if raise_exception and not res:
@@ -312,7 +307,7 @@ class CMSFormMixin(models.AbstractModel):
 
     def _form_prepare_subfields(self, _all_fields):
         """Add subfields to related main fields."""
-        # TODO: test this
+        # TODO: document this
         for mainfield, subfields in self._form_sub_fields.items():
             if mainfield not in _all_fields:
                 continue

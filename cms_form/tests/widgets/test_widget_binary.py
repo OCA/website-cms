@@ -76,14 +76,14 @@ class TestWidgetBinary(TestWidgetCase):
         )
 
     def test_widget_binary_load_from_record(self):
-        w_name, w_field = fake_field("image", type="binary",)
+        w_name, w_field = fake_field("image_1024", type="binary",)
         widget = self.get_widget(
             w_name, w_field, form=self.form, widget_model="cms.form.widget.image",
         )
         # test conversion
-        self.assertEqual(widget.w_load(image=False), {})
+        self.assertEqual(widget.w_load(image_1024=False), {})
         # set value on partner image
-        self.partner.image = TEST_IMAGE_GIF
+        self.partner.image_1024 = TEST_IMAGE_GIF
         self.assertEqual(
             widget.w_load(),
             {
@@ -95,19 +95,22 @@ class TestWidgetBinary(TestWidgetCase):
         )
 
     def test_widget_binary_load_from_request(self):
-        w_name, w_field = fake_field("image", type="binary",)
+        w_name, w_field = fake_field("image_1024", type="binary",)
         widget = self.get_widget(
             w_name, w_field, form=self.form, widget_model="cms.form.widget.image",
         )
         # test conversion
-        self.assertEqual(widget.w_load(image=False), {})
+        self.assertEqual(widget.w_load(image_1024=False), {})
 
         with b64_as_stream(TEST_IMAGE_JPG) as stream:
             req_image = fake_file_from_request(
-                "image", stream=stream, filename="foo.jpg", content_type="image/jpeg",
+                "image_1024",
+                stream=stream,
+                filename="foo.jpg",
+                content_type="image/jpeg",
             )
             self.assertEqual(
-                widget.w_load(image=req_image),
+                widget.w_load(image_1024=req_image),
                 {
                     "value": "data:image/jpeg;base64,{}".format(TEST_IMAGE_JPG),
                     "raw_value": TEST_IMAGE_JPG,

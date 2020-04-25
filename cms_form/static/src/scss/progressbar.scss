@@ -1,6 +1,6 @@
-@cms-prog-bar-bg: @brand-primary;
-@cms-prog-bar-bg-active: darken(@cms-prog-bar-bg, 10%);
-@cms-prog-bar-bg-hover: lighten(@cms-prog-bar-bg, 10%);
+$cms-prog-bar-bg: $primary;
+$cms-prog-bar-bg-active: darken($cms-prog-bar-bg, 10%);
+$cms-prog-bar-bg-hover: lighten($cms-prog-bar-bg, 10%);
 
 // not using `progress-bar` as it's already styled
 // for percentage bar by bootstrap
@@ -21,7 +21,7 @@
         span {
             color: #fff;
             display: block;
-            background-color: @cms-prog-bar-bg;
+            background-color: $cms-prog-bar-bg;
             text-decoration: none;
             position: relative;
             height: 40px;
@@ -56,7 +56,7 @@
                 content: "";
                 position: absolute;
                 top: 0;
-                border: 0 solid @cms-prog-bar-bg;
+                border: 0 solid $cms-prog-bar-bg;
                 border-width: 20px 10px;
                 width: 0;
                 height: 0;
@@ -68,26 +68,26 @@
             &:after {
                 left: 100%;
                 border-color: transparent;
-                border-left-color: @cms-prog-bar-bg;
+                border-left-color: $cms-prog-bar-bg;
             }
             &:hover {
-                background-color: @cms-prog-bar-bg-hover;
+                background-color: $cms-prog-bar-bg-hover;
                 &:before {
-                    border-color: @cms-prog-bar-bg-hover;
+                    border-color: $cms-prog-bar-bg-hover;
                     border-left-color: transparent;
                 }
                 &:after {
-                    border-left-color: @cms-prog-bar-bg-hover;
+                    border-left-color: $cms-prog-bar-bg-hover;
                 }
             }
             &.active {
-                background-color: @cms-prog-bar-bg-active;
+                background-color: $cms-prog-bar-bg-active;
                 &:before {
-                    border-color: @cms-prog-bar-bg-active;
+                    border-color: $cms-prog-bar-bg-active;
                     border-left-color: transparent;
                 }
                 &:after {
-                    border-left-color: @cms-prog-bar-bg-active;
+                    border-left-color: $cms-prog-bar-bg-active;
                 }
             }
         }

@@ -13,6 +13,7 @@ from odoo.tools.mimetypes import guess_mimetype
 class BinaryWidget(models.AbstractModel):
     _name = "cms.form.widget.binary.mixin"
     _inherit = "cms.form.widget.mixin"
+    _description = "CMS Form binary widget"
 
     def w_load(self, **req_values):
         value = super().w_load(**req_values)
@@ -30,11 +31,9 @@ class BinaryWidget(models.AbstractModel):
                 from_request = True
                 byte_content = value.read()
                 value = base64.b64encode(byte_content)
-                if not isinstance(value, pycompat.text_type):
-                    value = pycompat.to_text(value)
+                value = pycompat.to_text(value)
             else:
-                if not isinstance(value, pycompat.text_type):  # pragma: no cover
-                    value = value.encode()
+                value = pycompat.to_text(value)
                 byte_content = base64.b64decode(value)
             mimetype = guess_mimetype(byte_content)
             _value = {
@@ -66,8 +65,7 @@ class BinaryWidget(models.AbstractModel):
             if hasattr(value, "read"):
                 file_content = value.read()
                 _value = base64.b64encode(file_content)
-                if not isinstance(value, pycompat.text_type):
-                    _value = pycompat.to_text(_value)
+                _value = pycompat.to_text(_value)
             else:
                 # like 'data:image/jpeg;base64,jRyRuUm2VP...
                 _value = value.split(",")[-1]
@@ -90,4 +88,5 @@ class BinaryWidget(models.AbstractModel):
 class ImageWidget(models.AbstractModel):
     _name = "cms.form.widget.image"
     _inherit = "cms.form.widget.binary.mixin"
+    _description = "CMS Form image widget"
     _w_template = "cms_form.field_widget_image"

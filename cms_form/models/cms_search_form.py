@@ -7,6 +7,7 @@ from odoo.tools import pycompat
 
 class CMSFormSearch(models.AbstractModel):
     _name = "cms.form.search"
+    _description = "CMS Form search"
     _inherit = "cms.form.mixin"
 
     form_buttons_template = "cms_form.search_form_buttons"

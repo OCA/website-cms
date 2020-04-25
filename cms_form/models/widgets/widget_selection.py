@@ -7,6 +7,7 @@ from odoo import models
 class SelectionWidget(models.AbstractModel):
     _name = "cms.form.widget.selection"
     _inherit = "cms.form.widget.mixin"
+    _description = "CMS Form selection widget"
     _w_template = "cms_form.field_widget_selection"
 
     def w_extract(self, **req_values):
@@ -39,6 +40,7 @@ class SelectionWidget(models.AbstractModel):
 class RadioSelectionWidget(models.AbstractModel):
     _name = "cms.form.widget.radio"
     _inherit = "cms.form.widget.selection"
+    _description = "CMS Form radio widget"
     _w_template = "cms_form.field_widget_radio_selection"
     # you can define help message per each options
     # opt value: help msg (can be html too)

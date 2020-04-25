@@ -9,6 +9,7 @@ from ... import utils
 class BooleanWidget(models.AbstractModel):
     _name = "cms.form.widget.boolean"
     _inherit = "cms.form.widget.mixin"
+    _description = "CMS Form boolean widget"
     _w_template = "cms_form.field_widget_boolean"
 
     w_true_values = utils.TRUE_VALUES
