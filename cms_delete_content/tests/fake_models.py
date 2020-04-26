@@ -9,6 +9,6 @@ class FakePublishModel(models.TransientModel):
     _name = "fake.publishable"
     _description = "Fake publishable"
     _inherit = [
-        "website.published.mixin",
+        "cms.info.mixin",
     ]
     name = fields.Char()

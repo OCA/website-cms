@@ -1,1 +1,1 @@
-from . import website_published
+from . import cms_mixin

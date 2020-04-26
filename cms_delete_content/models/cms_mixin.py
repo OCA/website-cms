@@ -5,8 +5,8 @@
 from odoo import _, models
 
 
-class WebsitePublishedMixin(models.AbstractModel):
-    _inherit = "website.published.mixin"
+class CMSInfoMixin(models.AbstractModel):
+    _inherit = "cms.info.mixin"
 
     def msg_content_delete_confirm(self):
         self.ensure_one()
