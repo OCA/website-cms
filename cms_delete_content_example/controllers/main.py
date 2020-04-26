@@ -5,10 +5,11 @@ from odoo import http
 
 
 class ExampleModelDeleteControler(http.Controller):
-
-    @http.route(['/list-delete-content-example'],
-                type='http', auth='user', website=True)
+    @http.route(
+        ["/list-delete-content-example"], type="http", auth="user", website=True,
+    )
     def list_delete_content_example(self, **kw):
-        model = http.request.env['cms.delete.content.example']
-        return http.request.render('cms_delete_content_example.list_examples',
-                                   {'examples': model.search([])})
+        model = http.request.env["cms.delete.content.example"]
+        return http.request.render(
+            "cms_delete_content_example.list_examples", {"examples": model.search([])},
+        )
