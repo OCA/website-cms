@@ -1,7 +1,7 @@
 # Copyright 2018 Simone Orsi
 # License LGPL-3.0 or later (http://www.gnu.org/licenses/lgpl.html).
 
-import werkzeug.utils
+import html
 
 
 def marshal_request_values(values):
@@ -48,7 +48,7 @@ def marshal_request_values(values):
 def marshal_esc(values, orig_key, orig_value):
     """Transform `foo:esc` inputs to escaped value."""
     k = orig_key[: -len(":esc")]
-    v = werkzeug.utils.escape(orig_value)
+    v = html.escape(orig_value)
     return k, v
 
 
