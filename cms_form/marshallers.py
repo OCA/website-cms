@@ -18,8 +18,11 @@ def marshal_request_values(values):
     # TODO: support combinations like `:list:int` or `:dict:int`
     res = {}
     for k, v in values.items():
-        v = werkzeug.utils.escape(v)
         if k in ("csrf_token",):
+            continue
+        if k.endswith(":esc"):
+            k, v = marshal_esc(values, k, v)
+            res[k] = v
             continue
         # fields w/ multiple values
         if k.endswith(":list"):
@@ -40,6 +43,13 @@ def marshal_request_values(values):
             continue
         res[k] = v
     return res
+
+
+def marshal_esc(values, orig_key, orig_value):
+    """Transform `foo:esc` inputs to escaped value."""
+    k = orig_key[: -len(":esc")]
+    v = werkzeug.utils.escape(orig_value)
+    return k, v
 
 
 def marshal_list(values, orig_key, orig_value):
