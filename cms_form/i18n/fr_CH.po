@@ -1,47 +1,49 @@
 # Translation of Odoo Server.
 # This file contains the translation of the following modules:
-#	* cms_form
-#
+# 	* cms_form
 msgid ""
 msgstr ""
 "Project-Id-Version: Odoo Server 12.0\n"
 "Report-Msgid-Bugs-To: \n"
 "POT-Creation-Date: 2020-06-19 07:11+0000\n"
-"PO-Revision-Date: 2020-06-19 07:11+0000\n"
-"Last-Translator: <>\n"
-"Language-Team: \n"
+"PO-Revision-Date: 2020-06-19 09:15+0200\n"
+"Last-Translator: Akim Juillerat <akim.juillerat@camptocamp.com>\n"
+"Language-Team: none\n"
+"Language: fr_CH\n"
 "MIME-Version: 1.0\n"
 "Content-Type: text/plain; charset=UTF-8\n"
-"Content-Transfer-Encoding: \n"
-"Plural-Forms: \n"
+"Content-Transfer-Encoding: 8bit\n"
+"Plural-Forms: nplurals=2; plural=n > 1;\n"
+"X-Generator: Poedit 2.3.1\n"
 
 #. module: cms_form
 #: code:addons/cms_form/controllers/main.py:82
 #, python-format
 msgid "%s model has no CMS form registered."
-msgstr ""
+msgstr "Le modèle %s n'a pas de CMS form enregistré."
 
 #. module: cms_form
 #: model:ir.model,name:cms_form.model_cms_form_mixin
 msgid "CMS Form mixin"
-msgstr ""
+msgstr "Mixin CMS Form"
 
 #. module: cms_form
 #: model:ir.model,name:cms_form.model_cms_form_widget_mixin
+#| msgid "CMS Form mixin"
 msgid "CMS Form widget"
-msgstr ""
+msgstr "CMS Form widget"
 
 #. module: cms_form
 #: model_terms:ir.ui.view,arch_db:cms_form.base_form_buttons
 msgid "Cancel"
-msgstr ""
+msgstr "Annuler"
 
 #. module: cms_form
 #: code:addons/cms_form/models/cms_form.py:39
 #: code:addons/cms_form/models/cms_form.py:44
 #, python-format
 msgid "Create %s"
-msgstr ""
+msgstr "Créer %s"
 
 #. module: cms_form
 #: model_terms:ir.ui.view,arch_db:cms_form.field_widget_date
@@ -71,18 +73,18 @@ msgstr ""
 #: model:ir.model.fields,field_description:cms_form.field_cms_form_widget_x2m_mixin__display_name
 #: model:ir.model.fields,field_description:cms_form.field_cms_form_wizard__display_name
 msgid "Display Name"
-msgstr ""
+msgstr "Nom affiché"
 
 #. module: cms_form
 #: code:addons/cms_form/models/cms_form.py:37
 #, python-format
 msgid "Edit \"%s\""
-msgstr ""
+msgstr "Editer \"%s\""
 
 #. module: cms_form
 #: model_terms:ir.ui.view,arch_db:cms_form.fieldsets_as_tabs
 msgid "Home"
-msgstr ""
+msgstr "Accueil"
 
 #. module: cms_form
 #: model:ir.model.fields,field_description:cms_form.field_cms_form_id
@@ -107,24 +109,24 @@ msgstr ""
 #: model:ir.model.fields,field_description:cms_form.field_cms_form_widget_x2m_mixin_id
 #: model:ir.model.fields,field_description:cms_form.field_cms_form_wizard_id
 msgid "ID"
-msgstr ""
+msgstr "ID"
 
 #. module: cms_form
 #: code:addons/cms_form/models/cms_form.py:61
 #, python-format
 msgid "Item created."
-msgstr ""
+msgstr "Élément créé."
 
 #. module: cms_form
 #: code:addons/cms_form/models/cms_form.py:66
 #, python-format
 msgid "Item updated."
-msgstr ""
+msgstr "Élément mis à jour."
 
 #. module: cms_form
 #: model_terms:ir.ui.view,arch_db:cms_form.field_widget_image
 msgid "Keep current image"
-msgstr ""
+msgstr "Garder l'image actuelle"
 
 #. module: cms_form
 #: model:ir.model.fields,field_description:cms_form.field_cms_form____last_update
@@ -149,75 +151,75 @@ msgstr ""
 #: model:ir.model.fields,field_description:cms_form.field_cms_form_widget_x2m_mixin____last_update
 #: model:ir.model.fields,field_description:cms_form.field_cms_form_wizard____last_update
 msgid "Last Modified on"
-msgstr ""
+msgstr "Dernière modification le"
 
 #. module: cms_form
 #: model_terms:ir.ui.view,arch_db:cms_form.form_horizontal_field_wrapper
 #: model_terms:ir.ui.view,arch_db:cms_form.form_vertical_field_wrapper
 msgid "Name"
-msgstr ""
+msgstr "Nom"
 
 #. module: cms_form
 #: model_terms:ir.ui.view,arch_db:cms_form.wizard_form_buttons
 msgid "Next"
-msgstr ""
+msgstr "Suivant"
 
 #. module: cms_form
 #: model_terms:ir.ui.view,arch_db:cms_form.wizard_form_buttons
 msgid "Prev"
-msgstr ""
+msgstr "Précédent"
 
 #. module: cms_form
 #: model:ir.model,name:cms_form.model_ir_qweb
 msgid "Qweb"
-msgstr ""
+msgstr "Qweb"
 
 #. module: cms_form
 #: model_terms:ir.ui.view,arch_db:cms_form.field_widget_image
 msgid "Replace current image"
-msgstr ""
+msgstr "Remplacer l'image actuelle"
 
 #. module: cms_form
 #: model_terms:ir.ui.view,arch_db:cms_form.base_form
 msgid "Required fields"
-msgstr ""
+msgstr "Champs obligatoires"
 
 #. module: cms_form
 #: code:addons/cms_form/models/cms_search_form.py:70
 #: model_terms:ir.ui.view,arch_db:cms_form.search_form_buttons
 #, python-format
 msgid "Search"
-msgstr ""
+msgstr "Rechercher"
 
 #. module: cms_form
 #: code:addons/cms_form/models/cms_search_form.py:75
 #, python-format
 msgid "Search %s"
-msgstr ""
+msgstr "Rechercher %s"
 
 #. module: cms_form
 #: code:addons/cms_form/models/cms_form.py:70
 #, python-format
 msgid "Some required fields are empty."
-msgstr ""
+msgstr "Des champs obligatoires sont vides."
 
 #. module: cms_form
 #: model_terms:ir.ui.view,arch_db:cms_form.base_form_buttons
 #: model_terms:ir.ui.view,arch_db:cms_form.wizard_form_buttons
 msgid "Submit"
-msgstr ""
+msgstr "Envoyer"
 
 #. module: cms_form
 #: code:addons/cms_form/models/cms_form_mixin.py:174
 #, python-format
 msgid "You are not allowed to create any record for the model `%s`."
-msgstr ""
+msgstr "Vous n'êtes pas autorisé à créer des enregistrements pour le modèle `%s`."
 
 #. module: cms_form
 #: code:addons/cms_form/models/cms_form_mixin.py:164
 #, python-format
 msgid "You cannot edit this record. Model: %s, ID: %s."
-msgstr ""
+msgstr "Vous ne pouvez pas éditer cet enregistrement. Modèle : %s, ID: %s."
 
 #. module: cms_form
 #: model:ir.model,name:cms_form.model_cms_form
@@ -314,3 +316,5 @@ msgstr ""
 msgid "cms.form.wizard"
 msgstr ""
 
+#~ msgid "YYYY-MM-DD"
+#~ msgstr "YYYY-MM-DD"
