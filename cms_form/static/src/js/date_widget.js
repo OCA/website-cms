@@ -72,7 +72,21 @@ odoo.define('cms_form.date_widget', function (require) {
                     }
                 }
                 self.$realField.val(real_val);
-        }}));
+            },
+            disableDates:  function (date) {
+                // Reception of the dates in their isoformat form (string) or as undefined
+                const minDateStr = this.params.dp.min_date;
+                const maxDateStr = this.params.dp.max_date;
+                // Convertion to dates
+                const minDate = new Date(minDateStr).setHours(0,0,0,0);
+                const maxDate = new Date(maxDateStr).setHours(0,0,0,0);
+                // Verify that it is in valid range
+                return minDateStr === undefined && maxDateStr === undefined ||
+                        minDateStr === undefined && date <= maxDate ||
+                        minDate <= date && maxDateStr === undefined ||
+                        minDate <= date && date <= maxDate;
+            }
+        }));
       this._init_date();
     },
     _init_date: function () {
