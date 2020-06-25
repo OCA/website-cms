@@ -302,7 +302,7 @@ License LGPL-3.0 or later (http://www.gnu.org/licenses/lgpl.html).
         <button type="submit" class="btn btn-primary pull-right">Submit</button>
       </t>
       <t t-if="form.wiz_prev_step()">
-        <button type="submit" name="wiz_submit" value="prev" class="btn btn-primary btn-prev pull-left">Prev</button>
+        <button type="submit" name="wiz_submit" value="prev" class="btn btn-primary btn-prev pull-left" formnovalidate="True">Prev</button>
       </t>
      </div>
   </xpath>
