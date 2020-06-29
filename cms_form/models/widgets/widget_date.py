@@ -16,10 +16,19 @@ class DateWidget(models.AbstractModel):
 
     def widget_init(self, form, fname, field, **kw):
         widget = super().widget_init(form, fname, field, **kw)
-        if kw.get('format', widget.w_date_format):
-            widget.w_data['dp'] = {
-                'format': kw.get('format', widget.w_date_format)
-            }
+        widget.w_data["dp"] = {}
+        if kw.get("format", widget.w_date_format):
+            widget.w_data["dp"].update({
+                "format": kw.get("format", widget.w_date_format)
+            })
+        if kw.get("min_date"):
+            widget.w_data["dp"].update({
+                "min_date": kw.get("min_date")
+            })
+        if kw.get("max_date"):
+            widget.w_data["dp"].update({
+                "max_date": kw.get("max_date")
+            })
         widget.w_placeholder = kw.get('placeholder', widget.w_placeholder)
         return widget
 
