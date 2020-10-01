@@ -15,8 +15,9 @@ Translation Status
 ------------------
 [![Transifex Status](https://www.transifex.com/projects/p/OCA-website-cms-11-0/chart/image_png)](https://www.transifex.com/projects/p/${ORG_NAME}-website-cms-website-cms)
 
-----
 
+About OCA
+---------
 OCA, or the [Odoo Community Association](http://odoo-community.org/), is a nonprofit organization whose
 mission is to support the collaborative development of Odoo features and
 promote its widespread use.
