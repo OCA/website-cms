@@ -6,13 +6,15 @@ msgid ""
 msgstr ""
 "Project-Id-Version: Odoo Server 11.0\n"
 "Report-Msgid-Bugs-To: \n"
-"Last-Translator: Automatically generated\n"
+"PO-Revision-Date: 2020-10-06 17:16+0000\n"
+"Last-Translator: claudiagn <claudia.gargallo@qubiq.es>\n"
 "Language-Team: none\n"
 "Language: es\n"
 "MIME-Version: 1.0\n"
 "Content-Type: text/plain; charset=UTF-8\n"
 "Content-Transfer-Encoding: \n"
 "Plural-Forms: nplurals=2; plural=n != 1;\n"
+"X-Generator: Weblate 3.10\n"
 
 #. module: cms_info
 #: model:ir.model.fields,field_description:cms_info.field_cms_delete_content_example_cms_edit_url
@@ -22,9 +24,9 @@ msgstr ""
 #: model:ir.model.fields,field_description:cms_info.field_website_page_cms_edit_url
 #: model:ir.model.fields,field_description:cms_info.field_website_published_mixin_cms_edit_url
 msgid "CMS edit URL"
-msgstr ""
+msgstr "URL de edición de CMS"
 
 #. module: cms_info
 #: model:ir.model,name:cms_info.model_website_published_mixin
 msgid "website.published.mixin"
-msgstr ""
+msgstr "website.published.mixin"
