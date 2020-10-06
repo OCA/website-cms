@@ -1,0 +1,163 @@
+# Translation of Odoo Server.
+# This file contains the translation of the following modules:
+#	* cms_notification
+#
+msgid ""
+msgstr ""
+"Project-Id-Version: Odoo Server 11.0\n"
+"Report-Msgid-Bugs-To: \n"
+"Last-Translator: Automatically generated\n"
+"Language-Team: none\n"
+"Language: es\n"
+"MIME-Version: 1.0\n"
+"Content-Type: text/plain; charset=UTF-8\n"
+"Content-Transfer-Encoding: \n"
+"Plural-Forms: nplurals=2; plural=n != 1;\n"
+
+#. module: cms_notification
+#: model:ir.ui.view,arch_db:cms_notification.listing
+msgid "<span class=\"view_attached_label\">Attached to</span>"
+msgstr ""
+
+#. module: cms_notification
+#: model:ir.ui.view,arch_db:cms_notification.listing
+msgid "<span class=\"view_related_label\">View related</span>"
+msgstr ""
+
+#. module: cms_notification
+#: model:ir.model,name:cms_notification.model_cms_notification_listing
+msgid "CMS notification"
+msgstr ""
+
+#. module: cms_notification
+#: model:ir.model,name:cms_notification.model_cms_notification_panel_form
+msgid "CMS notification control panel"
+msgstr ""
+
+#. module: cms_notification
+#: code:addons/cms_notification/models/notification_panel_form.py:32
+#, python-format
+msgid "Changes applied."
+msgstr ""
+
+#. module: cms_notification
+#: model:ir.model.fields,field_description:cms_notification.field_cms_form_widget_notif_radio_display_name
+#: model:ir.model.fields,field_description:cms_notification.field_cms_notification_listing_display_name
+#: model:ir.model.fields,field_description:cms_notification.field_cms_notification_panel_form_display_name
+msgid "Display Name"
+msgstr ""
+
+#. module: cms_notification
+#: model:ir.model.fields,field_description:cms_notification.field_res_users_has_unread_notif
+msgid "Has unread notif"
+msgstr ""
+
+#. module: cms_notification
+#: model:ir.model.fields,field_description:cms_notification.field_cms_form_widget_notif_radio_id
+#: model:ir.model.fields,field_description:cms_notification.field_cms_notification_listing_id
+#: model:ir.model.fields,field_description:cms_notification.field_cms_notification_panel_form_id
+msgid "ID"
+msgstr ""
+
+#. module: cms_notification
+#: model:ir.model.fields,help:cms_notification.field_mail_message_subtype_cms_type
+msgid "If active, this message subtype will be visible in users' notifications control panel."
+msgstr ""
+
+#. module: cms_notification
+#: model:ir.model.fields,field_description:cms_notification.field_cms_form_widget_notif_radio___last_update
+#: model:ir.model.fields,field_description:cms_notification.field_cms_notification_listing___last_update
+#: model:ir.model.fields,field_description:cms_notification.field_cms_notification_panel_form___last_update
+msgid "Last Modified on"
+msgstr ""
+
+#. module: cms_notification
+#: model:ir.ui.view,arch_db:cms_notification.listing
+msgid "Mark as read"
+msgstr ""
+
+#. module: cms_notification
+#: model:ir.ui.view,arch_db:cms_notification.listing
+msgid "Mark as unread"
+msgstr ""
+
+#. module: cms_notification
+#: model:ir.model,name:cms_notification.model_mail_message
+msgid "Message"
+msgstr ""
+
+#. module: cms_notification
+#: model:ir.model,name:cms_notification.model_mail_message_subtype
+msgid "Message subtypes"
+msgstr ""
+
+#. module: cms_notification
+#: code:addons/cms_notification/models/notification_listing.py:21
+#, python-format
+msgid "My notifications"
+msgstr ""
+
+#. module: cms_notification
+#: model:ir.ui.view,arch_db:cms_notification.listing
+msgid "No notification."
+msgstr ""
+
+#. module: cms_notification
+#: code:addons/cms_notification/models/notification_panel_form.py:23
+#, python-format
+msgid "Notification settings."
+msgstr ""
+
+#. module: cms_notification
+#: model:ir.ui.view,arch_db:cms_notification.user_menu
+msgid "Notifications"
+msgstr ""
+
+#. module: cms_notification
+#: model:ir.ui.view,arch_db:cms_notification.user_menu
+msgid "Notifications settings"
+msgstr ""
+
+#. module: cms_notification
+#: model:ir.model.fields,field_description:cms_notification.field_mail_compose_message_ref_item_id
+#: model:ir.model.fields,field_description:cms_notification.field_mail_mail_ref_item_id
+#: model:ir.model.fields,field_description:cms_notification.field_mail_message_ref_item_id
+msgid "Referenced item"
+msgstr ""
+
+#. module: cms_notification
+#: model:ir.model.fields,field_description:cms_notification.field_mail_compose_message_ref_model_id
+#: model:ir.model.fields,field_description:cms_notification.field_mail_mail_ref_model_id
+#: model:ir.model.fields,field_description:cms_notification.field_mail_message_ref_model_id
+msgid "Referenced model"
+msgstr ""
+
+#. module: cms_notification
+#: model:ir.model,name:cms_notification.model_res_users
+msgid "Users"
+msgstr ""
+
+#. module: cms_notification
+#: model:ir.model.fields,field_description:cms_notification.field_mail_message_subtype_cms_type
+msgid "Visible in CMS control panel"
+msgstr ""
+
+#. module: cms_notification
+#: model:ir.ui.view,arch_db:cms_notification.notify_email_help_inbox
+msgid "You will not receive notifications via email."
+msgstr ""
+
+#. module: cms_notification
+#: model:ir.ui.view,arch_db:cms_notification.notify_email_help_email
+msgid "You will receive an email for every notification."
+msgstr ""
+
+#. module: cms_notification
+#: model:ir.ui.view,arch_db:cms_notification.notify_email_help_inbox
+msgid "You will receive them only via system notifications."
+msgstr ""
+
+#. module: cms_notification
+#: model:ir.model,name:cms_notification.model_cms_form_widget_notif_radio
+msgid "cms.form.widget.notif_radio"
+msgstr ""
