@@ -6,158 +6,162 @@ msgid ""
 msgstr ""
 "Project-Id-Version: Odoo Server 11.0\n"
 "Report-Msgid-Bugs-To: \n"
-"Last-Translator: Automatically generated\n"
+"PO-Revision-Date: 2020-10-06 17:16+0000\n"
+"Last-Translator: claudiagn <claudia.gargallo@qubiq.es>\n"
 "Language-Team: none\n"
 "Language: es\n"
 "MIME-Version: 1.0\n"
 "Content-Type: text/plain; charset=UTF-8\n"
 "Content-Transfer-Encoding: \n"
 "Plural-Forms: nplurals=2; plural=n != 1;\n"
+"X-Generator: Weblate 3.10\n"
 
 #. module: cms_notification
 #: model:ir.ui.view,arch_db:cms_notification.listing
 msgid "<span class=\"view_attached_label\">Attached to</span>"
-msgstr ""
+msgstr "<span class=\"view_attached_label\">Adjunto a</span>"
 
 #. module: cms_notification
 #: model:ir.ui.view,arch_db:cms_notification.listing
 msgid "<span class=\"view_related_label\">View related</span>"
-msgstr ""
+msgstr "<span class=\"view_related_label\">Vista relacionada</span>"
 
 #. module: cms_notification
 #: model:ir.model,name:cms_notification.model_cms_notification_listing
 msgid "CMS notification"
-msgstr ""
+msgstr "Notificación de CMS"
 
 #. module: cms_notification
 #: model:ir.model,name:cms_notification.model_cms_notification_panel_form
 msgid "CMS notification control panel"
-msgstr ""
+msgstr "panel de control de notificaciones CMS adjunto a"
 
 #. module: cms_notification
 #: code:addons/cms_notification/models/notification_panel_form.py:32
 #, python-format
 msgid "Changes applied."
-msgstr ""
+msgstr "Cambios aplicados."
 
 #. module: cms_notification
 #: model:ir.model.fields,field_description:cms_notification.field_cms_form_widget_notif_radio_display_name
 #: model:ir.model.fields,field_description:cms_notification.field_cms_notification_listing_display_name
 #: model:ir.model.fields,field_description:cms_notification.field_cms_notification_panel_form_display_name
 msgid "Display Name"
-msgstr ""
+msgstr "Nombre para mostrar"
 
 #. module: cms_notification
 #: model:ir.model.fields,field_description:cms_notification.field_res_users_has_unread_notif
 msgid "Has unread notif"
-msgstr ""
+msgstr "Tiene notificaciones sin leer"
 
 #. module: cms_notification
 #: model:ir.model.fields,field_description:cms_notification.field_cms_form_widget_notif_radio_id
 #: model:ir.model.fields,field_description:cms_notification.field_cms_notification_listing_id
 #: model:ir.model.fields,field_description:cms_notification.field_cms_notification_panel_form_id
 msgid "ID"
-msgstr ""
+msgstr "ID"
 
 #. module: cms_notification
 #: model:ir.model.fields,help:cms_notification.field_mail_message_subtype_cms_type
 msgid "If active, this message subtype will be visible in users' notifications control panel."
 msgstr ""
+"Si está activo, este subtipo de mensaje será visible en el panel de control "
+"de notificaciones de los usuarios."
 
 #. module: cms_notification
 #: model:ir.model.fields,field_description:cms_notification.field_cms_form_widget_notif_radio___last_update
 #: model:ir.model.fields,field_description:cms_notification.field_cms_notification_listing___last_update
 #: model:ir.model.fields,field_description:cms_notification.field_cms_notification_panel_form___last_update
 msgid "Last Modified on"
-msgstr ""
+msgstr "Última modificación el"
 
 #. module: cms_notification
 #: model:ir.ui.view,arch_db:cms_notification.listing
 msgid "Mark as read"
-msgstr ""
+msgstr "Marcar como leído"
 
 #. module: cms_notification
 #: model:ir.ui.view,arch_db:cms_notification.listing
 msgid "Mark as unread"
-msgstr ""
+msgstr "Marcar como leído"
 
 #. module: cms_notification
 #: model:ir.model,name:cms_notification.model_mail_message
 msgid "Message"
-msgstr ""
+msgstr "Mensaje"
 
 #. module: cms_notification
 #: model:ir.model,name:cms_notification.model_mail_message_subtype
 msgid "Message subtypes"
-msgstr ""
+msgstr "Subtipos de mensaje"
 
 #. module: cms_notification
 #: code:addons/cms_notification/models/notification_listing.py:21
 #, python-format
 msgid "My notifications"
-msgstr ""
+msgstr "Mis notificaciones"
 
 #. module: cms_notification
 #: model:ir.ui.view,arch_db:cms_notification.listing
 msgid "No notification."
-msgstr ""
+msgstr "Sin notificación."
 
 #. module: cms_notification
 #: code:addons/cms_notification/models/notification_panel_form.py:23
 #, python-format
 msgid "Notification settings."
-msgstr ""
+msgstr "Ajustes de notificaciones."
 
 #. module: cms_notification
 #: model:ir.ui.view,arch_db:cms_notification.user_menu
 msgid "Notifications"
-msgstr ""
+msgstr "Notificaciones"
 
 #. module: cms_notification
 #: model:ir.ui.view,arch_db:cms_notification.user_menu
 msgid "Notifications settings"
-msgstr ""
+msgstr "Ajustes de notificaciones"
 
 #. module: cms_notification
 #: model:ir.model.fields,field_description:cms_notification.field_mail_compose_message_ref_item_id
 #: model:ir.model.fields,field_description:cms_notification.field_mail_mail_ref_item_id
 #: model:ir.model.fields,field_description:cms_notification.field_mail_message_ref_item_id
 msgid "Referenced item"
-msgstr ""
+msgstr "ítem referenciado"
 
 #. module: cms_notification
 #: model:ir.model.fields,field_description:cms_notification.field_mail_compose_message_ref_model_id
 #: model:ir.model.fields,field_description:cms_notification.field_mail_mail_ref_model_id
 #: model:ir.model.fields,field_description:cms_notification.field_mail_message_ref_model_id
 msgid "Referenced model"
-msgstr ""
+msgstr "Modelo referenciado"
 
 #. module: cms_notification
 #: model:ir.model,name:cms_notification.model_res_users
 msgid "Users"
-msgstr ""
+msgstr "Usuarios"
 
 #. module: cms_notification
 #: model:ir.model.fields,field_description:cms_notification.field_mail_message_subtype_cms_type
 msgid "Visible in CMS control panel"
-msgstr ""
+msgstr "Visible en el panel de control de CMS"
 
 #. module: cms_notification
 #: model:ir.ui.view,arch_db:cms_notification.notify_email_help_inbox
 msgid "You will not receive notifications via email."
-msgstr ""
+msgstr "No recibirás notificaciones vía mail."
 
 #. module: cms_notification
 #: model:ir.ui.view,arch_db:cms_notification.notify_email_help_email
 msgid "You will receive an email for every notification."
-msgstr ""
+msgstr "No recibirás un mail por cada notificación."
 
 #. module: cms_notification
 #: model:ir.ui.view,arch_db:cms_notification.notify_email_help_inbox
 msgid "You will receive them only via system notifications."
-msgstr ""
+msgstr "Los recibirá solo a través de notificaciones del sistema."
 
 #. module: cms_notification
 #: model:ir.model,name:cms_notification.model_cms_form_widget_notif_radio
 msgid "cms.form.widget.notif_radio"
-msgstr ""
+msgstr "cms.form.widget.notif_radio"
