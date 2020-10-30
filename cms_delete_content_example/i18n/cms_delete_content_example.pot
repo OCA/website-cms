@@ -1,0 +1,75 @@
+# Translation of Odoo Server.
+# This file contains the translation of the following modules:
+#	* cms_delete_content_example
+#
+msgid ""
+msgstr ""
+"Project-Id-Version: Odoo Server 11.0\n"
+"Report-Msgid-Bugs-To: \n"
+"Last-Translator: <>\n"
+"Language-Team: \n"
+"MIME-Version: 1.0\n"
+"Content-Type: text/plain; charset=UTF-8\n"
+"Content-Transfer-Encoding: \n"
+"Plural-Forms: \n"
+
+#. module: cms_delete_content_example
+#: model:ir.ui.view,arch_db:cms_delete_content_example.list_examples
+msgid "Click on the delete button to remove an item."
+msgstr ""
+
+#. module: cms_delete_content_example
+#: model:ir.model.fields,field_description:cms_delete_content_example.field_cms_delete_content_example_create_uid
+msgid "Created by"
+msgstr ""
+
+#. module: cms_delete_content_example
+#: model:ir.model.fields,field_description:cms_delete_content_example.field_cms_delete_content_example_create_date
+msgid "Created on"
+msgstr ""
+
+#. module: cms_delete_content_example
+#: model:ir.ui.view,arch_db:cms_delete_content_example.list_examples
+msgid "Delete"
+msgstr ""
+
+#. module: cms_delete_content_example
+#: model:ir.model.fields,field_description:cms_delete_content_example.field_cms_delete_content_example_display_name
+msgid "Display Name"
+msgstr ""
+
+#. module: cms_delete_content_example
+#: model:ir.model.fields,field_description:cms_delete_content_example.field_cms_delete_content_example_id
+msgid "ID"
+msgstr ""
+
+#. module: cms_delete_content_example
+#: model:ir.model.fields,field_description:cms_delete_content_example.field_cms_delete_content_example___last_update
+msgid "Last Modified on"
+msgstr ""
+
+#. module: cms_delete_content_example
+#: model:ir.model.fields,field_description:cms_delete_content_example.field_cms_delete_content_example_write_uid
+msgid "Last Updated by"
+msgstr ""
+
+#. module: cms_delete_content_example
+#: model:ir.model.fields,field_description:cms_delete_content_example.field_cms_delete_content_example_write_date
+msgid "Last Updated on"
+msgstr ""
+
+#. module: cms_delete_content_example
+#: model:ir.ui.view,arch_db:cms_delete_content_example.list_examples
+msgid "List of examples"
+msgstr ""
+
+#. module: cms_delete_content_example
+#: model:ir.model.fields,field_description:cms_delete_content_example.field_cms_delete_content_example_name
+msgid "Name"
+msgstr ""
+
+#. module: cms_delete_content_example
+#: model:ir.model,name:cms_delete_content_example.model_cms_delete_content_example
+msgid "cms.delete.content.example"
+msgstr ""
+
