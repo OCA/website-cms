@@ -19,47 +19,52 @@ msgstr ""
 "Plural-Forms: nplurals=2; plural=(n != 1);\n"
 
 #. module: cms_status_message
-#: model:ir.ui.view,arch_db:cms_status_message.display_test
+#: model_terms:ir.ui.view,arch_db:cms_status_message.message_listing_wrapper
+msgid "Close"
+msgstr ""
+
+#. module: cms_status_message
+#: model_terms:ir.ui.view,arch_db:cms_status_message.display_test
 msgid ""
 "Enter a message and submit the form. <br/>You'll see your message rendered "
 "as a status message."
 msgstr ""
 
 #. module: cms_status_message
-#: code:addons/cms_status_message/models/website.py:17
+#: code:addons/cms_status_message/models/website.py:0
 #, python-format
 msgid "Error"
 msgstr "Errore"
 
 #. module: cms_status_message
-#: code:addons/cms_status_message/models/website.py:15
+#: code:addons/cms_status_message/models/website.py:0
 #, python-format
 msgid "Info"
 msgstr "Info"
 
 #. module: cms_status_message
-#: model:ir.ui.view,arch_db:cms_status_message.display_test
+#: model_terms:ir.ui.view,arch_db:cms_status_message.display_test
 msgid "Message"
 msgstr ""
 
 #. module: cms_status_message
-#: model:ir.ui.view,arch_db:cms_status_message.display_test
+#: model_terms:ir.ui.view,arch_db:cms_status_message.display_test
 msgid "Status message display test"
 msgstr ""
 
 #. module: cms_status_message
-#: code:addons/cms_status_message/models/website.py:16
+#: code:addons/cms_status_message/models/website.py:0
 #, python-format
 msgid "Success"
 msgstr "Ok"
 
 #. module: cms_status_message
-#: model:ir.ui.view,arch_db:cms_status_message.display_test
+#: model_terms:ir.ui.view,arch_db:cms_status_message.display_test
 msgid "Test"
 msgstr ""
 
 #. module: cms_status_message
-#: code:addons/cms_status_message/models/website.py:18
+#: code:addons/cms_status_message/models/website.py:0
 #, python-format
 msgid "Warning"
 msgstr "Attenzione"
