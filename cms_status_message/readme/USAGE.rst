@@ -1,5 +1,5 @@
 Python code
------------
+~~~~~~~~~~~
 
 Set a message:
 
@@ -30,7 +30,7 @@ Messages will be displayed like this:
 .. image:: ./images/preview.png
 
 Autodismiss
------------
+~~~~~~~~~~~
 
 By default messages will be auto-dismissed after 8 seconds.
 You can turn this off by setting an ir.config_param like::
@@ -54,7 +54,7 @@ You can also customize this on demand when you create the message:
 
 
 Javascript code
----------------
+~~~~~~~~~~~~~~~
 
 Dependencies:
 
@@ -92,7 +92,7 @@ message only after a redirect:
     msg_tool.add_message(msg, options);
 
 Customize appereance
---------------------
+~~~~~~~~~~~~~~~~~~~~
 
 By default the alert box is added on top of ``<main />`` content. If you
 want to customize this behavior just override or disable
@@ -100,7 +100,7 @@ want to customize this behavior just override or disable
 
 
 Test your theme look and feel
------------------------------
+~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
 
 Go to `/cms/status-message/display-test` to see how messages will look like
 when your theme is applied.
