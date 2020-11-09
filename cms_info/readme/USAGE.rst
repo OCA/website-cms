@@ -1,5 +1,5 @@
 New attributes
---------------
+~~~~~~~~~~~~~~
 
 * ``cms_create_url``: lead to create view. By default ``/cms/create/my.model``
 * ``cms_search_url``: lead to search view. By default ``/cms/search/my.model``
@@ -12,7 +12,7 @@ New attributes
 
 
 Permission and extra information
---------------------------------
+~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
 
 * ``record.cms_is_owner()``: current user is the owner of the record?
 * ``record.cms_can_edit()``: current user can edit this record?
@@ -22,7 +22,7 @@ Permission and extra information
 
 
 Info all in one
----------------
+~~~~~~~~~~~~~~~
 
 When you build CMS UIs you need all those info at once.
 This module provides also an helper method `cms_info()`
