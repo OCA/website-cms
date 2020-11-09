@@ -13,11 +13,10 @@ If you hit ``cancel`` the popup is closed. If you hit submit the item is
 deleted and you get redirected to your model's ``cms_after_delete_url``.
 By default is ``/``.
 
-Customization
--------------
+**Customization**
 
-Custom per-model delete messge
-~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+Custom per-model delete message
+~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
 
 .. code:: python
 
