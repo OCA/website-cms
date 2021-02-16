@@ -1,0 +1,75 @@
+# Translation of Odoo Server.
+# This file contains the translation of the following modules:
+# 	* cms_info
+#
+msgid ""
+msgstr ""
+"Project-Id-Version: Odoo Server 13.0\n"
+"Report-Msgid-Bugs-To: \n"
+"Last-Translator: Automatically generated\n"
+"Language-Team: none\n"
+"Language: es\n"
+"MIME-Version: 1.0\n"
+"Content-Type: text/plain; charset=UTF-8\n"
+"Content-Transfer-Encoding: \n"
+"Plural-Forms: nplurals=2; plural=n != 1;\n"
+
+#. module: cms_info
+#: model:ir.model,name:cms_info.model_cms_info_mixin
+msgid "CMS Info mixin"
+msgstr ""
+
+#. module: cms_info
+#: model:ir.model.fields,field_description:cms_info.field_cms_info_mixin__cms_delete_url
+#: model:ir.model.fields,field_description:cms_info.field_res_partner__cms_delete_url
+#: model:ir.model.fields,field_description:cms_info.field_res_users__cms_delete_url
+#: model:ir.model.fields,field_description:cms_info.field_website_page__cms_delete_url
+#: model:ir.model.fields,field_description:cms_info.field_website_published_mixin__cms_delete_url
+#: model:ir.model.fields,field_description:cms_info.field_website_published_multi_mixin__cms_delete_url
+msgid "CMS delete URL"
+msgstr ""
+
+#. module: cms_info
+#: model:ir.model.fields,field_description:cms_info.field_cms_info_mixin__cms_delete_confirm_url
+#: model:ir.model.fields,field_description:cms_info.field_res_partner__cms_delete_confirm_url
+#: model:ir.model.fields,field_description:cms_info.field_res_users__cms_delete_confirm_url
+#: model:ir.model.fields,field_description:cms_info.field_website_page__cms_delete_confirm_url
+#: model:ir.model.fields,field_description:cms_info.field_website_published_mixin__cms_delete_confirm_url
+#: model:ir.model.fields,field_description:cms_info.field_website_published_multi_mixin__cms_delete_confirm_url
+msgid "CMS delete confirm URL"
+msgstr ""
+
+#. module: cms_info
+#: model:ir.model.fields,field_description:cms_info.field_cms_info_mixin__cms_edit_url
+#: model:ir.model.fields,field_description:cms_info.field_res_partner__cms_edit_url
+#: model:ir.model.fields,field_description:cms_info.field_res_users__cms_edit_url
+#: model:ir.model.fields,field_description:cms_info.field_website_page__cms_edit_url
+#: model:ir.model.fields,field_description:cms_info.field_website_published_mixin__cms_edit_url
+#: model:ir.model.fields,field_description:cms_info.field_website_published_multi_mixin__cms_edit_url
+msgid "CMS edit URL"
+msgstr ""
+
+#. module: cms_info
+#: model:ir.model.fields,field_description:cms_info.field_cms_info_mixin__display_name
+msgid "Display Name"
+msgstr ""
+
+#. module: cms_info
+#: model:ir.model.fields,field_description:cms_info.field_cms_info_mixin__id
+msgid "ID"
+msgstr ""
+
+#. module: cms_info
+#: model:ir.model.fields,field_description:cms_info.field_cms_info_mixin____last_update
+msgid "Last Modified on"
+msgstr ""
+
+#. module: cms_info
+#: model:ir.model,name:cms_info.model_website_published_multi_mixin
+msgid "Multi Website Published Mixin"
+msgstr ""
+
+#. module: cms_info
+#: model:ir.model,name:cms_info.model_website_published_mixin
+msgid "Website Published Mixin"
+msgstr ""
