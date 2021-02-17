@@ -6,35 +6,37 @@ msgid ""
 msgstr ""
 "Project-Id-Version: Odoo Server 11.0\n"
 "Report-Msgid-Bugs-To: \n"
-"Last-Translator: Automatically generated\n"
+"PO-Revision-Date: 2021-02-17 17:45+0000\n"
+"Last-Translator: claudiagn <claudia.gargallo@qubiq.es>\n"
 "Language-Team: none\n"
 "Language: ca\n"
 "MIME-Version: 1.0\n"
 "Content-Type: text/plain; charset=UTF-8\n"
 "Content-Transfer-Encoding: \n"
 "Plural-Forms: nplurals=2; plural=n != 1;\n"
+"X-Generator: Weblate 4.3.2\n"
 
 #. module: cms_toolbar
 #: model:ir.ui.view,arch_db:cms_toolbar.toolbar
 msgid "Create"
-msgstr ""
+msgstr "Crear"
 
 #. module: cms_toolbar
 #: model:ir.ui.view,arch_db:cms_toolbar.toolbar
 msgid "Delete"
-msgstr ""
+msgstr "Suprimir"
 
 #. module: cms_toolbar
 #: model:ir.ui.view,arch_db:cms_toolbar.toolbar
 msgid "Edit"
-msgstr ""
+msgstr "Editar"
 
 #. module: cms_toolbar
 #. openerp-web
 #: code:addons/cms_toolbar/static/src/js/publish.js:59
 #, python-format
 msgid "Info"
-msgstr ""
+msgstr "Informació"
 
 #. module: cms_toolbar
 #. openerp-web
@@ -42,44 +44,46 @@ msgstr ""
 #, python-format
 msgid "It might be possible to edit the relevant items or fix the issue in <a href=\"%s\">the classic Odoo interface</a>"
 msgstr ""
+"Pot ser possible editar els elements rellevants o solucionar el problema a "
+"<a href=\"%s\"> la clàssica interfície Odoo </a>"
 
 #. module: cms_toolbar
 #. openerp-web
 #: code:addons/cms_toolbar/static/src/js/publish.js:58
 #, python-format
 msgid "Item published."
-msgstr ""
+msgstr "Element publicat."
 
 #. module: cms_toolbar
 #. openerp-web
 #: code:addons/cms_toolbar/static/src/js/publish.js:63
 #, python-format
 msgid "Item unpublished."
-msgstr ""
+msgstr "Element despublicat."
 
 #. module: cms_toolbar
 #: model:ir.ui.view,arch_db:cms_toolbar.publish
 msgid "Publish"
-msgstr ""
+msgstr "Publicar"
 
 #. module: cms_toolbar
 #: model:ir.ui.view,arch_db:cms_toolbar.popover_html_content
 msgid "Remember to publish your content when you are done with editing."
-msgstr ""
+msgstr "Recordeu de publicar el vostre contingut quan hàgiu acabat l'edició."
 
 #. module: cms_toolbar
 #: model:ir.ui.view,arch_db:cms_toolbar.publish
 msgid "Unpublish"
-msgstr ""
+msgstr "Anul·lar publicació"
 
 #. module: cms_toolbar
 #. openerp-web
 #: code:addons/cms_toolbar/static/src/js/publish.js:64
 #, python-format
 msgid "Warning"
-msgstr ""
+msgstr "Advertència"
 
 #. module: cms_toolbar
 #: model:ir.model,name:cms_toolbar.model_website_published_mixin
 msgid "website.published.mixin"
-msgstr ""
+msgstr "website.published.mixin"
