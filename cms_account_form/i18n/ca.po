@@ -6,78 +6,88 @@ msgid ""
 msgstr ""
 "Project-Id-Version: Odoo Server 11.0\n"
 "Report-Msgid-Bugs-To: \n"
-"Last-Translator: Automatically generated\n"
+"PO-Revision-Date: 2021-02-17 17:45+0000\n"
+"Last-Translator: claudiagn <claudia.gargallo@qubiq.es>\n"
 "Language-Team: none\n"
 "Language: ca\n"
 "MIME-Version: 1.0\n"
 "Content-Type: text/plain; charset=UTF-8\n"
 "Content-Transfer-Encoding: \n"
 "Plural-Forms: nplurals=2; plural=n != 1;\n"
+"X-Generator: Weblate 4.3.2\n"
 
 #. module: cms_account_form
 #: model:ir.ui.view,arch_db:cms_account_form.email_field_update_warning
 msgid "<strong>If you modify your email, your login will be updated as well.</strong><br/>\n"
 "      You'll be logged out and a confirmation email will be sent to the new address."
 msgstr ""
+"<strong> Si modifiqueu el correu electrònic, també s'actualitzarà el vostre "
+"inici de sessió. </strong> <br/>\n"
+"      Es tancarà la sessió i s’enviarà un correu electrònic de confirmació a "
+"la nova adreça."
 
 #. module: cms_account_form
 #: model:ir.model.fields,field_description:cms_account_form.field_cms_form_my_account_display_name
 msgid "Display Name"
-msgstr ""
+msgstr "Nom visible"
 
 #. module: cms_account_form
 #: code:addons/cms_account_form/models/account_form.py:129
 #, python-format
 msgid "Email address `%s` already taken."
-msgstr ""
+msgstr "L'adreça de correu electrònic `%s` ja s'ha pres."
 
 #. module: cms_account_form
 #: model:ir.model.fields,field_description:cms_account_form.field_cms_form_my_account_id
 msgid "ID"
-msgstr ""
+msgstr "ID"
 
 #. module: cms_account_form
 #: code:addons/cms_account_form/models/account_form.py:147
 #, python-format
 msgid "Important"
-msgstr ""
+msgstr "Important"
 
 #. module: cms_account_form
 #: code:addons/cms_account_form/models/account_form.py:63
 #, python-format
 msgid "Invalid Email! Please enter a valid email address."
 msgstr ""
+"Email invàlid! Siusplau, introdueixi una adreça de correu electrònic vàlida."
 
 #. module: cms_account_form
 #: model:ir.model.fields,field_description:cms_account_form.field_cms_form_my_account___last_update
 msgid "Last Modified on"
-msgstr ""
+msgstr "Darrera modificació el"
 
 #. module: cms_account_form
 #: code:addons/cms_account_form/models/account_form.py:41
 #, python-format
 msgid "My account"
-msgstr ""
+msgstr "El meu compte"
 
 #. module: cms_account_form
 #: code:addons/cms_account_form/models/account_form.py:45
 #, python-format
 msgid "Profile updated."
-msgstr ""
+msgstr "Perfil actualitzat."
 
 #. module: cms_account_form
 #: code:addons/cms_account_form/models/account_form.py:128
 #, python-format
 msgid "Warning"
-msgstr ""
+msgstr "Advertència"
 
 #. module: cms_account_form
 #: code:addons/cms_account_form/models/account_form.py:148
 #, python-format
 msgid "Your login username has changed to: `%s`. An email has been sent to verify it. You will be asked to reset your password."
 msgstr ""
+"El vostre nom d'usuari d'inici de sessió ha canviat a: `%s`. S'ha enviat un "
+"correu electrònic per verificar-lo. Se us demanarà que restableixi la "
+"contrasenya."
 
 #. module: cms_account_form
 #: model:ir.model,name:cms_account_form.model_cms_form_my_account
 msgid "cms.form.my.account"
-msgstr ""
+msgstr "cms.form.my.account"
