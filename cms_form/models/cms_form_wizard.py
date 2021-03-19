@@ -145,6 +145,7 @@ class CMSFormWizard(models.AbstractModel):
             # safely re-init step
             storage['steps'][step] = {}
         storage['steps'][step].update(values)
+        self._wiz_storage.save_request_data()
 
     def wiz_load_step(self, step=None):
         step = step or self.wiz_current_step()
