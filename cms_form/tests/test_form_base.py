@@ -7,27 +7,18 @@ from werkzeug.wrappers import Request
 from odoo import http
 
 from .common import FormTestCase
-from .fake_models import FakeFieldsForm, FakePartnerForm, FakePartnerFormProtectedFields
 from .utils import fake_request
 
 
 class TestFormBase(FormTestCase):
-
-    TEST_MODELS_KLASSES = [
-        FakePartnerForm,
-        FakeFieldsForm,
-        FakePartnerFormProtectedFields,
-    ]
-
-    @classmethod
-    def setUpClass(cls):
-        super(TestFormBase, cls).setUpClass()
-        cls._setup_models()
-
-    @classmethod
-    def tearDownClass(cls):
-        cls._teardown_models()
-        super(TestFormBase, cls).tearDownClass()
+    @staticmethod
+    def _get_test_models():
+        from .fake_models.fake_fields_form import FakeFieldsForm
+        from .fake_models.fake_partner_form import FakePartnerForm
+        from .fake_models.fake_partner_form_protected_fields import (
+            FakePartnerFormProtectedFields,
+        )
+        return (FakeFieldsForm, FakePartnerForm, FakePartnerFormProtectedFields)
 
     def test_form_init(self):
         form = self.get_form("cms.form.mixin")

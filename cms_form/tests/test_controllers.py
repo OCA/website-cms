@@ -9,7 +9,6 @@ import mock
 
 from ..controllers import main
 from .common import FormHttpTestCase
-from .fake_models import WIZ_KLASSES, FakePartnerForm, FakeSearchPartnerForm
 from .utils import fake_request
 
 IMPORT = "odoo.addons.cms_form.controllers.main"
@@ -17,8 +16,13 @@ IMPORT = "odoo.addons.cms_form.controllers.main"
 
 @unittest.skipIf(os.getenv("SKIP_HTTP_CASE"), "HTTP case disabled.")
 class TestControllers(FormHttpTestCase):
+    @staticmethod
+    def _get_test_models():
+        from .fake_models.fake_partner_form import FakePartnerForm
+        from .fake_models.fake_search_partner_form import FakeSearchPartnerForm
+        from .fake_models.fake_wizard_form import ALL_WIZ_KLASSES
 
-    TEST_MODELS_KLASSES = [FakePartnerForm, FakeSearchPartnerForm] + WIZ_KLASSES
+        return ALL_WIZ_KLASSES + [FakePartnerForm, FakeSearchPartnerForm]
 
     def setUp(self):
         super().setUp()
@@ -100,9 +104,9 @@ class TestControllers(FormHttpTestCase):
     def test_get_form_no_model_no_main_object(self):
         with self.mock_assets():
             form = self.form_controller.get_form(
-                None, form_model_key=FakePartnerForm._name
+                None, form_model_key=self.FakePartnerForm._name
             )
-            self.assertEqual(form.main_object, self.env[FakePartnerForm._name])
+            self.assertEqual(form.main_object, self.env[self.FakePartnerForm._name])
 
     def test_get_default_form(self):
         with self.mock_assets():
