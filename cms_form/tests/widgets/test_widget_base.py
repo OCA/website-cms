@@ -1,25 +1,26 @@
 # Copyright 2018 Simone Orsi
 # License LGPL-3.0 or later (http://www.gnu.org/licenses/lgpl.html).
 from ..common import FakeModelMixin, get_form
-from ..fake_models import FakePartnerForm
 from .common import TestWidgetCase, fake_field
 
 
 class TestWidgetBase(TestWidgetCase, FakeModelMixin):
 
-    TEST_MODELS_KLASSES = [
-        FakePartnerForm,
-    ]
-
     @classmethod
     def setUpClass(cls):
         super().setUpClass()
-        cls._setup_models()
+        cls._setup_models(cls)
 
     @classmethod
     def tearDownClass(cls):
-        cls._teardown_models()
+        cls._teardown_models(cls)
         super().tearDownClass()
+
+    @staticmethod
+    def _get_test_models():
+        from ..fake_models.fake_partner_form import FakePartnerForm
+
+        return (FakePartnerForm,)
 
     def test_widget_init(self):
         form = get_form(self.env, "cms.form.res.partner")
