@@ -7,35 +7,25 @@ from odoo import exceptions
 from odoo.tools import mute_logger
 
 from .common import FormTestCase
-from .fake_models import (
-    FakeFieldsForm,
-    FakePartnerChannelForm,
-    FakePartnerForm,
-    FakePubModel,
-    FakePubModelForm,
-)
 from .utils import fake_request
 
 
 class TestCMSForm(FormTestCase):
+    @staticmethod
+    def _get_test_models():
+        from .fake_models.fake_fields_form import FakeFieldsForm
+        from .fake_models.fake_partner_form import FakePartnerForm
+        from .fake_models.fake_partner_channel_form import FakePartnerChannelForm
+        from .fake_models.fake_pub_model_form import FakePubModel
+        from .fake_models.fake_pub_model_form import FakePubModelForm
 
-    TEST_MODELS_KLASSES = [
-        FakePartnerForm,
-        FakeFieldsForm,
-        FakePartnerChannelForm,
-        FakePubModel,
-        FakePubModelForm,
-    ]
-
-    @classmethod
-    def setUpClass(cls):
-        super(TestCMSForm, cls).setUpClass()
-        cls._setup_models()
-
-    @classmethod
-    def tearDownClass(cls):
-        cls._teardown_models()
-        super(TestCMSForm, cls).tearDownClass()
+        return (
+            FakePartnerForm,
+            FakeFieldsForm,
+            FakePartnerChannelForm,
+            FakePubModel,
+            FakePubModelForm,
+        )
 
     def test_form_base_attrs(self):
         form = self.get_form("cms.form.test_fields")

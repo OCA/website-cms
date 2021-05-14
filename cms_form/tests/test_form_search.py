@@ -4,32 +4,28 @@
 import mock
 
 from .common import FormTestCase
-from .fake_models import (
-    FakePartnerForm,
-    FakeSearchPartnerForm,
-    FakeSearchPartnerFormMulti,
-)
 from .utils import fake_request
 
 
 class TestCMSSearchForm(FormTestCase):
+    @staticmethod
+    def _get_test_models():
+        from .fake_models.fake_partner_form import FakePartnerForm
+        from .fake_models.fake_search_partner_form import (
+            FakeSearchPartnerForm,
+            FakeSearchPartnerFormMulti,
+        )
 
-    TEST_MODELS_KLASSES = [
-        FakePartnerForm,
-        FakeSearchPartnerForm,
-        FakeSearchPartnerFormMulti,
-    ]
+        return (
+            FakePartnerForm,
+            FakeSearchPartnerForm,
+            FakeSearchPartnerFormMulti,
+        )
 
     @classmethod
     def setUpClass(cls):
-        super(TestCMSSearchForm, cls).setUpClass()
-        cls._setup_models()
+        super().setUpClass()
         cls._setup_records()
-
-    @classmethod
-    def tearDownClass(cls):
-        cls._teardown_models()
-        super(TestCMSSearchForm, cls).tearDownClass()
 
     @classmethod
     def _setup_records(cls):
