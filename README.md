@@ -15,7 +15,14 @@ CMS features for Odoo
 
 [//]: # (addons)
 
-This part will be replaced when running the oca-gen-addons-table script from OCA/maintainer-tools.
+Available addons
+----------------
+addon | version | summary
+--- | --- | ---
+[cms_delete_content](cms_delete_content/) | 13.0.1.0.0 | Basic features for handling content deletion via frontend.
+[cms_delete_content_example](cms_delete_content_example/) | 13.0.1.0.0 | Basic content to showcase the CMS delete content
+[cms_info](cms_info/) | 13.0.1.0.0 | A set of basic information needed on all published records.
+[cms_status_message](cms_status_message/) | 13.0.1.0.0 | Basic status messages for your CMS system
 
 [//]: # (end addons)
 
