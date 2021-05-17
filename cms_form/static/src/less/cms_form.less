@@ -1,0 +1,24 @@
+.cms_form_wrapper{
+    form{
+        .field-required{
+            .control-label::after{
+                content: '*';
+                font-weight: bold;
+            }
+        }
+        .text-counter{
+            width: auto;
+            float: right;
+            margin-top: 0.2em;
+        }
+        fieldset {
+          padding: 1em;
+        }
+        .has_fieldsets.tabs .tab-pane{
+          padding: 0.5em;
+        }
+        .has-error .error-msg {
+          margin-top: 0.5em;
+        }
+    }
+}
