@@ -125,8 +125,8 @@ License LGPL-3.0 or later (http://www.gnu.org/licenses/lgpl.html).
     <template id="fieldsets_as_tabs" name="CMS form fieldsets as tabs">
         <ul class="nav nav-tabs" role="tablist">
             <t t-foreach="form_fieldsets" t-as="fset">
-                <li t-att-class="fset_first and 'active' or None" role="presentation">
-                    <a
+                <li role="presentation">
+                    <a  t-attf-class="nav-link #{'active' if fset_first else ''}"
                         t-attf-href="#tab-#{fset['id']}"
                         t-attf-aria-controls="tab-#{fset['id']}"
                         role="tab"
