@@ -24,6 +24,14 @@ addon | version | summary
 [cms_info](cms_info/) | 13.0.1.0.0 | A set of basic information needed on all published records.
 [cms_status_message](cms_status_message/) | 13.0.1.0.0 | Basic status messages for your CMS system
 
+
+Unported addons
+---------------
+addon | version | summary
+--- | --- | ---
+[cms_form](cms_form/) | 13.0.1.0.0 (unported) | Basic content type form
+[cms_form_example](cms_form_example/) | 11.0.1.1.0 (unported) | Basic content type form example
+
 [//]: # (end addons)
 
 <!-- prettier-ignore-end -->
