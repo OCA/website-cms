@@ -5,7 +5,7 @@
     'name': 'CMS Form example',
     'summary': """
         Basic content type form example""",
-    'version': '11.0.1.1.0',
+    'version': '13.0.1.0.0',
     'license': 'AGPL-3',
     'author': 'Simone Orsi,Odoo Community Association (OCA)',
     'depends': [
@@ -15,5 +15,5 @@
     'data': [
         'templates/assets.xml',
     ],
-    'installable': False,
+    'installable': True,
 }
