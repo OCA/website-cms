@@ -1,4 +1,3 @@
 #odoo-test-helper
-
-# TMP dependency to include https://github.com/akretion/odoo-test-helper/pull/1
+# Include https://github.com/akretion/odoo-test-helper/pull/11
 -e git+https://github.com/simahawk/odoo-test-helper.git@master#egg=odoo-test-helper
