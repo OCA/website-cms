@@ -524,7 +524,7 @@ class CMSFormMixin(models.AbstractModel):
         """
         render_values = self.form_render_values
         render_values.update(kw)
-        render_values['form_data'] = self.form_load_defaults()
+        render_values['form_data'] = self.form_load_defaults(request_values=kw)
         handler = getattr(self, 'form_process_' + self.request.method.upper())
         self.form_render_values = dict(render_values, **handler(render_values))
 
