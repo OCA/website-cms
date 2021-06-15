@@ -229,6 +229,8 @@ class CMSForm(models.AbstractModel):
             msg = errors_message.get('_validation') \
                 or errors_message.get('_integrity')
             if msg and self.o_request.website:
+                self.env.cr.rollback()
+                self.env.clear()
                 self.o_request.website.add_status_message(
                     msg, type_='danger', title=None)
         render_values.update({
