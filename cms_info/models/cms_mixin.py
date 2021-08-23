@@ -4,8 +4,7 @@ from odoo import api, exceptions, fields, models
 
 
 class CMSInfoMixin(models.AbstractModel):
-    """Provide core information for CMS records.
-    """
+    """Provide core information for CMS records."""
 
     _name = "cms.info.mixin"
     _description = "CMS Info mixin"
@@ -34,17 +33,18 @@ class CMSInfoMixin(models.AbstractModel):
         return "/"
 
     cms_edit_url = fields.Char(
-        string="CMS edit URL", compute="_compute_cms_edit_url", readonly=True,
+        string="CMS edit URL",
+        compute="_compute_cms_edit_url",
     )
 
     cms_delete_url = fields.Char(
-        string="CMS delete URL", compute="_compute_cms_delete_url", readonly=True,
+        string="CMS delete URL",
+        compute="_compute_cms_delete_url",
     )
 
     cms_delete_confirm_url = fields.Char(
         string="CMS delete confirm URL",
         compute="_compute_cms_delete_url",
-        readonly=True,
     )
 
     def _compute_cms_edit_url(self):
