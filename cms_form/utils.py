@@ -1,4 +1,4 @@
-# Copyright 2017-2018 Simone Orsi
+# Copyright 2017 Simone Orsi
 # License LGPL-3.0 or later (http://www.gnu.org/licenses/lgpl.html).
 
 
@@ -26,7 +26,15 @@ def safe_to_date(value, **kw):
     return value
 
 
-TRUE_VALUES = ('on', 'yes', 'ok', 'true', True, 1, '1', )
+TRUE_VALUES = (
+    "on",
+    "yes",
+    "ok",
+    "true",
+    True,
+    1,
+    "1",
+)
 
 
 def string_to_bool(value, true_values=TRUE_VALUES):
@@ -64,14 +72,12 @@ def data_merge(a, b):
                         a[key] = b[key]
             else:
                 raise ValueError(
-                    'Cannot merge non-dict "%s" into dict "%s"' % (b, a)
+                    'Cannot merge non-dict "{}" into dict "{}"'.format(b, a)
                 )
         else:
-            raise NotImplementedError(
-                'NOT IMPLEMENTED "%s" into "%s"' % (b, a)
-            )
+            raise NotImplementedError('NOT IMPLEMENTED "{}" into "{}"'.format(b, a))
     except TypeError as e:  # pragma: no cover
         raise TypeError(
-            '"%s" in key "%s" when merging "%s" into "%s"' % (e, key, b, a)
+            '"{}" in key "{}" when merging "{}" into "{}"'.format(e, key, b, a)
         )
     return a

@@ -1,13 +1,14 @@
-# Copyright 2017-2018 Simone Orsi
+# Copyright 2017 Simone Orsi
 # License LGPL-3.0 or later (http://www.gnu.org/licenses/lgpl.html).
 
 from odoo import models
 
 
 class SelectionWidget(models.AbstractModel):
-    _name = 'cms.form.widget.selection'
-    _inherit = 'cms.form.widget.mixin'
-    _w_template = 'cms_form.field_widget_selection'
+    _name = "cms.form.widget.selection"
+    _inherit = "cms.form.widget.mixin"
+    _description = "CMS Form selection widget"
+    _w_template = "cms_form.field_widget_selection"
 
     def w_extract(self, **req_values):
         # Handle case where sel options are integers.
@@ -19,10 +20,10 @@ class SelectionWidget(models.AbstractModel):
         first_value = None
         # use `get` as you might want to use the selection widget
         # for non-Selection fields and just pass options via `w_option_items`.
-        if self.w_field.get('selection'):
+        if self.w_field.get("selection"):
             # `fields.Selection` does this under the hood
             # to state the PG column type to be used.
-            first_value = self.w_field['selection'][0][0]
+            first_value = self.w_field["selection"][0][0]
         # fields.Selection does the same check to determine PG col type
         if first_value and value:
             # convert to same type
@@ -32,21 +33,20 @@ class SelectionWidget(models.AbstractModel):
     @property
     def w_option_items(self):
         return [
-            {'value': x[0], 'label': x[1]}
-            for x in self.w_field.get('selection', [])
+            {"value": x[0], "label": x[1]} for x in self.w_field.get("selection", [])
         ]
 
 
 class RadioSelectionWidget(models.AbstractModel):
-    _name = 'cms.form.widget.radio'
-    _inherit = 'cms.form.widget.selection'
-    _w_template = 'cms_form.field_widget_radio_selection'
+    _name = "cms.form.widget.radio"
+    _inherit = "cms.form.widget.selection"
+    _description = "CMS Form radio widget"
+    _w_template = "cms_form.field_widget_radio_selection"
     # you can define help message per each options
     # opt value: help msg (can be html too)
     w_options_help = {}
 
     def widget_init(self, form, fname, field, **kw):
-        widget = super(
-            RadioSelectionWidget, self).widget_init(form, fname, field, **kw)
-        widget.w_options_help = kw.get('options_help') or {}
+        widget = super(RadioSelectionWidget, self).widget_init(form, fname, field, **kw)
+        widget.w_options_help = kw.get("options_help") or {}
         return widget

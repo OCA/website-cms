@@ -55,5 +55,5 @@ In this case on the 1st page the user will deal with countries,
 then on the 2nd step with the name of the partner
 and on the last step only with partner category.
 
-The wizard machinery will handle session storage and navigation 
+The wizard machinery will handle session storage and navigation
 between steps automatically.

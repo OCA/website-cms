@@ -10,9 +10,10 @@ odoo.define("cms_status_message.autodismiss", function(require) {
             this.handle_autodimiss();
         },
         handle_autodimiss: function() {
+            const self = this;
             this.$el
                 .fadeOut(this.dimissTimeout, function() {
-                    this.$el.remove();
+                    self.$el.remove();
                 })
                 .on("mouseover", function() {
                     $(this)

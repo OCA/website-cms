@@ -16,6 +16,7 @@ if not testing:
 
         _name = 'cms.form.res.partner'
         _inherit = 'cms.form'
+        _description = __doc__
         _form_model = 'res.partner'
         _form_model_fields = ('name', 'country_id', 'category_id')
         _form_required_fields = ('name', )
@@ -33,6 +34,7 @@ if not testing:
 
         _name = 'cms.form.search.res.partner'
         _inherit = 'cms.form.search'
+        _description = __doc__
         _form_model = 'res.partner'
         _form_model_fields = ('name', 'country_id', )
 
@@ -40,12 +42,14 @@ if not testing:
         """Partner model search form with ajax."""
         _inherit = 'cms.form.search.res.partner'
         _name = 'cms.form.search.res.partner.ajax'
+        _description = __doc__
         _form_ajax = True
         _form_ajax_onchange = True
 
     class ExamplePartnerFormWithFieldsets(models.AbstractModel):
         _name = 'cms.form.res.partner.fset'
         _inherit = 'cms.form.res.partner'
+        _description = __doc__
 
         _form_fieldsets = [
             {

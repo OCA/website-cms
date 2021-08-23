@@ -15,10 +15,9 @@ class TestInfoMixin(test_common.SavepointCase):
     @classmethod
     def setUpClass(cls):
         super().setUpClass()
-        from .fake_models import FakeModel
-
         cls.loader = FakeModelLoader(cls.env, cls.__module__)
         cls.loader.backup_registry()
+        from .fake_models import FakeModel
         cls.loader.update_registry((FakeModel,))
         cls.model = cls.env[FakeModel._name]
         cls.record = cls.model.create({"name": "Foo"})
