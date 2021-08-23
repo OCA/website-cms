@@ -5,7 +5,7 @@
     "name": "Cms Delete Content Example",
     "summary": """
         Basic content to showcase the CMS delete content""",
-    "version": "13.0.1.0.0",
+    "version": "13.0.1.0.1",
     "license": "LGPL-3",
     "author": "Rémy Taymans, Odoo Community Association (OCA)",
     "mainainers": ["simahawk"],
