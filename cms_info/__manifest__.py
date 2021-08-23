@@ -8,6 +8,7 @@
     "category": "Website",
     "website": "https://github.com/OCA/website-cms",
     "author": "Camptocamp, Odoo Community Association (OCA)",
+    "mainainers": ["simahawk"],
     "license": "LGPL-3",
     "installable": True,
     # TODO: think about make cms stuff independent from `website`.
