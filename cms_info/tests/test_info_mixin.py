@@ -3,21 +3,18 @@
 import mock
 from odoo_test_helper import FakeModelLoader
 
-import odoo.tests.common as test_common
 from odoo import exceptions
+from odoo.tests.common import SavepointCase
 
 
-class TestInfoMixin(test_common.SavepointCase):
-
-    post_install = True
-    at_install = False
-
+class TestInfoMixin(SavepointCase):
     @classmethod
     def setUpClass(cls):
         super().setUpClass()
         cls.loader = FakeModelLoader(cls.env, cls.__module__)
         cls.loader.backup_registry()
         from .fake_models import FakeModel
+
         cls.loader.update_registry((FakeModel,))
         cls.model = cls.env[FakeModel._name]
         cls.record = cls.model.create({"name": "Foo"})
@@ -29,7 +26,6 @@ class TestInfoMixin(test_common.SavepointCase):
                 "name": "User 1",
                 "login": "user1",
                 "email": "user1@email.com",
-                "groups_id": [(6, 0, [cls.env.ref("base.group_portal").id])],
             }
         )
 
@@ -46,19 +42,22 @@ class TestInfoMixin(test_common.SavepointCase):
 
     def test_edit_url(self):
         self.assertEqual(
-            self.record.cms_edit_url, "/cms/edit/fake.model/%s" % self.record.id,
+            self.record.cms_edit_url,
+            "/cms/edit/fake.model/%s" % self.record.id,
         )
 
     def test_delete_url(self):
         self.assertEqual(
-            self.record.cms_delete_url, "/cms/delete/fake.model/%s" % self.record.id,
+            self.record.cms_delete_url,
+            "/cms/delete/fake.model/%s" % self.record.id,
         )
         self.assertEqual(
             self.record.cms_delete_confirm_url,
             "/cms/delete/fake.model/%s/confirm" % self.record.id,
         )
         self.assertEqual(
-            self.record.cms_after_delete_url, "/",
+            self.record.cms_after_delete_url,
+            "/",
         )
 
     def test_is_owner(self):
