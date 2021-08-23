@@ -380,35 +380,35 @@ users.</p>
 <p><strong>Table of contents</strong></p>
 <div class="contents local topic" id="contents">
 <ul class="simple">
-<li><a class="reference internal" href="#usage" id="id5">Usage</a><ul>
-<li><a class="reference internal" href="#python-code" id="id6">Python code</a></li>
-<li><a class="reference internal" href="#autodismiss" id="id7">Autodismiss</a></li>
-<li><a class="reference internal" href="#javascript-code" id="id8">Javascript code</a></li>
-<li><a class="reference internal" href="#customize-appereance" id="id9">Customize appereance</a></li>
-<li><a class="reference internal" href="#test-your-theme-look-and-feel" id="id10">Test your theme look and feel</a></li>
+<li><a class="reference internal" href="#usage" id="id6">Usage</a><ul>
+<li><a class="reference internal" href="#python-code" id="id7">Python code</a></li>
+<li><a class="reference internal" href="#autodismiss" id="id8">Autodismiss</a></li>
+<li><a class="reference internal" href="#javascript-code" id="id9">Javascript code</a></li>
+<li><a class="reference internal" href="#customize-appereance" id="id10">Customize appereance</a></li>
+<li><a class="reference internal" href="#test-your-theme-look-and-feel" id="id11">Test your theme look and feel</a></li>
 </ul>
 </li>
-<li><a class="reference internal" href="#known-issues-roadmap" id="id11">Known issues / Roadmap</a></li>
-<li><a class="reference internal" href="#changelog" id="id12">Changelog</a><ul>
-<li><a class="reference internal" href="#id1" id="id13">11.0.1.3.0 (2018-08-07)</a></li>
-<li><a class="reference internal" href="#id2" id="id14">11.0.1.2.0 (2018-08-07)</a></li>
-<li><a class="reference internal" href="#id3" id="id15">11.0.1.1.0 (2018-04-22)</a></li>
-<li><a class="reference internal" href="#id4" id="id16">11.0.1.0.0 (2018-01-18)</a></li>
+<li><a class="reference internal" href="#known-issues-roadmap" id="id12">Known issues / Roadmap</a></li>
+<li><a class="reference internal" href="#changelog" id="id13">Changelog</a><ul>
+<li><a class="reference internal" href="#id2" id="id14">11.0.1.3.0 (2018-08-07)</a></li>
+<li><a class="reference internal" href="#id3" id="id15">11.0.1.2.0 (2018-08-07)</a></li>
+<li><a class="reference internal" href="#id4" id="id16">11.0.1.1.0 (2018-04-22)</a></li>
+<li><a class="reference internal" href="#id5" id="id17">11.0.1.0.0 (2018-01-18)</a></li>
 </ul>
 </li>
-<li><a class="reference internal" href="#bug-tracker" id="id17">Bug Tracker</a></li>
-<li><a class="reference internal" href="#credits" id="id18">Credits</a><ul>
-<li><a class="reference internal" href="#authors" id="id19">Authors</a></li>
-<li><a class="reference internal" href="#contributors" id="id20">Contributors</a></li>
-<li><a class="reference internal" href="#maintainers" id="id21">Maintainers</a></li>
+<li><a class="reference internal" href="#bug-tracker" id="id18">Bug Tracker</a></li>
+<li><a class="reference internal" href="#credits" id="id19">Credits</a><ul>
+<li><a class="reference internal" href="#authors" id="id20">Authors</a></li>
+<li><a class="reference internal" href="#contributors" id="id21">Contributors</a></li>
+<li><a class="reference internal" href="#maintainers" id="id22">Maintainers</a></li>
 </ul>
 </li>
 </ul>
 </div>
 <div class="section" id="usage">
-<h1><a class="toc-backref" href="#id5">Usage</a></h1>
+<h1><a class="toc-backref" href="#id6">Usage</a></h1>
 <div class="section" id="python-code">
-<h2><a class="toc-backref" href="#id6">Python code</a></h2>
+<h2><a class="toc-backref" href="#id7">Python code</a></h2>
 <p>Set a message:</p>
 <pre class="code python literal-block">
 <span class="n">msg</span> <span class="o">=</span> <span class="n">_</span><span class="p">(</span><span class="s1">'My important message.'</span><span class="p">)</span>
@@ -433,7 +433,7 @@ beginning of the message) matches the message type:</p>
 <img alt="https://raw.githubusercontent.com/OCA/website-cms/13.0/cms_status_message/images/preview.png" src="https://raw.githubusercontent.com/OCA/website-cms/13.0/cms_status_message/images/preview.png" />
 </div>
 <div class="section" id="autodismiss">
-<h2><a class="toc-backref" href="#id7">Autodismiss</a></h2>
+<h2><a class="toc-backref" href="#id8">Autodismiss</a></h2>
 <p>By default messages will be auto-dismissed after 8 seconds.
 You can turn this off by setting an ir.config_param like:</p>
 <pre class="literal-block">
@@ -452,7 +452,7 @@ cms_status_message.autodismiss_timeout = 3000  # milliseconds
 </pre>
 </div>
 <div class="section" id="javascript-code">
-<h2><a class="toc-backref" href="#id8">Javascript code</a></h2>
+<h2><a class="toc-backref" href="#id9">Javascript code</a></h2>
 <p>Dependencies:</p>
 <pre class="code javascript literal-block">
 <span class="kd">var</span> <span class="nx">msg_tool</span> <span class="o">=</span> <span class="nx">require</span><span class="p">(</span><span class="s1">'cms_status_message.tool'</span><span class="p">);</span>
@@ -482,25 +482,30 @@ message only after a redirect:</p>
 </pre>
 </div>
 <div class="section" id="customize-appereance">
-<h2><a class="toc-backref" href="#id9">Customize appereance</a></h2>
+<h2><a class="toc-backref" href="#id10">Customize appereance</a></h2>
 <p>By default the alert box is added on top of <tt class="docutils literal">&lt;main /&gt;</tt> content. If you
 want to customize this behavior just override or disable
 <tt class="docutils literal">cms_status_message.add_status_message</tt> template.</p>
 </div>
 <div class="section" id="test-your-theme-look-and-feel">
-<h2><a class="toc-backref" href="#id10">Test your theme look and feel</a></h2>
+<h2><a class="toc-backref" href="#id11">Test your theme look and feel</a></h2>
 <p>Go to <cite>/cms/status-message/display-test</cite> to see how messages will look like
 when your theme is applied.</p>
 </div>
 </div>
 <div class="section" id="known-issues-roadmap">
-<h1><a class="toc-backref" href="#id11">Known issues / Roadmap</a></h1>
+<h1><a class="toc-backref" href="#id12">Known issues / Roadmap</a></h1>
 <p>Get rid of <cite>website</cite> dependency and move features to a standalone model.</p>
 </div>
 <div class="section" id="changelog">
-<h1><a class="toc-backref" href="#id12">Changelog</a></h1>
-<div class="section" id="id1">
-<h2><a class="toc-backref" href="#id13">11.0.1.3.0 (2018-08-07)</a></h2>
+<h1><a class="toc-backref" href="#id13">Changelog</a></h1>
+<p>13.0.1.0.1 (2021-08-23)
+<strong>Features</strong></p>
+<ul class="simple">
+<li>Migration to v13 (<a class="reference external" href="https://github.com/OCA/website-cms/issues/111">#111</a>)</li>
+</ul>
+<div class="section" id="id2">
+<h2><a class="toc-backref" href="#id14">11.0.1.3.0 (2018-08-07)</a></h2>
 <p><strong>Improvements</strong></p>
 <ul>
 <li><p class="first">Get rid of example package</p>
@@ -512,8 +517,8 @@ with your theme styles applied.</p>
 </li>
 </ul>
 </div>
-<div class="section" id="id2">
-<h2><a class="toc-backref" href="#id14">11.0.1.2.0 (2018-08-07)</a></h2>
+<div class="section" id="id3">
+<h2><a class="toc-backref" href="#id15">11.0.1.2.0 (2018-08-07)</a></h2>
 <p><strong>Improvements</strong></p>
 <ul>
 <li><p class="first">Add auto-dimiss option</p>
@@ -530,8 +535,8 @@ cms_status_message.autodismiss_timeout = 3000  # milliseconds
 </li>
 </ul>
 </div>
-<div class="section" id="id3">
-<h2><a class="toc-backref" href="#id15">11.0.1.1.0 (2018-04-22)</a></h2>
+<div class="section" id="id4">
+<h2><a class="toc-backref" href="#id16">11.0.1.1.0 (2018-04-22)</a></h2>
 <p><strong>Improvements</strong></p>
 <ul>
 <li><p class="first">Improve JS API</p>
@@ -552,13 +557,13 @@ and do things when rendering is really finished.</p>
 </li>
 </ul>
 </div>
-<div class="section" id="id4">
-<h2><a class="toc-backref" href="#id16">11.0.1.0.0 (2018-01-18)</a></h2>
+<div class="section" id="id5">
+<h2><a class="toc-backref" href="#id17">11.0.1.0.0 (2018-01-18)</a></h2>
 <p>Upgrade to v11</p>
 </div>
 </div>
 <div class="section" id="bug-tracker">
-<h1><a class="toc-backref" href="#id17">Bug Tracker</a></h1>
+<h1><a class="toc-backref" href="#id18">Bug Tracker</a></h1>
 <p>Bugs are tracked on <a class="reference external" href="https://github.com/OCA/website-cms/issues">GitHub Issues</a>.
 In case of trouble, please check there if your issue has already been reported.
 If you spotted it first, help us smashing it by providing a detailed and welcomed
@@ -566,21 +571,21 @@ If you spotted it first, help us smashing it by providing a detailed and welcome
 <p>Do not contact contributors directly about support or help with technical issues.</p>
 </div>
 <div class="section" id="credits">
-<h1><a class="toc-backref" href="#id18">Credits</a></h1>
+<h1><a class="toc-backref" href="#id19">Credits</a></h1>
 <div class="section" id="authors">
-<h2><a class="toc-backref" href="#id19">Authors</a></h2>
+<h2><a class="toc-backref" href="#id20">Authors</a></h2>
 <ul class="simple">
 <li>Camptocamp</li>
 </ul>
 </div>
 <div class="section" id="contributors">
-<h2><a class="toc-backref" href="#id20">Contributors</a></h2>
+<h2><a class="toc-backref" href="#id21">Contributors</a></h2>
 <ul class="simple">
 <li>Simone Orsi &lt;<a class="reference external" href="mailto:simone.orsi&#64;camptocamp.com">simone.orsi&#64;camptocamp.com</a>&gt;</li>
 </ul>
 </div>
 <div class="section" id="maintainers">
-<h2><a class="toc-backref" href="#id21">Maintainers</a></h2>
+<h2><a class="toc-backref" href="#id22">Maintainers</a></h2>
 <p>This module is maintained by the OCA.</p>
 <a class="reference external image-reference" href="https://odoo-community.org"><img alt="Odoo Community Association" src="https://odoo-community.org/logo.png" /></a>
 <p>OCA, or the Odoo Community Association, is a nonprofit organization whose

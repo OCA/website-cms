@@ -122,6 +122,12 @@ Get rid of `website` dependency to be able to use it w/ `portal` module only.
 Changelog
 =========
 
+13.0.1.0.1 (2021-08-23)
+**Features**
+
+- Migration to v13 (`#111 <https://github.com/OCA/website-cms/issues/111>`_)
+
+
 11.0.1.0.2 (2018-04-27)
 ~~~~~~~~~~~~~~~~~~~~~~~
 
