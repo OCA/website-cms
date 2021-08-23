@@ -162,6 +162,12 @@ Get rid of `website` dependency and move features to a standalone model.
 Changelog
 =========
 
+13.0.1.0.1 (2021-08-23)
+**Features**
+
+- Migration to v13 (`#111 <https://github.com/OCA/website-cms/issues/111>`_)
+
+
 11.0.1.3.0 (2018-08-07)
 ~~~~~~~~~~~~~~~~~~~~~~~
 
