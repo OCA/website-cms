@@ -10,6 +10,8 @@ setuptools.setup(
     install_requires=[
         'odoo13-addon-cms_delete_content',
         'odoo13-addon-cms_delete_content_example',
+        'odoo13-addon-cms_form',
+        'odoo13-addon-cms_form_example',
         'odoo13-addon-cms_info',
         'odoo13-addon-cms_status_message',
     ],
