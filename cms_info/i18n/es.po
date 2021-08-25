@@ -23,31 +23,16 @@ msgstr "CMS Información mix"
 
 #. module: cms_info
 #: model:ir.model.fields,field_description:cms_info.field_cms_info_mixin__cms_delete_url
-#: model:ir.model.fields,field_description:cms_info.field_res_partner__cms_delete_url
-#: model:ir.model.fields,field_description:cms_info.field_res_users__cms_delete_url
-#: model:ir.model.fields,field_description:cms_info.field_website_page__cms_delete_url
-#: model:ir.model.fields,field_description:cms_info.field_website_published_mixin__cms_delete_url
-#: model:ir.model.fields,field_description:cms_info.field_website_published_multi_mixin__cms_delete_url
 msgid "CMS delete URL"
 msgstr "CMS eliminar URL"
 
 #. module: cms_info
 #: model:ir.model.fields,field_description:cms_info.field_cms_info_mixin__cms_delete_confirm_url
-#: model:ir.model.fields,field_description:cms_info.field_res_partner__cms_delete_confirm_url
-#: model:ir.model.fields,field_description:cms_info.field_res_users__cms_delete_confirm_url
-#: model:ir.model.fields,field_description:cms_info.field_website_page__cms_delete_confirm_url
-#: model:ir.model.fields,field_description:cms_info.field_website_published_mixin__cms_delete_confirm_url
-#: model:ir.model.fields,field_description:cms_info.field_website_published_multi_mixin__cms_delete_confirm_url
 msgid "CMS delete confirm URL"
 msgstr "CMS confirmar eliminar URL"
 
 #. module: cms_info
 #: model:ir.model.fields,field_description:cms_info.field_cms_info_mixin__cms_edit_url
-#: model:ir.model.fields,field_description:cms_info.field_res_partner__cms_edit_url
-#: model:ir.model.fields,field_description:cms_info.field_res_users__cms_edit_url
-#: model:ir.model.fields,field_description:cms_info.field_website_page__cms_edit_url
-#: model:ir.model.fields,field_description:cms_info.field_website_published_mixin__cms_edit_url
-#: model:ir.model.fields,field_description:cms_info.field_website_published_multi_mixin__cms_edit_url
 msgid "CMS edit URL"
 msgstr "CMS editar URL"
 
@@ -66,12 +51,8 @@ msgstr "ID"
 msgid "Last Modified on"
 msgstr "Última modificación el"
 
-#. module: cms_info
-#: model:ir.model,name:cms_info.model_website_published_multi_mixin
-msgid "Multi Website Published Mixin"
-msgstr "Mixin publicado per varias webs"
+#~ msgid "Multi Website Published Mixin"
+#~ msgstr "Mixin publicado per varias webs"
 
-#. module: cms_info
-#: model:ir.model,name:cms_info.model_website_published_mixin
-msgid "Website Published Mixin"
-msgstr "Web Mixin publicado"
+#~ msgid "Website Published Mixin"
+#~ msgstr "Web Mixin publicado"
