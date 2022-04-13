@@ -6,7 +6,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: Odoo Server 13.0\n"
 "Report-Msgid-Bugs-To: \n"
-"PO-Revision-Date: 2022-02-15 13:16+0000\n"
+"PO-Revision-Date: 2022-04-13 10:05+0000\n"
 "Last-Translator: Noel estudillo <noelestudilloviera@gmail.com>\n"
 "Language-Team: none\n"
 "Language: ca\n"
@@ -94,7 +94,6 @@ msgstr "Widget enter del formulari CMS"
 
 #. module: cms_form
 #: model:ir.model,name:cms_form.model_cms_form_mixin
-#, fuzzy
 msgid "CMS Form mixin"
 msgstr "CMS Form mixin"
 
@@ -298,10 +297,10 @@ msgstr "Enviar"
 #: code:addons/cms_form/models/cms_form_mixin.py:0
 #, python-format
 msgid "You are not allowed to create any record for the model `%s`."
-msgstr ""
+msgstr "No teniu permís per crear cap registre per al model `%s`."
 
 #. module: cms_form
 #: code:addons/cms_form/models/cms_form_mixin.py:0
 #, python-format
 msgid "You cannot edit this record. Model: %s, ID: %s."
-msgstr ""
+msgstr "No podeu editar aquest registre. Model: %s, ID: %s."
