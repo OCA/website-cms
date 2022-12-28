@@ -9,19 +9,20 @@ msgstr ""
 "Project-Id-Version: Odoo Server 9.0c\n"
 "Report-Msgid-Bugs-To: \n"
 "POT-Creation-Date: 2017-05-31 03:19+0000\n"
-"PO-Revision-Date: 2017-05-31 03:19+0000\n"
-"Last-Translator: OCA Transbot <transbot@odoo-community.org>, 2017\n"
+"PO-Revision-Date: 2022-12-28 21:45+0000\n"
+"Last-Translator: mymage <stefano.consolaro@mymage.it>\n"
 "Language-Team: Italian (https://www.transifex.com/oca/teams/23907/it/)\n"
 "Language: it\n"
 "MIME-Version: 1.0\n"
 "Content-Type: text/plain; charset=UTF-8\n"
 "Content-Transfer-Encoding: \n"
-"Plural-Forms: nplurals=2; plural=(n != 1);\n"
+"Plural-Forms: nplurals=2; plural=n != 1;\n"
+"X-Generator: Weblate 4.14.1\n"
 
 #. module: cms_status_message
 #: model_terms:ir.ui.view,arch_db:cms_status_message.message_listing_wrapper
 msgid "Close"
-msgstr ""
+msgstr "Chiudere"
 
 #. module: cms_status_message
 #: model_terms:ir.ui.view,arch_db:cms_status_message.display_test
@@ -29,6 +30,8 @@ msgid ""
 "Enter a message and submit the form. <br/>You'll see your message rendered "
 "as a status message."
 msgstr ""
+"Inserire un messaggi e inviare il modulo.<br/>Il messaggio verrà reso come "
+"messaggio di stato."
 
 #. module: cms_status_message
 #: code:addons/cms_status_message/models/website.py:0
@@ -45,12 +48,12 @@ msgstr "Info"
 #. module: cms_status_message
 #: model_terms:ir.ui.view,arch_db:cms_status_message.display_test
 msgid "Message"
-msgstr ""
+msgstr "Messaggio"
 
 #. module: cms_status_message
 #: model_terms:ir.ui.view,arch_db:cms_status_message.display_test
 msgid "Status message display test"
-msgstr ""
+msgstr "Test visualizzazione messaggio di stato"
 
 #. module: cms_status_message
 #: code:addons/cms_status_message/models/website.py:0
@@ -61,7 +64,7 @@ msgstr "Ok"
 #. module: cms_status_message
 #: model_terms:ir.ui.view,arch_db:cms_status_message.display_test
 msgid "Test"
-msgstr ""
+msgstr "Test"
 
 #. module: cms_status_message
 #: code:addons/cms_status_message/models/website.py:0
@@ -72,4 +75,4 @@ msgstr "Attenzione"
 #. module: cms_status_message
 #: model:ir.model,name:cms_status_message.model_website
 msgid "Website"
-msgstr ""
+msgstr "Sito web"
