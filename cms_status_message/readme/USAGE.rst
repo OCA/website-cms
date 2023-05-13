@@ -6,8 +6,7 @@ Set a message:
 .. code:: python
 
     msg = _('My important message.')
-    if request.website:
-        request.website.add_status_message(msg)
+    env["ir.http"].add_status_message(msg)
 
 By default the message type is ``info``. The title (the label at the
 beginning of the message) matches the message type:
@@ -22,8 +21,7 @@ You can change message parameters:
 .. code:: python
 
     msg = _('Watch out!')
-    if request.website:
-        request.website.add_status_message(msg, type_='warning', title='Oh no')
+    env["ir.http"].add_status_message(msg, kind='warning', title='Oh no')
 
 Messages will be displayed like this:
 
@@ -49,14 +47,15 @@ You can also customize this on demand when you create the message:
 
     msg = _('I will disappear more slowly')
     options = {'autodismissTimeout': 10000}
-    if request.website:
-        request.website.add_status_message(msg, dismiss_options=options)
+    env["ir.http"].add_status_message(msg, dismiss_options=options)
 
 
 Javascript code
 ~~~~~~~~~~~~~~~
 
 Dependencies:
+
+FIXME v16
 
 .. code:: javascript
 

@@ -1,4 +1,15 @@
+16.0.1.0.0 (2023-05-13)
+~~~~~~~~~~~~~~~~~~~~~~~
+
+**Features**
+
+- Migration to v16 (`#127 <https://github.com/OCA/website-cms/issues/127>`_)
+- Get rid of `website` dependency
+
+
 13.0.1.0.1 (2021-08-23)
+~~~~~~~~~~~~~~~~~~~~~~~
+
 **Features**
 
 - Migration to v13 (`#111 <https://github.com/OCA/website-cms/issues/111>`_)

@@ -1,12 +1,12 @@
-# Copyright 2017-2018 Camptocamp - Simone Orsi
+# Copyright 2017 Camptocamp - Simone Orsi
 # License LGPL-3.0 or later (http://www.gnu.org/licenses/lgpl).
 
 from odoo import _, api, models
 from odoo.http import request
 
 
-class Website(models.Model):
-    _inherit = "website"
+class IrHttp(models.AbstractModel):
+    _inherit = "ir.http"
 
     @property
     def default_status_msg_title(self):
@@ -23,7 +23,7 @@ class Website(models.Model):
         self,
         msg,
         title="",
-        type_="info",
+        kind="info",
         dismissible=True,
         dismiss_options=None,
         session=None,
@@ -33,10 +33,10 @@ class Website(models.Model):
         :param msg: the message you want to display.
 
         :param title: a title for your message.
-        By default is taken from `default_status_msg_title` if `type_` matches.
+        By default is taken from `default_status_msg_title` if `kind` matches.
         If you pass `None` the title is removed from the alert box.
 
-        :param type_: the type of message (info, success, etc).
+        :param kind: the type of message (info, success, etc).
         Is used to provide the proper css klass to the alert box.
         Note: matching a default type is not required at all.
         You can use your custom type to have your alert box styled differently.
@@ -47,22 +47,22 @@ class Website(models.Model):
         By default is taken from the current request.
         """
         if title is not None:
-            title = title or self.default_status_msg_title.get(type_)
+            title = title or self.default_status_msg_title.get(kind)
         status_message = {
             "msg": msg,
             "title": title,
-            "type": type_,
+            "type": kind,
             "dismissible": bool(dismissible),
         }
         if dismissible and not dismiss_options:
-            dismiss_options = self._get_autodismiss_config()
+            dismiss_options = self._status_message_autodismiss_config()
         status_message["dismiss_options"] = dismiss_options or {}
         if session is None:
             session = request.session
         if session is not None:
             session.setdefault("status_message", []).append(status_message)
 
-    def _get_autodismiss_config(self):
+    def _status_message_autodismiss_config(self):
         """Retrieve configuration for autodismiss.
 
         You can create `ir.config_parameter` records to customize:

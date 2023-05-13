@@ -26,13 +26,13 @@ msgid ""
 msgstr ""
 
 #. module: cms_status_message
-#: code:addons/cms_status_message/models/website.py:0
+#: code:addons/cms_status_message/models/ir_http.py:0
 #, python-format
 msgid "Error"
 msgstr ""
 
 #. module: cms_status_message
-#: code:addons/cms_status_message/models/website.py:0
+#: code:addons/cms_status_message/models/ir_http.py:0
 #, python-format
 msgid "Info"
 msgstr ""
@@ -48,7 +48,7 @@ msgid "Status message display test"
 msgstr ""
 
 #. module: cms_status_message
-#: code:addons/cms_status_message/models/website.py:0
+#: code:addons/cms_status_message/models/ir_http.py:0
 #, python-format
 msgid "Success"
 msgstr ""
@@ -59,12 +59,12 @@ msgid "Test"
 msgstr ""
 
 #. module: cms_status_message
-#: code:addons/cms_status_message/models/website.py:0
+#: code:addons/cms_status_message/models/ir_http.py:0
 #, python-format
 msgid "Warning"
 msgstr ""
 
 #. module: cms_status_message
-#: model:ir.model,name:cms_status_message.model_website
-msgid "Website"
+#: model:ir.model,name:cms_status_message.model_ir_http
+msgid "ir_http"
 msgstr ""
