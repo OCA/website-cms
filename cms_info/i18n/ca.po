@@ -36,20 +36,14 @@ msgstr "CMS confirmar eliminar URL"
 msgid "CMS edit URL"
 msgstr "CMS editar URL"
 
-#. module: cms_info
-#: model:ir.model.fields,field_description:cms_info.field_cms_info_mixin__display_name
-msgid "Display Name"
-msgstr "Nom visible"
+#~ msgid "Display Name"
+#~ msgstr "Nom visible"
 
-#. module: cms_info
-#: model:ir.model.fields,field_description:cms_info.field_cms_info_mixin__id
-msgid "ID"
-msgstr "ID"
+#~ msgid "ID"
+#~ msgstr "ID"
 
-#. module: cms_info
-#: model:ir.model.fields,field_description:cms_info.field_cms_info_mixin____last_update
-msgid "Last Modified on"
-msgstr "Última modificació el"
+#~ msgid "Last Modified on"
+#~ msgstr "Última modificació el"
 
 #~ msgid "Multi Website Published Mixin"
 #~ msgstr "Mixin publicat per diversos llocs web"
