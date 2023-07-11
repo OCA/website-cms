@@ -4,6 +4,7 @@
 from odoo import models
 
 from ... import utils
+from ..fields import Serialized
 
 
 class BooleanWidget(models.AbstractModel):
@@ -12,7 +13,7 @@ class BooleanWidget(models.AbstractModel):
     _description = "CMS Form boolean widget"
     _w_template = "cms_form.field_widget_boolean"
 
-    w_true_values = utils.TRUE_VALUES
+    w_true_values = Serialized(default=utils.TRUE_VALUES)
 
     def widget_init(self, form, fname, field, **kw):
         widget = super().widget_init(form, fname, field, **kw)

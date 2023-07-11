@@ -19,7 +19,8 @@
 # -- Project information -----------------------------------------------------
 
 project = "Odoo CMS Form"
-copyright = "2018, Simone Orsi"
+# FIXME: builtin word. In any case move to GH pages!
+# copyright = "2018, Simone Orsi"
 author = "Simone Orsi"
 
 # The short X.Y version

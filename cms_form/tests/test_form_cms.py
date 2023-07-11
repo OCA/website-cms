@@ -14,14 +14,18 @@ class TestCMSForm(FormTestCase):
     @staticmethod
     def _get_test_models():
         from .fake_models.fake_fields_form import FakeFieldsForm
-        from .fake_models.fake_partner_channel_form import FakePartnerChannelForm
+        from .fake_models.fake_partner_channel_form import (
+            FakePartnerRelatedForm,
+            FakePartnerRelModel,
+        )
         from .fake_models.fake_partner_form import FakePartnerForm
         from .fake_models.fake_pub_model_form import FakePubModel, FakePubModelForm
 
         return (
             FakePartnerForm,
             FakeFieldsForm,
-            FakePartnerChannelForm,
+            FakePartnerRelatedForm,
+            FakePartnerRelModel,
             FakePubModel,
             FakePubModelForm,
         )
@@ -42,12 +46,10 @@ class TestCMSForm(FormTestCase):
         self.assertEqual(form.form_title, 'Edit "%s"' % partner.name)
         # now edit a record that has a m2o as rec name
         partner.name = "Johnny"
-        partner_channel = self.env["mail.channel.partner"].create(
+        partner_rel = self.env[self.FakePartnerRelModel._name].create(
             {"partner_id": partner.id}
         )
-        form = self.get_form(
-            "cms.form.mail.channel.partner", main_object=partner_channel
-        )
+        form = self.get_form(self.FakePartnerRelatedForm._name, main_object=partner_rel)
         self.assertEqual(form.form_title, 'Edit "Johnny"')
 
     def test_form_special_attrs_getter_setter(self):
@@ -116,7 +118,7 @@ class TestCMSForm(FormTestCase):
         request = fake_request(form_data=data)
         required = ("a_many2one", "a_many2many")
         form = self.get_form(
-            "cms.form.test_fields", req=request, required_fields=required
+            "cms.form.test_fields", req=request, form_required_fields=required
         )
         errors, errors_message = form.form_validate()
         self.assertEqual(
@@ -143,7 +145,7 @@ class TestCMSForm(FormTestCase):
         }
         request = fake_request(form_data=data, method="POST")
         form = self.get_form(
-            "cms.form.res.partner", req=request, required_fields=("name",)
+            "cms.form.res.partner", req=request, form_required_fields=("name",)
         )
         form.form_process()
         main_object = form.main_object
@@ -160,7 +162,7 @@ class TestCMSForm(FormTestCase):
             "cms.form.res.partner",
             req=request,
             main_object=main_object,
-            required_fields=("name",),
+            form_required_fields=("name",),
         )
         form.form_process()
         self.assertEqual(main_object.name, data["name"])

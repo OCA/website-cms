@@ -3,7 +3,9 @@
 
 from copy import deepcopy
 
-from odoo import models
+from odoo import fields, models
+
+from .fields import Serialized
 
 
 class CMSFormWizard(models.AbstractModel):
@@ -18,16 +20,21 @@ class CMSFormWizard(models.AbstractModel):
     _name = "cms.form.wizard"
     _description = "CMS Form wizard"
     _inherit = "cms.form"
-    _form_mode = "wizard"
     _wiz_name = _name
-    form_buttons_template = "cms_form.wizard_form_buttons"
+    form_buttons_template = fields.Char(
+        form_tech=True, default="cms_form.wizard_form_buttons"
+    )
     # display wizard progress bar?
-    wiz_show_progress_bar = True
-    # fields declared here will be automatically stored
+    form_show_progress_bar = fields.Boolean(form_tech=True, default=True)
+    # Fields declared here will be automatically stored
     # into wizard storage
-    # Use `_wiz_step_stored_fields = 'all'` to store them all.
+    # Use `form_step_store_all_fields = True` to store them all.
     # You can pass a list of fields if you don't want to store them all.
-    _wiz_step_stored_fields = "all"
+    form_step_stored_fields = Serialized(form_tech=True, default=[])
+    form_step_store_all_fields = fields.Boolean(form_tech=True, default=True)
+
+    def _get_form_mode(self):
+        return "wizard"
 
     @property
     def form_wrapper_css_klass(self):
@@ -113,8 +120,8 @@ class CMSFormWizard(models.AbstractModel):
         step = int(step)
         try:
             return self.wiz_configure_steps()[step]
-        except KeyError:
-            raise ValueError("Step `%s` does not exists." % str(step))
+        except KeyError as e:
+            raise ValueError("Step `%s` does not exists." % str(step)) from e
 
     def wiz_current_step(self):
         return self.wiz_storage_get().get("current") or 1
@@ -162,8 +169,8 @@ class CMSFormWizard(models.AbstractModel):
         values = values.copy()
         values.update(extra_values)
         step_values = {}
-        stored_fields = self._wiz_step_stored_fields
-        if stored_fields == "all":
+        stored_fields = self.form_step_stored_fields
+        if not stored_fields and self.form_step_store_all_fields:
             stored_fields = values.keys()
         for fname in stored_fields:
             if fname in values:

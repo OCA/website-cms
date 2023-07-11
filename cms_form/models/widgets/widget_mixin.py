@@ -3,7 +3,9 @@
 
 import json
 
-from odoo import models
+from odoo import fields, models
+
+from ..fields import Serialized
 
 
 class Widget(models.AbstractModel):
@@ -11,8 +13,22 @@ class Widget(models.AbstractModel):
     _description = "CMS Form widget mixin"
 
     # use `w_` prefix as a namespace for all widget properties
-    _w_template = ""
-    _w_css_klass = ""
+
+    id = fields.Id(automatic=True)
+    # Special fields
+    # TODO: would be better to have python obj fields
+    w_form = fields.Binary(store=False)
+    w_record = fields.Binary(store=False)
+    main_object = fields.Binary(store=False)
+    w_field = fields.Binary(store=False)
+
+    w_template = fields.Char(default="")
+    w_css_klass = fields.Char(default="")
+
+    w_fname = fields.Char(default="")
+    w_field_value = Serialized(default=None)
+    w_data = Serialized(default={})
+    w_subfields = Serialized(default={})
 
     def widget_init(
         self,
@@ -25,30 +41,33 @@ class Widget(models.AbstractModel):
         css_klass="",
         **kw
     ):
-        widget = self.new()
-        widget.w_form = form
-        widget.w_form_model = form.form_model
-        widget.w_record = form.main_object
-        widget.w_form_values = form.form_render_values
-        widget.w_fname = fname
-        widget.w_field = field
-        widget.w_field_value = widget.w_form_values.get("form_data", {}).get(fname)
-        widget.w_data = data or {}
-        widget.w_subfields = subfields or field.get("subfields", {})
-        widget._w_template = template or self._w_template
-        widget._w_css_klass = css_klass or self._w_css_klass
+        vals = {
+            "w_form": form,
+            "w_fname": fname,
+            "w_field": field,
+            "w_field_value": form.form_render_values.get("form_data", {}).get(fname),
+            "w_data": data or {},
+            "w_subfields": subfields or field.get("subfields", {}),
+            "w_template": template,
+            "w_css_klass": css_klass,
+        }
+        widget = self.new(vals)
         return widget
 
     def render(self):
         return self.env.ref(self.w_template).render({"widget": self})
 
     @property
-    def w_template(self):
-        return self._w_template
+    def w_form_model(self):
+        return self.w_form.form_model
 
     @property
-    def w_css_klass(self):
-        return self._w_css_klass
+    def w_record(self):
+        return self.w_form.main_object
+
+    @property
+    def w_form_values(self):
+        return self.w_form.form_render_values
 
     def w_load(self, **req_values):
         """Load value for current field in current request."""

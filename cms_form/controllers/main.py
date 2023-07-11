@@ -46,7 +46,7 @@ class FormControllerMixin(object):
         #    w/ a name that overrides a rendering value not related to a form.
         #    Most common example: field named `website` will override
         #    odoo record for current website.
-        vals = {k: v for k, v in kw.items() if k not in form.form_fields()}
+        vals = {k: v for k, v in kw.items() if k not in form.form_fields_get()}
         vals.update({"form": form, "main_object": main_object, "controller": self})
         return vals
 
@@ -155,7 +155,7 @@ class WizardFormControllerMixin(FormControllerMixin):
         step_info = wiz.wiz_get_step_info(page)
         # retrieve form model for current step
         form_model = step_info["form_model"]
-        model = request.env[form_model]._form_model
+        model = request.env[form_model].form_model_name
         kw["form_model_key"] = form_model
         return super().make_response(model, model_id=model_id, page=page, **kw)
 

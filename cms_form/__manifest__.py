@@ -15,6 +15,7 @@
         "cms_status_message",
         # TODO: get rid of portal too
         "portal",
+        "base_sparse_field",
     ],
     "data": [
         "security/cms_form.xml",

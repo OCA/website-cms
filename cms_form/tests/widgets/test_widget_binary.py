@@ -1,6 +1,9 @@
 # Copyright 2019 Simone Orsi
 # License LGPL-3.0 or later (http://www.gnu.org/licenses/lgpl.html).
-from odoo.addons.cms_form.tests.utils import b64_as_stream, fake_file_from_request
+from odoo.addons.cms_form.tests.utils import (  # pylint: disable=W7950
+    b64_as_stream,
+    fake_file_from_request,
+)
 
 from .common import TestWidgetCase, fake_field, fake_form
 

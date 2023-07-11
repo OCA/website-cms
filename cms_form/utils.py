@@ -79,5 +79,5 @@ def data_merge(a, b):
     except TypeError as e:  # pragma: no cover
         raise TypeError(
             '"{}" in key "{}" when merging "{}" into "{}"'.format(e, key, b, a)
-        )
+        ) from e
     return a
