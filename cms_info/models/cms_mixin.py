@@ -32,35 +32,45 @@ class CMSInfoMixin(models.AbstractModel):
     def cms_after_delete_url(self):
         return "/"
 
+    url = fields.Char(
+        string="URL",
+        compute="_compute_cms_url",
+    )
     cms_edit_url = fields.Char(
         string="CMS edit URL",
-        compute="_compute_cms_edit_url",
+        compute="_compute_cms_url",
     )
-
     cms_delete_url = fields.Char(
         string="CMS delete URL",
-        compute="_compute_cms_delete_url",
+        compute="_compute_cms_url",
     )
-
     cms_delete_confirm_url = fields.Char(
         string="CMS delete confirm URL",
-        compute="_compute_cms_delete_url",
+        compute="_compute_cms_url",
     )
 
-    def _compute_cms_edit_url(self):
-        base_url = self.cms_edit_url_base
-        for item in self:
-            item.cms_edit_url = "{}/{}".format(base_url, item.id)
+    def _compute_cms_url(self):
+        for rec in self:
+            rec.url = rec._get_cms_url()
+            rec.cms_edit_url = rec._get_cms_edit_url()
+            rec.update(rec._get_cms_delete_urls())
 
-    def _compute_cms_delete_url(self):
+    def _get_cms_url(self):
+        # TODO: add glue module for website
+        # TODO: should be empty by default?
+        base_view_url = self._cms_make_url("view")
+        return f"{base_view_url}/{self.id}"
+
+    def _get_cms_edit_url(self):
+        base_edit_url = self.cms_edit_url_base
+        return f"{base_edit_url}/{self.id}"
+
+    def _get_cms_delete_urls(self):
         base_url = self.cms_delete_url_base
-        for item in self:
-            item.update(
-                {
-                    "cms_delete_url": "{}/{}".format(base_url, item.id),
-                    "cms_delete_confirm_url": "{}/{}/confirm".format(base_url, item.id),
-                }
-            )
+        return {
+            "cms_delete_url": "{}/{}".format(base_url, self.id),
+            "cms_delete_confirm_url": "{}/{}/confirm".format(base_url, self.id),
+        }
 
     def cms_is_owner(self, uid=None):
         self.ensure_one()
