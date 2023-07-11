@@ -12,7 +12,7 @@ from odoo.http import request
 class FormControllerMixin(object):
 
     # default template
-    template = "cms_form.form_wrapper"
+    template = "cms_form.portal_form_wrapper"
 
     def get_template(self, form, **kw):
         """Retrieve rendering template.
@@ -142,7 +142,7 @@ class CMSFormController(http.Controller, FormControllerMixin):
 
 class WizardFormControllerMixin(FormControllerMixin):
 
-    template = "cms_form.wizard_form_wrapper"
+    template = "cms_form.portal_wizard_form_wrapper"
 
     def make_response(self, wiz_model, model_id=None, page=1, **kw):
         """Custom response.
@@ -176,7 +176,7 @@ class CMSWizardFormController(http.Controller, WizardFormControllerMixin):
 
 class SearchFormControllerMixin(FormControllerMixin):
 
-    template = "cms_form.search_form_wrapper"
+    template = "cms_form.portal_search_form_wrapper"
 
     def form_model_key(self, model, **kw):
         return "cms.form.search." + model

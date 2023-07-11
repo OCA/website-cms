@@ -5,14 +5,14 @@ import base64
 import io
 import urllib.parse
 from contextlib import contextmanager
+from unittest import mock
 
-import mock
-from werkzeug.contrib.sessions import SessionStore
 from werkzeug.datastructures import FileStorage
 from werkzeug.wrappers import Request
 
 from odoo import api, http
 from odoo.tests.common import get_db_name
+from odoo.tools._vendor.sessions import SessionStore
 
 
 def fake_request(
@@ -37,8 +37,7 @@ def fake_request(
     )
     w_req.session = session if session is not None else mock.MagicMock()
     # odoo request
-    o_req = http.HttpRequest(w_req)
-    o_req.website = mock.MagicMock()
+    o_req = http.Request(w_req)
     o_req.csrf_token = mock.MagicMock()
     o_req.httprequest = w_req
     o_req.__testing__ = True
@@ -51,7 +50,7 @@ class FakeSessionStore(SessionStore):
         del session
 
 
-session_store = FakeSessionStore(session_class=http.OpenERPSession)
+session_store = FakeSessionStore(session_class=http.Session)
 
 
 def fake_session(env, **kw):
@@ -64,7 +63,6 @@ def fake_session(env, **kw):
     session.password = ""
     session.context = dict(env.context)
     session.context["uid"] = env.uid
-    session._fix_lang(session.context)
     for k, v in kw.items():
         if hasattr(session, k):
             setattr(session, k, v)

@@ -5,9 +5,9 @@
 CMS Form
 ========
 
-Basic website contents form framework. Allows to define front-end forms for every models in a simple way.
+Advanced contents form framework. Allows to define front-end forms for every models in a simple way.
 
-If you are tired of re-defining every time an edit form or a search form for your odoo website,
+If you are tired of re-defining every time an edit form or a search form for your odoo portal or website,
 this is the module you are looking for.
 
 Features

@@ -4,8 +4,8 @@
 from odoo import fields, models
 
 
-# `AbstractModel` or `TransientModel` needed to make ACL check happy`
-class FakeNonPubModel(models.TransientModel):
+# `AbstractModel` or `AbstractModel` needed to make ACL check happy`
+class FakeNonPubModel(models.AbstractModel):
     _name = "fake.non.publishable"
     _description = "CMS Form fake non publishable model"
     name = fields.Char()

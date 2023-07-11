@@ -1,6 +1,7 @@
 odoo.define("cms_form.lock_copy_paste", function (require) {
     "use strict";
 
+    // FIXME: website dep
     var sAnimation = require("website.content.snippets.animation");
 
     sAnimation.registry.CMSFormLockCopyPaste = sAnimation.Class.extend({

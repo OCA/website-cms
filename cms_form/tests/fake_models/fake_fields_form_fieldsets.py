@@ -26,4 +26,5 @@ class FakeFieldsFormWithFieldsets(models.AbstractModel):
         },
         {"id": "protected", "fields": ["ihaveagroup"]},
     ]
+    # FIXME
     ihaveagroup = fields.Char(groups="website.group_website_designer")
