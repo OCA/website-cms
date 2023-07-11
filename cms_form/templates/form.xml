@@ -126,7 +126,8 @@ License LGPL-3.0 or later (http://www.gnu.org/licenses/lgpl.html).
         <ul class="nav nav-tabs" role="tablist">
             <t t-foreach="form_fieldsets" t-as="fset">
                 <li role="presentation">
-                    <a  t-attf-class="nav-link #{'active' if fset_first else ''}"
+                    <a
+                        t-attf-class="nav-link #{'active' if fset_first else ''}"
                         t-attf-href="#tab-#{fset['id']}"
                         t-attf-aria-controls="tab-#{fset['id']}"
                         role="tab"

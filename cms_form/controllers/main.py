@@ -136,8 +136,7 @@ class CMSFormController(http.Controller, FormControllerMixin):
         website=True,
     )
     def cms_form(self, model, model_id=None, **kw):
-        """Handle a `form` route.
-        """
+        """Handle a `form` route."""
         return self.make_response(model, model_id=model_id, **kw)
 
 
@@ -171,8 +170,7 @@ class CMSWizardFormController(http.Controller, WizardFormControllerMixin):
         website=True,
     )
     def cms_wiz(self, wiz_model, model_id=None, **kw):
-        """Handle a wizard route.
-        """
+        """Handle a wizard route."""
         return self.make_response(wiz_model, model_id=model_id, **kw)
 
 
@@ -199,8 +197,7 @@ class CMSSearchFormController(http.Controller, SearchFormControllerMixin):
         website=True,
     )
     def cms_form(self, model, **kw):
-        """Handle a search `form` route.
-        """
+        """Handle a search `form` route."""
         response = self.make_response(model, **kw)
         return response
 

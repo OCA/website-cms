@@ -16,7 +16,10 @@ class TestWidgetInteger(TestWidgetCase):
         form = fake_form(an_int_field=10)
         cls.w_name, cls.w_field = fake_field("an_int_field", type="integer")
         cls.widget = cls.get_widget(
-            cls.w_name, cls.w_field, form=form, widget_model="cms.form.widget.integer",
+            cls.w_name,
+            cls.w_field,
+            form=form,
+            widget_model="cms.form.widget.integer",
         )
 
     def test_widget_integer_input(self):

@@ -11,11 +11,12 @@ from .common import FormTestCase
 class TestFormPermCheck(FormTestCase):
     @staticmethod
     def _get_test_models():
+        from .fake_models.fake_nonpub_model_form import (
+            FakeNonPubModel,
+            FakeNonPubModelForm,
+        )
         from .fake_models.fake_partner_form import FakePartnerForm
-        from .fake_models.fake_pub_model_form import FakePubModel
-        from .fake_models.fake_pub_model_form import FakePubModelForm
-        from .fake_models.fake_nonpub_model_form import FakeNonPubModel
-        from .fake_models.fake_nonpub_model_form import FakeNonPubModelForm
+        from .fake_models.fake_pub_model_form import FakePubModel, FakePubModelForm
 
         return (
             FakeNonPubModel,

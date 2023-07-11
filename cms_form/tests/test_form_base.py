@@ -18,6 +18,7 @@ class TestFormBase(FormTestCase):
         from .fake_models.fake_partner_form_protected_fields import (
             FakePartnerFormProtectedFields,
         )
+
         return (FakeFieldsForm, FakePartnerForm, FakePartnerFormProtectedFields)
 
     def test_form_init(self):
@@ -31,7 +32,10 @@ class TestFormBase(FormTestCase):
             mode="foo",
             fields_whitelist=("name",),
             fields_blacklist=("country_id",),
-            fields_attributes=("string", "type",),
+            fields_attributes=(
+                "string",
+                "type",
+            ),
             wrapper_extra_css_klass="foo",
             extra_css_klass="baz",
         )
@@ -73,7 +77,8 @@ class TestFormBase(FormTestCase):
 
     def test_fields_order(self):
         form = self.get_form(
-            "cms.form.res.partner", fields_order=["name", "custom", "country_id"],
+            "cms.form.res.partner",
+            fields_order=["name", "custom", "country_id"],
         )
         fields = form.form_fields()
         self.assertEqual(list(fields.keys())[0], "name")
@@ -82,7 +87,8 @@ class TestFormBase(FormTestCase):
 
         # change order
         form = self.get_form(
-            "cms.form.res.partner", fields_order=["country_id", "name", "custom"],
+            "cms.form.res.partner",
+            fields_order=["country_id", "name", "custom"],
         )
         fields = form.form_fields()
         self.assertEqual(list(fields.keys())[0], "country_id")

@@ -19,10 +19,15 @@ class TestWidgetRadio(TestWidgetCase):
             ("opt3", "Option 3"),
         ]
         w_name, w_field = fake_field(
-            "radio_field", type="selection", selection=select_options,
+            "radio_field",
+            type="selection",
+            selection=select_options,
         )
         widget = self.get_widget(
-            w_name, w_field, form=self.form, widget_model="cms.form.widget.radio",
+            w_name,
+            w_field,
+            form=self.form,
+            widget_model="cms.form.widget.radio",
         )
         node = self.to_xml_node(widget.render())[0]
         self.assertIn("radio-select", node.attrib["class"])
@@ -50,9 +55,14 @@ class TestWidgetRadio(TestWidgetCase):
             if i == 1:
                 expected_attrs["checked"] = "checked"
             self._test_element_attributes(
-                node_input, "input", expected_attrs,
+                node_input,
+                "input",
+                expected_attrs,
             )
             node_span = node_label.getchildren()[1]
             self._test_element_attributes(
-                node_span, "span", {}, text="Option %s" % (i + 1),
+                node_span,
+                "span",
+                {},
+                text="Option %s" % (i + 1),
             )

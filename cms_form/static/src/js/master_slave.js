@@ -1,4 +1,4 @@
-odoo.define("cms_form.master_slave", function(require) {
+odoo.define("cms_form.master_slave", function (require) {
     "use strict";
     /*
     Handle master / slave fields automatically.
@@ -11,12 +11,12 @@ odoo.define("cms_form.master_slave", function(require) {
 
     sAnimation.registry.CMSFormMasterSlave = sAnimation.Class.extend({
         selector: ".cms_form_wrapper form",
-        start: function() {
+        start: function () {
             this.data = this.$el.data("form");
             this.setup_handlers();
             this.load_master_slave();
         },
-        setup_handlers: function() {
+        setup_handlers: function () {
             this.handlers = {
                 hide: $.proxy(this.handle_hide, this),
                 show: $.proxy(this.handle_show, this),
@@ -26,22 +26,22 @@ odoo.define("cms_form.master_slave", function(require) {
                 no_required: $.proxy(this.handle_no_required, this),
             };
         },
-        load_master_slave: function() {
+        load_master_slave: function () {
             var self = this;
-            $.each(this.data.master_slave, function(master, slaves) {
+            $.each(this.data.master_slave, function (master, slaves) {
                 var $master_input = $('[name="' + master + '"]');
-                $.each(slaves, function(action, mapping) {
+                $.each(slaves, function (action, mapping) {
                     var handler = self.handlers[action];
                     if (handler) {
                         $master_input
-                            .on("change", function() {
+                            .on("change", function () {
                                 var $input = $(this),
                                     val = $input.val();
                                 if ($input.is(":checkbox")) {
                                     // Value == 'on' => true/false
                                     val = $input.is(":checked");
                                 }
-                                $.each(mapping, function(slave_fname, values) {
+                                $.each(mapping, function (slave_fname, values) {
                                     if (_.contains(values, val)) {
                                         handler(slave_fname);
                                     }
@@ -56,32 +56,32 @@ odoo.define("cms_form.master_slave", function(require) {
                 });
             });
         },
-        handle_hide: function(slave_fname) {
+        handle_hide: function (slave_fname) {
             $('[name="' + slave_fname + '"]')
                 .closest(".form-group")
                 .hide();
         },
-        handle_show: function(slave_fname) {
+        handle_show: function (slave_fname) {
             $('[name="' + slave_fname + '"]')
                 .closest(".form-group")
                 .show();
         },
-        handle_readonly: function(slave_fname) {
+        handle_readonly: function (slave_fname) {
             $('[name="' + slave_fname + '"]')
                 .attr("disabled", "disabled")
                 .closest(".form-group")
                 .addClass("disabled");
         },
-        handle_no_readonly: function(slave_fname) {
+        handle_no_readonly: function (slave_fname) {
             $('[name="' + slave_fname + '"]')
                 .attr("disabled", null)
                 .closest(".form-group")
                 .removeClass("disabled");
         },
-        handle_required: function(slave_fname) {
+        handle_required: function (slave_fname) {
             $('[name="' + slave_fname + '"]').attr("required", "required");
         },
-        handle_no_required: function(slave_fname) {
+        handle_no_required: function (slave_fname) {
             $('[name="' + slave_fname + '"]').attr("required", null);
         },
     });
