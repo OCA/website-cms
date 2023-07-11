@@ -14,4 +14,4 @@ class FakePartnerFormProtectedFields(models.AbstractModel):
     _form_fields_order = ["ihaveagroup", "nogroup"]
 
     nogroup = fields.Char()
-    ihaveagroup = fields.Char(groups="website.group_website_designer")
+    ihaveagroup = fields.Char(groups="base.group_system")

@@ -3,6 +3,8 @@
 
 from odoo import fields, models
 
+from odoo.addons.cms_form.models.fields import Serialized  # pylint: disable=W7950
+
 
 class FakePartnerForm(models.AbstractModel):
     """A test model form."""
@@ -10,9 +12,10 @@ class FakePartnerForm(models.AbstractModel):
     _name = "cms.form.res.partner"
     _inherit = "cms.form"
     _description = "CMS Form test partner form"
-    _form_model = "res.partner"
-    _form_model_fields = ("name", "country_id")
-    _form_required_fields = ("name", "country_id")
+
+    form_model_name = fields.Char(default="res.partner")
+    form_model_fields = Serialized(default=("name", "country_id"))
+    form_required_fields = Serialized(default=("name", "country_id"))
 
     custom = fields.Char(default=lambda self: "I am your default")
 
