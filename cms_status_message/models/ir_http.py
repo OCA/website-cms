@@ -1,8 +1,7 @@
 # Copyright 2017 Camptocamp - Simone Orsi
 # License LGPL-3.0 or later (http://www.gnu.org/licenses/lgpl).
 
-from odoo import _, api, models
-from odoo.http import request
+from odoo import _, api, http, models
 
 
 class IrHttp(models.AbstractModel):
@@ -26,6 +25,7 @@ class IrHttp(models.AbstractModel):
         kind="info",
         dismissible=True,
         dismiss_options=None,
+        request=None,
         session=None,
     ):
         """Inject status message in session.
@@ -57,6 +57,7 @@ class IrHttp(models.AbstractModel):
         if dismissible and not dismiss_options:
             dismiss_options = self._status_message_autodismiss_config()
         status_message["dismiss_options"] = dismiss_options or {}
+        request = request or http.request
         if session is None:
             session = request.session
         if session is not None:
@@ -96,7 +97,7 @@ class IrHttp(models.AbstractModel):
 
         :rtype: list.
         """
-        session = session or request.session
+        session = session or http.request.session
         if session:
             return session.pop("status_message", [])
         return []
