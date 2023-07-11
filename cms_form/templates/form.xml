@@ -5,23 +5,22 @@ License LGPL-3.0 or later (http://www.gnu.org/licenses/lgpl.html).
 -->
 <odoo>
     <template id="form_wrapper" name="CMS form wrapper">
-        <t t-call="website.layout">
-            <t t-set="title" t-value="form.form_title" />
-            <div id="wrap" t-att-class="form.form_wrapper_css_klass">
-                <div class="container">
-                    <t t-if="form.form_title">
-                        <h2>
-                            <span class="form_title" t-esc="form.form_title" />
-                        </h2>
-                    </t>
-                    <t t-if="form.form_description">
-                        <p class="form_description" t-esc="form.form_description" />
-                    </t>
-                    <t t-raw="form.form_render()" />
-                </div>
+        <t t-set="title" t-value="form.form_title" />
+        <div id="wrap" t-att-class="form.form_wrapper_css_klass">
+            <div class="container">
+                <t t-if="form.form_title">
+                    <h2>
+                        <span class="form_title" t-esc="form.form_title" />
+                    </h2>
+                </t>
+                <t t-if="form.form_description">
+                    <p class="form_description" t-esc="form.form_description" />
+                </t>
+                <t t-raw="form.form_render()" />
             </div>
-        </t>
+        </div>
     </template>
+
     <template
         id="form_horizontal_field_wrapper"
         name="CMS form field wrapper horiz form"
@@ -217,6 +216,11 @@ License LGPL-3.0 or later (http://www.gnu.org/licenses/lgpl.html).
             </div>
         </xpath>
     </template>
+    <template id="portal_search_form_wrapper" name="CMS search portal form wrapper">
+        <t t-call="portal.portal_layout">
+            <t t-call="cms_form.search_form_wrapper" />
+        </t>
+    </template>
     <template
         id="search_form_buttons"
         name="CMS search form buttons"
@@ -231,10 +235,11 @@ License LGPL-3.0 or later (http://www.gnu.org/licenses/lgpl.html).
             </div>
         </xpath>
     </template>
-    <template
+    <!-- FIXME -->
+    <!--template
         id="search_results_pager"
         name="CMS form pager"
-        inherit_id="website.pager"
+        inherit_id="portal.pager"
         primary="True"
     >
         <xpath expr="./ul/li[1]/a" position="attributes">
@@ -250,7 +255,7 @@ License LGPL-3.0 or later (http://www.gnu.org/licenses/lgpl.html).
             pager['page']['num'] + 1 if pager['page']['num'] &lt; pager['page_count'] else None
         </attribute>
         </xpath>
-    </template>
+    </template-->
     <template id="search_results" name="CMS form search results">
         <t t-foreach="form.form_search_results['results']" t-as="item">
             <div
@@ -259,16 +264,17 @@ License LGPL-3.0 or later (http://www.gnu.org/licenses/lgpl.html).
                 t-attf-data-item='{"id": #{item.id}}'
             >
                 <h3 class="item-name">
-                    <t t-if="'website_url' in item">
-                        <a t-att-href="item.website_url" t-field="item.display_name" />
+                    <t t-if="'url' in item">
+                        <a t-att-href="item.url" t-field="item.display_name" />
                     </t>
-                    <t t-if="'website_url' not in item">
+                    <t t-if="'url' not in item">
                         <span t-field="item.display_name" />
                     </t>
                 </h3>
-                <t t-if="'website_description' in item">
+                <!-- TODO: define glue field `cms_description` -->
+                <!-- <t t-if="'website_description' in item">
                     <p class="item-description" t-field="item.website_description" />
-                </t>
+                </t> -->
             </div>
         </t>
         <div class="text-center mb32">
@@ -287,6 +293,11 @@ License LGPL-3.0 or later (http://www.gnu.org/licenses/lgpl.html).
             <t t-if="form.wiz_show_progress_bar">
                 <t t-call="cms_form.wizard_progress_bar" />
             </t>
+        </t>
+    </template>
+    <template id="portal_wizard_form_wrapper" name="CMS wizard portal form wrapper">
+        <t t-call="portal.portal_layout">
+            <t t-call="cms_form.wizard_form_wrapper" />
         </t>
     </template>
     <template id="wizard_progress_bar" name="CMS Wizard progress bar">

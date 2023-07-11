@@ -1,0 +1,24 @@
+<?xml version="1.0" encoding="utf-8" ?>
+<!--
+Copyright 2023 Simone Orsi
+License LGPL-3.0 or later (http://www.gnu.org/licenses/lgpl.html).
+-->
+<odoo>
+    <template id="portal_form_wrapper" name="CMS portal form wrapper">
+        <t t-call="portal.portal_layout">
+            <t t-call="cms_form.form_wrapper" />
+        </t>
+    </template>
+
+    <template id="portal_search_form_wrapper" name="CMS search portal form wrapper">
+        <t t-call="portal.portal_layout">
+            <t t-call="cms_form.search_form_wrapper" />
+        </t>
+    </template>
+
+    <template id="portal_wizard_form_wrapper" name="CMS wizard portal form wrapper">
+        <t t-call="portal.portal_layout">
+            <t t-call="cms_form.wizard_form_wrapper" />
+        </t>
+    </template>
+</odoo>
