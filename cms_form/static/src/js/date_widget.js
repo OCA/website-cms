@@ -1,6 +1,7 @@
 odoo.define("cms_form.date_widget", function (require) {
     "use strict";
 
+    // FIXME: website dep
     var sAnimation = require("website.content.snippets.animation");
     var time_utils = require("web.time");
 

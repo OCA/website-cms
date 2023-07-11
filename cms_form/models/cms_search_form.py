@@ -4,6 +4,8 @@
 from odoo import _, models
 from odoo.tools import pycompat
 
+from odoo.addons.portal.controllers.portal import pager as portal_pager
+
 
 class CMSFormSearch(models.AbstractModel):
     _name = "cms.form.search"
@@ -43,9 +45,10 @@ class CMSFormSearch(models.AbstractModel):
 
     def form_update_fields_attributes(self, _fields):
         """No field should be mandatory."""
-        super().form_update_fields_attributes(_fields)
+        res = super().form_update_fields_attributes(_fields)
         for _fname, field in _fields.items():
             field["required"] = False
+        return res
 
     def form_get_widget_model(self, fname, field):
         """Search via related field needs a simple char widget."""
@@ -116,7 +119,7 @@ class CMSFormSearch(models.AbstractModel):
         return url
 
     def pager(self, **kw):
-        return self.env["website"].pager(**kw)
+        return portal_pager(**kw)
 
     def _form_results_pager(self, count=None, page=0, url="", url_args=None):
         """Prepare pager for current search."""

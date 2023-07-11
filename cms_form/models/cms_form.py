@@ -79,8 +79,8 @@ class CMSForm(models.AbstractModel):
             # redirect overridden
             return self.request.args.get("redirect")
         main_object = main_object or self.main_object
-        if main_object and "website_url" in main_object:
-            return main_object.website_url
+        if main_object and main_object.url:
+            return main_object.url
         return "/"
 
     def form_cancel_url(self, main_object=None):
@@ -89,8 +89,8 @@ class CMSForm(models.AbstractModel):
             # redirect overridden
             return self.request.args.get("redirect")
         main_object = main_object or self.main_object
-        if main_object and "website_url" in main_object:
-            return main_object.website_url
+        if main_object and main_object.url:
+            return main_object.url
         return self.request.referrer or "/"
 
     def form_check_empty_value(self, fname, field, value, **req_values):
@@ -121,9 +121,9 @@ class CMSForm(models.AbstractModel):
                 errors_message[fname] = error_msg
 
         # error message for empty required fields
-        if missing and self.o_request.website:
+        if missing:
             msg = self.form_msg_error_missing
-            self.o_request.website.add_status_message(msg, type_="danger")
+            self.add_status_message(msg, type_="danger")
         return errors, errors_message
 
     def form_get_validator(self, fname, field):
@@ -181,8 +181,8 @@ class CMSForm(models.AbstractModel):
         else:
             self._form_create(write_values)
             msg = self.form_msg_success_created
-        if msg and self.o_request.website:
-            self.o_request.website.add_status_message(msg)
+        if msg:
+            self.add_status_message(msg)
         # post hook
         self.form_after_create_or_update(write_values, extra_values)
         return self.main_object
@@ -229,9 +229,11 @@ class CMSForm(models.AbstractModel):
         orm_error = errors.get("_validation") or errors.get("_integrity")
         if orm_error:
             msg = errors_message.get("_validation") or errors_message.get("_integrity")
-            if msg and self.o_request.website:
-                self.o_request.website.add_status_message(
-                    msg, type_="danger", title=None
-                )
+            if msg:
+                self.add_status_message(msg, type_="danger", title=None)
         render_values.update({"errors": errors, "errors_message": errors_message})
         return render_values
+
+    def add_status_message(self, msg, **kw):
+        # TODO: allow add_status_message to receive a `request` arg
+        self.env["ir.http"].add_status_message(msg, **kw)

@@ -1,6 +1,7 @@
 odoo.define("cms_form.ajax", function (require) {
     "use strict";
 
+    // FIXME: website dep
     var core = require("web.core"),
         animation = require("website.content.snippets.animation");
 

@@ -4,8 +4,7 @@
 import os
 import unittest
 from contextlib import contextmanager
-
-import mock
+from unittest import mock
 
 from ..controllers import main
 from .common import FormHttpTestCase
@@ -150,9 +149,9 @@ class TestControllers(FormHttpTestCase):
                 "res.partner", model_id=partner.id
             )
             self.assertEqual(response.status_code, 303)
-            if "website_url" in partner:
+            if "url" in partner:
                 # website_partner installed
-                self.assertEqual(response.location, partner.website_url)
+                self.assertEqual(response.location, partner.url)
             else:
                 self.assertEqual(response.location, "/")
 

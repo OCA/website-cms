@@ -7,6 +7,7 @@ odoo.define("cms_form.master_slave", function (require) {
 
     // TODO: this does not work ATM :(
     // var pyeval = require('web.pyeval');
+    // FIXME: website dep
     var sAnimation = require("website.content.snippets.animation");
 
     sAnimation.registry.CMSFormMasterSlave = sAnimation.Class.extend({

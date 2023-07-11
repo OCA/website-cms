@@ -20,6 +20,7 @@ IGNORED_FORM_FIELDS = [
     "message_unread",
     "message_unread_counter",
     "message_needaction_counter",
+    # Loose dep
     "website_message_ids",
     "website_published",
 ] + models.MAGIC_COLUMNS
@@ -115,6 +116,7 @@ class CMSFormMixin(models.AbstractModel):
     __form_fields_ignore = IGNORED_FORM_FIELDS
     # current edit object if any
     __form_main_object = None
+    _o_request = None
     # default is to post the form and have a full reload. Set to true to keep
     # the search form as it is and only replace the result pane
     _form_ajax = False
@@ -130,6 +132,14 @@ class CMSFormMixin(models.AbstractModel):
     def main_object(self, value):
         """Current main object setter."""
         self.__form_main_object = value
+
+    @property
+    def o_request(self):
+        return self._o_request
+
+    @o_request.setter
+    def o_request(self, value):
+        self._o_request = value
 
     def form_init(self, request, main_object=None, **kw):
         """Initalize a form instance.
@@ -160,16 +170,15 @@ class CMSFormMixin(models.AbstractModel):
             else:
                 # `cms.info.mixin` not provided by model.
                 res = self._can_edit(raise_exception=False)
-            msg = _("You cannot edit this record. Model: %s, ID: %s.") % (
-                self.main_object._name,
-                self.main_object.id,
+            msg = _(
+                "You cannot edit this record. Model: %(model)s, ID: %(obj_id)s.",
+                dict(model=self.main_object._name, obj_id=self.main_object.id),
             )
         else:
             if self._form_model:
                 if hasattr(self.form_model, "cms_can_create"):
                     res = self.form_model.cms_can_create()
                 else:
-                    # not `website.published.mixin` model
                     res = self._can_create(raise_exception=False)
                 msg = (
                     _("You are not allowed to create any record for the model `%s`.")
@@ -503,7 +512,7 @@ class CMSFormMixin(models.AbstractModel):
         values["field_wrapper_template"] = "cms_form.form_{}_field_wrapper".format(
             self.form_display_mode
         )
-        return self.env.ref(self.form_template).render(values)
+        return self.env["ir.qweb"]._render(self.form_template, values)
 
     def form_process(self, **kw):
         """Process current request.

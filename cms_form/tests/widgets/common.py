@@ -1,8 +1,8 @@
 # Copyright 2018 Simone Orsi
 # License LGPL-3.0 or later (http://www.gnu.org/licenses/lgpl.html).
-import mock
+from unittest import mock
 
-from odoo.tests.common import SavepointCase
+from odoo.tests.common import TransactionCase
 
 from ..common import HTMLRenderMixin
 
@@ -52,7 +52,7 @@ def get_widget(env, fname, field, form=None, widget_model=None, **kw):
     return env[widget_model].widget_init(form, fname, field, **kw)
 
 
-class TestWidgetCase(SavepointCase, HTMLRenderMixin):
+class TestWidgetCase(TransactionCase, HTMLRenderMixin):
 
     at_install = False
     post_install = True
