@@ -48,7 +48,8 @@ class TestControllers(FormHttpTestCase):
             form = self.form_controller.get_form("res.partner")
             # default
             self.assertEqual(
-                self.form_controller.get_template(form), "cms_form.form_wrapper",
+                self.form_controller.get_template(form),
+                "cms_form.form_wrapper",
             )
             # custom on form
             form.form_wrapper_template = "foo.baz"
@@ -139,7 +140,10 @@ class TestControllers(FormHttpTestCase):
             self.assertEqual(form.form_mode, "create")
 
     def test_redirect_after_success(self):
-        req = fake_request(form_data={"name": "John"}, method="POST",)
+        req = fake_request(
+            form_data={"name": "John"},
+            method="POST",
+        )
         with self.mock_assets(req=req):
             partner = self.env.ref("base.res_partner_12")
             response = self.form_controller.make_response(

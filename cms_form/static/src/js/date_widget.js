@@ -1,4 +1,4 @@
-odoo.define("cms_form.date_widget", function(require) {
+odoo.define("cms_form.date_widget", function (require) {
     "use strict";
 
     var sAnimation = require("website.content.snippets.animation");
@@ -6,7 +6,7 @@ odoo.define("cms_form.date_widget", function(require) {
 
     sAnimation.registry.CMSDateWidget = sAnimation.Class.extend({
         selector: ".cms_form_wrapper form input.js_datepicker",
-        start: function() {
+        start: function () {
             // The datepicker is attached to $fname_display field.
             // The real value is held by the real field input (hidden).
             this.$realField = this.$el.next(
@@ -15,7 +15,7 @@ odoo.define("cms_form.date_widget", function(require) {
             this.load_options();
             this.setup_datepicker();
         },
-        load_options: function() {
+        load_options: function () {
             // global options
             this.options = _.omit(this.$el.data("params"), "dp");
             // Datepicker specific ones
@@ -37,7 +37,7 @@ odoo.define("cms_form.date_widget", function(require) {
                 }
             );
         },
-        setup_datepicker: function() {
+        setup_datepicker: function () {
             var self = this;
             var placeholder = this.$el.attr("placeholder");
             // Placeholder empty: set default via lang format
@@ -56,7 +56,7 @@ odoo.define("cms_form.date_widget", function(require) {
             // Init bootstrap-datetimepicker
             this.$el.datetimepicker(this.picker_options);
             this.picker = this.$el.data("DateTimePicker");
-            this.$el.on("dp.change", function(e) {
+            this.$el.on("dp.change", function (e) {
                 // Update real value field.
                 // WARNING: this format should not be touched, it matches server side.
                 var real_val = "";
@@ -71,11 +71,11 @@ odoo.define("cms_form.date_widget", function(require) {
             this.$el
                 .closest(".input-group")
                 .find(".js_datepicker_trigger")
-                .click(function() {
+                .click(function () {
                     self.picker.show();
                 });
         },
-        _init_date: function() {
+        _init_date: function () {
             var self = this;
             // Retrieve current date from real field
             var defaultDate = self.$realField.val();
@@ -88,7 +88,7 @@ odoo.define("cms_form.date_widget", function(require) {
                 this.picker.date(defaultDate);
             }
         },
-        destroy: function() {
+        destroy: function () {
             this.picker.destroy();
             this._super.apply(this, arguments);
         },
