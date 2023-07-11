@@ -138,11 +138,9 @@ class CMSForm(models.AbstractModel):
 
     def form_before_create_or_update(self, values, extra_values):
         """Pre create/update hook."""
-        pass
 
     def form_after_create_or_update(self, values, extra_values):
         """Post create/update hook."""
-        pass
 
     def _form_purge_non_model_fields(self, values):
         """Purge fields that are not in `form_model` schema and return them."""
@@ -151,7 +149,8 @@ class CMSForm(models.AbstractModel):
             return extra_values
         _model_fields = list(
             self.form_model.fields_get(
-                self._form_model_fields, attributes=self._form_fields_attributes,
+                self._form_model_fields,
+                attributes=self._form_fields_attributes,
             ).keys()
         )
         submitted_keys = list(values.keys())

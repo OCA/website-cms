@@ -22,7 +22,10 @@ class TestWidgetHidden(TestWidgetCase):
         """Test char field hidden."""
         w_name, w_field = fake_field("char_field")
         widget = self.get_widget(
-            w_name, w_field, form=self.form, widget_model="cms.form.widget.hidden",
+            w_name,
+            w_field,
+            form=self.form,
+            widget_model="cms.form.widget.hidden",
         )
         expected_attrs = {
             "type": "hidden",
@@ -41,7 +44,10 @@ class TestWidgetHidden(TestWidgetCase):
         """Test int field hidden."""
         w_name, w_field = fake_field("int_field", type="integer")
         widget = self.get_widget(
-            w_name, w_field, form=self.form, widget_model="cms.form.widget.hidden",
+            w_name,
+            w_field,
+            form=self.form,
+            widget_model="cms.form.widget.hidden",
         )
         expected_attrs = {
             "type": "hidden",
@@ -55,7 +61,10 @@ class TestWidgetHidden(TestWidgetCase):
         """Test float field hidden."""
         w_name, w_field = fake_field("float_field", type="float")
         widget = self.get_widget(
-            w_name, w_field, form=self.form, widget_model="cms.form.widget.hidden",
+            w_name,
+            w_field,
+            form=self.form,
+            widget_model="cms.form.widget.hidden",
         )
         expected_attrs = {
             "type": "hidden",
@@ -68,10 +77,15 @@ class TestWidgetHidden(TestWidgetCase):
     def test_widget_selection_string_input_hidden(self):
         """Test selection field hidden with string values."""
         w_name, w_field = fake_field(
-            "selection_str_field", type="selection", selection=[("1", "A"), ("2", "B")],
+            "selection_str_field",
+            type="selection",
+            selection=[("1", "A"), ("2", "B")],
         )
         widget = self.get_widget(
-            w_name, w_field, form=self.form, widget_model="cms.form.widget.hidden",
+            w_name,
+            w_field,
+            form=self.form,
+            widget_model="cms.form.widget.hidden",
         )
         expected_attrs = {
             "type": "hidden",
@@ -84,10 +98,15 @@ class TestWidgetHidden(TestWidgetCase):
     def test_widget_selection_integer_input_hidden(self):
         """Test selection field hidden with integer values."""
         w_name, w_field = fake_field(
-            "selection_integer_field", type="selection", selection=[(1, "A"), (2, "B")],
+            "selection_integer_field",
+            type="selection",
+            selection=[(1, "A"), (2, "B")],
         )
         widget = self.get_widget(
-            w_name, w_field, form=self.form, widget_model="cms.form.widget.hidden",
+            w_name,
+            w_field,
+            form=self.form,
+            widget_model="cms.form.widget.hidden",
         )
         expected_attrs = {
             "type": "hidden",
@@ -105,7 +124,10 @@ class TestWidgetHidden(TestWidgetCase):
             selection=[(4.0, "A"), (8.0, "B")],
         )
         widget = self.get_widget(
-            w_name, w_field, form=self.form, widget_model="cms.form.widget.hidden",
+            w_name,
+            w_field,
+            form=self.form,
+            widget_model="cms.form.widget.hidden",
         )
         expected_attrs = {
             "type": "hidden",
@@ -119,7 +141,10 @@ class TestWidgetHidden(TestWidgetCase):
         """Test many2one field hidden."""
         w_name, w_field = fake_field("many2one_field", type="many2one")
         widget = self.get_widget(
-            w_name, w_field, form=self.form, widget_model="cms.form.widget.hidden",
+            w_name,
+            w_field,
+            form=self.form,
+            widget_model="cms.form.widget.hidden",
         )
         expected_attrs = {
             "type": "hidden",

@@ -14,10 +14,9 @@ class TestCMSForm(FormTestCase):
     @staticmethod
     def _get_test_models():
         from .fake_models.fake_fields_form import FakeFieldsForm
-        from .fake_models.fake_partner_form import FakePartnerForm
         from .fake_models.fake_partner_channel_form import FakePartnerChannelForm
-        from .fake_models.fake_pub_model_form import FakePubModel
-        from .fake_models.fake_pub_model_form import FakePubModelForm
+        from .fake_models.fake_partner_form import FakePartnerForm
+        from .fake_models.fake_pub_model_form import FakePubModel, FakePubModelForm
 
         return (
             FakePartnerForm,
@@ -77,7 +76,9 @@ class TestCMSForm(FormTestCase):
         # edit a record that has an URL but got redirect in request
         request = fake_request(query_string="redirect=/sorry/go/here")
         form = self.get_form(
-            "cms.form.fake.publishable", req=request, main_object=record,
+            "cms.form.fake.publishable",
+            req=request,
+            main_object=record,
         )
         self.assertEqual(form.form_next_url(), "/sorry/go/here")
 
@@ -96,7 +97,9 @@ class TestCMSForm(FormTestCase):
         # edit a record that has an URL but got redirect in request
         request = fake_request(query_string="redirect=/sorry/go/here")
         form = self.get_form(
-            "cms.form.fake.publishable", req=request, main_object=record,
+            "cms.form.fake.publishable",
+            req=request,
+            main_object=record,
         )
         self.assertEqual(form.form_cancel_url(), "/sorry/go/here")
 

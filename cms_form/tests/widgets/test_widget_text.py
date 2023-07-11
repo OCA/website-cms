@@ -12,12 +12,18 @@ class TestWidgetTxt(TestWidgetCase):
     @classmethod
     def setUpClass(cls):
         super().setUpClass()
-        cls.form = fake_form(a_char_field="Just a string", a_text_field=TXT,)
+        cls.form = fake_form(
+            a_char_field="Just a string",
+            a_text_field=TXT,
+        )
 
     def test_widget_char_input(self):
         w_name, w_field = fake_field("a_char_field")
         widget = self.get_widget(
-            w_name, w_field, form=self.form, widget_model="cms.form.widget.char",
+            w_name,
+            w_field,
+            form=self.form,
+            widget_model="cms.form.widget.char",
         )
         expected_attrs = {
             "type": "text",
@@ -35,7 +41,10 @@ class TestWidgetTxt(TestWidgetCase):
     def test_widget_text_input(self):
         w_name, w_field = fake_field("a_text_field", type="text")
         widget = self.get_widget(
-            w_name, w_field, form=self.form, widget_model="cms.form.widget.text",
+            w_name,
+            w_field,
+            form=self.form,
+            widget_model="cms.form.widget.text",
         )
         expected_attrs = {
             "id": "a_text_field",
@@ -50,7 +59,10 @@ class TestWidgetTxt(TestWidgetCase):
     def test_widget_text_input_maxlength(self):
         w_name, w_field = fake_field("a_text_field", type="text", maxlength=100)
         widget = self.get_widget(
-            w_name, w_field, form=self.form, widget_model="cms.form.widget.text",
+            w_name,
+            w_field,
+            form=self.form,
+            widget_model="cms.form.widget.text",
         )
         node_items = self.to_xml_node(widget.render())
         self.assertEqual(len(node_items), 2)
@@ -62,7 +74,10 @@ class TestWidgetTxt(TestWidgetCase):
             "maxlength": "100",
         }
         self._test_element_attributes(
-            node_textarea, "textarea", expected_attrs, text=TXT,
+            node_textarea,
+            "textarea",
+            expected_attrs,
+            text=TXT,
         )
         node_counter = node_items[1]
         expected_attrs = {
@@ -73,5 +88,7 @@ class TestWidgetTxt(TestWidgetCase):
             "class": "form-control text-counter",
         }
         self._test_element_attributes(
-            node_counter, "input", expected_attrs,
+            node_counter,
+            "input",
+            expected_attrs,
         )

@@ -5,7 +5,6 @@ from .common import TestWidgetCase, fake_field
 
 
 class TestWidgetBase(TestWidgetCase, FakeModelMixin):
-
     @classmethod
     def setUpClass(cls):
         super().setUpClass()
@@ -69,7 +68,8 @@ class TestWidgetBase(TestWidgetCase, FakeModelMixin):
         self.assertEqual(widget.w_ids_from_input(""), [])
         # not valid values are skipped
         self.assertEqual(
-            widget.w_ids_from_input("1,2,3,#4, 70, 1XX, 200"), [1, 2, 3, 70, 200],
+            widget.w_ids_from_input("1,2,3,#4, 70, 1XX, 200"),
+            [1, 2, 3, 70, 200],
         )
 
     def test_subfields_get(self):

@@ -1,4 +1,4 @@
-odoo.define("cms_form.ajax", function(require) {
+odoo.define("cms_form.ajax", function (require) {
     "use strict";
 
     var core = require("web.core"),
@@ -9,7 +9,7 @@ odoo.define("cms_form.ajax", function(require) {
         events: {
             submit: "submit_form",
         },
-        start: function() {
+        start: function () {
             this.data = this.$el.data("form");
             if (this.$el.data("ajax-onchange")) {
                 this.$el.on("change", this.proxy("submit_form"));
@@ -20,7 +20,7 @@ odoo.define("cms_form.ajax", function(require) {
                 .find(".pagination a[href]")
                 .on("click", this.proxy("pager"));
         },
-        ajax_submit: function(additional_data) {
+        ajax_submit: function (additional_data) {
             return jQuery.ajax(_.str.sprintf("/cms/ajax/search/%s", this.data.model), {
                 data:
                     this.$el.serialize() +
@@ -32,7 +32,7 @@ odoo.define("cms_form.ajax", function(require) {
                 error: this.proxy("error"),
             });
         },
-        submit_form: function(ev) {
+        submit_form: function (ev) {
             var $container = this.$container();
 
             jQuery.blockUI();
@@ -41,17 +41,17 @@ odoo.define("cms_form.ajax", function(require) {
 
             return this.ajax_submit();
         },
-        success: function(data) {
+        success: function (data) {
             jQuery.unblockUI();
             var $container = this.$container();
 
             $container.html(data.content);
             $container.find(".pagination a[href]").on("click", this.proxy("pager"));
         },
-        error: function() {
+        error: function () {
             jQuery.unblockUI();
         },
-        pager: function(ev) {
+        pager: function (ev) {
             var $a = jQuery(ev.currentTarget);
 
             jQuery.blockUI();
@@ -59,7 +59,7 @@ odoo.define("cms_form.ajax", function(require) {
 
             return this.ajax_submit("&page=" + $a.data("page"));
         },
-        $container: function() {
+        $container: function () {
             return this.$el
                 .parents(".cms_form_wrapper")
                 .find(this.data.form_content_selector);

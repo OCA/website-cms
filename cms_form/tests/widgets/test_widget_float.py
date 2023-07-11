@@ -10,7 +10,10 @@ class TestWidgetFloat(TestWidgetCase):
         form = fake_form(a_float_field=2.0)
         cls.w_name, cls.w_field = fake_field("a_float_field", type="float")
         cls.widget = cls.get_widget(
-            cls.w_name, cls.w_field, form=form, widget_model="cms.form.widget.float",
+            cls.w_name,
+            cls.w_field,
+            form=form,
+            widget_model="cms.form.widget.float",
         )
 
     def test_widget_float_input(self):

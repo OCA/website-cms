@@ -19,10 +19,15 @@ class TestWidgetSelection(TestWidgetCase):
             ("opt1", "Option 1"),
         ]
         w_name, w_field = fake_field(
-            "selection_char_field", type="selection", selection=select_options,
+            "selection_char_field",
+            type="selection",
+            selection=select_options,
         )
         widget = self.get_widget(
-            w_name, w_field, form=self.form, widget_model="cms.form.widget.selection",
+            w_name,
+            w_field,
+            form=self.form,
+            widget_model="cms.form.widget.selection",
         )
         expected_attrs = {
             "id": "selection_char_field",
@@ -40,10 +45,15 @@ class TestWidgetSelection(TestWidgetCase):
             ("opt3", "Option 3"),
         ]
         w_name, w_field = fake_field(
-            "selection_char_field", type="selection", selection=select_options,
+            "selection_char_field",
+            type="selection",
+            selection=select_options,
         )
         widget = self.get_widget(
-            w_name, w_field, form=self.form, widget_model="cms.form.widget.selection",
+            w_name,
+            w_field,
+            form=self.form,
+            widget_model="cms.form.widget.selection",
         )
         expected_attrs = {
             "id": "selection_char_field",
@@ -72,10 +82,15 @@ class TestWidgetSelection(TestWidgetCase):
             (3, "Option 3"),
         ]
         w_name, w_field = fake_field(
-            "selection_integer_field", type="selection", selection=select_options,
+            "selection_integer_field",
+            type="selection",
+            selection=select_options,
         )
         widget = self.get_widget(
-            w_name, w_field, form=self.form, widget_model="cms.form.widget.selection",
+            w_name,
+            w_field,
+            form=self.form,
+            widget_model="cms.form.widget.selection",
         )
         expected_attrs = {
             "id": "selection_integer_field",
@@ -104,10 +119,15 @@ class TestWidgetSelection(TestWidgetCase):
             (3.0, "Option 3"),
         ]
         w_name, w_field = fake_field(
-            "selection_float_field", type="selection", selection=select_options,
+            "selection_float_field",
+            type="selection",
+            selection=select_options,
         )
         widget = self.get_widget(
-            w_name, w_field, form=self.form, widget_model="cms.form.widget.selection",
+            w_name,
+            w_field,
+            form=self.form,
+            widget_model="cms.form.widget.selection",
         )
         expected_attrs = {
             "id": "selection_float_field",
@@ -127,7 +147,10 @@ class TestWidgetSelection(TestWidgetCase):
             if i == 3:
                 expected_attrs["selected"] = "selected"
             self._test_element_attributes(
-                node_children[i], "option", expected_attrs, text="Option %s" % i,
+                node_children[i],
+                "option",
+                expected_attrs,
+                text="Option %s" % i,
             )
         # test conversion
         extracted = widget.w_extract(selection_float_field="3.0")
@@ -140,7 +163,10 @@ class TestWidgetSelection(TestWidgetCase):
             # do not pass `selection`
         )
         widget = self.get_widget(
-            w_name, w_field, form=self.form, widget_model="cms.form.widget.selection",
+            w_name,
+            w_field,
+            form=self.form,
+            widget_model="cms.form.widget.selection",
         )
         # no selection found: should not fail and give back an empty list
         self.assertEqual(widget.w_option_items, [])

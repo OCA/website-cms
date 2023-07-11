@@ -262,7 +262,8 @@ class CMSFormMixin(models.AbstractModel):
         _model_fields = {}
         if self._form_model:
             _model_fields = self.form_model.fields_get(
-                self._form_model_fields, attributes=self._form_fields_attributes,
+                self._form_model_fields,
+                attributes=self._form_fields_attributes,
             )
             # inject defaults
             defaults = self.form_model.default_get(self._form_model_fields)
@@ -588,7 +589,11 @@ class CMSFormMixin(models.AbstractModel):
             {
                 "master_slave": self._form_master_slave_info(),
                 "model": self._form_model,
-                "form_content_selector": getattr(self, "_form_content_selector", None,),
+                "form_content_selector": getattr(
+                    self,
+                    "_form_content_selector",
+                    None,
+                ),
             }
         )
         return info
