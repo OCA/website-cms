@@ -115,7 +115,7 @@ class TestControllers(FormHttpTestCase):
             self.assertTrue(
                 isinstance(form, self.env["cms.form.res.partner"].__class__)
             )
-            self.assertEqual(form._form_model, "res.partner")
+            self.assertEqual(form.form_model, "res.partner")
             self.assertEqual(form.form_mode, "create")
 
     def test_get_specific_form(self):
@@ -125,7 +125,7 @@ class TestControllers(FormHttpTestCase):
             self.assertTrue(
                 isinstance(form, self.env["cms.form.search.res.partner"].__class__)
             )
-            self.assertEqual(form._form_model, "res.partner")
+            self.assertEqual(form.form_model, "res.partner")
             self.assertEqual(form.form_mode, "search")
 
     def test_get_wizard_form(self):
@@ -135,7 +135,7 @@ class TestControllers(FormHttpTestCase):
             self.assertTrue(
                 isinstance(form, self.env["cms.form.res.partner"].__class__)
             )
-            self.assertEqual(form._form_model, "res.partner")
+            self.assertEqual(form.form_model, "res.partner")
             self.assertEqual(form.form_mode, "create")
 
     def test_redirect_after_success(self):

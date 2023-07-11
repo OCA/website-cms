@@ -3,21 +3,15 @@
 
 import json
 
-from odoo import models
+from odoo import fields, models
 
 
 class X2MWidget(models.AbstractModel):
     _name = "cms.form.widget.x2m.mixin"
-    _inherit = "cms.form.widget.mixin"
+    _inherit = "cms.form.widget.rel.mixin"
     _description = "CMS Form X2M widget"
-    _w_template = "cms_form.field_widget_x2m"
-    w_diplay_field = "display_name"
 
-    def widget_init(self, form, fname, field, **kw):
-        widget = super().widget_init(form, fname, field, **kw)
-        widget.w_comodel = self.env[widget.w_field["relation"]]
-        widget.w_domain = widget.w_field.get("domain", [])
-        return widget
+    w_template = fields.Char(default="cms_form.field_widget_x2m")
 
     # TODO: rename all widget-specific methods like:
     #    `x2many_to_form` -> `_w_orm_to_form`
@@ -50,7 +44,7 @@ class X2MWidget(models.AbstractModel):
             # request value take precedence
             ids = req_val[:]
         read_fields = [
-            self.w_diplay_field,
+            self.w_display_field,
         ]
         if "name" in self.w_comodel:
             read_fields.append("name")
@@ -62,7 +56,7 @@ class X2MWidget(models.AbstractModel):
 
     def form_to_x2many(self, value, **req_values):
         _value = False
-        if self.w_form._form_extract_value_mode == "write":
+        if self.w_form.form_extract_value_mode == "write":
             if value:
                 _value = [(6, False, self.w_ids_from_input(value))]
             else:

@@ -19,8 +19,8 @@ class FakeFieldsForm(models.AbstractModel):
     a_one2many = fields.Char()
     a_many2many = fields.Char()
 
-    def _form_fields(self):
-        _fields = super()._form_fields()
+    def _form_fields_get(self):
+        _fields = super()._form_fields_get()
         # fake fields' types
         _fields["a_many2one"]["type"] = "many2one"
         _fields["a_many2one"]["relation"] = "res.partner"

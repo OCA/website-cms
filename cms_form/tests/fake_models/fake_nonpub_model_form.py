@@ -3,9 +3,10 @@
 
 from odoo import fields, models
 
+from odoo.addons.cms_form.models.fields import Serialized  # pylint: disable=W7950
 
-# `AbstractModel` or `AbstractModel` needed to make ACL check happy`
-class FakeNonPubModel(models.AbstractModel):
+
+class FakeNonPubModel(models.Model):
     _name = "fake.non.publishable"
     _description = "CMS Form fake non publishable model"
     name = fields.Char()
@@ -15,5 +16,6 @@ class FakeNonPubModelForm(models.AbstractModel):
     _name = "cms.form.fake.non.publishable"
     _inherit = "cms.form"
     _description = "CMS Form fake non publishable model form"
-    _form_model = "fake.non.publishable"
-    _form_model_fields = ("name",)
+
+    form_model_name = fields.Char(default="fake.non.publishable")
+    form_model_fields = Serialized(default=("name",))

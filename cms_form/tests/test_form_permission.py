@@ -90,14 +90,20 @@ class TestFormPermCheck(FormTestCase):
 
     def test_form_check_permission_no_record_no_model_can_edit_create(self):
         form = self.get_form(self.FakePartnerForm._name, main_object=None)
-        form._form_model = None
+        form.form_model_name = None
         self.assertTrue(form._can_edit())
         self.assertTrue(form._can_create())
 
     def test_form_check_permission_form_cannot_edit(self):
-        form = self.get_form(self.FakePartnerForm._name, main_object=self.record)
-        with mock.patch.object(type(self.record), "check_access_rights") as patched:
+        form = self.get_form(self.FakePartnerForm._name)
+        with mock.patch.object(
+            type(self.record), "check_access_rights", spec=True
+        ) as patched:
             patched.side_effect = exceptions.AccessError("boom")
             with self.assertRaises(exceptions.AccessError):
+                # FIXME: for some reason entering this ctx manager and exiting
+                # wipes the main_object thus I have to set it twice
+                form.main_object = self.record
                 form._can_edit()
+            form.main_object = self.record
             self.assertFalse(form._can_edit(raise_exception=False))

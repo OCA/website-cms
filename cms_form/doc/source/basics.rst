@@ -12,9 +12,9 @@ Just inherit from ``cms.form`` to add a form for your model. Quick example for p
 
         _name = 'cms.form.res.partner'
         _inherit = 'cms.form'
-        _form_model = 'res.partner'
-        _form_model_fields = ('name', 'country_id')
-        _form_required_fields = ('name', 'country_id')
+        form_model = 'res.partner'
+        form_model_fields = ('name', 'country_id')
+        form_required_fields = ('name', 'country_id')
 
 
 In this case you'll have form with the following characteristics:
@@ -55,9 +55,9 @@ The form above can be extended with extra fields that are not part of the ``_for
 
         _name = 'cms.form.res.partner'
         _inherit = 'cms.form'
-        _form_model = 'res.partner'
-        _form_model_fields = ('name', 'country_id', 'email')
-        _form_required_fields = ('name', 'country_id', 'email')
+        form_model = 'res.partner'
+        form_model_fields = ('name', 'country_id', 'email')
+        form_required_fields = ('name', 'country_id', 'email')
 
         notify_partner = fields.Boolean()
 
@@ -81,10 +81,10 @@ You want to group fields into meaningful groups. You can use fieldsets:
 
         _name = 'cms.form.res.partner'
         _inherit = 'cms.form'
-        _form_model = 'res.partner'
-        _form_model_fields = ('name', 'country_id', 'email')
-        _form_required_fields = ('name', 'country_id', 'email')
-        _form_fieldsets = [
+        form_model = 'res.partner'
+        form_model_fields = ('name', 'country_id', 'email')
+        form_required_fields = ('name', 'country_id', 'email')
+        form_fieldsets = [
             {
                 'id': 'main',
                 'title': 'Main',
@@ -116,8 +116,8 @@ If you want fieldsets to be displayed as tabs, just override this option:
 
         _name = 'cms.form.res.partner'
         _inherit = 'cms.form'
-        _form_fieldsets = [...]
-        _form_fieldsets_display = 'tabs'
+        form_fieldsets = [...]
+        form_fieldsets_display = 'tabs'
 
 
 .. image:: ./_static/images/cms_form_example_tabbed.png
@@ -135,9 +135,9 @@ Just inherit from ``cms.form.search`` to add a form for your model. Quick exampl
 
         _name = 'cms.form.search.res.partner'
         _inherit = 'cms.form.search'
-        _form_model = 'res.partner'
-        _form_model_fields = ('name', 'country_id', )
-        _form_fields_order = ('country_id', 'name', )
+        form_model = 'res.partner'
+        form_model_fields = ('name', 'country_id', )
+        form_fields_order = ('country_id', 'name', )
 
 
 .. image:: ./_static/images/cms_form_example_search.png

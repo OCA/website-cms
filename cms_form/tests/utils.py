@@ -24,7 +24,6 @@ def fake_request(
     session=None,
 ):
     data = urllib.parse.urlencode(form_data or {})
-    query_string = query_string or ""
     content_type = content_type or "application/x-www-form-urlencoded"
     # werkzeug request
     w_req = Request.from_values(
