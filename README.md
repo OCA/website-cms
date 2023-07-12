@@ -21,7 +21,7 @@ Available addons
 ----------------
 addon | version | maintainers | summary
 --- | --- | --- | ---
-[cms_info](cms_info/) | 16.0.1.0.0 |  | A set of basic information needed to expose any kind of record in your CMS.
+[cms_info](cms_info/) | 16.0.1.1.0 |  | A set of basic information needed to expose any kind of record in your CMS.
 
 [//]: # (end addons)
 
