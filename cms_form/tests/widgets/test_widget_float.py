@@ -4,14 +4,13 @@ from .common import TestWidgetCase, fake_field, fake_form
 
 
 class TestWidgetFloat(TestWidgetCase):
-    @classmethod
-    def setUpClass(cls):
-        super().setUpClass()
+    def setUp(self):
+        super().setUp()
         form = fake_form(a_float_field=2.0)
-        cls.w_name, cls.w_field = fake_field("a_float_field", type="float")
-        cls.widget = cls.get_widget(
-            cls.w_name,
-            cls.w_field,
+        self.w_name, self.w_field = fake_field("a_float_field", type="float")
+        self.widget = self.get_widget(
+            self.w_name,
+            self.w_field,
             form=form,
             widget_model="cms.form.widget.float",
         )

@@ -31,7 +31,7 @@ class TestWidgetBase(TestWidgetCase, FakeModelMixin):
         self.assertEqual(widget.w_form_values, form.form_render_values)
         self.assertEqual(widget.w_fname, "custom")
         self.assertDictEqual(widget.w_field, field)
-        self.assertEqual(widget.w_field_value, None)
+        self.assertEqual(widget.w_field_value, False)
         self.assertEqual(widget.w_data, {})
         self.assertEqual(widget.w_subfields, {})
 
@@ -76,7 +76,7 @@ class TestWidgetBase(TestWidgetCase, FakeModelMixin):
         form = get_form(
             self.env,
             "cms.form.res.partner",
-            sub_fields={"name": {"_all": ("custom",)}},
+            form_sub_fields={"name": {"_all": ("custom",)}},
         )
         fields = form.form_fields_get()
         widget = self.get_widget("name", fields["name"], form=form)

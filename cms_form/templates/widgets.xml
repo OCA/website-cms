@@ -58,7 +58,7 @@ License LGPL-3.0 or later (http://www.gnu.org/licenses/lgpl.html).
         <xpath expr="//t[@t-foreach]/option" position="replace">
             <option
                 t-att-value="opt_item['value']"
-                t-att-selected="'selected' if opt_item['value'] == widget.w_field_value else None"
+                t-att-selected="widget.is_option_selected(opt_item)"
             >
                 <t t-esc="opt_item['label']" />
             </option>
