@@ -1,9 +1,11 @@
 # Copyright 2023 Simone Orsi
 # License LGPL-3.0 or later (http://www.gnu.org/licenses/lgpl.html).
-
 import json
+import logging
 
 from odoo.addons.base_sparse_field.models.fields import Serialized as BaseSerialized
+
+_logger = logging.getLogger(__name__)
 
 
 class Serialized(BaseSerialized):
@@ -22,5 +24,12 @@ class Serialized(BaseSerialized):
         # you must use a string (eg: "[]" or "{}")
         value = value if value is not None else default
         if isinstance(value, str):
-            return json.loads(value)
+            try:
+                return json.loads(value)
+            except ValueError:
+                _logger.error("%s got bad json string: %s", self.name, value)
+                # Likely a string that is not convert-able.
+                # Consider using a special encoder/decoder.
+                return value
+
         return value
