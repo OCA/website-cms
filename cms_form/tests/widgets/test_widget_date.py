@@ -6,15 +6,14 @@ from .common import TestWidgetCase, fake_field, fake_form
 
 
 class TestWidgetDate(TestWidgetCase):
-    @classmethod
-    def setUpClass(cls):
-        super().setUpClass()
-        cls.form = fake_form(a_date_field="2019-01-12", type="date")
-        cls.w_name, cls.w_field = fake_field("a_date_field")
-        cls.widget = cls.get_widget(
-            cls.w_name,
-            cls.w_field,
-            form=cls.form,
+    def setUp(self):
+        super().setUp()
+        self.form = fake_form(a_date_field="2019-01-12", type="date")
+        self.w_name, self.w_field = fake_field("a_date_field")
+        self.widget = self.get_widget(
+            self.w_name,
+            self.w_field,
+            form=self.form,
             widget_model="cms.form.widget.date",
         )
 

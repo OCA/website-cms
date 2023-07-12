@@ -6,6 +6,7 @@ import json
 from odoo import fields, models
 
 from ... import utils
+from ..fields import Serialized
 
 
 class M2OWidget(models.AbstractModel):
@@ -14,6 +15,7 @@ class M2OWidget(models.AbstractModel):
     _description = "CMS Form M2O widget"
 
     w_template = fields.Char(default="cms_form.field_widget_m2o")
+    w_field_value = fields.Integer()
 
     @property
     def w_option_items(self):
@@ -50,9 +52,11 @@ class M2OMultiWidget(models.AbstractModel):
     _name = "cms.form.widget.many2one.multi"
     _inherit = "cms.form.widget.many2one"
     _description = "CMS Form M2O multi widget"
-    _w_template = "cms_form.field_widget_m2o_multi"
+
+    w_template = fields.Char(default="cms_form.field_widget_m2o_multi")
     # TODO: not used ATM
-    w_display_field = "display_name"
+    w_display_field = fields.Char(default="display_name")
+    w_field_value = Serialized(default=[])
 
     def m2o_to_form(self, value, **req_values):
         if not value:
