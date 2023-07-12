@@ -32,3 +32,8 @@ msgstr ""
 #: model:ir.model.fields,field_description:cms_info.field_cms_info_mixin__cms_edit_url
 msgid "CMS edit URL"
 msgstr ""
+
+#. module: cms_info
+#: model:ir.model.fields,field_description:cms_info.field_cms_info_mixin__url
+msgid "URL"
+msgstr ""
