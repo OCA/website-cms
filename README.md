@@ -23,6 +23,14 @@ addon | version | maintainers | summary
 --- | --- | --- | ---
 [cms_info](cms_info/) | 16.0.1.1.0 |  | A set of basic information needed to expose any kind of record in your CMS.
 
+
+Unported addons
+---------------
+addon | version | maintainers | summary
+--- | --- | --- | ---
+[cms_form](cms_form/) | 13.0.1.0.1 (unported) |  | Basic content type form
+[cms_form_example](cms_form_example/) | 13.0.1.0.1 (unported) |  | Basic content type form example
+
 [//]: # (end addons)
 
 <!-- prettier-ignore-end -->
