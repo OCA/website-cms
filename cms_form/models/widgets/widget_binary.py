@@ -5,7 +5,7 @@ import base64
 
 import werkzeug
 
-from odoo import models
+from odoo import fields, models
 from odoo.tools import pycompat
 from odoo.tools.mimetypes import guess_mimetype
 
@@ -89,4 +89,5 @@ class ImageWidget(models.AbstractModel):
     _name = "cms.form.widget.image"
     _inherit = "cms.form.widget.binary.mixin"
     _description = "CMS Form image widget"
-    _w_template = "cms_form.field_widget_image"
+
+    w_template = fields.Char(default="cms_form.field_widget_image")

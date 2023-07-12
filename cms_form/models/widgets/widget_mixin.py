@@ -19,51 +19,38 @@ class Widget(models.AbstractModel):
     # TODO: would be better to have python obj fields
     w_form = fields.Binary(store=False)
     w_record = fields.Binary(store=False)
-    main_object = fields.Binary(store=False)
     w_field = fields.Binary(store=False)
+    w_subfields = fields.Binary(default={}, store=False)
 
     w_template = fields.Char(default="")
     w_css_klass = fields.Char(default="")
 
     w_fname = fields.Char(default="")
-    w_field_value = Serialized(default=None)
+    w_field_value = fields.Char(default="")
     w_data = Serialized(default={})
-    w_subfields = Serialized(default={})
 
-    def widget_init(
-        self,
-        form,
-        fname,
-        field,
-        data=None,
-        subfields=None,
-        template="",
-        css_klass="",
-        **kw
-    ):
+    def widget_init(self, form, fname, field, data=None, subfields=None, **kw):
         vals = {
             "w_form": form,
+            "w_record": form.main_object,
             "w_fname": fname,
             "w_field": field,
             "w_field_value": form.form_render_values.get("form_data", {}).get(fname),
             "w_data": data or {},
             "w_subfields": subfields or field.get("subfields", {}),
-            "w_template": template,
-            "w_css_klass": css_klass,
         }
+        for k in ("template", "css_klass"):
+            if kw.get(k):
+                vals[f"w_{k}"] = kw[k]
         widget = self.new(vals)
         return widget
 
     def render(self):
-        return self.env.ref(self.w_template).render({"widget": self})
+        return self.env["ir.qweb"]._render(self.w_template, {"widget": self})
 
     @property
     def w_form_model(self):
         return self.w_form.form_model
-
-    @property
-    def w_record(self):
-        return self.w_form.main_object
 
     @property
     def w_form_values(self):

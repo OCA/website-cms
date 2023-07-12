@@ -10,14 +10,13 @@ class TestWidgetInteger(TestWidgetCase):
     # Of course we have to switch to `w_html_fname` approach as hidden widget.
     # This implies that we test w/ a full request too.
 
-    @classmethod
-    def setUpClass(cls):
-        super().setUpClass()
+    def setUp(self):
+        super().setUp()
         form = fake_form(an_int_field=10)
-        cls.w_name, cls.w_field = fake_field("an_int_field", type="integer")
-        cls.widget = cls.get_widget(
-            cls.w_name,
-            cls.w_field,
+        self.w_name, self.w_field = fake_field("an_int_field", type="integer")
+        self.widget = self.get_widget(
+            self.w_name,
+            self.w_field,
             form=form,
             widget_model="cms.form.widget.integer",
         )

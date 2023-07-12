@@ -4,10 +4,9 @@ from .common import TestWidgetCase, fake_field, fake_form
 
 
 class TestWidgetSelection(TestWidgetCase):
-    @classmethod
-    def setUpClass(cls):
-        super().setUpClass()
-        cls.form = fake_form(
+    def setUp(self):
+        super().setUp()
+        self.form = fake_form(
             # fake defaults
             selection_char_field="opt1",
             selection_integer_field=2,
