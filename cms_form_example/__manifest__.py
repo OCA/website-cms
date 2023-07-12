@@ -9,6 +9,7 @@
     "license": "AGPL-3",
     "author": "Simone Orsi,Odoo Community Association (OCA)",
     "mainainers": ["simahawk"],
+    "website": "https://github.com/OCA/website-cms",
     "depends": [
         "website_partner",
         "cms_form",
