@@ -3,6 +3,7 @@
 Copyright 2017 Simone Orsi
 License LGPL-3.0 or later (http://www.gnu.org/licenses/lgpl.html).
 -->
+<!-- TODO: rework w/ latest bootstrap markup and split in more files -->
 <odoo>
     <template id="form_wrapper" name="CMS form wrapper">
         <t t-set="title" t-value="form.form_title" />
