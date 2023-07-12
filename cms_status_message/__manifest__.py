@@ -5,7 +5,7 @@
     "name": "CMS status message",
     "summary": """Basic status messages for your CMS system""",
     "version": "16.0.1.0.0",
-    "mainainers": ["simahawk"],
+    "maintainers": ["simahawk"],
     "license": "LGPL-3",
     "author": "Camptocamp, Odoo Community Association (OCA)",
     "website": "https://github.com/OCA/website-cms",
