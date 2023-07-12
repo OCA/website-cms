@@ -1,0 +1,340 @@
+<?xml version="1.0" encoding="utf-8" ?>
+<!--
+Copyright 2017 Simone Orsi
+License LGPL-3.0 or later (http://www.gnu.org/licenses/lgpl.html).
+-->
+<odoo>
+    <template id="form_wrapper" name="CMS form wrapper">
+        <t t-call="website.layout">
+            <t t-set="title" t-value="form.form_title" />
+            <div id="wrap" t-att-class="form.form_wrapper_css_klass">
+                <div class="container">
+                    <t t-if="form.form_title">
+                        <h2>
+                            <span class="form_title" t-esc="form.form_title" />
+                        </h2>
+                    </t>
+                    <t t-if="form.form_description">
+                        <p class="form_description" t-esc="form.form_description" />
+                    </t>
+                    <t t-raw="form.form_render()" />
+                </div>
+            </div>
+        </t>
+    </template>
+    <template
+        id="form_horizontal_field_wrapper"
+        name="CMS form field wrapper horiz form"
+    >
+        <div
+            t-att-class="form.form_make_field_wrapper_klass(fname, field, errors=errors)"
+        >
+            <label
+                class="col-md-3 col-sm-4 control-label"
+                t-att-for="fname"
+                t-esc="field['string']"
+            >Name</label>
+            <div class="col-md-9 col-sm-8">
+                <t t-raw="widget.render()" />
+                <t t-if="field.get('help')">
+                    <t t-call="cms_form.base_form_field_help_block" />
+                </t>
+                <t t-if="errors.get(fname)">
+                    <t t-call="cms_form.base_form_field_error_block" />
+                </t>
+            </div>
+        </div>
+    </template>
+    <template
+        id="form_vertical_field_wrapper"
+        name="CMS form field wrapper vertical form"
+    >
+        <div
+            t-att-class="form.form_make_field_wrapper_klass(fname, field, errors=errors)"
+        >
+            <label
+                class="control-label"
+                t-att-for="fname"
+                t-esc="field['string']"
+            >Name</label>
+            <t t-raw="widget.render()" />
+            <t t-if="field.get('help')">
+                <t t-call="cms_form.base_form_field_help_block" />
+            </t>
+            <t t-if="errors.get(fname)">
+                <t t-call="cms_form.base_form_field_error_block" />
+            </t>
+        </div>
+    </template>
+    <template id="base_form_field_help_block" name="CMS form field help block">
+        <div class="help-block">
+            <!-- use `raw` to allow injecting html stuff here -->
+            <t t-raw="field['help']" />
+        </div>
+    </template>
+    <template id="base_form_field_error_block" name="CMS form field error block">
+        <t t-if="errors_message.get(fname)">
+            <div class="alert alert-danger error-msg">
+                <span t-esc="errors_message[fname]" />
+            </div>
+        </t>
+    </template>
+    <template id="base_form_fields" name="CMS form fields">
+        <div t-attf-class="form-fields #{ form.form_fieldsets_wrapper_klass }">
+            <t t-if="form_fieldsets">
+                <t t-if="form._form_fieldsets_display == 'tabs'">
+                    <t t-call="cms_form.fieldsets_as_tabs" />
+                </t>
+                <t t-else="">
+                    <t t-foreach="form_fieldsets" t-as="fset">
+                        <t t-call="cms_form.single_fieldset" />
+                    </t>
+                </t>
+            </t>
+            <t t-else="">
+                <t t-foreach="form_fields.keys()" t-as="fname">
+                    <t t-call="cms_form.single_field" />
+                </t>
+            </t>
+        </div>
+    </template>
+    <template id="single_field" name="CMS form single field">
+        <t t-if="form_fields.get(fname) and not form_fields[fname].get('is_subfield')">
+            <!-- this template is computed in `form_render`
+      based on `form_display_mode`
+      -->
+            <t t-call="#{ field_wrapper_template }">
+                <t t-set="field" t-value="form_fields[fname]" />
+                <t t-set="widget" t-value="field['widget']" />
+            </t>
+        </t>
+    </template>
+    <template id="single_fieldset" name="CMS form single fieldset">
+        <fieldset t-att-id="fset['id']" t-att-class="fset.get('css_extra_klass')">
+            <t t-if="show_legend is not False and fset.get('title')">
+                <legend t-esc="fset['title']" />
+            </t>
+            <t t-if="fset.get('description')">
+                <p class="fieldset-description" t-esc="fset['description']" />
+            </t>
+            <t t-foreach="fset['fields']" t-as="fname">
+                <t t-call="cms_form.single_field" />
+            </t>
+        </fieldset>
+    </template>
+    <template id="fieldsets_as_tabs" name="CMS form fieldsets as tabs">
+        <ul class="nav nav-tabs" role="tablist">
+            <t t-foreach="form_fieldsets" t-as="fset">
+                <li role="presentation">
+                    <a  t-attf-class="nav-link #{'active' if fset_first else ''}"
+                        t-attf-href="#tab-#{fset['id']}"
+                        t-attf-aria-controls="tab-#{fset['id']}"
+                        role="tab"
+                        data-toggle="tab"
+                        t-esc="fset['title']"
+                    >Home</a>
+                </li>
+            </t>
+        </ul>
+        <div class="tab-content">
+            <t t-foreach="form_fieldsets" t-as="fset">
+                <div
+                    t-attf-id="tab-#{fset['id']}"
+                    t-attf-class="tab-pane #{fset_first and 'active' or ''}"
+                    role="tabpanel"
+                >
+                    <t t-call="cms_form.single_fieldset">
+                        <t t-set="show_legend" t-value="False" />
+                    </t>
+                </div>
+            </t>
+        </div>
+    </template>
+    <template id="base_form" name="CMS form template">
+        <form
+            t-att-action="form.form_action"
+            t-att-method="form.form_method"
+            t-att-data-form="form.form_json_info()"
+            t-att-class="form.form_css_klass"
+            enctype="multipart/form-data"
+            t-att-data-ajax="form._form_ajax or None"
+            t-att-data-ajax-onchange="form._form_ajax_onchange or None"
+        >
+            <t t-if="form.form_method == 'POST'">
+                <input
+                    type="hidden"
+                    name="csrf_token"
+                    t-att-value="form.o_request.csrf_token()"
+                />
+            </t>
+            <t t-set="form_fields" t-value="form.form_fields(hidden=False)" />
+            <t t-set="form_hidden_fields" t-value="form.form_fields(hidden=True)" />
+            <t t-set="form_fieldsets" t-value="form.form_fieldsets()" />
+            <t t-foreach="form_hidden_fields" t-as="hidden_fname">
+                <t t-raw="form_hidden_fields[hidden_fname]['widget'].render()" />
+            </t>
+            <t t-call="#{ form.form_fields_template }" />
+            <div class="col-sm-9 col-sm-offset-3 above-controls">
+                <!-- you can style required fields like this:
+            `form .form-group.field-required label.control-label::after{ content: '*'}`
+            You'll get the symbol here, with proper legend
+        -->
+                <t t-if="form.form_mode != 'search'">
+                    <div class="form-group field-required">
+                        <p class="field-required-legend"><label
+                                class="control-label"
+                            /> Required fields</p>
+                    </div>
+                </t>
+            </div>
+            <t t-call="#{ form.form_buttons_template }" />
+        </form>
+    </template>
+    <template id="base_form_buttons" name="CMS base form buttons">
+        <div class="form-group form-controls">
+            <div class="col-sm-9 col-sm-offset-3">
+                <a
+                    class="btn btn-default"
+                    t-att-href="form.form_cancel_url()"
+                >Cancel</a>
+                <button type="submit" class="btn btn-primary">Submit</button>
+            </div>
+        </div>
+    </template>
+    <template
+        id="search_form_wrapper"
+        name="CMS search form wrapper"
+        inherit_id="cms_form.form_wrapper"
+        primary="True"
+    >
+        <xpath expr="//t[@t-raw]" position="replace">
+            <t t-if="form.form_show_search_form">
+                <t t-raw="form.form_render()" />
+            </t>
+            <div class="form_content">
+                <t t-call="#{ form.form_search_results_template }" />
+            </div>
+        </xpath>
+    </template>
+    <template
+        id="search_form_buttons"
+        name="CMS search form buttons"
+        inherit_id="cms_form.base_form_buttons"
+        primary="True"
+    >
+        <xpath expr="//div[hasclass('form-controls')]" position="replace">
+            <div class="form-group form-controls">
+                <div class="col-sm-9 col-sm-offset-3">
+                    <button type="submit" class="btn btn-primary">Search</button>
+                </div>
+            </div>
+        </xpath>
+    </template>
+    <template
+        id="search_results_pager"
+        name="CMS form pager"
+        inherit_id="website.pager"
+        primary="True"
+    >
+        <xpath expr="./ul/li[1]/a" position="attributes">
+            <attribute name="t-att-data-page">
+            pager['page']['num'] - 1 if pager['page']['num'] > 1 else None
+        </attribute>
+        </xpath>
+        <xpath expr="./ul/t/li/a" position="attributes">
+            <attribute name="t-att-data-page">page['num']</attribute>
+        </xpath>
+        <xpath expr="./ul/li[2]/a" position="attributes">
+            <attribute name="t-att-data-page">
+            pager['page']['num'] + 1 if pager['page']['num'] &lt; pager['page_count'] else None
+        </attribute>
+        </xpath>
+    </template>
+    <template id="search_results" name="CMS form search results">
+        <t t-foreach="form.form_search_results['results']" t-as="item">
+            <div
+                t-attf-id="list_item_#{item.id}"
+                class="list_item"
+                t-attf-data-item='{"id": #{item.id}}'
+            >
+                <h3 class="item-name">
+                    <t t-if="'website_url' in item">
+                        <a t-att-href="item.website_url" t-field="item.display_name" />
+                    </t>
+                    <t t-if="'website_url' not in item">
+                        <span t-field="item.display_name" />
+                    </t>
+                </h3>
+                <t t-if="'website_description' in item">
+                    <p class="item-description" t-field="item.website_description" />
+                </t>
+            </div>
+        </t>
+        <div class="text-center mb32">
+            <t t-call="cms_form.search_results_pager">
+                <t t-set="pager" t-value="form.form_search_results['pager']" />
+            </t>
+        </div>
+    </template>
+    <template
+        id="wizard_form_wrapper"
+        name="CMS wizard form wrapper"
+        inherit_id="cms_form.form_wrapper"
+        primary="True"
+    >
+        <t t-if="form.form_title" position="before">
+            <t t-if="form.wiz_show_progress_bar">
+                <t t-call="cms_form.wizard_progress_bar" />
+            </t>
+        </t>
+    </template>
+    <template id="wizard_progress_bar" name="CMS Wizard progress bar">
+        <ul class="status-bar wizard-status-bar hidden-xs">
+            <t t-set="current_step" t-value="form.wiz_current_step()" />
+            <t t-foreach="form.wiz_steps" t-as="step">
+                <t t-set="info" t-value="form.wiz_get_step_info(step)" />
+                <li t-attf-id="step_#{step}" t-attf-class="step">
+                    <span
+                        t-if="info.get('title')"
+                        t-esc="info['title']"
+                        t-att-title="info.get('description')"
+                        t-attf-class="#{page == step and 'active text-primary' or 'text-muted'}"
+                    />
+                </li>
+            </t>
+        </ul>
+    </template>
+    <template
+        id="wizard_form_buttons"
+        name="CMS wizard form buttons"
+        inherit_id="cms_form.base_form_buttons"
+        primary="True"
+    >
+        <xpath expr="//div[hasclass('form-controls')]" position="replace">
+            <div class="form-group form-controls">
+                <t t-if="form.wiz_next_step()">
+                    <button
+                        type="submit"
+                        name="wiz_submit"
+                        value="next"
+                        class="btn btn-primary btn-next pull-right"
+                    >Next</button>
+                </t>
+                <t t-else="">
+                    <button
+                        type="submit"
+                        class="btn btn-primary pull-right"
+                    >Submit</button>
+                </t>
+                <t t-if="form.wiz_prev_step()">
+                    <button
+                        type="submit"
+                        name="wiz_submit"
+                        value="prev"
+                        class="btn btn-primary btn-prev pull-left"
+                    >Prev</button>
+                </t>
+            </div>
+        </xpath>
+    </template>
+</odoo>

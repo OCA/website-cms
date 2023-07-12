@@ -1,0 +1,235 @@
+<?xml version="1.0" encoding="utf-8" ?>
+<!--
+Copyright 2017 Simone Orsi
+License LGPL-3.0 or later (http://www.gnu.org/licenses/lgpl.html).
+-->
+<odoo>
+    <template id="field_widget_char" name="CMS form text field widget">
+        <input
+            type="text"
+            t-attf-class="form-control #{widget.w_css_klass}"
+            t-att-id="widget.w_fname"
+            t-att-name="widget.w_fname"
+            t-att-value="widget.w_field_value"
+            t-att-required="widget.w_field['required'] and '1' or None"
+            t-att-data-params='widget.w_data_json()'
+            t-att-placeholder="widget.w_field['string'] + '...'"
+        />
+    </template>
+    <template id="field_widget_hidden" name="CMS form hidden field">
+        <input
+            type="hidden"
+            t-attf-class="#{widget.w_css_klass}"
+            t-att-id="widget.w_fname"
+            t-att-name="widget.w_html_fname"
+            t-att-value="widget.w_field_value"
+            t-att-required="widget.w_field['required'] and '1' or None"
+            t-att-data-params='widget.w_data_json()'
+        />
+    </template>
+    <template id="field_widget_m2o" name="CMS form m2o field widget">
+        <select
+            t-attf-class="form-control #{widget.w_css_klass}"
+            t-att-id="widget.w_fname"
+            t-att-name="widget.w_fname"
+            t-att-required="widget.w_field['required'] and '1' or None"
+            t-att-data-params='widget.w_data_json()'
+        >
+            <option class="empty_item" value="">
+                <t t-esc="widget.w_field['string'] + '...'" />
+            </option>
+            <t t-foreach="widget.w_option_items" t-as="opt_item">
+                <option
+                    class="value_item"
+                    t-att-value="opt_item.id"
+                    t-att-selected="opt_item.id == widget.w_field_value"
+                >
+                    <t t-esc="opt_item.name" />
+                </option>
+            </t>
+        </select>
+    </template>
+    <template
+        id="field_widget_selection"
+        name="CMS form selection field widget"
+        inherit_id="cms_form.field_widget_m2o"
+        primary="True"
+    >
+        <xpath expr="//t[@t-foreach]/option" position="replace">
+            <option
+                t-att-value="opt_item['value']"
+                t-att-selected="'selected' if opt_item['value'] == widget.w_field_value else None"
+            >
+                <t t-esc="opt_item['label']" />
+            </option>
+        </xpath>
+    </template>
+    <template
+        id="field_widget_radio_selection"
+        name="CMS form selection field radio widget"
+    >
+        <div t-attf-class="radio-select #{widget.w_css_klass}">
+            <t t-foreach="widget.w_option_items" t-as="opt_item">
+                <div class="radio option-item">
+                    <label t-attf-for="#{widget.w_fname}_#{opt_item_index}">
+                        <input
+                            type="radio"
+                            t-att-name="widget.w_fname"
+                            t-attf-id="#{widget.w_fname}_#{opt_item_index}"
+                            t-att-value="opt_item['value']"
+                            t-att-checked="'checked' if opt_item['value'] == widget.w_field_value else None"
+                            t-att-required="widget.w_field['required'] and '1' or None"
+                        />
+                        <span t-esc="opt_item['label']" />
+                    </label>
+                    <t t-if="opt_item.get('help')">
+                        <div class="help-block" t-raw="opt_item.get('help')" />
+                    </t>
+                    <t t-if="widget.w_options_help.get(opt_item['value'])">
+                        <div
+                            class="help-block"
+                            t-raw="widget.w_options_help.get(opt_item['value'])"
+                        />
+                    </t>
+                </div>
+            </t>
+        </div>
+    </template>
+    <template id="field_widget_x2m" name="CMS form x2m field widget">
+        <!-- NOTE: `t-att-value` is really important here
+  since without it `initSelection` function for select2 does not work-->
+        <input
+            type="text"
+            t-att-id="widget.w_fname"
+            t-att-name="widget.w_fname"
+            t-attf-class="form-control js_select2_m2m_widget #{widget.w_css_klass}"
+            t-attf-data-init-value="#{widget.w_field_value}"
+            t-att-value="widget.w_field_value or widget.w_fname"
+            t-att-data-model="widget.w_field['relation']"
+            data-display_name="name"
+            data-fields='["name"]'
+            t-att-placeholder="widget.w_field['string'] + '...'"
+            t-att-data-domain="widget.w_field.get('domain') or '[]'"
+            t-att-required="widget.w_field['required'] and '1' or None"
+        />
+    </template>
+    <template
+        id="field_widget_m2o_multi"
+        name="CMS form m2o multi select field widget"
+        inherit_id="field_widget_x2m"
+        primary="True"
+    >
+        <xpath expr="//input" position="attributes">
+            <attribute name="t-attf-class" add="m2o" separator=" " />
+        </xpath>
+    </template>
+    <template id="field_widget_date" name="CMS form date field widget">
+        <div class="input-group">
+            <!-- This will hold the value displayed to users -->
+            <input
+                type="text"
+                t-attf-name="#{widget.w_fname}_display"
+                t-attf-id="#{widget.w_fname}_display"
+                t-attf-class="form-control js_datepicker #{widget.w_css_klass}"
+                t-att-placeholder="widget.w_placeholder"
+                t-att-data-params='widget.w_data_json()'
+                t-att-required="widget.w_field['required'] and '1' or None"
+            />
+            <!-- This will hold server-side value -->
+            <input
+                type="hidden"
+                t-att-name="widget.w_fname"
+                t-att-id="widget.w_fname"
+                t-att-value="widget.w_field_value"
+            />
+            <span class="input-group-addon js_datepicker_trigger">
+                <span class="fa fa-calendar" />
+            </span>
+        </div>
+    </template>
+    <template id="field_widget_text" name="CMS form text field widget">
+        <!--
+    XXX: in v11 `t-esc` must stay inside the textarea
+    otherwise the whole text area is not rendered at all when value is empty.
+    -->
+        <textarea
+            t-att-name="widget.w_fname"
+            t-att-id="widget.w_fname"
+            t-attf-class="form-control #{widget.w_css_klass}"
+            t-att-required="widget.w_field['required'] and '1' or None"
+            t-att-maxlength="widget.w_maxlength"
+        >
+            <t t-esc="widget.w_field_value" />
+        </textarea>
+        <t t-if="widget.w_maxlength">
+            <input
+                type="text"
+                size="3"
+                readonly="1"
+                t-ignore="1"
+                t-attf-id="#{widget.w_fname}_counter"
+                t-attf-name="#{widget.w_fname}_counter"
+                class="form-control text-counter"
+            />
+        </t>
+    </template>
+    <template id="field_widget_boolean" name="CMS form boolean field widget">
+        <input
+            type="checkbox"
+            t-att-name="widget.w_fname"
+            t-att-id="widget.w_fname"
+            t-att-checked="'checked' if widget.w_field_value else None"
+            t-attf-class="form-control #{widget.w_css_klass}"
+            t-att-required="widget.w_field['required'] and '1' or None"
+        />
+    </template>
+    <template id="field_widget_image" name="CMS form image field widget">
+        <div class="image-widget-wrapper">
+            <input
+                type="file"
+                capture="camera"
+                accept="image/*"
+                t-att-id="widget.w_fname"
+                t-att-name="widget.w_fname"
+                class="form-control"
+            />
+            <t t-if="widget.w_field_value">
+                <t t-set="prefix" t-value="widget.w_fname" />
+                <img
+                    class="img img-responsive"
+                    t-att-src="widget.w_field_value.get('value')"
+                />
+                <div t-attf-id="#{prefix}_keepbox" class="keepbox text-center">
+                    <div class="form-group">
+                        <label
+                            class="checkbox inline"
+                            t-attf-for="#{prefix}_keepcheck_yes"
+                        >
+            <input
+                                type="radio"
+                                t-attf-id="#{prefix}_keepcheck_yes"
+                                t-attf-name="#{prefix}_keepcheck"
+                                checked="'checked' if not widget.w_field_value.get('from_request') else None"
+                                value="yes"
+                            />
+            Keep current image
+          </label>
+                        <label
+                            class="checkbox inline"
+                            t-attf-for="#{prefix}_keepcheck_no"
+                        >
+            <input
+                                type="radio"
+                                t-attf-id="#{prefix}_keepcheck_no"
+                                t-attf-name="#{prefix}_keepcheck"
+                                checked="'checked' if widget.w_field_value.get('from_request') else None"
+                                value="no"
+                            />
+            Replace current image
+          </label>
+                    </div>
+                </div>
+            </t>
+        </div>
+    </template>
+</odoo>
