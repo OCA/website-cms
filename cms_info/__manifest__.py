@@ -6,7 +6,7 @@
     "summary": """
     A set of basic information needed to expose any kind of record in your CMS.
     """,
-    "version": "16.0.1.0.0",
+    "version": "16.0.1.1.0",
     "category": "CMS",
     "website": "https://github.com/OCA/website-cms",
     "author": "Camptocamp, Odoo Community Association (OCA)",
