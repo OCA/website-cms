@@ -36,6 +36,11 @@ msgstr "CMS confirmar eliminar URL"
 msgid "CMS edit URL"
 msgstr "CMS editar URL"
 
+#. module: cms_info
+#: model:ir.model.fields,field_description:cms_info.field_cms_info_mixin__url
+msgid "URL"
+msgstr ""
+
 #~ msgid "Display Name"
 #~ msgstr "Nom visible"
 
