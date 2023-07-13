@@ -283,6 +283,9 @@ class CMSFormMixin(models.AbstractModel):
             return filtered
         return _fields
 
+    def _form_fields_attributes_get(self):
+        return self.form_fields_attributes or []
+
     @tools.cache("self")
     def _form_fields_get(self):
         """Retrieve form fields ready to be used.
@@ -294,20 +297,21 @@ class CMSFormMixin(models.AbstractModel):
         Blacklisted fields are skipped.
         Whitelisted fields are loaded only.
         """
+        attributes = self._form_fields_attributes_get()
         _all_fields = OrderedDict()
         # load model fields
         _model_fields = {}
         if self.form_model_name:
             _model_fields = self.form_model.fields_get(
                 self.form_model_fields,
-                attributes=self.form_fields_attributes,
+                attributes=attributes,
             )
             # inject defaults
             defaults = self.form_model.default_get(self.form_model_fields)
             for k, v in defaults.items():
                 _model_fields[k]["_default"] = v
         # load form fields
-        _form_fields = self.fields_get(attributes=self.form_fields_attributes)
+        _form_fields = self.fields_get(attributes=attributes)
         # inject defaults
         for k, v in self.default_get(list(_form_fields.keys())).items():
             _form_fields[k]["_default"] = v
