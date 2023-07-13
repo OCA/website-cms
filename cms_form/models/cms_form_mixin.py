@@ -399,12 +399,7 @@ class CMSFormMixin(models.AbstractModel):
                 _fields[fname]["hidden"] = True
             _fields[fname]["widget"] = self.form_get_widget(fname, field)
 
-    @property
-    def form_widgets(self):
-        """Return a mapping between field name and widget model."""
-        return {}
-
-    def form_get_widget_model(self, fname, field):
+    def _form_get_default_widget_model(self, fname, field):
         """Retrieve widget model name."""
         if field.get("hidden"):
             # special case
@@ -414,13 +409,43 @@ class CMSFormMixin(models.AbstractModel):
             model_key = "cms.form.widget." + key
             if model_key in self.env:
                 widget_model = model_key
-        return self.form_widgets.get(fname, widget_model)
+        return widget_model
 
     def form_get_widget(self, fname, field, **kw):
         """Retrieve and initialize widget."""
-        return self.env[self.form_get_widget_model(fname, field)].widget_init(
-            self, fname, field, **kw
-        )
+        specific_widget = self._form_get_specific_widget(fname, field, **kw)
+        if specific_widget:
+            return specific_widget
+        model = self._form_get_default_widget_model(fname, field)
+        return self.env[model].widget_init(self, fname, field, **kw)
+
+    def _form_get_specific_widget(self, fname, field, **kw):
+        """Retrieve and initialize fields' specific widgets.
+
+        Form fields' can declare custom widgets using `form_widget` attribute.
+        Properties:
+
+        `resolver`: callable that returns a widget already initialized (optional)
+        `model`: widget model if no `resolver` is passed (mandatory)
+        `options`: dictionary or callable to resolve widget's options
+        """
+        widget_conf = {}
+        if fname in self._fields:
+            # Note: a custom widget for a field on the related model
+            # can come only from an override of the field in the form.
+            widget_conf = getattr(self._fields[fname], "form_widget", {})
+        if not widget_conf:
+            return None
+        if widget_conf.get("resolver"):
+            return widget_conf["resolver"](self, fname, field, **kw)
+        try:
+            model = widget_conf["model"]
+        except KeyError:
+            model = self._form_get_default_widget_model(fname, field)
+        options = widget_conf.get("options", {})
+        if options and callable(options):
+            options = options(self, fname, field, **kw)
+        return self.env[model].widget_init(self, fname, field, **options)
 
     @property
     def form_file_fields(self):

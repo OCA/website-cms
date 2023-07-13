@@ -73,9 +73,9 @@ class CMSFormSearch(models.AbstractModel):
             field["required"] = False
         return res
 
-    def form_get_widget_model(self, fname, field):
+    def _form_get_default_widget_model(self, fname, field):
         """Search via related field needs a simple char widget."""
-        res = super().form_get_widget_model(fname, field)
+        res = super()._form_get_default_widget_model(fname, field)
         if fname in self.form_search_domain_rules:
             res = "cms.form.widget.char"
         return res

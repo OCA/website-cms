@@ -14,13 +14,23 @@ from .utils import fake_request
 class TestFormBase(FormTestCase):
     @staticmethod
     def _get_test_models():
-        from .fake_models.fake_fields_form import FakeFieldsForm
+        from .fake_models.fake_fields_form import (
+            FakeFieldsForm,
+            FakeFieldsForm2,
+            FakeFloatWidget,
+        )
         from .fake_models.fake_partner_form import FakePartnerForm
         from .fake_models.fake_partner_form_protected_fields import (
             FakePartnerFormProtectedFields,
         )
 
-        return (FakeFieldsForm, FakePartnerForm, FakePartnerFormProtectedFields)
+        return (
+            FakeFieldsForm,
+            FakeFieldsForm2,
+            FakeFloatWidget,
+            FakePartnerForm,
+            FakePartnerFormProtectedFields,
+        )
 
     def test_form_init(self):
         form = self.get_form("cms.form.mixin")
@@ -500,7 +510,7 @@ class TestFormBase(FormTestCase):
             )
 
     def test_get_widget(self):
-        form = self.get_form("cms.form.test_fields")
+        form = self.get_form("cms.form.test_fields2")
         expected = {
             "a_char": "cms.form.widget.char",
             "a_number": "cms.form.widget.integer",
@@ -508,12 +518,10 @@ class TestFormBase(FormTestCase):
             "a_many2one": "cms.form.widget.many2one",
             "a_many2many": "cms.form.widget.many2many",
             "a_one2many": "cms.form.widget.one2many",
+            "a_float_with_another_widget": self.FakeFloatWidget._name,
         }
         fields = form.form_fields_get()
         for fname, widget_model in expected.items():
-            self.assertEqual(
-                widget_model, form.form_get_widget_model(fname, fields[fname])
-            )
             self.assertEqual(
                 form.form_get_widget(fname, fields[fname]).__class__,
                 self.env[widget_model].__class__,

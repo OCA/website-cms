@@ -48,7 +48,7 @@ def get_widget(env, fname, field, form=None, widget_model=None, **kw):
     if not form:
         form = fake_form()
     if not widget_model:
-        widget_model = form.form_get_widget_model(fname, field)
+        widget_model = form._form_get_default_widget_model(fname, field)
     return env[widget_model].widget_init(form, fname, field, **kw)
 
 
