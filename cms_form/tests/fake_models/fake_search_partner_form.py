@@ -47,9 +47,7 @@ class FakeSearchPartnerFormMulti(models.AbstractModel):
     _description = "CMS Form test partner search multi form"
 
     form_search_fields_multi = Serialized(default=("country_id",))
-
-    @property
-    def form_widgets(self):
-        res = super().form_widgets
-        res.update({"country_id": "cms.form.widget.many2one.multi"})
-        return res
+    country_id = fields.Many2one(
+        comodel_name="res.country",
+        form_widget={"model": "cms.form.widget.many2one.multi"},
+    )
