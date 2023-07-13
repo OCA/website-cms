@@ -14,7 +14,7 @@ class X2MWidget(models.AbstractModel):
     _description = "CMS Form X2M widget"
 
     w_template = fields.Char(default="cms_form.field_widget_x2m")
-    w_field_value = Serialized(default=None)
+    w_field_value = Serialized(default=[])
 
     # TODO: rename all widget-specific methods like:
     #    `x2many_to_form` -> `_w_orm_to_form`
