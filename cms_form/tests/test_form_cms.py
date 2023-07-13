@@ -74,7 +74,9 @@ class TestCMSForm(FormTestCase):
         # edit a record: get to its ws URL
         record = self.env["fake.publishable"].create({"name": "Baz"})
         form = self.get_form("cms.form.fake.publishable", main_object=record)
-        self.assertEqual(form.form_next_url(), "/publishable/%d" % record.id)
+        self.assertEqual(
+            form.form_next_url(), "/cms/view/fake.publishable/%d" % record.id
+        )
         # edit a record that has an URL but got redirect in request
         request = fake_request(query_string="redirect=/sorry/go/here")
         form = self.get_form(
@@ -95,7 +97,9 @@ class TestCMSForm(FormTestCase):
         # edit a record: get to its ws URL
         record = self.env["fake.publishable"].create({"name": "Baz"})
         form = self.get_form("cms.form.fake.publishable", main_object=record)
-        self.assertEqual(form.form_cancel_url(), "/publishable/%d" % record.id)
+        self.assertEqual(
+            form.form_cancel_url(), "/cms/view/fake.publishable/%d" % record.id
+        )
         # edit a record that has an URL but got redirect in request
         request = fake_request(query_string="redirect=/sorry/go/here")
         form = self.get_form(
