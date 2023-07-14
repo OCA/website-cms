@@ -2,6 +2,11 @@
 # License LGPL-3.0 or later (http://www.gnu.org/licenses/lgpl.html).
 
 import html
+from collections.abc import Callable
+from dataclasses import dataclass
+from typing import Any
+
+from . import utils
 
 
 def marshal_request_values(values):
@@ -16,101 +21,116 @@ def marshal_request_values(values):
     """
     # TODO: add docs
     # TODO: support combinations like `:list:int` or `:dict:int`
-    res = {}
-    for k, v in values.items():
-        if k in ("csrf_token",):
-            continue
-        if k.endswith(":esc"):
-            k, v = marshal_esc(values, k, v)
+    return Marshaller(values).marshall()
+
+
+@dataclass
+class Todo:
+    okey: str
+    oval: Any
+    handlers: list[Callable]
+
+
+class Marshaller:
+    def __init__(self, req_values):
+        self.req_values = req_values
+        self.todos = []
+        self.skip_keys = {"csrf_token"}
+        self._collect_todo()
+
+    def _add_todo(self, orig_key, orig_value, *handlers):
+        self.todos.append(Todo(okey=orig_key, oval=orig_value, handlers=handlers))
+
+    def _collect_todo(self):
+        for k, v in self.req_values.items():
+            if k in self.skip_keys:
+                continue
+            for operator, handler in self._marshallers():
+                if k.endswith(operator):
+                    self._add_todo(k, v, handler)
+                    continue
+            # plain
+            self._add_todo(k, v, self.marshal_plain)
+
+    def _marshallers(self):
+        return (
+            (":esc", self.marshal_esc),
+            (":list", self.marshal_list),
+            (":dict", self.marshal_dict),
+            (":int", self.marshal_int),
+            (":float", self.marshal_float),
+        )
+
+    def marshall(self):
+        res = {}
+        for todo in self.todos:
+            k, v = todo.okey, todo.oval
+            for handler in todo.handlers:
+                k, v = handler(k, v)
             res[k] = v
-            continue
-        # fields w/ multiple values
-        if k.endswith(":list"):
-            k, v = marshal_list(values, k, v)
-            res[k] = v
-            continue
-        if k.endswith(":dict"):
-            k, v = marshal_dict(values, k, v)
-            res[k] = v
-            continue
-        if k.endswith(":int"):
-            k, v = marshal_int(values, k, v)
-            res[k] = v
-            continue
-        if k.endswith(":float"):
-            k, v = marshal_float(values, k, v)
-            res[k] = v
-            continue
-        res[k] = v
-    return res
+        return res
 
+    def marshal_plain(self, orig_key, orig_value):
+        """No transform."""
+        return orig_key, orig_value
 
-def marshal_esc(values, orig_key, orig_value):
-    """Transform `foo:esc` inputs to escaped value."""
-    k = orig_key[: -len(":esc")]
-    v = html.escape(orig_value)
-    return k, v
+    def marshal_esc(self, orig_key, orig_value):
+        """Transform `foo:esc` inputs to escaped value."""
+        k = orig_key[: -len(":esc")]
+        v = html.escape(orig_value)
+        return k, v
 
+    def marshal_list(self, orig_key, orig_value):
+        """Transform `foo:list` inputs to list of values."""
+        k = orig_key[: -len(":list")]
+        v = self.req_values.getlist(orig_key)
+        return k, v
 
-def marshal_list(values, orig_key, orig_value):
-    """Transform `foo:list` inputs to list of values."""
-    k = orig_key[: -len(":list")]
-    v = values.getlist(orig_key)
-    return k, v
+    def marshal_int(self, orig_key, orig_value):
+        """Transform `foo:int` inputs to integer values."""
+        k = orig_key[: -len(":int")]
+        return k, utils.safe_to_integer(orig_value)
 
+    def marshal_float(self, orig_key, orig_value):
+        """Transform `foo:float` inputs to float values."""
+        k = orig_key[: -len(":float")]
+        return k, utils.safe_to_float(orig_value)
 
-def marshal_int(values, orig_key, orig_value):
-    """Transform `foo:int` inputs to integer values."""
-    k = orig_key[: -len(":int")]
-    v = int(orig_value) if orig_value and orig_value.isdigit() else orig_value
-    return k, v
+    def marshal_dict(self, orig_key, orig_value):
+        """Transform `foo:dict` inputs to dictionary values.
 
+        `orig_key` must be formatted like:
 
-def marshal_float(values, orig_key, orig_value):
-    """Transform `foo:float` inputs to float values."""
-    k = orig_key[: -len(":float")]
-    try:
-        v = float(orig_value.replace(",", "."))
-    except (ValueError, TypeError):
-        v = orig_value
-    return k, v
+            `$fname.$dict_key:dict`
 
+        Every request key matching `$fname` prefix
+        will be merged into a dict whereas keys will match all `$dict_key`.
 
-def marshal_dict(values, orig_key, orig_value):
-    """Transform `foo:dict` inputs to dictionary values.
+        Example:
 
-    `orig_key` must be formatted like:
+            values = [
+                ('foo.a:dict', '1'),
+                ('foo.b:dict', '2'),
+                ('foo.c:dict', '3'),
+            ]
 
-        `$fname.$dict_key:dict`
+            will be translated to:
 
-    Every request key matching `$fname` prefix
-    will be merged into a dict whereas keys will match all `$dict_key`.
+            values['foo'] = {
+                'a': '1',
+                'b': '2',
+                'c': '3',
+            }
 
-    Example:
-
-        values = [
-            ('foo.a:dict', '1'),
-            ('foo.b:dict', '2'),
-            ('foo.c:dict', '3'),
-        ]
-
-        will be translated to:
-
-        values['foo'] = {
-            'a': '1',
-            'b': '2',
-            'c': '3',
-        }
-
-    """
-    res = {}
-    key = orig_key.split(".")[0]
-    for _k, _v in values.items():
-        # get all the keys matching fname
-        if not _k.startswith(key):
-            continue
-        # TODO: `__` will be to support extra marshallers, like:
-        # foo.1:dict:int -> get a dictionary w/ integer values
-        full_key, _, __ = _k.partition(":dict")
-        res[full_key.split(".")[-1]] = _v
-    return key, res
+        """
+        res = {}
+        key = orig_key.split(".")[0]
+        for _k, _v in self.req_values.items():
+            # get all the keys matching fname
+            if not _k.startswith(key):
+                continue
+            # TODO: `__` will be to support extra marshallers, like:
+            # foo.1:dict:int -> get a dictionary w/ integer values
+            full_key, _, __ = _k.partition(":dict")
+            res[full_key.split(".")[-1]] = _v
+        return key, res
