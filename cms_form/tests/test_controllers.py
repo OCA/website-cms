@@ -3,18 +3,15 @@
 
 import os
 import unittest
-from contextlib import contextmanager
-from unittest import mock
 
 from ..controllers import main
-from .common import FormHttpTestCase
-from .utils import fake_request
+from .common import FormHttpTestCase, FormTestCase
+from .utils import fake_request, mock_request
 
 IMPORT = "odoo.addons.cms_form.controllers.main"
 
 
-@unittest.skipIf(os.getenv("SKIP_HTTP_CASE"), "HTTP case disabled.")
-class TestControllers(FormHttpTestCase):
+class TestControllersAPI(FormTestCase):
     @staticmethod
     def _get_test_models():
         from .fake_models.fake_partner_form import FakePartnerForm
@@ -28,27 +25,14 @@ class TestControllers(FormHttpTestCase):
         self.form_controller = main.CMSFormController()
         self.form_search_controller = main.CMSSearchFormController()
         self.form_wiz_controller = main.CMSWizardFormController()
-        self.authenticate("admin", "admin")
-
-    @contextmanager
-    def mock_assets(self, req=None):
-        """Mocks some stuff like request."""
-        with mock.patch("%s.request" % IMPORT) as request:
-            faked = req or fake_request()
-            request.session = self.session
-            request.env = self.env
-            request.httprequest = faked.httprequest
-            yield {
-                "request": request,
-            }
 
     def test_get_template(self):
-        with self.mock_assets():
+        with mock_request(self.env):
             form = self.form_controller.get_form("res.partner")
             # default
             self.assertEqual(
                 self.form_controller.get_template(form),
-                "cms_form.form_wrapper",
+                "cms_form.portal_form_wrapper",
             )
             # custom on form
             form.form_wrapper_template = "foo.baz"
@@ -59,7 +43,7 @@ class TestControllers(FormHttpTestCase):
                 self.form_controller.get_template(form)
 
     def test_get_render_values(self):
-        with self.mock_assets():
+        with mock_request(self.env):
             form = self.form_controller.get_form("res.partner")
             # default, no main object
             self.assertEqual(
@@ -95,47 +79,47 @@ class TestControllers(FormHttpTestCase):
             )
 
     def test_get_no_form(self):
-        with self.mock_assets():
+        with mock_request(self.env):
             # we do not have a specific form for res.groups
             # and cms form is not enabled on partner model
             with self.assertRaises(NotImplementedError):
                 self.form_controller.get_form("res.groups")
 
     def test_get_form_no_model_no_main_object(self):
-        with self.mock_assets():
+        with mock_request(self.env):
             form = self.form_controller.get_form(
                 None, form_model_key=self.FakePartnerForm._name
             )
             self.assertEqual(form.main_object, self.env[self.FakePartnerForm._name])
 
     def test_get_default_form(self):
-        with self.mock_assets():
+        with mock_request(self.env):
             # we have one for res.partner
             form = self.form_controller.get_form("res.partner")
             self.assertTrue(
                 isinstance(form, self.env["cms.form.res.partner"].__class__)
             )
-            self.assertEqual(form.form_model, "res.partner")
+            self.assertEqual(form.form_model_name, "res.partner")
             self.assertEqual(form.form_mode, "create")
 
     def test_get_specific_form(self):
-        with self.mock_assets():
+        with mock_request(self.env):
             # we have a specific form here
             form = self.form_search_controller.get_form("res.partner")
             self.assertTrue(
                 isinstance(form, self.env["cms.form.search.res.partner"].__class__)
             )
-            self.assertEqual(form.form_model, "res.partner")
+            self.assertEqual(form.form_model_name, "res.partner")
             self.assertEqual(form.form_mode, "search")
 
     def test_get_wizard_form(self):
-        with self.mock_assets():
+        with mock_request(self.env):
             # we have a specific form here
             form = self.form_wiz_controller.get_form("res.partner")
             self.assertTrue(
                 isinstance(form, self.env["cms.form.res.partner"].__class__)
             )
-            self.assertEqual(form.form_model, "res.partner")
+            self.assertEqual(form.form_model_name, "res.partner")
             self.assertEqual(form.form_mode, "create")
 
     def test_redirect_after_success(self):
@@ -143,7 +127,7 @@ class TestControllers(FormHttpTestCase):
             form_data={"name": "John"},
             method="POST",
         )
-        with self.mock_assets(req=req):
+        with mock_request(self.env, httprequest=req.httprequest):
             partner = self.env.ref("base.res_partner_12")
             response = self.form_controller.make_response(
                 "res.partner", model_id=partner.id
@@ -154,6 +138,21 @@ class TestControllers(FormHttpTestCase):
                 self.assertEqual(response.location, partner.url)
             else:
                 self.assertEqual(response.location, "/")
+
+
+@unittest.skipIf(os.getenv("SKIP_HTTP_CASE"), "HTTP case disabled.")
+class TestControllersRender(FormHttpTestCase):
+    def setUp(self):
+        super().setUp()
+        self.authenticate("admin", "admin")
+
+    @staticmethod
+    def _get_test_models():
+        from .fake_models.fake_partner_form import FakePartnerForm
+        from .fake_models.fake_search_partner_form import FakeSearchPartnerForm
+        from .fake_models.fake_wizard_form import ALL_WIZ_KLASSES
+
+        return ALL_WIZ_KLASSES + [FakePartnerForm, FakeSearchPartnerForm]
 
     def _check_rendering(self, dom, form_model, model, mode, extra_klass=""):
         """Check default markup for form and form wrapper."""
