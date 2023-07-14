@@ -80,3 +80,31 @@ class TestMarshallers(unittest.TestCase):
         marshalled = marshallers.marshal_request_values(data)
         self.assertEqual(marshalled["a"], "&lt;span&gt;I&#x27;m bad&lt;/span&gt;")
         self.assertEqual(marshalled["b"], "<span>I'm bad but I don't care</span>")
+
+    def test_marshal_dict_list(self):
+        data = MultiDict(
+            [
+                ("a", "1"),
+                ("b.1.x:dict:list", "b1x"),
+                ("b.1.y:dict:list", "b1y"),
+                ("b.1.z:dict:list", "b1z"),
+                ("b.2.x:dict:list", "b2x"),
+                ("b.2.y:dict:list", "b2y"),
+                ("b.2.z:dict:list", "b2z"),
+                ("b.3.x:dict:list", "b3x"),
+                ("b.3.y:dict:list", "b3y"),
+                ("b.3.z:dict:list", "b3z"),
+                ("c", "3"),
+            ]
+        )
+        marshalled = marshallers.marshal_request_values(data)
+        self.assertEqual(marshalled["a"], "1")
+        self.assertEqual(
+            marshalled["b"],
+            [
+                {"x": "b1x", "y": "b1y", "z": "b1z"},
+                {"x": "b2x", "y": "b2y", "z": "b2z"},
+                {"x": "b3x", "y": "b3y", "z": "b3z"},
+            ],
+        )
+        self.assertEqual(marshalled["c"], "3")
