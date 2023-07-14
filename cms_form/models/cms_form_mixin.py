@@ -559,7 +559,7 @@ class CMSFormMixin(models.AbstractModel):
 
         To render the form simply do:
 
-            <t t-raw="form.form_render()" />
+            <t t-out="form.form_render()" />
         """
         values = self.form_render_values.copy()
         values.update(kw)

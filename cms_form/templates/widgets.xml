@@ -83,12 +83,12 @@ License LGPL-3.0 or later (http://www.gnu.org/licenses/lgpl.html).
                         <span t-esc="opt_item['label']" />
                     </label>
                     <t t-if="opt_item.get('help')">
-                        <div class="help-block" t-raw="opt_item.get('help')" />
+                        <div class="help-block" t-out="opt_item.get('help')" />
                     </t>
                     <t t-if="widget.w_options_help.get(opt_item['value'])">
                         <div
                             class="help-block"
-                            t-raw="widget.w_options_help.get(opt_item['value'])"
+                            t-out="widget.w_options_help.get(opt_item['value'])"
                         />
                     </t>
                 </div>
