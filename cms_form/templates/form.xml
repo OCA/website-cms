@@ -17,7 +17,7 @@ License LGPL-3.0 or later (http://www.gnu.org/licenses/lgpl.html).
                 <t t-if="form.form_description">
                     <p class="form_description" t-esc="form.form_description" />
                 </t>
-                <t t-raw="form.form_render()" />
+                <t t-out="form.form_render()" />
             </div>
         </div>
     </template>
@@ -57,7 +57,7 @@ License LGPL-3.0 or later (http://www.gnu.org/licenses/lgpl.html).
                 t-att-for="fname"
                 t-esc="field['string']"
             >Name</label>
-            <t t-raw="widget.render()" />
+            <t t-out="widget.render()" />
             <t t-if="field.get('help')">
                 <t t-call="cms_form.base_form_field_help_block" />
             </t>
@@ -68,8 +68,8 @@ License LGPL-3.0 or later (http://www.gnu.org/licenses/lgpl.html).
     </template>
     <template id="base_form_field_help_block" name="CMS form field help block">
         <div class="help-block">
-            <!-- use `raw` to allow injecting html stuff here -->
-            <t t-raw="field['help']" />
+            <!-- use `out` to allow injecting html stuff here -->
+            <t t-out="field['help']" />
         </div>
     </template>
     <template id="base_form_field_error_block" name="CMS form field error block">
@@ -211,9 +211,9 @@ License LGPL-3.0 or later (http://www.gnu.org/licenses/lgpl.html).
         inherit_id="cms_form.form_wrapper"
         primary="True"
     >
-        <xpath expr="//t[@t-raw]" position="replace">
+        <xpath expr="//t[@t-out]" position="replace">
             <t t-if="form.form_show_search_form">
-                <t t-raw="form.form_render()" />
+                <t t-out="form.form_render()" />
             </t>
             <div class="form_content">
                 <t t-call="{{ form.form_search_results_template  }}" />
