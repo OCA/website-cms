@@ -7,6 +7,7 @@ class TestWidgetSelection(TestWidgetCase):
     def setUp(self):
         super().setUp()
         self.form = fake_form(
+            self.env,
             # fake defaults
             selection_char_field="opt1",
             selection_integer_field=2,

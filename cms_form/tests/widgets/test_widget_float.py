@@ -6,7 +6,7 @@ from .common import TestWidgetCase, fake_field, fake_form
 class TestWidgetFloat(TestWidgetCase):
     def setUp(self):
         super().setUp()
-        form = fake_form(a_float_field=2.0)
+        form = fake_form(self.env, a_float_field=2.0)
         self.w_name, self.w_field = fake_field("a_float_field", type="float")
         self.widget = self.get_widget(
             self.w_name,

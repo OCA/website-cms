@@ -45,7 +45,6 @@ class TestWidgetBinary(TestWidgetCase):
     def setUpClass(cls):
         super().setUpClass()
         cls.partner = cls.env["res.partner"].search([], limit=1)
-        cls.form = fake_form(main_object=cls.partner)
         cls.maxDiff = None
 
     # TODO: we have only an image widget ATM -> add a file widget and test it

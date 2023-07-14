@@ -8,6 +8,7 @@ class TestWidgetRadio(TestWidgetCase):
     def setUpClass(cls):
         super().setUpClass()
         cls.form = fake_form(
+            cls.env,
             # fake defaults
             radio_field="opt2",
         )

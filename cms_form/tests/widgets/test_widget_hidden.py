@@ -4,10 +4,10 @@ from .common import TestWidgetCase, fake_field, fake_form
 
 
 class TestWidgetHidden(TestWidgetCase):
-    @classmethod
-    def setUpClass(cls):
-        super().setUpClass()
-        cls.form = fake_form(
+    def setUp(self):
+        super().setUp()
+        self.form = fake_form(
+            self.env,
             # fake defaults
             char_field="abc",
             int_field=5,
