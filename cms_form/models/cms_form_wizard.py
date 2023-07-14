@@ -48,7 +48,7 @@ class CMSFormWizard(models.AbstractModel):
 
     @property
     def _wiz_storage(self):
-        return self.request.session
+        return self.o_request.session
 
     def wiz_storage_get(self):
         if not self._wiz_storage.get(self._wiz_storage_key):
