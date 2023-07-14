@@ -8,7 +8,7 @@ from .common import TestWidgetCase, fake_field, fake_form
 class TestWidgetDate(TestWidgetCase):
     def setUp(self):
         super().setUp()
-        self.form = fake_form(a_date_field="2019-01-12", type="date")
+        self.form = fake_form(self.env, a_date_field="2019-01-12", type="date")
         self.w_name, self.w_field = fake_field("a_date_field")
         self.widget = self.get_widget(
             self.w_name,
