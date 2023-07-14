@@ -21,10 +21,7 @@ class FormControllerMixin(object):
         Can be overridden straight in the form
         using the attribute `form_wrapper_template`.
         """
-        template = self.template
-
-        if getattr(form, "form_wrapper_template", None):
-            template = form.form_wrapper_template
+        template = form.form_wrapper_template or self.template
 
         if not template:
             raise NotImplementedError("You must provide a template!")
@@ -215,8 +212,5 @@ class CMSSearchFormController(http.Controller, SearchFormControllerMixin):
         return self.make_response_ajax(model, **kw)
 
     def _make_response_ajax_content(self, response):
-        return (
-            request.env.ref(response.qcontext["form"].form_search_results_template)
-            .render(response.qcontext)
-            .decode("utf8")
-        )
+        template = response.qcontext["form"].form_search_results_template
+        return request.env["ir.qweb"]._render(template, response.qcontext)
