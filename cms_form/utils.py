@@ -6,14 +6,14 @@ def safe_to_integer(value, **kw):
     """Convert to integer safely."""
     try:
         return int(value)
-    except (ValueError, TypeError):
+    except (ValueError, TypeError, AttributeError):
         return None
 
 
 def safe_to_float(value, **kw):
     try:
-        return float(value)
-    except (ValueError, TypeError):
+        return float(value.replace(",", "."))
+    except (ValueError, TypeError, AttributeError):
         return None
 
 
