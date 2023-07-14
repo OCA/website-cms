@@ -44,6 +44,7 @@ class CMSFormMixin(models.AbstractModel):
         form_tech=True, store=False, compute="_compute_form_render_values"
     )
     # / special fields
+    form_wrapper_template = fields.Char(form_tech=True, default="")
     form_template = fields.Char(form_tech=True, default="cms_form.base_form")
     form_fields_template = fields.Char(
         form_tech=True, default="cms_form.base_form_fields"
