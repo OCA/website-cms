@@ -68,7 +68,7 @@ class CMSForm(models.AbstractModel):
             # redirect overridden
             return self.request.args.get("redirect")
         main_object = main_object or self.main_object
-        if main_object and main_object.url:
+        if main_object and "url" in main_object._fields:
             return main_object.url
         return "/"
 
@@ -78,7 +78,7 @@ class CMSForm(models.AbstractModel):
             # redirect overridden
             return self.request.args.get("redirect")
         main_object = main_object or self.main_object
-        if main_object and main_object.url:
+        if main_object and "url" in main_object._fields:
             return main_object.url
         return self.request.referrer or "/"
 
