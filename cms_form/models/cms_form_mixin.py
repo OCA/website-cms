@@ -476,6 +476,8 @@ class CMSFormMixin(models.AbstractModel):
         res.update({k: v for k, v in self.request.files.items()})
         return res
 
+    # TODO: rename to form_load
+    # TODO: adapt signature to form_extract (eg: kw args)
     def form_load_defaults(self, main_object=None, request_values=None):
         """Load default values.
 
@@ -514,6 +516,7 @@ class CMSFormMixin(models.AbstractModel):
         loader = getattr(self, "_form_load_" + fname, loader)
         return loader
 
+    # TODO: rename to form_extract
     def form_extract_values(self, **request_values):
         """Extract values from request form."""
         request_values = request_values or self.form_get_request_values()
