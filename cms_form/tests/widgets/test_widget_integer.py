@@ -12,7 +12,7 @@ class TestWidgetInteger(TestWidgetCase):
 
     def setUp(self):
         super().setUp()
-        form = fake_form(an_int_field=10)
+        form = fake_form(self.env, an_int_field=10)
         self.w_name, self.w_field = fake_field("an_int_field", type="integer")
         self.widget = self.get_widget(
             self.w_name,

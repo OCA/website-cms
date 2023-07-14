@@ -1,21 +1,20 @@
 # Copyright 2018 Simone Orsi
 # License LGPL-3.0 or later (http://www.gnu.org/licenses/lgpl.html).
-from unittest import mock
 
 from odoo.tests.common import TransactionCase
 
 from ..common import HTMLRenderMixin
+from ..utils import fake_request
 
 
-def fake_form(main_object=None, **data):
+def fake_form(env, main_object=None, **data):
     """Get a mocked fake form.
 
     :param data: kw args for setting form values
     """
-    form = mock.MagicMock(name="FakeForm")
-    form_values = mock.PropertyMock(return_value={"form_data": data})
-    type(form).form_render_values = form_values
-    form.main_object = main_object
+    form = env["cms.form"].form_init(
+        fake_request(), main_object=main_object, form_data=data
+    )
     return form
 
 
@@ -46,7 +45,7 @@ def get_widget(env, fname, field, form=None, widget_model=None, **kw):
     """
     assert form or widget_model
     if not form:
-        form = fake_form()
+        form = fake_form(env)
     if not widget_model:
         widget_model = form._form_get_default_widget_model(fname, field)
     return env[widget_model].widget_init(form, fname, field, **kw)

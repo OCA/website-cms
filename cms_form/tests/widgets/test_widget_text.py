@@ -9,10 +9,10 @@ Duo illum dolore id, ea mei error gloriatur voluptaria."""
 
 
 class TestWidgetTxt(TestWidgetCase):
-    @classmethod
-    def setUpClass(cls):
-        super().setUpClass()
-        cls.form = fake_form(
+    def setUp(self):
+        super().setUp()
+        self.form = fake_form(
+            self.env,
             a_char_field="Just a string",
             a_text_field=TXT,
         )
