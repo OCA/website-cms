@@ -7,7 +7,7 @@ class TestWidgetInteger(TestWidgetCase):
 
     # TODO: test extraction and conversion to proper field value
     # on EVERY widget and not just rely on the marshallers.
-    # Of course we have to switch to `w_html_fname` approach as hidden widget.
+    # Of course we have to switch to `html_fname` approach as hidden widget.
     # This implies that we test w/ a full request too.
 
     def setUp(self):

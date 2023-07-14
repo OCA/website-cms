@@ -154,6 +154,8 @@ class CMSFormMixin(models.AbstractModel):
     form_ajax_onchange = fields.Boolean(form_tech=True, default=False)
     # jQuery selector to find container of search results
     form_content_selector = fields.Char(form_tech=True, default=".form_content")
+    # used to interpolate widgets' html field name
+    form_fname_pattern = fields.Char(form_tech=True, default="")
 
     def _valid_field_parameter(self, field, name):
         res = super()._valid_field_parameter(field, name)

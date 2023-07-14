@@ -61,7 +61,7 @@ class M2OMultiWidget(models.AbstractModel):
     def m2o_to_form(self, value, **req_values):
         if not value:
             return json.dumps([])
-        if isinstance(value, str) and value == req_values.get(self.w_fname):
+        if isinstance(value, str) and value == req_values.get(self.html_fname):
             value = self.w_comodel.browse(
                 # TODO: we should allow customizations of fields to read
                 self.w_ids_from_input(value)

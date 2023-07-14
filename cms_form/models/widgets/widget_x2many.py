@@ -42,7 +42,7 @@ class X2MWidget(models.AbstractModel):
             ids = value.ids
         elif isinstance(value, str):
             ids = self.w_ids_from_input(value)
-        req_val = self.w_ids_from_input(req_values.get(self.w_fname, ""))
+        req_val = self.w_ids_from_input(req_values.get(self.html_fname, ""))
         if req_val:
             # request value take precedence
             ids = req_val[:]

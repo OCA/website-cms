@@ -29,13 +29,19 @@ class Widget(models.AbstractModel):
     w_field_value = fields.Char(default="")
     w_data = Serialized(default={})
 
+    @property
+    def html_fname(self):
+        if self.w_form.form_fname_pattern:
+            return self.w_form.form_fname_pattern.format(widget=self)
+        return self.w_fname
+
     def widget_init(self, form, fname, field, data=None, subfields=None, **kw):
         vals = {
             "w_form": form,
             "w_record": form.main_object,
-            "w_fname": fname,
             "w_field": field,
             "w_field_value": form.form_render_values.get("form_data", {}).get(fname),
+            "w_fname": fname,
             "w_data": data or {},
             "w_subfields": subfields or field.get("subfields", {}),
         }
@@ -63,12 +69,12 @@ class Widget(models.AbstractModel):
         if self.w_record and self.w_fname in self.w_record:
             value = self.w_record[self.w_fname] or value
         # maybe a POST request with new values: override item value
-        value = req_values.get(self.w_fname, value)
+        value = req_values.get(self.html_fname, value)
         return value
 
     def w_extract(self, **req_values):
         """Extract value from form submit."""
-        return req_values.get(self.w_fname)
+        return req_values.get(self.html_fname)
 
     def w_check_empty_value(self, value, **req_values):
         # `None` values are meant to be ignored as not changed
