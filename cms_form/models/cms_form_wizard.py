@@ -176,3 +176,20 @@ class CMSFormWizard(models.AbstractModel):
             if fname in values:
                 step_values[fname] = values[fname]
         return step_values
+
+    # TODO: tests
+    def form_load_defaults(self, main_object=None, request_values=None):
+        # Override to load values from the storage
+        defaults = super().form_load_defaults(
+            main_object=main_object, request_values=request_values
+        )
+        request_values = request_values or {}
+        step_values = self.wiz_load_step()
+        if step_values:
+            for fname in self.form_fields_get().keys():
+                if fname in request_values:
+                    # req value has precedence
+                    continue
+                if fname in step_values:
+                    defaults[fname] = step_values[fname]
+        return defaults
