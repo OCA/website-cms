@@ -7,7 +7,7 @@ from odoo import exceptions
 from odoo.tools import mute_logger
 
 from .common import FormTestCase
-from .utils import fake_request
+from .utils import fake_request, mock_request
 
 
 class TestCMSForm(FormTestCase):
@@ -175,7 +175,9 @@ class TestCMSForm(FormTestCase):
     def test_create_or_update_with_errors(self):
         request = fake_request(form_data={}, method="POST")
         form = self.get_form("cms.form.res.partner", req=request)
-        with mute_logger("odoo.sql_db"):
+        with mute_logger("odoo.sql_db"), mock_request(
+            self.env, httprequest=request.httprequest
+        ):
             values = form.form_process_POST({})
         self.assertFalse(form.form_success)
         self.assertTrue(
@@ -183,7 +185,9 @@ class TestCMSForm(FormTestCase):
             "_integrity" in values["errors"]
             or "_validation" in values["errors"]
         )
-        with mock.patch.object(type(form), "form_create_or_update") as mocked:
+        with mock.patch.object(
+            type(form), "form_create_or_update"
+        ) as mocked, mock_request(self.env, httprequest=request.httprequest):
             random_msg = (
                 "Error while validating constraint\n"
                 "\nEnd Date cannot be set before Start Date.\nNone"
