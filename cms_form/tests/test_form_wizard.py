@@ -4,6 +4,9 @@
 from .common import FormSessionTestCase
 from .utils import fake_request
 
+# TODO: add tests w/ real session
+# to make sure there's no regression between versions
+
 
 class TestCMSFormWizard(FormSessionTestCase):
     @staticmethod
