@@ -28,7 +28,7 @@ class TestWidgetBase(TestWidgetCase, FakeModelMixin):
         self.assertEqual(widget.w_form, form)
         self.assertEqual(widget.w_form_model, form.form_model)
         self.assertEqual(widget.w_record, form.main_object)
-        self.assertEqual(widget.w_form_values, form.form_render_values)
+        self.assertEqual(widget.w_form_values, form.form_data)
         self.assertEqual(widget.w_fname, "custom")
         self.assertDictEqual(widget.w_field, field)
         self.assertEqual(widget.w_field_value, False)

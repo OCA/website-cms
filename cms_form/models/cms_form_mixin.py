@@ -43,6 +43,7 @@ class CMSFormMixin(models.AbstractModel):
     form_render_values = fields.Binary(
         form_tech=True, store=False, compute="_compute_form_render_values"
     )
+    form_data = Serialized(form_tech=True, default={})
     # / special fields
     form_wrapper_template = fields.Char(form_tech=True, default="")
     form_template = fields.Char(form_tech=True, default="cms_form.base_form")
@@ -172,7 +173,6 @@ class CMSFormMixin(models.AbstractModel):
             # TODO: default for BInary field is "False" but we need "None"
             "main_object": self.main_object or None,
             "form": self,
-            "form_data": {},
             "errors": {},
             "errors_messages": {},
         }
@@ -205,6 +205,8 @@ class CMSFormMixin(models.AbstractModel):
         form_kw = {k: v for k, v in kw.items() if k in self._fields}
         vals.update(form_kw)
         form = self.new(vals)
+        if "form_data" not in vals:
+            form.form_data = form.form_load_defaults()
         return form
 
     def form_check_permission(self, raise_exception=True):
@@ -582,7 +584,6 @@ class CMSFormMixin(models.AbstractModel):
         """
         render_values = self.form_render_values
         render_values.update(kw)
-        render_values["form_data"] = self.form_load_defaults()
         handler = getattr(self, "form_process_" + self.request.method.upper())
         self.form_render_values = dict(render_values, **handler(render_values))
 
