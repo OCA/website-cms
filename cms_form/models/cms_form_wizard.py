@@ -58,6 +58,12 @@ class CMSFormWizard(models.AbstractModel):
             )
         return self._wiz_storage[self._wiz_storage_key]
 
+    def wiz_storage_set(self, storage):
+        self.o_request.session.update({self._wiz_storage_key: storage})
+        # Important: ensure the session is stored (will be flagged as dirty)
+        # Mandatory since v16 when storing nested objs.
+        self.o_request.session.touch()
+
     DEFAULT_STORAGE_KEYS = {
         "steps": {},
         "current": 1,
@@ -155,7 +161,9 @@ class CMSFormWizard(models.AbstractModel):
         if step not in storage["steps"]:
             # safely re-init step
             storage["steps"][step] = {}
+
         storage["steps"][step].update(values)
+        self.wiz_storage_set(storage)
 
     def wiz_load_step(self, step=None):
         step = step or self.wiz_current_step()
