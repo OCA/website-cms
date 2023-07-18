@@ -428,6 +428,9 @@ class CMSFormMixin(models.AbstractModel):
         model = self._form_get_default_widget_model(fname, field)
         return self.env[model].widget_init(self, fname, field, **kw)
 
+    def form_get_current_widget(self, fname):
+        return self.form_fields_get()[fname]["widget"]
+
     def _form_get_specific_widget(self, fname, field, **kw):
         """Retrieve and initialize fields' specific widgets.
 
