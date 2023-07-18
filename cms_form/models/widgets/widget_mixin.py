@@ -26,7 +26,7 @@ class Widget(models.AbstractModel):
     w_css_klass = fields.Char(default="")
 
     w_fname = fields.Char(default="")
-    w_field_value = fields.Char(default="")
+    w_field_value = fields.Char()
     w_data = Serialized(default={})
 
     @property
