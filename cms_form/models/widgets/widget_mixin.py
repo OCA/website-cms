@@ -40,7 +40,6 @@ class Widget(models.AbstractModel):
             "w_form": form,
             "w_record": form.main_object,
             "w_field": field,
-            "w_field_value": form.form_render_values.get("form_data", {}).get(fname),
             "w_fname": fname,
             "w_data": data or {},
             "w_subfields": subfields or field.get("subfields", {}),
@@ -48,6 +47,9 @@ class Widget(models.AbstractModel):
         for k in ("template", "css_klass"):
             if kw.get(k):
                 vals[f"w_{k}"] = kw[k]
+        field_value = form.form_data.get(fname, kw.get("field_value"))
+        if field_value:
+            vals["w_field_value"] = field_value
         widget = self.new(vals)
         return widget
 
@@ -60,7 +62,7 @@ class Widget(models.AbstractModel):
 
     @property
     def w_form_values(self):
-        return self.w_form.form_render_values
+        return self.w_form.form_data
 
     def w_load(self, **req_values):
         """Load value for current field in current request."""

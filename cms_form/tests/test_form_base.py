@@ -420,7 +420,6 @@ class TestFormBase(FormTestCase):
             {
                 "main_object": None,
                 "form": form,
-                "form_data": {},
                 "errors": {},
                 "errors_messages": {},
             },
@@ -442,10 +441,10 @@ class TestFormBase(FormTestCase):
                 "a_number": None,
                 "a_one2many": "[]",
             }
+            self.assertEqual(form.form_data, default_form_data)
             expected = {
                 "main_object": None,
                 "form": form,
-                "form_data": default_form_data,
                 "errors": {},
                 "errors_messages": {},
             }
@@ -459,7 +458,6 @@ class TestFormBase(FormTestCase):
                     "extra_key2": "baz",
                     "main_object": None,
                     "form": form,
-                    "form_data": default_form_data,
                     "errors": {},
                     "errors_messages": {},
                 },
@@ -485,10 +483,10 @@ class TestFormBase(FormTestCase):
                 "a_number": None,
                 "a_one2many": "[]",
             }
+            self.assertEqual(form.form_data, default_form_data)
             expected = {
                 "main_object": None,
                 "form": form,
-                "form_data": default_form_data,
                 "errors": {},
                 "errors_messages": {},
             }
@@ -503,7 +501,6 @@ class TestFormBase(FormTestCase):
                     "extra_key4": "baz",
                     "main_object": None,
                     "form": form,
-                    "form_data": default_form_data,
                     "errors": {},
                     "errors_messages": {},
                 },
