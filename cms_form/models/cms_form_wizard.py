@@ -32,6 +32,7 @@ class CMSFormWizard(models.AbstractModel):
     # You can pass a list of fields if you don't want to store them all.
     form_step_stored_fields = Serialized(form_tech=True, default=[])
     form_step_store_all_fields = fields.Boolean(form_tech=True, default=True)
+    form_reset = fields.Boolean(form_tech=True, default=False)
 
     def _get_form_mode(self):
         return "wizard"
@@ -51,12 +52,15 @@ class CMSFormWizard(models.AbstractModel):
         return self.o_request.session
 
     def wiz_storage_get(self):
-        if not self._wiz_storage.get(self._wiz_storage_key):
+        self._wiz_storage_prepare()
+        return self._wiz_storage[self._wiz_storage_key]
+
+    def _wiz_storage_prepare(self, reset=False):
+        if not self._wiz_storage.get(self._wiz_storage_key) or reset:
             # use `deepcopy` to not reference steps' dict
             self._wiz_storage[self._wiz_storage_key] = deepcopy(
                 self.DEFAULT_STORAGE_KEYS
             )
-        return self._wiz_storage[self._wiz_storage_key]
 
     def wiz_storage_set(self, storage):
         self.o_request.session.update({self._wiz_storage_key: storage})
@@ -73,6 +77,9 @@ class CMSFormWizard(models.AbstractModel):
 
     def form_init(self, request, main_object=None, page=1, wizard=None, **kw):
         form = super().form_init(request, main_object=main_object, **kw)
+        if form.form_reset:
+            form._wiz_storage_prepare(reset=True)
+            form.form_reset = False
         form.wiz_init(page=page, **kw)
         return form
 
