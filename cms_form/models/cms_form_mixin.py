@@ -405,9 +405,16 @@ class CMSFormMixin(models.AbstractModel):
         for fname, field in _fields.items():
             if fname in self.form_required_fields:
                 _fields[fname]["required"] = True
-            if fname in self.form_fields_hidden:
+            if self._form_is_field_hidden(fname, field):
                 _fields[fname]["hidden"] = True
             _fields[fname]["widget"] = self.form_get_widget(fname, field)
+
+    def _form_is_field_hidden(self, fname, field):
+        return (
+            fname in self.form_fields_hidden
+            or fname in self._fields
+            and getattr(self._fields[fname], "form_hidden", False)
+        )
 
     def _form_get_default_widget_model(self, fname, field):
         """Retrieve widget model name."""
