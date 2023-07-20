@@ -338,6 +338,8 @@ License LGPL-3.0 or later (http://www.gnu.org/licenses/lgpl.html).
                 <t t-else="">
                     <button
                         type="submit"
+                        name="wiz_submit"
+                        value="process"
                         class="btn btn-primary pull-right"
                     >Submit</button>
                 </t>
