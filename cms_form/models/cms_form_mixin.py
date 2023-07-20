@@ -322,7 +322,8 @@ class CMSFormMixin(models.AbstractModel):
             _form_fields[k]["_default"] = v
         _all_fields.update(_model_fields)
         # form fields override model fields
-        _all_fields.update(_form_fields)
+        # TODO: add tests
+        _all_fields = utils.data_merge(_all_fields, _form_fields)
         # exclude blacklisted
         for fname in self.form_fields_blacklist:
             # make it fail if passing wrong field name
