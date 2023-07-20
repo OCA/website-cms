@@ -14,6 +14,7 @@ License LGPL-3.0 or later (http://www.gnu.org/licenses/lgpl.html).
             t-att-required="widget.w_field['required'] and '1' or None"
             t-att-data-params='widget.w_data_json()'
             t-att-placeholder="widget.w_field['string'] + '...'"
+            t-att-readonly="widget.html_readonly or None"
         />
     </template>
     <template id="field_widget_hidden" name="CMS form hidden field">
@@ -34,6 +35,7 @@ License LGPL-3.0 or later (http://www.gnu.org/licenses/lgpl.html).
             t-att-name="widget.html_fname"
             t-att-required="widget.w_field['required'] and '1' or None"
             t-att-data-params='widget.w_data_json()'
+            t-att-readonly="widget.html_readonly or None"
         >
             <option class="empty_item" value="">
                 <t t-esc="widget.w_field['string'] + '...'" />
@@ -79,6 +81,7 @@ License LGPL-3.0 or later (http://www.gnu.org/licenses/lgpl.html).
                             t-att-value="opt_item['value']"
                             t-att-checked="'checked' if opt_item['value'] == widget.w_field_value else None"
                             t-att-required="widget.w_field['required'] and '1' or None"
+                            t-att-readonly="widget.html_readonly or None"
                         />
                         <span t-esc="opt_item['label']" />
                     </label>
@@ -111,6 +114,7 @@ License LGPL-3.0 or later (http://www.gnu.org/licenses/lgpl.html).
             t-att-placeholder="widget.w_field['string'] + '...'"
             t-att-data-domain="widget.w_field.get('domain') or '[]'"
             t-att-required="widget.w_field['required'] and '1' or None"
+            t-att-readonly="widget.html_readonly or None"
         />
     </template>
     <template
@@ -134,6 +138,7 @@ License LGPL-3.0 or later (http://www.gnu.org/licenses/lgpl.html).
                 t-att-placeholder="widget.w_placeholder"
                 t-att-data-params='widget.w_data_json()'
                 t-att-required="widget.w_field['required'] and '1' or None"
+                t-att-readonly="widget.html_readonly or None"
             />
             <!-- This will hold server-side value -->
             <input
@@ -170,6 +175,7 @@ License LGPL-3.0 or later (http://www.gnu.org/licenses/lgpl.html).
                 t-attf-id="#{widget.w_fname}_counter"
                 t-attf-name="#{widget.w_fname}_counter"
                 class="form-control text-counter"
+                t-att-readonly="widget.html_readonly or None"
             />
         </t>
     </template>
@@ -181,6 +187,7 @@ License LGPL-3.0 or later (http://www.gnu.org/licenses/lgpl.html).
             t-att-checked="'checked' if widget.w_field_value else None"
             t-attf-class="form-control #{widget.w_css_klass}"
             t-att-required="widget.w_field['required'] and '1' or None"
+            t-att-readonly="widget.html_readonly or None"
         />
     </template>
     <template id="field_widget_image" name="CMS form image field widget">
@@ -192,6 +199,7 @@ License LGPL-3.0 or later (http://www.gnu.org/licenses/lgpl.html).
                 t-att-id="widget.w_fname"
                 t-att-name="widget.html_fname"
                 class="form-control"
+                t-att-readonly="widget.html_readonly or None"
             />
             <t t-if="widget.w_field_value">
                 <t t-set="prefix" t-value="widget.w_fname" />

@@ -27,6 +27,7 @@ class Widget(models.AbstractModel):
 
     w_fname = fields.Char(default="")
     w_field_value = fields.Char()
+    w_readonly = fields.Boolean()
     w_data = Serialized(default={})
 
     @property
@@ -34,6 +35,10 @@ class Widget(models.AbstractModel):
         if self.w_form.form_fname_pattern:
             return self.w_form.form_fname_pattern.format(widget=self)
         return self.w_fname
+
+    @property
+    def html_readonly(self):
+        return self.w_form.form_mode == "readonly" or self.w_readonly
 
     def widget_init(self, form, fname, field, data=None, subfields=None, **kw):
         vals = {

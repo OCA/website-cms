@@ -183,7 +183,7 @@ License LGPL-3.0 or later (http://www.gnu.org/licenses/lgpl.html).
             `form .form-group.field-required label.control-label::after{ content: '*'}`
             You'll get the symbol here, with proper legend
         -->
-                <t t-if="form.form_mode != 'search'">
+                <t t-if="form.form_mode not in ('search', 'readonly')">
                     <div class="form-group field-required">
                         <p class="field-required-legend"><label
                                 class="control-label"
