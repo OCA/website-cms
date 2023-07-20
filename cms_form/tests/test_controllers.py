@@ -1,6 +1,7 @@
 # Copyright 2017 Simone Orsi
 # License LGPL-3.0 or later (http://www.gnu.org/licenses/lgpl.html).
 
+import json
 import os
 import unittest
 
@@ -225,3 +226,33 @@ class TestControllersRender(FormHttpTestCase):
             "wizard",
             extra_klass="fake_wiz",
         )
+        # TODO: check more (paging etc)
+
+    def test_render_only_form(self):
+        url = self.base_url() + "/cms/render/form/cms.form.res.partner"
+        resp = self.url_open(
+            url,
+            data=json.dumps({"widget_params": {}}),
+            headers={"Content-Type": "application/json"},
+            timeout=30,
+        )
+        form = resp.json()["result"]["form"]
+        dom = self.parse_html(form, fragment=True)
+        self.assertTrue(dom.tag == "form")
+        data_form = json.loads(dom.attrib["data-form"])
+        self.assertEqual(data_form["model"], "res.partner")
+
+    def test_render_only_form_widget(self):
+        url = self.base_url() + "/cms/render/form/cms.form.res.partner"
+        resp = self.url_open(
+            url,
+            data=json.dumps({"widget_params": {"custom": {}}}),
+            headers={"Content-Type": "application/json"},
+            timeout=30,
+        )
+        by_widget = resp.json()["result"]["by_widget"]
+        dom = self.parse_html(by_widget["custom"], fragment=True)
+        self.assertTrue(dom.tag == "input")
+        self.assertEqual(dom.attrib["id"], "custom")
+        self.assertEqual(dom.attrib["name"], "custom")
+        self.assertEqual(dom.attrib["value"], "oh yeah!")
