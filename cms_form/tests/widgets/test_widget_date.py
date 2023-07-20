@@ -34,7 +34,7 @@ class TestWidgetDate(TestWidgetCase):
         # TODO: check on json params on other widgets too
         self.assertEqual(
             json.loads(node_input_disp[0].attrib["data-params"]),
-            {"defaultToday": True},
+            {"defaultToday": True, "name": "a_date_field"},
         )
         # and the real one holding the value which is hidden
         node_input = self.find_input_name(node, self.w_name)
@@ -70,7 +70,7 @@ class TestWidgetDate(TestWidgetCase):
         self.assertEqual(widget.w_placeholder, "Custom")
         self.assertEqual(
             widget.w_data_json(),
-            '{"defaultToday": true, "dp": {"format": "%m.%Y"}}',
+            '{"defaultToday": true, "dp": {"format": "%m.%Y"}, "name": "a_date_field"}',
         )
 
     def test_widget_date_input_all_elems(self):

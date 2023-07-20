@@ -100,4 +100,8 @@ class Widget(models.AbstractModel):
         return self.w_subfields.get(value, {})
 
     def w_data_json(self):
-        return json.dumps(self.w_data, sort_keys=True)
+        data = dict(self.w_data, name=self.html_fname)
+        return self._data_to_json(data)
+
+    def _data_to_json(self, data):
+        return json.dumps(data, sort_keys=True)
