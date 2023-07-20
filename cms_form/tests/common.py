@@ -131,7 +131,13 @@ class FormHttpTestCase(HttpCase, FakeModelMixin, HTMLRenderMixin):
 
     def html_get(self, url):
         resp = self.url_open(url, timeout=30)
-        return html.document_fromstring(resp.content)
+        return self.parse_html(resp.content)
+
+    def parse_html(self, content, fragment=False):
+        parser = html.document_fromstring
+        if fragment:
+            parser = html.fragment_fromstring
+        return parser(content)
 
     def get_form(self, form_model, **kw):
         return get_form(self.env, form_model, **kw)

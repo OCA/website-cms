@@ -136,6 +136,37 @@ class CMSFormController(http.Controller, FormControllerMixin):
         """Handle a `form` route."""
         return self.make_response(model, model_id=model_id, **kw)
 
+    @http.route(
+        [
+            "/cms/render/form/<string:form_model>",
+            "/cms/render/form/<string:form_model>/<int:model_id>",
+        ],
+        type="json",
+        auth="user",
+        website=True,
+        # FIXME
+        csfr=False,
+    )
+    def cms_form_render(self, form_model, model_id=None, **kw):
+        kw["form_model_key"] = form_model
+        data = request.get_json_data()
+        process_form = data.get("process", kw.pop("process", False))
+        widget_params = data.get("widget_params", kw.pop("widget_params", {}))
+        if widget_params:
+            kw["form_model_fields"] = list(widget_params)
+        form = self.get_form(None, model_id=model_id, **kw)
+        form.form_check_permission()
+        if process_form:
+            form.form_process()
+        by_widget = {}
+        for fname, params in widget_params.items():
+            widget = form.form_get_current_widget(fname)
+            widget.update(params)
+            by_widget[fname] = widget.render()
+        if by_widget:
+            return {"by_widget": by_widget}
+        return {"form": form.form_render()}
+
 
 class WizardFormControllerMixin(FormControllerMixin):
 
