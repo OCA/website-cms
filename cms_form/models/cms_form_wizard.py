@@ -180,6 +180,10 @@ class CMSFormWizard(models.AbstractModel):
         step_values = self._prepare_step_values_to_store(values, extra_values)
         self.wiz_save_step(step_values)
 
+    def is_final_step_process(self):
+        # Helper method to determine if the submot action is the last one
+        return self.request.form.get("wiz_submit") == "process"
+
     def _prepare_step_values_to_store(self, values, extra_values):
         values = values.copy()
         values.update(extra_values)
