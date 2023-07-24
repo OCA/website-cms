@@ -61,7 +61,11 @@ class IrHttp(models.AbstractModel):
         if session is None:
             session = request.session
         if session is not None:
-            session.setdefault("status_message", []).append(status_message)
+            if "status_message" not in session:
+                session["status_message"] = []
+            session["status_message"].append(status_message)
+            if hasattr(session, "touch"):
+                session.touch()
 
     def _status_message_autodismiss_config(self):
         """Retrieve configuration for autodismiss.
