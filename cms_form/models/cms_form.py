@@ -170,10 +170,10 @@ class CMSForm(models.AbstractModel):
         else:
             self._form_create(write_values)
             msg = self.form_msg_success_created
-        if msg:
-            self.add_status_message(msg)
         # post hook
         self.form_after_create_or_update(write_values, extra_values)
+        if msg:
+            self.add_status_message(msg)
         return self.main_object
 
     def form_process_POST(self, render_values):
