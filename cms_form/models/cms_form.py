@@ -196,7 +196,11 @@ class CMSForm(models.AbstractModel):
                 # u'Error while validating constraint\n
                 #    \nEnd Date cannot be set before Start Date.\nNone'
                 errors_message["_validation"] = "<br />".join(
-                    [x for x in err.name.replace("None", "").split("\n") if x.strip()]
+                    [
+                        x
+                        for x in err.args[0].replace("None", "").split("\n")
+                        if x.strip()
+                    ]
                 )
             except (pg.IntegrityError, pg.OperationalError) as err:
                 errors["_integrity"] = True
