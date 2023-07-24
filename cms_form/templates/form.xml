@@ -7,7 +7,7 @@ License LGPL-3.0 or later (http://www.gnu.org/licenses/lgpl.html).
 <odoo>
     <template id="form_wrapper" name="CMS form wrapper">
         <t t-set="title" t-value="form.form_title" />
-        <div id="wrap" t-att-class="form.form_wrapper_css_klass">
+        <div t-att-class="form.form_wrapper_css_klass">
             <div class="container">
                 <t t-if="form.form_title">
                     <h2>
