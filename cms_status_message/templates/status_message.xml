@@ -46,16 +46,15 @@ License LGPL-3.0 or later (http://www.gnu.org/licenses/lgpl).
     </template>
 
     <!--
-        TODO: move to a glue module -> no need to depend on website
-
+        TODO: move to a glue module -> no need to depend on portal for this
+    -->
     <template
-        id="add_status_message"
-        inherit_id="website.layout"
+        id="portal_add_status_message"
+        inherit_id="portal.portal_layout"
         name="Add status message"
     >
-        <xpath expr="//div[@id='wrapwrap']/main/*" position="before">
+        <xpath expr="(//div[@id='wrap']/div)[1]" position="before">
             <t t-call="cms_status_message.status_message" />
         </xpath>
     </template>
-    -->
 </odoo>
