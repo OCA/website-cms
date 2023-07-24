@@ -151,6 +151,14 @@ class CMSFormWizard(models.AbstractModel):
             step = self.wiz_next_step()
         else:
             step = self.wiz_prev_step()
+
+        main_object = main_object or self.main_object
+        if (
+            main_object
+            and "url" in main_object._fields
+            and self.is_final_step_process()
+        ):
+            return main_object.url
         if not step:
             # fallback to page 1
             step = 1
