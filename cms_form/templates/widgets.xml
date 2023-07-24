@@ -5,6 +5,7 @@ License LGPL-3.0 or later (http://www.gnu.org/licenses/lgpl.html).
 -->
 <odoo>
     <template id="field_widget_char" name="CMS form text field widget">
+        <!-- FIXME: `id` must be removed and use as data attr to avoid multiple el w/ same id -->
         <input
             type="text"
             t-attf-class="form-control #{widget.w_css_klass}"
