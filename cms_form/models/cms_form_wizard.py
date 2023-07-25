@@ -53,7 +53,13 @@ class CMSFormWizard(models.AbstractModel):
 
     def wiz_storage_get(self):
         self._wiz_storage_prepare()
-        return self._wiz_storage[self._wiz_storage_key]
+        storage = self._wiz_storage[self._wiz_storage_key]
+        if "steps" in storage:
+            # Depending of the type of session storage data might be serialized.
+            # When this happens steps keys might be converted to strings.
+            # Ensure we always get integers.
+            storage["steps"] = {int(k): v for k, v in storage["steps"].items()}
+        return storage
 
     def _wiz_storage_prepare(self, reset=False):
         if not self._wiz_storage.get(self._wiz_storage_key) or reset:
