@@ -35,18 +35,22 @@ class CMSInfoMixin(models.AbstractModel):
     url = fields.Char(
         string="URL",
         compute="_compute_cms_url",
+        compute_sudo=True,
     )
     cms_edit_url = fields.Char(
         string="CMS edit URL",
         compute="_compute_cms_url",
+        compute_sudo=True,
     )
     cms_delete_url = fields.Char(
         string="CMS delete URL",
         compute="_compute_cms_url",
+        compute_sudo=True,
     )
     cms_delete_confirm_url = fields.Char(
         string="CMS delete confirm URL",
         compute="_compute_cms_url",
+        compute_sudo=True,
     )
 
     def _compute_cms_url(self):
