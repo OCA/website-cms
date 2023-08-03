@@ -21,6 +21,9 @@ class CMSFormSearch(models.AbstractModel):
     form_search_results_template = fields.Char(
         form_tech=True, default="cms_form.search_results"
     )
+    form_no_search_results_template = fields.Char(
+        form_tech=True, default="cms_form.no_search_results"
+    )
     form_method = fields.Char(form_tech=True, default="GET")
     # you might want to just list items based on a predefined query
     # if this flag is false the search form won't be rendered
@@ -46,6 +49,9 @@ class CMSFormSearch(models.AbstractModel):
 
     # make it computed
     form_title = fields.Char(form_tech=True, compute="_compute_form_title")
+    form_no_result_msg = fields.Char(
+        form_tech=True, compute="_compute_form_no_result_msg"
+    )
 
     def _get_form_mode(self):
         return "search"
@@ -61,6 +67,13 @@ class CMSFormSearch(models.AbstractModel):
             name = model and model.name or ""
             title = _("Search %s") % name
         return title
+
+    def _compute_form_no_result_msg(self):
+        for rec in self:
+            rec.form_no_result_msg = rec._get_form_no_result_msg()
+
+    def _get_form_no_result_msg(self):
+        return _("No items")
 
     def form_check_permission(self):
         """Just searching, nothing to check here."""

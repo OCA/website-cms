@@ -216,6 +216,9 @@ License LGPL-3.0 or later (http://www.gnu.org/licenses/lgpl.html).
                 <t t-out="form.form_render()" />
             </t>
             <div class="form_content">
+                <t t-if="not form.form_search_results['count']">
+                    <t t-call="{{ form.form_no_search_results_template  }}" />
+                </t>
                 <t t-call="{{ form.form_search_results_template  }}" />
             </div>
         </xpath>
@@ -284,6 +287,11 @@ License LGPL-3.0 or later (http://www.gnu.org/licenses/lgpl.html).
             <t t-call="cms_form.search_results_pager">
                 <t t-set="pager" t-value="form.form_search_results['pager']" />
             </t>
+        </div>
+    </template>
+    <template id="no_search_results" name="CMS form no search results">
+        <div class="text-center mb32" t-if="form.form_no_result_msg">
+            <p t-out="form.form_no_result_msg" />
         </div>
     </template>
     <template
