@@ -52,11 +52,17 @@ class CMSInfoMixin(models.AbstractModel):
         compute="_compute_cms_url",
         compute_sudo=True,
     )
+    cms_copy_url = fields.Char(
+        string="CMS copy URL",
+        compute="_compute_cms_url",
+        compute_sudo=True,
+    )
 
     def _compute_cms_url(self):
         for rec in self:
             rec.url = rec._get_cms_url()
             rec.cms_edit_url = rec._get_cms_edit_url()
+            rec.cms_copy_url = rec._get_cms_copy_url()
             rec.update(rec._get_cms_delete_urls())
 
     def _get_cms_url(self):
@@ -68,6 +74,10 @@ class CMSInfoMixin(models.AbstractModel):
     def _get_cms_edit_url(self):
         base_edit_url = self.cms_edit_url_base
         return f"{base_edit_url}/{self.id}"
+
+    def _get_cms_copy_url(self):
+        base_url = self._cms_make_url("copy")
+        return f"{base_url}/{self.id}"
 
     def _get_cms_delete_urls(self):
         base_url = self.cms_delete_url_base
