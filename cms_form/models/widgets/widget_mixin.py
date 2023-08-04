@@ -81,7 +81,12 @@ class Widget(models.AbstractModel):
 
     def w_extract(self, **req_values):
         """Extract value from form submit."""
-        return req_values.get(self.html_fname)
+        value = req_values.get(self.html_fname)
+        if isinstance(value, str) and value == "None":
+            # Corner case for when field values are set as None in the request.
+            # Odoo request will convert the value to a string.
+            value = None
+        return value
 
     def w_check_empty_value(self, value, **req_values):
         # `None` values are meant to be ignored as not changed
