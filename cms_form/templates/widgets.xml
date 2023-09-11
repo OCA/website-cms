@@ -16,6 +16,7 @@ License LGPL-3.0 or later (http://www.gnu.org/licenses/lgpl.html).
             t-att-data-params='widget.w_data_json()'
             t-att-placeholder="widget.w_field['string'] + '...'"
             t-att-readonly="widget.html_readonly or None"
+            t-att-pattern="widget.w_valid_pattern"
         />
     </template>
     <template
