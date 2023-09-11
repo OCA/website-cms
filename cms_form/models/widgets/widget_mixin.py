@@ -49,8 +49,12 @@ class Widget(models.AbstractModel):
             "w_data": data or {},
             "w_subfields": subfields or field.get("subfields", {}),
         }
+        for k, v in kw.items():
+            if k in self._fields:
+                vals[k] = v
         for k in ("template", "css_klass"):
             if kw.get(k):
+                # TODO: deprecate
                 vals[f"w_{k}"] = kw[k]
         field_value = form.form_data.get(fname, kw.get("field_value"))
         if field_value:
