@@ -11,6 +11,7 @@ class CharWidget(models.AbstractModel):
 
     w_template = fields.Char(default="cms_form.field_widget_char")
     w_input_type = fields.Char(default="text")
+    w_valid_pattern = fields.Char(help="Used to validate inputs with `pattern` attr")
 
 
 class TextWidget(models.AbstractModel):
