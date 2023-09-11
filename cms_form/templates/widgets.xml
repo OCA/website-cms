@@ -7,7 +7,7 @@ License LGPL-3.0 or later (http://www.gnu.org/licenses/lgpl.html).
     <template id="field_widget_char" name="CMS form text field widget">
         <!-- FIXME: `id` must be removed and use as data attr to avoid multiple el w/ same id -->
         <input
-            type="text"
+            t-att-type="widget.w_input_type"
             t-attf-class="form-control #{widget.w_css_klass}"
             t-att-id="widget.w_fname"
             t-att-name="widget.html_fname"
@@ -17,6 +17,17 @@ License LGPL-3.0 or later (http://www.gnu.org/licenses/lgpl.html).
             t-att-placeholder="widget.w_field['string'] + '...'"
             t-att-readonly="widget.html_readonly or None"
         />
+    </template>
+    <template
+        id="field_widget_numeric"
+        primary="True"
+        inherit_id="cms_form.field_widget_char"
+        name="CMS form numeric field widget"
+    >
+        <input position="attributes">
+          <attribute name="t-att-min">widget.html_input_min</attribute>
+          <attribute name="t-att-max">widget.html_input_max</attribute>
+        </input>
     </template>
     <template id="field_widget_hidden" name="CMS form hidden field">
         <input

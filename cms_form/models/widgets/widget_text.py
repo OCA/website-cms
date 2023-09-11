@@ -10,6 +10,7 @@ class CharWidget(models.AbstractModel):
     _description = "CMS Form char widget"
 
     w_template = fields.Char(default="cms_form.field_widget_char")
+    w_input_type = fields.Char(default="text")
 
 
 class TextWidget(models.AbstractModel):
