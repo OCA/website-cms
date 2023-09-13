@@ -13,6 +13,8 @@ class BooleanWidget(models.AbstractModel):
     _description = "CMS Form boolean widget"
 
     w_template = fields.Char(default="cms_form.field_widget_boolean")
+    w_wrapper_template = fields.Char(default="cms_form.form_field_label_after_wrapper")
+    w_wrapper_css_klass = fields.Char(default="form-check")
     w_true_values = Serialized(default=utils.TRUE_VALUES)
     w_field_value = fields.Boolean()
 

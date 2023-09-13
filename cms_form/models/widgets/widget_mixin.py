@@ -23,7 +23,9 @@ class Widget(models.AbstractModel):
     w_subfields = fields.Binary(default={}, store=False)
 
     w_template = fields.Char(default="")
+    w_wrapper_template = fields.Char(default="")
     w_css_klass = fields.Char(default="")
+    w_wrapper_css_klass = fields.Char(default="")
 
     w_fname = fields.Char(default="")
     w_field_value = fields.Char()

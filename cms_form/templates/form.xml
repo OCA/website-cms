@@ -66,6 +66,27 @@ License LGPL-3.0 or later (http://www.gnu.org/licenses/lgpl.html).
             </t>
         </div>
     </template>
+    <template
+        id="form_field_label_after_wrapper"
+        name="CMS form field wrapper with label after"
+    >
+        <div
+            t-att-class="form.form_make_field_wrapper_klass(fname, field, errors=errors)"
+        >
+            <t t-out="widget.render()" />
+            <label
+                class="control-label"
+                t-att-for="fname"
+                t-esc="field['string']"
+            >Name</label>
+            <t t-if="field.get('help')">
+                <t t-call="cms_form.base_form_field_help_block" />
+            </t>
+            <t t-if="errors.get(fname)">
+                <t t-call="cms_form.base_form_field_error_block" />
+            </t>
+        </div>
+    </template>
     <template id="base_form_field_help_block" name="CMS form field help block">
         <div class="help-block">
             <!-- use `out` to allow injecting html stuff here -->
@@ -103,7 +124,9 @@ License LGPL-3.0 or later (http://www.gnu.org/licenses/lgpl.html).
             <!-- this template is computed in `form_render`
       based on `form_display_mode`
       -->
-            <t t-call="{{ field_wrapper_template }}">
+            <t
+                t-call="{{ form.form_get_field_wrapper_template(fname, form_fields[fname]) }}"
+            >
                 <t t-set="field" t-value="form_fields[fname]" />
                 <t t-set="widget" t-value="field['widget']" />
             </t>

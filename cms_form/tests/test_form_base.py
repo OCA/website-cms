@@ -544,30 +544,27 @@ class TestFormBase(FormTestCase):
 
     def test_field_wrapper_css_klass(self):
         form = self.get_form("cms.form.res.partner")
+        field = form.form_fields_get()["custom"]
         self.assertEqual(
-            form.form_make_field_wrapper_klass(
-                "foo_field", {"type": "char", "required": False}
-            ),
-            "form-group form-field field-char field-foo_field",
+            form.form_make_field_wrapper_klass("custom", field),
+            "form-group form-field field-char field-custom",
         )
+        field = form.form_fields_get()["country_id"]
+        self.assertEqual(
+            form.form_make_field_wrapper_klass("country_id", field),
+            ("form-group form-field field-many2one " "field-country_id field-required"),
+        )
+        field = form.form_fields_get()["custom"]
+        field["required"] = True
         self.assertEqual(
             form.form_make_field_wrapper_klass(
-                "foo_field_id", {"type": "many2one", "required": True}
+                "custom",
+                field,
+                errors={"custom": "bad_value"},
             ),
             (
-                "form-group form-field field-many2one "
-                "field-foo_field_id field-required"
-            ),
-        )
-        self.assertEqual(
-            form.form_make_field_wrapper_klass(
-                "foo_field",
-                {"type": "float", "required": True},
-                errors={"foo_field": "bad_value"},
-            ),
-            (
-                "form-group form-field field-float "
-                "field-foo_field field-required has-error"
+                "form-group form-field field-char "
+                "field-custom field-required has-error"
             ),
         )
 
