@@ -50,6 +50,9 @@ class CMSFormMixin(models.AbstractModel):
     form_fields_template = fields.Char(
         form_tech=True, default="cms_form.base_form_fields"
     )
+    form_fields_wrapper_template = fields.Char(
+        form_tech=True, compute="_compute_form_fields_wrapper_template", readonly=False
+    )
     form_buttons_template = fields.Char(
         form_tech=True, default="cms_form.base_form_buttons"
     )
@@ -188,6 +191,15 @@ class CMSFormMixin(models.AbstractModel):
         if self.main_object:
             return "edit"
         return "create"
+
+    _form_field_wrapper_template_pattern = (
+        "cms_form.form_{form.form_display_mode}_field_wrapper"
+    )
+
+    def _compute_form_fields_wrapper_template(self):
+        pattern = self._form_field_wrapper_template_pattern
+        for rec in self:
+            rec.form_fields_wrapper_template = pattern.format(form=rec)
 
     def form_init(self, request, main_object=None, **kw):
         """Initalize a form instance.
@@ -416,6 +428,9 @@ class CMSFormMixin(models.AbstractModel):
             and getattr(self._fields[fname], "form_hidden", False)
         )
 
+    def form_get_field_wrapper_template(self, fname, field):
+        return field["widget"].w_wrapper_template or self.form_fields_wrapper_template
+
     def _form_get_default_widget_model(self, fname, field):
         """Retrieve widget model name."""
         if field.get("hidden"):
@@ -577,9 +592,6 @@ class CMSFormMixin(models.AbstractModel):
         """
         values = self.form_render_values.copy()
         values.update(kw)
-        values["field_wrapper_template"] = "cms_form.form_{}_field_wrapper".format(
-            self.form_display_mode
-        )
         return self.env["ir.qweb"]._render(self.form_template, values)
 
     def form_process(self, **kw):
@@ -657,6 +669,8 @@ class CMSFormMixin(models.AbstractModel):
             klass.append("field-required")
         if kw.get("errors", {}).get(fname):
             klass.append("has-error")
+        if field["widget"].w_wrapper_css_klass:
+            klass.append(field["widget"].w_wrapper_css_klass)
         return " ".join(klass).format(fname=fname, **field)
 
     def _form_json_info(self):
