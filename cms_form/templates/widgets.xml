@@ -198,7 +198,7 @@ License LGPL-3.0 or later (http://www.gnu.org/licenses/lgpl.html).
             t-att-name="widget.html_fname"
             t-att-id="widget.w_fname"
             t-att-checked="'checked' if widget.w_field_value else None"
-            t-attf-class="form-control #{widget.w_css_klass}"
+            t-attf-class="form-check-input #{widget.w_css_klass}"
             t-att-required="widget.w_field['required'] and '1' or None"
             t-att-readonly="widget.html_readonly or None"
         />
