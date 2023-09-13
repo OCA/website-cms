@@ -8,7 +8,7 @@ from ... import utils
 
 class NumericWidgetMixin(models.AbstractModel):
     _name = "cms.form.widget.numeric.mixin"
-    _inherit = "cms.form.widget.char"
+    _inherit = "cms.form.widget.char.mixin"
     _description = "CMS Form numeric mixin widget"
 
     w_template = fields.Char(default="cms_form.field_widget_numeric")
