@@ -42,6 +42,10 @@ class Widget(models.AbstractModel):
     def html_readonly(self):
         return self.w_form.form_mode == "readonly" or self.w_readonly
 
+    @property
+    def html_value(self):
+        return self.w_field_value
+
     def widget_init(self, form, fname, field, data=None, subfields=None, **kw):
         vals = {
             "w_form": form,
