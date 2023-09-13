@@ -201,6 +201,19 @@ License LGPL-3.0 or later (http://www.gnu.org/licenses/lgpl.html).
             t-attf-class="form-check-input #{widget.w_css_klass}"
             t-att-required="widget.w_field['required'] and '1' or None"
             t-att-readonly="widget.html_readonly or None"
+            t-att-disabled="'disabled' if widget.html_readonly else None"
+        />
+        <!--
+          `readonly` has no effect on checkboxes. It's kept only for consistency.
+          When `disabled` is set, however, the input won't be submitted in the form.
+          Hence, an hidden field is needed.
+         -->
+         <input
+            t-if="widget.html_readonly"
+            type="hidden"
+            t-att-name="widget.html_fname"
+            t-att-id="widget.w_fname"
+            t-att-value="widget.w_field_value"
         />
     </template>
     <template id="field_widget_image" name="CMS form image field widget">
