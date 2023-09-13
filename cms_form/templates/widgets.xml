@@ -169,6 +169,8 @@ License LGPL-3.0 or later (http://www.gnu.org/licenses/lgpl.html).
         <!--
     XXX: in v11 `t-esc` must stay inside the textarea
     otherwise the whole text area is not rendered at all when value is empty.
+    Also, keep opening and closing tag attached to the t-esc element
+    to avoid having unwanted white spaces inside the text.
     -->
         <textarea
             t-att-name="widget.html_fname"
@@ -176,9 +178,8 @@ License LGPL-3.0 or later (http://www.gnu.org/licenses/lgpl.html).
             t-attf-class="form-control #{widget.w_css_klass}"
             t-att-required="widget.w_field['required'] and '1' or None"
             t-att-maxlength="widget.w_maxlength"
-        >
-            <t t-esc="widget.w_field_value" />
-        </textarea>
+            t-att-readonly="widget.html_readonly or None"
+        ><t t-esc="widget.html_value" /></textarea>
         <t t-if="widget.w_maxlength">
             <input
                 type="text"
