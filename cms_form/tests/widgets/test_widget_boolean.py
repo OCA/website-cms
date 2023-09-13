@@ -22,7 +22,7 @@ class TestWidgetBoolean(TestWidgetCase):
             "type": "checkbox",
             "id": "a_boolean_field",
             "name": "a_boolean_field",
-            "class": "form-control ",
+            "class": "form-check-input ",
         }
         self._test_widget_attributes(widget, "input", expected_attrs)
 
@@ -34,7 +34,7 @@ class TestWidgetBoolean(TestWidgetCase):
             "type": "checkbox",
             "id": "a_boolean_field",
             "name": "a_boolean_field",
-            "class": "form-control ",
+            "class": "form-check-input ",
             "required": "1",
         }
         self._test_widget_attributes(widget, "input", expected_attrs)
@@ -46,7 +46,7 @@ class TestWidgetBoolean(TestWidgetCase):
             "type": "checkbox",
             "id": "a_boolean_field",
             "name": "a_boolean_field",
-            "class": "form-control ",
+            "class": "form-check-input ",
             "checked": "checked",
         }
         self._test_widget_attributes(widget, "input", expected_attrs)
