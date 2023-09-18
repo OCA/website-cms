@@ -58,14 +58,10 @@ odoo.define("cms_form.master_slave", function (require) {
             });
         },
         handle_hide: function (slave_fname) {
-            $('[name="' + slave_fname + '"]')
-                .closest(".form-group")
-                .hide();
+            $(".field-" + slave_fname).hide();
         },
         handle_show: function (slave_fname) {
-            $('[name="' + slave_fname + '"]')
-                .closest(".form-group")
-                .show();
+            $(".field-" + slave_fname).show();
         },
         handle_readonly: function (slave_fname) {
             $('[name="' + slave_fname + '"]')
