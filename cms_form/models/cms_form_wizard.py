@@ -34,6 +34,9 @@ class CMSFormWizard(models.AbstractModel):
     form_step_store_all_fields = fields.Boolean(form_tech=True, default=True)
     form_reset = fields.Boolean(form_tech=True, default=False)
 
+    def _is_wiz_main_model(self):
+        return self._name == self._wiz_name
+
     def _get_form_mode(self):
         return "wizard"
 
@@ -216,6 +219,9 @@ class CMSFormWizard(models.AbstractModel):
     # TODO: tests
     def form_load_defaults(self, main_object=None, request_values=None):
         # Override to load values from the storage
+        if self._is_wiz_main_model():
+            # Do not load anything if we are initializing the main wiz model
+            return {}
         defaults = super().form_load_defaults(
             main_object=main_object, request_values=request_values
         )
