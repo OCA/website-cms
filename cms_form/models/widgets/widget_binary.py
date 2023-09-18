@@ -91,3 +91,11 @@ class ImageWidget(models.AbstractModel):
     _description = "CMS Form image widget"
 
     w_template = fields.Char(default="cms_form.field_widget_image")
+
+
+class FileWidget(models.AbstractModel):
+    _name = "cms.form.widget.binary"
+    _inherit = "cms.form.widget.binary.mixin"
+    _description = "CMS Form file widget"
+
+    w_template = fields.Char(default="cms_form.field_widget_file")

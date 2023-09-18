@@ -267,4 +267,15 @@ License LGPL-3.0 or later (http://www.gnu.org/licenses/lgpl.html).
             </t>
         </div>
     </template>
+    <template id="field_widget_file" name="CMS form image field widget">
+      <input
+            type="file"
+            t-att-name="widget.html_fname"
+            t-att-id="widget.w_fname"
+            t-attf-class="form-control #{widget.w_css_klass}"
+            t-att-required="widget.w_field['required'] and '1' or None"
+            t-att-readonly="widget.html_readonly or None"
+            t-att-disabled="'disabled' if widget.html_readonly else None"
+        />
+    </template>
 </odoo>
