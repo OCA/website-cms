@@ -86,7 +86,7 @@ class Widget(models.AbstractModel):
         if self.w_record and self.w_fname in self.w_record:
             value = self.w_record[self.w_fname] or value
         # maybe a POST request with new values: override item value
-        value = req_values.get(self.html_fname, value)
+        value = req_values.get(self.w_fname, value)
         if isinstance(value, str) and value == "None":
             # Corner case for when field values are set as None in the request.
             # Odoo request will convert the value to a string.
@@ -97,7 +97,7 @@ class Widget(models.AbstractModel):
 
     def w_extract(self, **req_values):
         """Extract value from form submit."""
-        value = req_values.get(self.html_fname)
+        value = req_values.get(self.w_fname)
         if isinstance(value, str) and value == "None":
             # Corner case for when field values are set as None in the request.
             # Odoo request will convert the value to a string.
