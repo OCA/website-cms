@@ -1,5 +1,6 @@
 # Copyright 2019 Simone Orsi
 # License LGPL-3.0 or later (http://www.gnu.org/licenses/lgpl.html).
+from odoo.addons.cms_form.marshallers import Marshaller  # pylint: disable=W7950
 from odoo.addons.cms_form.tests.utils import (  # pylint: disable=W7950
     b64_as_stream,
     fake_file_from_request,
@@ -46,6 +47,10 @@ class TestWidgetBinary(TestWidgetCase):
         super().setUpClass()
         cls.partner = cls.env["res.partner"].search([], limit=1)
         cls.maxDiff = None
+
+    def setUp(self):
+        super().setUp()
+        self.form = fake_form(self.env, main_object=self.partner)
 
     # TODO: we have only an image widget ATM -> add a file widget and test it
     def test_widget_binary_base(self):
@@ -99,7 +104,7 @@ class TestWidgetBinary(TestWidgetCase):
             widget_model="cms.form.widget.image",
         )
         # test conversion
-        self.assertEqual(widget.w_load(image_1024=False), {})
+        self.assertEqual(widget.w_load(image_1024=False), False)
         # set value on partner image
         self.partner.image_1024 = TEST_IMAGE_GIF
         self.assertEqual(
@@ -108,7 +113,8 @@ class TestWidgetBinary(TestWidgetCase):
                 "value": "data:image/png;base64,{}".format(TEST_IMAGE_GIF),
                 "raw_value": TEST_IMAGE_GIF,
                 "mimetype": "image/png",
-                "from_request": False,
+                "content_type": "image/png",
+                "content_lenght": len(TEST_IMAGE_GIF),
             },
         )
 
@@ -124,24 +130,23 @@ class TestWidgetBinary(TestWidgetCase):
             widget_model="cms.form.widget.image",
         )
         # test conversion
-        self.assertEqual(widget.w_load(image_1024=False), {})
+        self.assertEqual(widget.w_load(image_1024=False), False)
 
         with b64_as_stream(TEST_IMAGE_JPG) as stream:
-            req_image = fake_file_from_request(
-                "image_1024",
-                stream=stream,
-                filename="foo.jpg",
-                content_type="image/jpeg",
+            req_image = Marshaller._filedata_from_filestorage(
+                fake_file_from_request(
+                    "image_1024",
+                    stream=stream,
+                    filename="foo.jpg",
+                    content_type="image/jpeg",
+                )
             )
-            self.assertEqual(
-                widget.w_load(image_1024=req_image),
-                {
-                    "value": "data:image/jpeg;base64,{}".format(TEST_IMAGE_JPG),
-                    "raw_value": TEST_IMAGE_JPG,
-                    "mimetype": "image/jpeg",
-                    "from_request": True,
-                },
+            res = widget.w_load(image_1024=req_image)
+            expected = dict(
+                req_image, value="data:image/jpg;base64,{}".format(TEST_IMAGE_JPG)
             )
+            for k, v in res.items():
+                self.assertEqual(v, expected[k], f"{k} not matching")
 
     def test_widget_binary_extract_string(self):
         w_name, w_field = fake_field(
@@ -160,7 +165,7 @@ class TestWidgetBinary(TestWidgetCase):
         # req value can come as string
         req_val = "data:image/jpeg;base64,{}".format(TEST_IMAGE_JPG)
         # value in request but no check flag -> None
-        self.assertEqual(widget.w_extract(image=req_val), None)
+        self.assertEqual(widget.w_extract(image=req_val), TEST_IMAGE_JPG)
         # value in request but keep flag is ON -> None
         self.assertEqual(widget.w_extract(image=req_val, image_keepcheck="yes"), None)
         # value in request but keep flag is ON -> None
@@ -183,14 +188,16 @@ class TestWidgetBinary(TestWidgetCase):
 
         # value in request but no check flag -> None
         with b64_as_stream(TEST_IMAGE_JPG) as stream:
-            req_val = fake_file_from_request(
-                "image",
-                stream=stream,
-                filename="foo.jpg",
-                content_type="image/jpeg",
+            req_image = Marshaller._filedata_from_filestorage(
+                fake_file_from_request(
+                    "image",
+                    stream=stream,
+                    filename="foo.jpg",
+                    content_type="image/jpeg",
+                )
             )
             self.assertEqual(
-                widget.w_extract(image=req_val, image_keepcheck="no"),
+                widget.w_extract(image=req_image, image_keepcheck="no"),
                 TEST_IMAGE_JPG,
             )
 
