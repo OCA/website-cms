@@ -20,11 +20,7 @@ class BinaryWidget(models.AbstractModel):
         return self.binary_to_form(value, **req_values)
 
     def binary_to_form(self, value, **req_values):
-        _value = {
-            # 'value': '',
-            # 'raw_value': '',
-            # 'mimetype': '',
-        }
+        _value = None
         from_request = False
         if value:
             if isinstance(value, werkzeug.datastructures.FileStorage):
@@ -54,21 +50,24 @@ class BinaryWidget(models.AbstractModel):
         if self.html_fname not in req_values:
             return None
         _value = False
-        keepcheck_flag = req_values.get(self.html_fname + "_keepcheck")
-        if not keepcheck_flag or keepcheck_flag == "yes":
+        keepcheck_flag_key = self.html_fname + "_keepcheck"
+        keepcheck_flag = req_values.get(keepcheck_flag_key)
+        # If no keepcheck flag is given the file or img is always replaced
+        if keepcheck_flag_key in req_values and keepcheck_flag == "yes":
             # no flag or flag marked as "keep current value"
             # prevent discarding image
             req_values.pop(self.html_fname, None)
-            req_values.pop(self.html_fname + "_keepcheck", None)
+            req_values.pop(keepcheck_flag_key, None)
             return None
         if value:
-            if hasattr(value, "read"):
-                file_content = value.read()
-                _value = base64.b64encode(file_content)
-                _value = pycompat.to_text(_value)
-            else:
-                # like 'data:image/jpeg;base64,jRyRuUm2VP...
-                _value = value.split(",")[-1]
+            _value = value
+            # TODO: move this to image widget
+            if isinstance(value, str):
+                if value.startswith("data:"):
+                    # like 'data:image/jpeg;base64,jRyRuUm2VP...
+                    _value = value.split(",")[-1]
+            elif isinstance(value, dict):
+                _value = value.get("value")
         return _value
 
     def w_check_empty_value(self, value, **req_values):
