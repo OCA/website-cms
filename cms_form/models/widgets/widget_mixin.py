@@ -87,6 +87,12 @@ class Widget(models.AbstractModel):
             value = self.w_record[self.w_fname] or value
         # maybe a POST request with new values: override item value
         value = req_values.get(self.html_fname, value)
+        if isinstance(value, str) and value == "None":
+            # Corner case for when field values are set as None in the request.
+            # Odoo request will convert the value to a string.
+            # Here we might have data stored in session (eg: wizards)
+            # or other kind of serialized value.
+            value = None
         return value
 
     def w_extract(self, **req_values):
