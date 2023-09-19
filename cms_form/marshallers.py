@@ -1,10 +1,16 @@
 # Copyright 2018 Simone Orsi
 # License LGPL-3.0 or later (http://www.gnu.org/licenses/lgpl.html).
 
+import base64
 import html
 from collections.abc import Callable
 from dataclasses import dataclass
 from typing import Any
+
+import werkzeug
+
+from odoo.tools import pycompat
+from odoo.tools.mimetypes import guess_mimetype
 
 from . import utils
 
@@ -12,15 +18,8 @@ from . import utils
 def marshal_request_values(values):
     """Transform given request values using marshallers.
 
-    Available marshallers:
-
-    * `:int` transform to integer
-    * `:float` transform to float
-    * `:list` transform to list of values
-    * `:dict` transform to dictionary of values
+    Available marshallers: see Marshaller class.
     """
-    # TODO: add docs
-    # TODO: support combinations like `:list:int` or `:dict:int`
     return Marshaller(values).marshall()
 
 
@@ -57,6 +56,8 @@ class Marshaller:
                 done.add(k)
 
     def _marshallers(self):
+        # TODO: add docs
+        # TODO: support combinations like `:list:int` or `:dict:int`
         return (
             (":esc", self.marshal_esc),
             (":dict:list", self.marshal_dict_list),
@@ -64,6 +65,7 @@ class Marshaller:
             (":dict", self.marshal_dict),
             (":int", self.marshal_int),
             (":float", self.marshal_float),
+            (":file", self.marshal_file),
         )
 
     def marshall(self):
@@ -198,3 +200,36 @@ class Marshaller:
                 item[inner_key] = value
             res.append(item)
         return main_key, res
+
+    def marshal_file(self, orig_key, orig_value):
+        k = orig_key[: -len(":file")]
+        value = orig_value
+        if isinstance(value, werkzeug.datastructures.FileStorage):
+            _value = self._filedata_from_filestorage(value)
+        else:
+            mimetype = guess_mimetype(value)
+            _value = {
+                "value": value,
+                "raw_value": value,
+                "mimetype": mimetype,
+                "content_type": mimetype,
+            }
+        _value["_from_request"] = True
+        return k, _value
+
+    @staticmethod
+    def _filedata_from_filestorage(fs):
+        raw_value = fs.read()
+        value = base64.b64encode(raw_value)
+        value = pycompat.to_text(value)
+        data = dict(raw_value=value, value=value)
+        for attr in (
+            "content_length",
+            "content_type",
+            "filename",
+            "headers",
+            "mimetype",
+            "mimetype_params",
+        ):
+            data[attr] = getattr(fs, attr)
+        return data

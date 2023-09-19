@@ -3,9 +3,10 @@
 
 import unittest
 
-from werkzeug.datastructures import MultiDict
+from werkzeug.datastructures import FileMultiDict, Headers, MultiDict
 
 from .. import marshallers
+from .utils import fake_file_from_request, file_as_stream
 
 
 class TestMarshallers(unittest.TestCase):
@@ -111,3 +112,36 @@ class TestMarshallers(unittest.TestCase):
         self.assertEqual(marshalled["c"], "3")
         self.assertNotIn("b.1.x:dict:list", marshalled)
         self.assertNotIn("b.2.y:dict:list", marshalled)
+
+    def test_marshal_file(self):
+        data = FileMultiDict()
+        content = b"a,b,c\n1,2,3\n4,5,6"
+        with file_as_stream(content) as stream:
+            data.add_file(
+                "one:file",
+                fake_file_from_request(
+                    "one",
+                    stream=stream,
+                    filename="one.csv",
+                    content_type="text/csv",
+                    content_length=len(content),
+                ),
+            )
+            marshalled = marshallers.marshal_request_values(data)
+        self.assertEqual(
+            marshalled["one"],
+            {
+                "_from_request": True,
+                "content_length": 17,
+                "content_type": "text/csv",
+                "filename": "one.csv",
+                "headers": Headers(
+                    [("Content-Type", "text/csv"), ("Content-Length", "17")]
+                ),
+                "mimetype": "text/csv",
+                "mimetype_params": {},
+                "raw_value": "YSxiLGMKMSwyLDMKNCw1LDY=",
+                "value": "YSxiLGMKMSwyLDMKNCw1LDY=",
+            },
+        )
+        self.assertNotIn("one:file", marshalled)

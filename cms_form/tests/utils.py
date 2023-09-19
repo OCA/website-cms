@@ -109,12 +109,18 @@ def fake_session(env, **kw):
 
 
 @contextmanager
-def b64_as_stream(b64_content):
+def file_as_stream(content):
     stream = io.BytesIO()
-    stream.write(base64.b64decode(b64_content))
+    stream.write(content)
     stream.seek(0)
     yield stream
     stream.close()
+
+
+@contextmanager
+def b64_as_stream(b64_content):
+    with file_as_stream(base64.b64decode(b64_content)) as stream:
+        yield stream
 
 
 def fake_file_from_request(input_name, stream, **kw):

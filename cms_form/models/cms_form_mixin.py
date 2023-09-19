@@ -502,7 +502,26 @@ class CMSFormMixin(models.AbstractModel):
         # normal fields
         res = marshallers.marshal_request_values(_values)
         # file fields
-        res.update({k: v for k, v in self.request.files.items()})
+        files = self.request.files
+        # Convert files always. Main reasons:
+        # * file descriptors will be consumed on 1st read.
+        #   If you access them again you won't find any info.
+        # * homegenous handling of files
+        # * no need to parse metadata down the stack as is done by the marshaller
+        parsed_files = getattr(self.request, "_cms_form_files_processed", None)
+        if files and not parsed_files:
+            _file_values = {}
+            _file_fields = self.form_file_fields
+            for fname, fobj in files.items():
+                if fname in _file_fields:
+                    # fake field name enforcing marshaller
+                    if not fname.endswith(":file"):
+                        fname = f"{fname}:file"
+                    _file_values[fname] = fobj
+            file_values = marshallers.marshal_request_values(_file_values)
+            self.request._cms_form_files_processed = file_values
+        elif parsed_files:
+            res.update(parsed_files)
         return res
 
     # TODO: rename to form_load
