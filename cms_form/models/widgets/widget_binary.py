@@ -73,7 +73,7 @@ class BinaryWidget(models.AbstractModel):
     def w_check_empty_value(self, value, **req_values):
         if isinstance(value, werkzeug.datastructures.FileStorage):
             has_value = bool(value.filename)
-            keep_flag = req_values.get(self.html_fname + "_keepcheck")
+            keep_flag = req_values.get(self.w_fname + "_keepcheck")
             if not has_value and keep_flag == "yes":
                 # no value, but we want to preserve existing one
                 return False

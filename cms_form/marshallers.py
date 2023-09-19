@@ -42,15 +42,19 @@ class Marshaller:
         self.todos.append(Todo(okey=orig_key, oval=orig_value, handlers=handlers))
 
     def _collect_todo(self):
+        done = set()
         for k, v in self.req_values.items():
             if k in self.skip_keys:
                 continue
             for operator, handler in self._marshallers():
                 if k.endswith(operator):
                     self._add_todo(k, v, handler)
+                    done.add(k)
                     continue
             # plain
-            self._add_todo(k, v, self.marshal_plain)
+            if k not in done:
+                self._add_todo(k, v, self.marshal_plain)
+                done.add(k)
 
     def _marshallers(self):
         return (

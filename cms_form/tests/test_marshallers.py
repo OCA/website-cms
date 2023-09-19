@@ -80,6 +80,7 @@ class TestMarshallers(unittest.TestCase):
         marshalled = marshallers.marshal_request_values(data)
         self.assertEqual(marshalled["a"], "&lt;span&gt;I&#x27;m bad&lt;/span&gt;")
         self.assertEqual(marshalled["b"], "<span>I'm bad but I don't care</span>")
+        self.assertNotIn("a:esc", marshalled)
 
     def test_marshal_dict_list(self):
         data = MultiDict(
@@ -108,3 +109,5 @@ class TestMarshallers(unittest.TestCase):
             ],
         )
         self.assertEqual(marshalled["c"], "3")
+        self.assertNotIn("b.1.x:dict:list", marshalled)
+        self.assertNotIn("b.2.y:dict:list", marshalled)
