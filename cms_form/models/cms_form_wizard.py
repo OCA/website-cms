@@ -193,6 +193,15 @@ class CMSFormWizard(models.AbstractModel):
         step = step or self.wiz_current_step()
         return self.wiz_storage_get()["steps"].get(step) or {}
 
+    def wiz_load_steps(self, steps=None):
+        """Load all steps data merged together."""
+        data = self.wiz_storage_get()["steps"]
+        steps = steps or data.keys()
+        res = {}
+        for step in steps:
+            res.update(data.get(step, {}))
+        return res
+
     def form_after_create_or_update(self, values, extra_values):
         step_values = self._prepare_step_values_to_store(values, extra_values)
         self.wiz_save_step(step_values)
