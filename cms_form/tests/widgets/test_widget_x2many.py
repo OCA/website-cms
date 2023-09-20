@@ -17,7 +17,7 @@ class TestWidgetX2M(TestWidgetCase):
             self.env,
             # fake defaults
             # behavior of o2m or m2m ATM is the same
-            m2m_field=cls.partners.ids[0:2],
+            m2m_field=self.partners.ids[0:2],
         )
 
     def test_widget_x2many_base(self):
@@ -128,6 +128,9 @@ class TestWidgetX2M(TestWidgetCase):
             widget_model="cms.form.widget.many2many",
         )
         # test conversion
+        self.assertEqual(widget.w_extract(m2m_field="1,2,3"), [(6, False, [1, 2, 3])])
+        self.assertEqual(widget.w_extract(m2m_field=""), [(5,)])
+        self.form.form_extract_value_mode = "read"
         self.assertEqual(widget.w_extract(m2m_field="1,2,3"), [1, 2, 3])
 
     def test_widget_x2many_load_no_value(self):
