@@ -13,9 +13,10 @@ class TestWidgetM2O(TestWidgetCase):
 
     def setUp(self):
         super().setUp()
-        self.form = fake_form(self.env,
+        self.form = fake_form(
+            self.env,
             # fake defaults
-            m2o_field=cls.partners.ids[0],
+            m2o_field=self.partners.ids[0],
         )
 
     def test_widget_many2one_base(self):
