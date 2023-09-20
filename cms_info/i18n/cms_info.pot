@@ -19,6 +19,11 @@ msgid "CMS Info mixin"
 msgstr ""
 
 #. module: cms_info
+#: model:ir.model.fields,field_description:cms_info.field_cms_info_mixin__cms_copy_url
+msgid "CMS copy URL"
+msgstr ""
+
+#. module: cms_info
 #: model:ir.model.fields,field_description:cms_info.field_cms_info_mixin__cms_delete_url
 msgid "CMS delete URL"
 msgstr ""
