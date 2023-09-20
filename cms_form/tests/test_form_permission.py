@@ -56,7 +56,7 @@ class TestFormPermCheck(FormTestCase):
                 msg = (
                     "You are not allowed to create any record " "for the model `%s`."
                 ) % self.FakePubModel._name
-                self.assertEqual(err.name, msg)
+                self.assertEqual(err.args[0], msg)
 
     def test_form_check_permission_can_edit(self):
         form = self.get_form(self.FakePubModelForm._name, main_object=self.record)
@@ -77,7 +77,7 @@ class TestFormPermCheck(FormTestCase):
                     self.record._name,
                     self.record.id,
                 )
-                self.assertEqual(err.name, msg)
+                self.assertEqual(err.args[0], msg)
 
     def test_form_check_permission_no_ws_mixin_can_create(self):
         form = self.get_form(self.FakeNonPubModelForm._name, main_object=None)
