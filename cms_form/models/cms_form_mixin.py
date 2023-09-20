@@ -534,6 +534,8 @@ class CMSFormMixin(models.AbstractModel):
         1. `main_object` fields' values (if an existing main_object is passed)
         2. request parameters (only parameters matching form fields names)
         """
+        if self.form_data:
+            return self.form_data
         main_object = main_object or self.main_object
         request_values = request_values or self.form_get_request_values()
         defaults = request_values.copy()
