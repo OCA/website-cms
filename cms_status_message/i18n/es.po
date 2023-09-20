@@ -1,0 +1,75 @@
+# Translation of Odoo Server.
+# This file contains the translation of the following modules:
+# 	* cms_status_message
+#
+msgid ""
+msgstr ""
+"Project-Id-Version: Odoo Server 13.0\n"
+"Report-Msgid-Bugs-To: \n"
+"PO-Revision-Date: 2021-02-17 10:45+0000\n"
+"Last-Translator: claudiagn <claudia.gargallo@qubiq.es>\n"
+"Language-Team: none\n"
+"Language: es\n"
+"MIME-Version: 1.0\n"
+"Content-Type: text/plain; charset=UTF-8\n"
+"Content-Transfer-Encoding: \n"
+"Plural-Forms: nplurals=2; plural=n != 1;\n"
+"X-Generator: Weblate 4.3.2\n"
+
+#. module: cms_status_message
+#: model_terms:ir.ui.view,arch_db:cms_status_message.message_listing_wrapper
+msgid "Close"
+msgstr "Cerrar"
+
+#. module: cms_status_message
+#: model_terms:ir.ui.view,arch_db:cms_status_message.display_test
+msgid ""
+"Enter a message and submit the form. <br/>You'll see your message rendered "
+"as a status message."
+msgstr ""
+"Ingrese un mensaje y envíe el formulario. <br/> Verá su mensaje representado "
+"como un mensaje de estado."
+
+#. module: cms_status_message
+#: code:addons/cms_status_message/models/ir_http.py:0
+#, python-format
+msgid "Error"
+msgstr "Error"
+
+#. module: cms_status_message
+#: code:addons/cms_status_message/models/ir_http.py:0
+#, python-format
+msgid "Info"
+msgstr "Información"
+
+#. module: cms_status_message
+#: model_terms:ir.ui.view,arch_db:cms_status_message.display_test
+msgid "Message"
+msgstr "Mensaje"
+
+#. module: cms_status_message
+#: model_terms:ir.ui.view,arch_db:cms_status_message.display_test
+msgid "Status message display test"
+msgstr "Prueba de visualización de mensajes de estado"
+
+#. module: cms_status_message
+#: code:addons/cms_status_message/models/ir_http.py:0
+#, python-format
+msgid "Success"
+msgstr "Éxito"
+
+#. module: cms_status_message
+#: model_terms:ir.ui.view,arch_db:cms_status_message.display_test
+msgid "Test"
+msgstr "Test"
+
+#. module: cms_status_message
+#: code:addons/cms_status_message/models/ir_http.py:0
+#, python-format
+msgid "Warning"
+msgstr "Advertencia"
+
+#. module: cms_status_message
+#: model:ir.model,name:cms_status_message.model_ir_http
+msgid "ir_http"
+msgstr "Web"

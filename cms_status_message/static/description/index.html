@@ -1,0 +1,600 @@
+<?xml version="1.0" encoding="utf-8" ?>
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml" xml:lang="en" lang="en">
+<head>
+<meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+<meta name="generator" content="Docutils 0.15.1: http://docutils.sourceforge.net/" />
+<title>CMS status message</title>
+<style type="text/css">
+
+/*
+:Author: David Goodger (goodger@python.org)
+:Id: $Id: html4css1.css 7952 2016-07-26 18:15:59Z milde $
+:Copyright: This stylesheet has been placed in the public domain.
+
+Default cascading style sheet for the HTML output of Docutils.
+
+See http://docutils.sf.net/docs/howto/html-stylesheets.html for how to
+customize this style sheet.
+*/
+
+/* used to remove borders from tables and images */
+.borderless, table.borderless td, table.borderless th {
+  border: 0 }
+
+table.borderless td, table.borderless th {
+  /* Override padding for "table.docutils td" with "! important".
+     The right padding separates the table cells. */
+  padding: 0 0.5em 0 0 ! important }
+
+.first {
+  /* Override more specific margin styles with "! important". */
+  margin-top: 0 ! important }
+
+.last, .with-subtitle {
+  margin-bottom: 0 ! important }
+
+.hidden {
+  display: none }
+
+.subscript {
+  vertical-align: sub;
+  font-size: smaller }
+
+.superscript {
+  vertical-align: super;
+  font-size: smaller }
+
+a.toc-backref {
+  text-decoration: none ;
+  color: black }
+
+blockquote.epigraph {
+  margin: 2em 5em ; }
+
+dl.docutils dd {
+  margin-bottom: 0.5em }
+
+object[type="image/svg+xml"], object[type="application/x-shockwave-flash"] {
+  overflow: hidden;
+}
+
+/* Uncomment (and remove this text!) to get bold-faced definition list terms
+dl.docutils dt {
+  font-weight: bold }
+*/
+
+div.abstract {
+  margin: 2em 5em }
+
+div.abstract p.topic-title {
+  font-weight: bold ;
+  text-align: center }
+
+div.admonition, div.attention, div.caution, div.danger, div.error,
+div.hint, div.important, div.note, div.tip, div.warning {
+  margin: 2em ;
+  border: medium outset ;
+  padding: 1em }
+
+div.admonition p.admonition-title, div.hint p.admonition-title,
+div.important p.admonition-title, div.note p.admonition-title,
+div.tip p.admonition-title {
+  font-weight: bold ;
+  font-family: sans-serif }
+
+div.attention p.admonition-title, div.caution p.admonition-title,
+div.danger p.admonition-title, div.error p.admonition-title,
+div.warning p.admonition-title, .code .error {
+  color: red ;
+  font-weight: bold ;
+  font-family: sans-serif }
+
+/* Uncomment (and remove this text!) to get reduced vertical space in
+   compound paragraphs.
+div.compound .compound-first, div.compound .compound-middle {
+  margin-bottom: 0.5em }
+
+div.compound .compound-last, div.compound .compound-middle {
+  margin-top: 0.5em }
+*/
+
+div.dedication {
+  margin: 2em 5em ;
+  text-align: center ;
+  font-style: italic }
+
+div.dedication p.topic-title {
+  font-weight: bold ;
+  font-style: normal }
+
+div.figure {
+  margin-left: 2em ;
+  margin-right: 2em }
+
+div.footer, div.header {
+  clear: both;
+  font-size: smaller }
+
+div.line-block {
+  display: block ;
+  margin-top: 1em ;
+  margin-bottom: 1em }
+
+div.line-block div.line-block {
+  margin-top: 0 ;
+  margin-bottom: 0 ;
+  margin-left: 1.5em }
+
+div.sidebar {
+  margin: 0 0 0.5em 1em ;
+  border: medium outset ;
+  padding: 1em ;
+  background-color: #ffffee ;
+  width: 40% ;
+  float: right ;
+  clear: right }
+
+div.sidebar p.rubric {
+  font-family: sans-serif ;
+  font-size: medium }
+
+div.system-messages {
+  margin: 5em }
+
+div.system-messages h1 {
+  color: red }
+
+div.system-message {
+  border: medium outset ;
+  padding: 1em }
+
+div.system-message p.system-message-title {
+  color: red ;
+  font-weight: bold }
+
+div.topic {
+  margin: 2em }
+
+h1.section-subtitle, h2.section-subtitle, h3.section-subtitle,
+h4.section-subtitle, h5.section-subtitle, h6.section-subtitle {
+  margin-top: 0.4em }
+
+h1.title {
+  text-align: center }
+
+h2.subtitle {
+  text-align: center }
+
+hr.docutils {
+  width: 75% }
+
+img.align-left, .figure.align-left, object.align-left, table.align-left {
+  clear: left ;
+  float: left ;
+  margin-right: 1em }
+
+img.align-right, .figure.align-right, object.align-right, table.align-right {
+  clear: right ;
+  float: right ;
+  margin-left: 1em }
+
+img.align-center, .figure.align-center, object.align-center {
+  display: block;
+  margin-left: auto;
+  margin-right: auto;
+}
+
+table.align-center {
+  margin-left: auto;
+  margin-right: auto;
+}
+
+.align-left {
+  text-align: left }
+
+.align-center {
+  clear: both ;
+  text-align: center }
+
+.align-right {
+  text-align: right }
+
+/* reset inner alignment in figures */
+div.align-right {
+  text-align: inherit }
+
+/* div.align-center * { */
+/*   text-align: left } */
+
+.align-top    {
+  vertical-align: top }
+
+.align-middle {
+  vertical-align: middle }
+
+.align-bottom {
+  vertical-align: bottom }
+
+ol.simple, ul.simple {
+  margin-bottom: 1em }
+
+ol.arabic {
+  list-style: decimal }
+
+ol.loweralpha {
+  list-style: lower-alpha }
+
+ol.upperalpha {
+  list-style: upper-alpha }
+
+ol.lowerroman {
+  list-style: lower-roman }
+
+ol.upperroman {
+  list-style: upper-roman }
+
+p.attribution {
+  text-align: right ;
+  margin-left: 50% }
+
+p.caption {
+  font-style: italic }
+
+p.credits {
+  font-style: italic ;
+  font-size: smaller }
+
+p.label {
+  white-space: nowrap }
+
+p.rubric {
+  font-weight: bold ;
+  font-size: larger ;
+  color: maroon ;
+  text-align: center }
+
+p.sidebar-title {
+  font-family: sans-serif ;
+  font-weight: bold ;
+  font-size: larger }
+
+p.sidebar-subtitle {
+  font-family: sans-serif ;
+  font-weight: bold }
+
+p.topic-title {
+  font-weight: bold }
+
+pre.address {
+  margin-bottom: 0 ;
+  margin-top: 0 ;
+  font: inherit }
+
+pre.literal-block, pre.doctest-block, pre.math, pre.code {
+  margin-left: 2em ;
+  margin-right: 2em }
+
+pre.code .ln { color: grey; } /* line numbers */
+pre.code, code { background-color: #eeeeee }
+pre.code .comment, code .comment { color: #5C6576 }
+pre.code .keyword, code .keyword { color: #3B0D06; font-weight: bold }
+pre.code .literal.string, code .literal.string { color: #0C5404 }
+pre.code .name.builtin, code .name.builtin { color: #352B84 }
+pre.code .deleted, code .deleted { background-color: #DEB0A1}
+pre.code .inserted, code .inserted { background-color: #A3D289}
+
+span.classifier {
+  font-family: sans-serif ;
+  font-style: oblique }
+
+span.classifier-delimiter {
+  font-family: sans-serif ;
+  font-weight: bold }
+
+span.interpreted {
+  font-family: sans-serif }
+
+span.option {
+  white-space: nowrap }
+
+span.pre {
+  white-space: pre }
+
+span.problematic {
+  color: red }
+
+span.section-subtitle {
+  /* font-size relative to parent (h1..h6 element) */
+  font-size: 80% }
+
+table.citation {
+  border-left: solid 1px gray;
+  margin-left: 1px }
+
+table.docinfo {
+  margin: 2em 4em }
+
+table.docutils {
+  margin-top: 0.5em ;
+  margin-bottom: 0.5em }
+
+table.footnote {
+  border-left: solid 1px black;
+  margin-left: 1px }
+
+table.docutils td, table.docutils th,
+table.docinfo td, table.docinfo th {
+  padding-left: 0.5em ;
+  padding-right: 0.5em ;
+  vertical-align: top }
+
+table.docutils th.field-name, table.docinfo th.docinfo-name {
+  font-weight: bold ;
+  text-align: left ;
+  white-space: nowrap ;
+  padding-left: 0 }
+
+/* "booktabs" style (no vertical lines) */
+table.docutils.booktabs {
+  border: 0px;
+  border-top: 2px solid;
+  border-bottom: 2px solid;
+  border-collapse: collapse;
+}
+table.docutils.booktabs * {
+  border: 0px;
+}
+table.docutils.booktabs th {
+  border-bottom: thin solid;
+  text-align: left;
+}
+
+h1 tt.docutils, h2 tt.docutils, h3 tt.docutils,
+h4 tt.docutils, h5 tt.docutils, h6 tt.docutils {
+  font-size: 100% }
+
+ul.auto-toc {
+  list-style-type: none }
+
+</style>
+</head>
+<body>
+<div class="document" id="cms-status-message">
+<h1 class="title">CMS status message</h1>
+
+<!-- !!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!
+!! This file is generated by oca-gen-addon-readme !!
+!! changes will be overwritten.                   !!
+!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!! -->
+<p><a class="reference external" href="https://odoo-community.org/page/development-status"><img alt="Beta" src="https://img.shields.io/badge/maturity-Beta-yellow.png" /></a> <a class="reference external" href="http://www.gnu.org/licenses/lgpl-3.0-standalone.html"><img alt="License: LGPL-3" src="https://img.shields.io/badge/licence-LGPL--3-blue.png" /></a> <a class="reference external" href="https://github.com/OCA/website-cms/tree/13.0/cms_status_message"><img alt="OCA/website-cms" src="https://img.shields.io/badge/github-OCA%2Fwebsite--cms-lightgray.png?logo=github" /></a> <a class="reference external" href="https://translation.odoo-community.org/projects/website-cms-13-0/website-cms-13-0-cms_status_message"><img alt="Translate me on Weblate" src="https://img.shields.io/badge/weblate-Translate%20me-F47D42.png" /></a> <a class="reference external" href="https://runbot.odoo-community.org/runbot/225/13.0"><img alt="Try me on Runbot" src="https://img.shields.io/badge/runbot-Try%20me-875A7B.png" /></a></p>
+<p>A “status message” is an important message that you want to show to
+users.</p>
+<p>For instance: a user submit a form or does a specific action and you
+want to report the status of this action like “your profile has been
+updated” or “Your upgrade has been successful.”.</p>
+<p>This module allows to easily display this kind of messages to your
+users.</p>
+<p>Messages are displayed using Twitter bootstrap alerts.</p>
+<p>You can add several messages: they will be displayed one after another.</p>
+<p><strong>Table of contents</strong></p>
+<div class="contents local topic" id="contents">
+<ul class="simple">
+<li><a class="reference internal" href="#usage" id="id6">Usage</a><ul>
+<li><a class="reference internal" href="#python-code" id="id7">Python code</a></li>
+<li><a class="reference internal" href="#autodismiss" id="id8">Autodismiss</a></li>
+<li><a class="reference internal" href="#javascript-code" id="id9">Javascript code</a></li>
+<li><a class="reference internal" href="#customize-appereance" id="id10">Customize appereance</a></li>
+<li><a class="reference internal" href="#test-your-theme-look-and-feel" id="id11">Test your theme look and feel</a></li>
+</ul>
+</li>
+<li><a class="reference internal" href="#known-issues-roadmap" id="id12">Known issues / Roadmap</a></li>
+<li><a class="reference internal" href="#changelog" id="id13">Changelog</a><ul>
+<li><a class="reference internal" href="#id2" id="id14">11.0.1.3.0 (2018-08-07)</a></li>
+<li><a class="reference internal" href="#id3" id="id15">11.0.1.2.0 (2018-08-07)</a></li>
+<li><a class="reference internal" href="#id4" id="id16">11.0.1.1.0 (2018-04-22)</a></li>
+<li><a class="reference internal" href="#id5" id="id17">11.0.1.0.0 (2018-01-18)</a></li>
+</ul>
+</li>
+<li><a class="reference internal" href="#bug-tracker" id="id18">Bug Tracker</a></li>
+<li><a class="reference internal" href="#credits" id="id19">Credits</a><ul>
+<li><a class="reference internal" href="#authors" id="id20">Authors</a></li>
+<li><a class="reference internal" href="#contributors" id="id21">Contributors</a></li>
+<li><a class="reference internal" href="#maintainers" id="id22">Maintainers</a></li>
+</ul>
+</li>
+</ul>
+</div>
+<div class="section" id="usage">
+<h1><a class="toc-backref" href="#id6">Usage</a></h1>
+<div class="section" id="python-code">
+<h2><a class="toc-backref" href="#id7">Python code</a></h2>
+<p>Set a message:</p>
+<pre class="code python literal-block">
+<span class="n">msg</span> <span class="o">=</span> <span class="n">_</span><span class="p">(</span><span class="s1">'My important message.'</span><span class="p">)</span>
+<span class="k">if</span> <span class="n">request</span><span class="o">.</span><span class="n">website</span><span class="p">:</span>
+    <span class="n">request</span><span class="o">.</span><span class="n">website</span><span class="o">.</span><span class="n">add_status_message</span><span class="p">(</span><span class="n">msg</span><span class="p">)</span>
+</pre>
+<p>By default the message type is <tt class="docutils literal">info</tt>. The title (the label at the
+beginning of the message) matches the message type:</p>
+<ul class="simple">
+<li>‘info’: ‘Info’</li>
+<li>‘success’: ‘Success’</li>
+<li>‘danger’: ‘Error’</li>
+<li>‘warning’: ‘Warning’</li>
+</ul>
+<p>You can change message parameters:</p>
+<pre class="code python literal-block">
+<span class="n">msg</span> <span class="o">=</span> <span class="n">_</span><span class="p">(</span><span class="s1">'Watch out!'</span><span class="p">)</span>
+<span class="k">if</span> <span class="n">request</span><span class="o">.</span><span class="n">website</span><span class="p">:</span>
+    <span class="n">request</span><span class="o">.</span><span class="n">website</span><span class="o">.</span><span class="n">add_status_message</span><span class="p">(</span><span class="n">msg</span><span class="p">,</span> <span class="n">type_</span><span class="o">=</span><span class="s1">'warning'</span><span class="p">,</span> <span class="n">title</span><span class="o">=</span><span class="s1">'Oh no'</span><span class="p">)</span>
+</pre>
+<p>Messages will be displayed like this:</p>
+<img alt="https://raw.githubusercontent.com/OCA/website-cms/13.0/cms_status_message/images/preview.png" src="https://raw.githubusercontent.com/OCA/website-cms/13.0/cms_status_message/images/preview.png" />
+</div>
+<div class="section" id="autodismiss">
+<h2><a class="toc-backref" href="#id8">Autodismiss</a></h2>
+<p>By default messages will be auto-dismissed after 8 seconds.
+You can turn this off by setting an ir.config_param like:</p>
+<pre class="literal-block">
+cms_status_message.autodismiss = 0
+</pre>
+<p>You can customize the timeout by setting the key:</p>
+<pre class="literal-block">
+cms_status_message.autodismiss_timeout = 3000  # milliseconds
+</pre>
+<p>You can also customize this on demand when you create the message:</p>
+<pre class="code python literal-block">
+<span class="n">msg</span> <span class="o">=</span> <span class="n">_</span><span class="p">(</span><span class="s1">'I will disappear more slowly'</span><span class="p">)</span>
+<span class="n">options</span> <span class="o">=</span> <span class="p">{</span><span class="s1">'autodismissTimeout'</span><span class="p">:</span> <span class="mi">10000</span><span class="p">}</span>
+<span class="k">if</span> <span class="n">request</span><span class="o">.</span><span class="n">website</span><span class="p">:</span>
+    <span class="n">request</span><span class="o">.</span><span class="n">website</span><span class="o">.</span><span class="n">add_status_message</span><span class="p">(</span><span class="n">msg</span><span class="p">,</span> <span class="n">dismiss_options</span><span class="o">=</span><span class="n">options</span><span class="p">)</span>
+</pre>
+</div>
+<div class="section" id="javascript-code">
+<h2><a class="toc-backref" href="#id9">Javascript code</a></h2>
+<p>Dependencies:</p>
+<pre class="code javascript literal-block">
+<span class="kd">var</span> <span class="nx">msg_tool</span> <span class="o">=</span> <span class="nx">require</span><span class="p">(</span><span class="s1">'cms_status_message.tool'</span><span class="p">);</span>
+<span class="kd">var</span> <span class="nx">core</span> <span class="o">=</span> <span class="nx">require</span><span class="p">(</span><span class="s1">'web.core'</span><span class="p">);</span>
+<span class="kd">var</span> <span class="nx">_t</span> <span class="o">=</span> <span class="nx">core</span><span class="p">.</span><span class="nx">_t</span><span class="p">;</span>
+</pre>
+<p>Inject a custom message on the fly:</p>
+<pre class="code javascript literal-block">
+<span class="nx">msg</span> <span class="o">=</span> <span class="p">{</span>
+    <span class="s1">'msg'</span><span class="o">:</span> <span class="nx">_t</span><span class="p">(</span><span class="s1">'Item unpublished.'</span><span class="p">),</span>
+    <span class="s1">'title'</span><span class="o">:</span> <span class="nx">_t</span><span class="p">(</span><span class="s1">'Warning'</span><span class="p">),</span>
+    <span class="s1">'type'</span><span class="o">:</span> <span class="s1">'warning'</span>
+<span class="p">}</span>
+<span class="nx">msg_tool</span><span class="p">.</span><span class="nx">render_messages</span><span class="p">(</span><span class="nx">msg</span><span class="p">).</span><span class="nx">then</span><span class="p">(</span><span class="kd">function</span><span class="p">(</span><span class="nx">html</span><span class="p">)</span> <span class="p">{</span>
+    <span class="c1">// wipe existing
+</span>    <span class="nx">$</span><span class="p">(</span><span class="s1">'.status_message'</span><span class="p">).</span><span class="nx">remove</span><span class="p">();</span>
+    <span class="c1">// inject new
+</span>    <span class="nx">$</span><span class="p">(</span><span class="nx">html</span><span class="p">).</span><span class="nx">hide</span><span class="p">().</span><span class="nx">prependTo</span><span class="p">(</span><span class="s1">'#wrap'</span><span class="p">).</span><span class="nx">fadeIn</span><span class="p">(</span><span class="s1">'slow'</span><span class="p">);</span>
+<span class="p">});</span>
+</pre>
+<p>Add a status message to the session, useful if you want to show the
+message only after a redirect:</p>
+<pre class="code javascript literal-block">
+<span class="kd">var</span> <span class="nx">msg</span> <span class="o">=</span>  <span class="nx">_t</span><span class="p">(</span><span class="s1">'Contratulations! You made it!.'</span><span class="p">);</span>
+<span class="kd">var</span> <span class="nx">options</span> <span class="o">=</span> <span class="p">{</span><span class="s1">'title'</span><span class="o">:</span> <span class="nx">_</span><span class="p">(</span><span class="s1">'My title'</span><span class="p">),</span> <span class="s1">'dismissible'</span><span class="o">:</span> <span class="kc">false</span><span class="p">};</span>
+<span class="nx">msg_tool</span><span class="p">.</span><span class="nx">add_message</span><span class="p">(</span><span class="nx">msg</span><span class="p">,</span> <span class="nx">options</span><span class="p">);</span>
+</pre>
+</div>
+<div class="section" id="customize-appereance">
+<h2><a class="toc-backref" href="#id10">Customize appereance</a></h2>
+<p>By default the alert box is added on top of <tt class="docutils literal">&lt;main /&gt;</tt> content. If you
+want to customize this behavior just override or disable
+<tt class="docutils literal">cms_status_message.add_status_message</tt> template.</p>
+</div>
+<div class="section" id="test-your-theme-look-and-feel">
+<h2><a class="toc-backref" href="#id11">Test your theme look and feel</a></h2>
+<p>Go to <cite>/cms/status-message/display-test</cite> to see how messages will look like
+when your theme is applied.</p>
+</div>
+</div>
+<div class="section" id="known-issues-roadmap">
+<h1><a class="toc-backref" href="#id12">Known issues / Roadmap</a></h1>
+<p>Get rid of <cite>website</cite> dependency and move features to a standalone model.</p>
+</div>
+<div class="section" id="changelog">
+<h1><a class="toc-backref" href="#id13">Changelog</a></h1>
+<p>13.0.1.0.1 (2021-08-23)
+<strong>Features</strong></p>
+<ul class="simple">
+<li>Migration to v13 (<a class="reference external" href="https://github.com/OCA/website-cms/issues/111">#111</a>)</li>
+</ul>
+<div class="section" id="id2">
+<h2><a class="toc-backref" href="#id14">11.0.1.3.0 (2018-08-07)</a></h2>
+<p><strong>Improvements</strong></p>
+<ul>
+<li><p class="first">Get rid of example package</p>
+<p>The example package was there only to show how a message would look like.
+But in real life you want always to verify how they look like
+with your theme styles applied.</p>
+<p>Now we have a new route <cite>/cms/status-message/display-test</cite> to check them.
+<cite>cms_status_message_example</cite> module has been removed.</p>
+</li>
+</ul>
+</div>
+<div class="section" id="id3">
+<h2><a class="toc-backref" href="#id15">11.0.1.2.0 (2018-08-07)</a></h2>
+<p><strong>Improvements</strong></p>
+<ul>
+<li><p class="first">Add auto-dimiss option</p>
+<p>By default messages will be auto-dismissed after 8 seconds.
+You can turn this off by setting an ir.config_param like:</p>
+<pre class="literal-block">
+cms_status_message.autodismiss = 0
+</pre>
+<p>You can customize the timeout by setting the key:</p>
+<pre class="literal-block">
+cms_status_message.autodismiss_timeout = 3000  # milliseconds
+</pre>
+<p>Check README for further info.</p>
+</li>
+</ul>
+</div>
+<div class="section" id="id4">
+<h2><a class="toc-backref" href="#id16">11.0.1.1.0 (2018-04-22)</a></h2>
+<p><strong>Improvements</strong></p>
+<ul>
+<li><p class="first">Improve JS API</p>
+<ol class="arabic simple">
+<li>load qweb template on demand</li>
+<li>load qweb template only if not loaded yet</li>
+<li>use promises for rendering</li>
+</ol>
+<p>We load qweb templates via JS.
+Prior to this change we got 1 request every time,
+on every page load per each template,
+even if we were not using any status message feature.</p>
+<p>Now we load templates only when needed
+and we load them only if not loaded yet,
+lowering page load time a bit :)</p>
+<p>Plus, rendering now returns a promise object so you can chain calls
+and do things when rendering is really finished.</p>
+</li>
+</ul>
+</div>
+<div class="section" id="id5">
+<h2><a class="toc-backref" href="#id17">11.0.1.0.0 (2018-01-18)</a></h2>
+<p>Upgrade to v11</p>
+</div>
+</div>
+<div class="section" id="bug-tracker">
+<h1><a class="toc-backref" href="#id18">Bug Tracker</a></h1>
+<p>Bugs are tracked on <a class="reference external" href="https://github.com/OCA/website-cms/issues">GitHub Issues</a>.
+In case of trouble, please check there if your issue has already been reported.
+If you spotted it first, help us smashing it by providing a detailed and welcomed
+<a class="reference external" href="https://github.com/OCA/website-cms/issues/new?body=module:%20cms_status_message%0Aversion:%2013.0%0A%0A**Steps%20to%20reproduce**%0A-%20...%0A%0A**Current%20behavior**%0A%0A**Expected%20behavior**">feedback</a>.</p>
+<p>Do not contact contributors directly about support or help with technical issues.</p>
+</div>
+<div class="section" id="credits">
+<h1><a class="toc-backref" href="#id19">Credits</a></h1>
+<div class="section" id="authors">
+<h2><a class="toc-backref" href="#id20">Authors</a></h2>
+<ul class="simple">
+<li>Camptocamp</li>
+</ul>
+</div>
+<div class="section" id="contributors">
+<h2><a class="toc-backref" href="#id21">Contributors</a></h2>
+<ul class="simple">
+<li>Simone Orsi &lt;<a class="reference external" href="mailto:simone.orsi&#64;camptocamp.com">simone.orsi&#64;camptocamp.com</a>&gt;</li>
+</ul>
+</div>
+<div class="section" id="maintainers">
+<h2><a class="toc-backref" href="#id22">Maintainers</a></h2>
+<p>This module is maintained by the OCA.</p>
+<a class="reference external image-reference" href="https://odoo-community.org"><img alt="Odoo Community Association" src="https://odoo-community.org/logo.png" /></a>
+<p>OCA, or the Odoo Community Association, is a nonprofit organization whose
+mission is to support the collaborative development of Odoo features and
+promote its widespread use.</p>
+<p>This module is part of the <a class="reference external" href="https://github.com/OCA/website-cms/tree/13.0/cms_status_message">OCA/website-cms</a> project on GitHub.</p>
+<p>You are welcome to contribute. To learn how please visit <a class="reference external" href="https://odoo-community.org/page/Contribute">https://odoo-community.org/page/Contribute</a>.</p>
+</div>
+</div>
+</div>
+</body>
+</html>
