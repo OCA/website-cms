@@ -11,6 +11,8 @@ def safe_to_integer(value, **kw):
 
 
 def safe_to_float(value, **kw):
+    if value is False:
+        return 0.0
     try:
         return float(value.replace(",", "."))
     except (ValueError, TypeError, AttributeError):
