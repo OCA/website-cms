@@ -51,5 +51,5 @@ class TestWidgetFloat(TestWidgetCase):
     def test_widget_float_input_extract(self):
         self.assertEqual(self.widget.w_extract(a_float_field="1"), 1.0)
         self.assertEqual(self.widget.w_extract(a_float_field="2.0"), 2.0)
-        self.assertEqual(self.widget.w_extract(a_float_field="2,0"), None)
+        self.assertEqual(self.widget.w_extract(a_float_field="2,0"), 2.0)
         self.assertEqual(self.widget.w_extract(a_float_field=""), None)
