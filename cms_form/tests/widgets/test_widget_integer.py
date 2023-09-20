@@ -23,7 +23,7 @@ class TestWidgetInteger(TestWidgetCase):
 
     def test_widget_integer_input(self):
         expected_attrs = {
-            "type": "text",
+            "type": "number",
             "id": "an_int_field",
             "name": "an_int_field",
             "placeholder": "An int field...",
@@ -35,7 +35,7 @@ class TestWidgetInteger(TestWidgetCase):
     def test_widget_integer_input_required(self):
         self.widget.w_field["required"] = True
         expected_attrs = {
-            "type": "text",
+            "type": "number",
             "id": "an_int_field",
             "name": "an_int_field",
             "placeholder": "An int field...",
