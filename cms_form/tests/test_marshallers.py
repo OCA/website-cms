@@ -37,7 +37,7 @@ class TestMarshallers(unittest.TestCase):
         self.assertEqual(marshalled["a"], "1")
         self.assertEqual(marshalled["b"], 2)
         self.assertEqual(marshalled["c"], 3)
-        self.assertEqual(marshalled["d"], "bad")
+        self.assertEqual(marshalled["d"], None)
 
     def test_marshal_float(self):
         data = MultiDict(
