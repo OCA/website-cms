@@ -76,10 +76,16 @@ odoo.define("cms_form.master_slave", function (require) {
                 .removeClass("disabled");
         },
         handle_required: function (slave_fname) {
-            $('[name="' + slave_fname + '"]').attr("required", "required");
+            $('[name="' + slave_fname + '"]')
+                .attr("required", "required")
+                .closest(".form-group")
+                .addClass("field-required");
         },
         handle_no_required: function (slave_fname) {
-            $('[name="' + slave_fname + '"]').attr("required", null);
+            $('[name="' + slave_fname + '"]')
+                .attr("required", null)
+                .closest(".form-group")
+                .removeClass("field-required");
         },
     });
 });
