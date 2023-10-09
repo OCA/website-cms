@@ -134,7 +134,6 @@ msgstr "Cancel·lar"
 
 #. module: cms_form
 #: code:addons/cms_form/models/cms_form.py:0
-#: code:addons/cms_form/models/cms_form.py:0
 #, python-format
 msgid "Create %s"
 msgstr "Crear %s"
