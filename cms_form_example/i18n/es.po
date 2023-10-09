@@ -1,6 +1,6 @@
 # Translation of Odoo Server.
 # This file contains the translation of the following modules:
-#	* cms_form_example
+# 	* cms_form_example
 #
 msgid ""
 msgstr ""
@@ -18,21 +18,21 @@ msgstr ""
 
 #. module: cms_form_example
 #. openerp-web
-#: code:addons/cms_form_example/static/src/js/cms_form_example.tour.js:33
+#: code:addons/cms_form_example/static/src/js/cms_form_example.tour.js:0
 #, python-format
 msgid "Continue"
 msgstr "Continuar"
 
 #. module: cms_form_example
 #. openerp-web
-#: code:addons/cms_form_example/static/src/js/cms_form_example.tour.js:30
+#: code:addons/cms_form_example/static/src/js/cms_form_example.tour.js:0
 #, python-format
 msgid "Partner created"
 msgstr "Socio creado"
 
 #. module: cms_form_example
 #. openerp-web
-#: code:addons/cms_form_example/static/src/js/cms_form_example.tour.js:32
+#: code:addons/cms_form_example/static/src/js/cms_form_example.tour.js:0
 #, python-format
 msgid "This is the new partner. Let's edit it."
 msgstr "Éste es el nuevo socio. Vamos a editarlo."
