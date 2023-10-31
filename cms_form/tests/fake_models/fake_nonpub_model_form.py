@@ -3,7 +3,7 @@
 
 from odoo import fields, models
 
-from odoo.addons.cms_form.models.fields import Serialized  # pylint: disable=W7950
+from odoo.addons.cms_form.models.fields import Serialized  # pylint: disable=W8150
 
 
 class FakeNonPubModel(models.Model):

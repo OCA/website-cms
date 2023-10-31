@@ -69,6 +69,7 @@ License LGPL-3.0 or later (http://www.gnu.org/licenses/lgpl.html).
         name="CMS form selection field widget"
         inherit_id="cms_form.field_widget_m2o"
         primary="True"
+        priority="100"
     >
         <xpath expr="//t[@t-foreach]/option" position="replace">
             <option
