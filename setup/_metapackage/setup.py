@@ -8,6 +8,7 @@ setuptools.setup(
     description="Meta package for oca-website-cms Odoo addons",
     version=version,
     install_requires=[
+        'odoo-addon-cms_form>=16.0dev,<16.1dev',
         'odoo-addon-cms_info>=16.0dev,<16.1dev',
         'odoo-addon-cms_status_message>=16.0dev,<16.1dev',
     ],
