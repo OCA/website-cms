@@ -3,24 +3,27 @@
 
 from odoo import fields, models
 
+from odoo.addons.cms_form.models.fields import Serialized  # pylint: disable=W8150
 
-# `AbstractModel` or `TransientModel` needed to make ACL check happy`
-class FakePubModel(models.TransientModel):
+
+class FakePubModel(models.Model):
     _name = "fake.publishable"
     _inherit = [
-        "website.published.mixin",
+        "cms.info.mixin",
     ]
     _description = "CMS Form fake publishable model form"
+
     name = fields.Char()
 
-    def _compute_website_url(self):
+    def _compute_cms_view_url(self):
         for item in self:
-            item.website_url = "/publishable/%d" % item.id
+            item.url = "/publishable/%d" % item.id
 
 
 class FakePubModelForm(models.AbstractModel):
     _name = "cms.form.fake.publishable"
     _inherit = "cms.form"
     _description = "CMS Form fake publishable form"
-    _form_model = "fake.publishable"
-    _form_model_fields = ("name",)
+
+    form_model_name = fields.Char(default="fake.publishable")
+    form_model_fields = Serialized(default=("name",))

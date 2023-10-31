@@ -6,13 +6,15 @@ from .common import TestWidgetCase, fake_field, fake_form
 
 
 class TestWidgetDate(TestWidgetCase):
-    @classmethod
-    def setUpClass(cls):
-        super().setUpClass()
-        cls.form = fake_form(a_date_field="2019-01-12", type="date")
-        cls.w_name, cls.w_field = fake_field("a_date_field")
-        cls.widget = cls.get_widget(
-            cls.w_name, cls.w_field, form=cls.form, widget_model="cms.form.widget.date",
+    def setUp(self):
+        super().setUp()
+        self.form = fake_form(self.env, a_date_field="2019-01-12", type="date")
+        self.w_name, self.w_field = fake_field("a_date_field")
+        self.widget = self.get_widget(
+            self.w_name,
+            self.w_field,
+            form=self.form,
+            widget_model="cms.form.widget.date",
         )
 
     def test_widget_date_input(self):
@@ -32,7 +34,7 @@ class TestWidgetDate(TestWidgetCase):
         # TODO: check on json params on other widgets too
         self.assertEqual(
             json.loads(node_input_disp[0].attrib["data-params"]),
-            {"defaultToday": True},
+            {"defaultToday": True, "name": "a_date_field"},
         )
         # and the real one holding the value which is hidden
         node_input = self.find_input_name(node, self.w_name)
@@ -67,13 +69,16 @@ class TestWidgetDate(TestWidgetCase):
         )
         self.assertEqual(widget.w_placeholder, "Custom")
         self.assertEqual(
-            widget.w_data_json(), '{"defaultToday": true, "dp": {"format": "%m.%Y"}}',
+            widget.w_data_json(),
+            '{"defaultToday": true, "dp": {"format": "%m.%Y"}, "name": "a_date_field"}',
         )
 
     def test_widget_date_input_all_elems(self):
         node = self.to_xml_node(self.widget.render())[0]
         self._test_element_attributes(
-            node, "div", {"class": "input-group"},
+            node,
+            "div",
+            {"class": "input-group"},
         )
         self.assertEqual(len(node.getchildren()), 3)
         self._test_element_attributes(node.getchildren()[0], "input", {})
@@ -86,7 +91,9 @@ class TestWidgetDate(TestWidgetCase):
             {"class": "input-group-addon js_datepicker_trigger"},
         )
         self._test_element_attributes(
-            node.getchildren()[2].getchildren()[0], "span", {"class": "fa fa-calendar"},
+            node.getchildren()[2].getchildren()[0],
+            "span",
+            {"class": "fa fa-calendar"},
         )
 
     def test_widget_date_input_extract_default_format(self):

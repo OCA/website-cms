@@ -5,7 +5,6 @@ from .common import TestWidgetCase, fake_field
 
 
 class TestWidgetBase(TestWidgetCase, FakeModelMixin):
-
     @classmethod
     def setUpClass(cls):
         super().setUpClass()
@@ -24,15 +23,15 @@ class TestWidgetBase(TestWidgetCase, FakeModelMixin):
 
     def test_widget_init(self):
         form = get_form(self.env, "cms.form.res.partner")
-        field = form.form_fields()["custom"]
+        field = form.form_fields_get()["custom"]
         widget = self.get_widget("custom", field, form=form)
         self.assertEqual(widget.w_form, form)
         self.assertEqual(widget.w_form_model, form.form_model)
         self.assertEqual(widget.w_record, form.main_object)
-        self.assertEqual(widget.w_form_values, form.form_render_values)
+        self.assertEqual(widget.w_form_values, form.form_data)
         self.assertEqual(widget.w_fname, "custom")
         self.assertDictEqual(widget.w_field, field)
-        self.assertEqual(widget.w_field_value, None)
+        self.assertEqual(widget.w_field_value, "oh yeah!")
         self.assertEqual(widget.w_data, {})
         self.assertEqual(widget.w_subfields, {})
 
@@ -69,15 +68,30 @@ class TestWidgetBase(TestWidgetCase, FakeModelMixin):
         self.assertEqual(widget.w_ids_from_input(""), [])
         # not valid values are skipped
         self.assertEqual(
-            widget.w_ids_from_input("1,2,3,#4, 70, 1XX, 200"), [1, 2, 3, 70, 200],
+            widget.w_ids_from_input("1,2,3,#4, 70, 1XX, 200"),
+            [1, 2, 3, 70, 200],
         )
 
     def test_subfields_get(self):
         form = get_form(
             self.env,
             "cms.form.res.partner",
-            sub_fields={"name": {"_all": ("custom",)}},
+            form_sub_fields={"name": {"_all": ("custom",)}},
         )
-        fields = form.form_fields()
+        fields = form.form_fields_get()
         widget = self.get_widget("name", fields["name"], form=form)
         self.assertEqual(widget.w_subfields_by_value(), {"custom": fields["custom"]})
+
+    def test_html_name(self):
+        form = get_form(self.env, "cms.form.res.partner")
+        for fname, field in form.form_fields_get().items():
+            widget = self.get_widget(fname, field, form=form)
+            self.assertEqual(widget.html_fname, fname)
+        form = get_form(
+            self.env,
+            "cms.form.res.partner",
+            form_fname_pattern="pre_{widget.w_fname}_post",
+        )
+        for fname, field in form.form_fields_get().items():
+            widget = self.get_widget(fname, field, form=form)
+            self.assertEqual(widget.html_fname, f"pre_{fname}_post")

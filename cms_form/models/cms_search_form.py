@@ -1,8 +1,12 @@
 # Copyright 2017 Simone Orsi
 # License LGPL-3.0 or later (http://www.gnu.org/licenses/lgpl.html).
 
-from odoo import _, models
+from odoo import _, fields, models
 from odoo.tools import pycompat
+
+from odoo.addons.portal.controllers.portal import pager as portal_pager
+
+from .fields import Serialized
 
 
 class CMSFormSearch(models.AbstractModel):
@@ -10,32 +14,66 @@ class CMSFormSearch(models.AbstractModel):
     _description = "CMS Form search"
     _inherit = "cms.form.mixin"
 
-    form_buttons_template = "cms_form.search_form_buttons"
-    form_search_results_template = "cms_form.search_results"
-    form_action = ""
-    form_method = "GET"
+    # change defaults
+    form_buttons_template = fields.Char(
+        form_tech=True, default="cms_form.search_form_buttons"
+    )
+    form_search_results_template = fields.Char(
+        form_tech=True, default="cms_form.search_results"
+    )
+    form_no_search_results_template = fields.Char(
+        form_tech=True, default="cms_form.no_search_results"
+    )
+    form_method = fields.Char(form_tech=True, default="GET")
     # you might want to just list items based on a predefined query
     # if this flag is false the search form won't be rendered
-    form_show_search_form = True
-    _form_mode = "search"
-    _form_extract_value_mode = "read"
+    form_show_search_form = fields.Boolean(form_tech=True, default=True)
+    form_mode = fields.Char(form_tech=True, default="search")
+    form_extract_value_mode = fields.Char(form_tech=True, default="read")
     # show results if no query has been submitted?
-    _form_show_results_no_submit = True
-    _form_results_per_page = 10
+    form_show_search_form = fields.Boolean(form_tech=True, default=True)
+    form_show_results_no_submit = fields.Boolean(form_tech=True, default=True)
+    form_results_per_page = fields.Integer(form_tech=True, default=10)
     # sort by this param, defaults to model's `_order`
-    _form_results_orderby = ""
+    form_results_orderby = fields.Char(form_tech=True, default="")
     # declare fields that must be searched w/ multiple values
-    _form_search_fields_multi = ()
+    form_search_fields_multi = Serialized(form_tech=True, default=[])
     # declare custom domain computation rules
-    _form_search_domain_rules = {
-        # opt 1: `field name: (leaf field name, operator, format value)`
-        # `format_value` is a formatting compatible string
-        # 'product_id': ('product_id.name', 'ilike', '{}')
-        # opt 2: function that give back `(fname, operator, value)``
-        # 'foo': lambda field, value, search_values: ('foo', 'not like', value)
-    }
-    # jQuery selector to find container of search results
-    _form_content_selector = ".form_content"
+    # opt 1: `field name: (leaf field name, operator, format value)`
+    # `format_value` is a formatting compatible string
+    # 'product_id': ('product_id.name', 'ilike', '{}')
+    # opt 2: function that give back `(fname, operator, value)``
+    # 'foo': lambda field, value, search_values: ('foo', 'not like', value)
+    form_search_domain_rules = fields.Binary(form_tech=True, default={}, store=False)
+    form_search_results = fields.Binary(form_tech=True, default={}, store=False)
+
+    # make it computed
+    form_title = fields.Char(form_tech=True, compute="_compute_form_title")
+    form_no_result_msg = fields.Char(
+        form_tech=True, compute="_compute_form_no_result_msg"
+    )
+
+    def _get_form_mode(self):
+        return "search"
+
+    def _compute_form_title(self):
+        for rec in self:
+            rec.form_title = rec._get_form_title()
+
+    def _get_form_title(self):
+        title = _("Search")
+        if self.form_model_name:
+            model = self.env["ir.model"]._get(self.form_model_name)
+            name = model and model.name or ""
+            title = _("Search %s") % name
+        return title
+
+    def _compute_form_no_result_msg(self):
+        for rec in self:
+            rec.form_no_result_msg = rec._get_form_no_result_msg()
+
+    def _get_form_no_result_msg(self):
+        return _("No items")
 
     def form_check_permission(self):
         """Just searching, nothing to check here."""
@@ -43,38 +81,17 @@ class CMSFormSearch(models.AbstractModel):
 
     def form_update_fields_attributes(self, _fields):
         """No field should be mandatory."""
-        super().form_update_fields_attributes(_fields)
+        res = super().form_update_fields_attributes(_fields)
         for _fname, field in _fields.items():
             field["required"] = False
-
-    def form_get_widget_model(self, fname, field):
-        """Search via related field needs a simple char widget."""
-        res = super().form_get_widget_model(fname, field)
-        if fname in self._form_search_domain_rules:
-            res = "cms.form.widget.char"
         return res
 
-    __form_search_results = {}
-
-    @property
-    def form_search_results(self):
-        """Return search results."""
-        return self.__form_search_results
-
-    @form_search_results.setter
-    def form_search_results(self, value):
-        self.__form_search_results = value
-
-    @property
-    def form_title(self):
-        title = _("Search")
-        if self._form_model:
-            model = (
-                self.env["ir.model"].sudo().search([("model", "=", self._form_model)])
-            )
-            name = model and model.name or ""
-            title = _("Search %s") % name
-        return title
+    def _form_get_default_widget_model(self, fname, field):
+        """Search via related field needs a simple char widget."""
+        res = super()._form_get_default_widget_model(fname, field)
+        if fname in self.form_search_domain_rules:
+            res = "cms.form.widget.char"
+        return res
 
     def form_process_GET(self, render_values):
         self.form_search(render_values)
@@ -83,17 +100,17 @@ class CMSFormSearch(models.AbstractModel):
     def form_search(self, render_values):
         """Produce search results."""
         search_values = self.form_extract_values()
-        if not search_values and not self._form_show_results_no_submit:
+        if not search_values and not self.form_show_results_no_submit:
             return self.form_search_results
         domain = self.form_search_domain(search_values)
         count = self.form_model.search_count(domain)
         page = render_values.get("extra_args", {}).get("page", 0)
         url = self._form_get_url_for_pager(render_values)
         pager = self._form_results_pager(count=count, page=page, url=url)
-        order = self._form_results_orderby or None
+        order = self.form_results_orderby or None
         results = self.form_model.search(
             domain,
-            limit=self._form_results_per_page,
+            limit=self.form_results_per_page,
             offset=pager["offset"],
             order=order,
         )
@@ -108,7 +125,7 @@ class CMSFormSearch(models.AbstractModel):
         # default to current path w/out paging
         path = pycompat.to_text(self.request.path)
         url = path.split("/page")[0]
-        if self._form_model:
+        if self.form_model_name:
             # rely on model's cms search url
             url = getattr(self.form_model, "cms_search_url", None) or url
         # override via controller/request specific value
@@ -116,7 +133,7 @@ class CMSFormSearch(models.AbstractModel):
         return url
 
     def pager(self, **kw):
-        return self.env["website"].pager(**kw)
+        return portal_pager(**kw)
 
     def _form_results_pager(self, count=None, page=0, url="", url_args=None):
         """Prepare pager for current search."""
@@ -126,19 +143,19 @@ class CMSFormSearch(models.AbstractModel):
             url=url,
             total=count,
             page=page,
-            step=self._form_results_per_page,
-            scope=self._form_results_per_page,
+            step=self.form_results_per_page,
+            scope=self.form_results_per_page,
             url_args=url_args,
         )
 
     def form_search_domain(self, search_values):
         """Build search domain."""
         domain = []
-        for fname, field in self.form_fields().items():
+        for fname, field in self.form_fields_get().items():
             value = search_values.get(fname)
             if value is None:
                 continue
-            if fname in self._form_search_fields_multi:
+            if fname in self.form_search_fields_multi:
                 leaf = (fname, "in", value)
                 domain.append(leaf)
                 continue
@@ -163,8 +180,8 @@ class CMSFormSearch(models.AbstractModel):
                 if not value:
                     # searching for an empty string breaks search
                     continue
-            if fname in self._form_search_domain_rules:
-                rule = self._form_search_domain_rules[fname]
+            if fname in self.form_search_domain_rules:
+                rule = self.form_search_domain_rules[fname]
                 if callable(rule):
                     fname, operator, value = rule(field, value, search_values)
                 else:

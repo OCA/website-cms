@@ -1,7 +1,8 @@
 # Copyright 2017 Simone Orsi
 # License LGPL-3.0 or later (http://www.gnu.org/licenses/lgpl.html).
 
-import mock
+from unittest import mock
+
 from werkzeug.wrappers import Request
 
 from odoo import http
@@ -13,59 +14,75 @@ from .utils import fake_request
 class TestFormBase(FormTestCase):
     @staticmethod
     def _get_test_models():
-        from .fake_models.fake_fields_form import FakeFieldsForm
+        from .fake_models.fake_fields_form import (
+            FakeFieldsForm,
+            FakeFieldsForm2,
+            FakeFloatWidget,
+        )
         from .fake_models.fake_partner_form import FakePartnerForm
         from .fake_models.fake_partner_form_protected_fields import (
             FakePartnerFormProtectedFields,
         )
-        return (FakeFieldsForm, FakePartnerForm, FakePartnerFormProtectedFields)
+
+        return (
+            FakeFieldsForm,
+            FakeFieldsForm2,
+            FakeFloatWidget,
+            FakePartnerForm,
+            FakePartnerFormProtectedFields,
+        )
 
     def test_form_init(self):
         form = self.get_form("cms.form.mixin")
         self.assertTrue(isinstance(form.request, Request))
-        self.assertTrue(isinstance(form.o_request, http.HttpRequest))
+        self.assertTrue(isinstance(form.o_request, http.Request))
 
     def test_form_init_overrides(self):
         overrides = dict(
-            model="res.partner",
-            mode="foo",
-            fields_whitelist=("name",),
-            fields_blacklist=("country_id",),
-            fields_attributes=("string", "type",),
-            wrapper_extra_css_klass="foo",
-            extra_css_klass="baz",
+            form_model_name="res.partner",
+            form_mode="foo",
+            form_fields_whitelist=("name",),
+            form_fields_blacklist=("country_id",),
+            form_fields_attributes=(
+                "string",
+                "type",
+            ),
+            form_wrapper_extra_css_klass="foo",
+            form_extra_css_klass="baz",
         )
         form = self.get_form("cms.form.mixin", **overrides)
         for k, v in overrides.items():
-            self.assertEqual(getattr(form, "_form_" + k), v)
+            self.assertEqual(form[k], v)
 
     def test_form_mode(self):
         form = self.get_form("cms.form.mixin")
         self.assertEqual(form.form_mode, "create")
         form = self.get_form("cms.form.mixin", main_object=object())
         self.assertEqual(form.form_mode, "edit")
-        form = self.get_form("cms.form.mixin", mode="custom")
+        form = self.get_form("cms.form.mixin", form_mode="custom")
         self.assertEqual(form.form_mode, "custom")
 
     def test_fields_load(self):
         form = self.get_form("cms.form.res.partner")
-        fields = form.form_fields()
+        fields = form.form_fields_get()
         self.assertEqual(len(fields), 3)
         self.assertTrue("name" in list(fields.keys()))
         self.assertTrue("country_id" in list(fields.keys()))
         self.assertTrue("custom" in list(fields.keys()))
 
         # whitelist
-        form = self.get_form("cms.form.res.partner", fields_whitelist=("name",))
-        fields = form.form_fields()
+        form = self.get_form("cms.form.res.partner", form_fields_whitelist=("name",))
+        fields = form.form_fields_get()
         self.assertEqual(len(fields), 1)
         self.assertTrue("name" in list(fields.keys()))
         self.assertTrue("country_id" not in list(fields.keys()))
         self.assertTrue("custom" not in list(fields.keys()))
 
         # blacklist
-        form = self.get_form("cms.form.res.partner", fields_blacklist=("country_id",))
-        fields = form.form_fields()
+        form = self.get_form(
+            "cms.form.res.partner", form_fields_blacklist=("country_id",)
+        )
+        fields = form.form_fields_get()
         self.assertEqual(len(fields), 2)
         self.assertTrue("name" in list(fields.keys()))
         self.assertTrue("country_id" not in list(fields.keys()))
@@ -73,25 +90,34 @@ class TestFormBase(FormTestCase):
 
     def test_fields_order(self):
         form = self.get_form(
-            "cms.form.res.partner", fields_order=["name", "custom", "country_id"],
+            "cms.form.res.partner",
+            form_fields_order=["name", "custom", "country_id"],
         )
-        fields = form.form_fields()
+        fields = form.form_fields_get()
         self.assertEqual(list(fields.keys())[0], "name")
         self.assertEqual(list(fields.keys())[1], "custom")
         self.assertEqual(list(fields.keys())[2], "country_id")
 
         # change order
         form = self.get_form(
-            "cms.form.res.partner", fields_order=["country_id", "name", "custom"],
+            "cms.form.res.partner",
+            form_fields_order=["country_id", "name", "custom"],
         )
-        fields = form.form_fields()
+        fields = form.form_fields_get()
         self.assertEqual(list(fields.keys())[0], "country_id")
         self.assertEqual(list(fields.keys())[1], "name")
         self.assertEqual(list(fields.keys())[2], "custom")
 
+    def test_form_fields_get(self):
+        form = self.get_form("cms.form.res.partner")
+        fields = form.form_fields_get()
+        # must include ONLY non tech fields and model fields
+        expected = ["name", "country_id", "custom"]
+        self.assertEqual(sorted(fields.keys()), sorted(expected))
+
     def test_fields_attributes(self):
         form = self.get_form("cms.form.res.partner")
-        fields = form.form_fields()
+        fields = form.form_fields_get()
         # this one is required in partner model
         self.assertTrue(fields["name"]["required"])
         # this one is forced to required in our custom form
@@ -100,50 +126,50 @@ class TestFormBase(FormTestCase):
     def test_fields_defaults(self):
         form = self.get_form("cms.form.res.partner")
         self.env["ir.default"].set("res.partner", "name", "DEFAULT NAME")
-        fields = form.form_fields()
+        fields = form.form_fields_get()
         self.assertEqual(fields["name"]["_default"], "DEFAULT NAME")
         self.assertEqual(fields["custom"]["_default"], "I am your default")
 
     def test_fields_hidden(self):
-        form = self.get_form("cms.form.res.partner", fields_hidden=("country_id",))
+        form = self.get_form("cms.form.res.partner", form_fields_hidden=("country_id",))
         # get all fields (default)
-        fields = form.form_fields()
+        fields = form.form_fields_get()
         self.assertListEqual(sorted(fields.keys()), ["country_id", "custom", "name"])
         # country is flagged as hidden
         self.assertTrue(fields["country_id"]["hidden"])
         # get only visible
-        fields = form.form_fields(hidden=False)
+        fields = form.form_fields_get(hidden=False)
         self.assertListEqual(sorted(fields.keys()), ["custom", "name"])
         # get only hidden
-        fields = form.form_fields(hidden=True)
+        fields = form.form_fields_get(hidden=True)
         self.assertListEqual(sorted(fields.keys()), ["country_id"])
         self.assertTrue(fields["country_id"]["hidden"])
 
     def test_fields_hidden_keep_order(self):
         form = self.get_form(
             "cms.form.res.partner",
-            fields_hidden=("country_id",),
-            fields_order=["country_id", "name", "custom"],
+            form_fields_hidden=("country_id",),
+            form_fields_order=["country_id", "name", "custom"],
         )
-        fields = form.form_fields(hidden=False)
+        fields = form.form_fields_get(hidden=False)
         self.assertListEqual(list(fields.keys()), ["name", "custom"])
         form = self.get_form(
             "cms.form.res.partner",
-            fields_hidden=("country_id",),
-            fields_order=["country_id", "custom", "name"],
+            form_fields_hidden=("country_id",),
+            form_fields_order=["country_id", "custom", "name"],
         )
-        fields = form.form_fields(hidden=False)
+        fields = form.form_fields_get(hidden=False)
         self.assertListEqual(list(fields.keys()), ["custom", "name"])
 
     def test_subfields(self):
         form = self.get_form(
             "cms.form.res.partner",
-            sub_fields={
+            form_sub_fields={
                 "name": {"_all": ("custom",)},
                 "do_not_exists": {"_all": ("foo",)},  # skipped
             },
         )
-        fields = form.form_fields()
+        fields = form.form_fields_get()
         self.assertEqual(
             fields["name"]["subfields"], {"_all": {"custom": fields["custom"]}}
         )
@@ -151,24 +177,24 @@ class TestFormBase(FormTestCase):
 
     def test_fields_binary(self):
         form = self.get_form(
-            "cms.form.res.partner", model_fields=["name", "image_1024"]
+            "cms.form.res.partner", form_model_fields=["name", "image_1024"]
         )
         self.assertEqual(list(form.form_file_fields.keys()), ["image_1024"])
 
     def test_fields_protected(self):
-        group = self.env.ref("website.group_website_designer")
+        group = self.env.ref("base.group_system")
         user = self.env.ref("base.user_demo")
         # user does not have the group
         self.assertNotIn(group, user.groups_id)
         form = self.get_form("cms.form.protected.fields", sudo_uid=user.id)
-        fields = form.form_fields()
+        fields = form.form_fields_get()
         # field is skipped
         self.assertEqual(list(fields.keys()), ["nogroup"])
         # now add the group
         user.write({"groups_id": [(4, group.id)]})
-        fields = form.form_fields()
+        fields = form.form_fields_get()
         # now we get protected field too
-        self.assertEqual(list(fields.keys()), ["ihaveagroup", "nogroup"])
+        self.assertEqual(sorted(fields.keys()), sorted(["ihaveagroup", "nogroup"]))
 
     def test_get_loader(self):
         form = self.get_form("cms.form.test_fields")
@@ -183,22 +209,32 @@ class TestFormBase(FormTestCase):
             ),
             None,
         )
-        fields = form.form_fields()
+        fields = form.form_fields_get()
         for fname, loader in expected.items():
             self.assertEqual(loader, form.form_get_loader(fname, fields[fname]))
 
-        def custom_loader(*pa, **ka):
+        def custom_loader(self, *pa, **ka):
             return pa, ka
 
-        # by type
-        form._form_load_char = custom_loader
-        form._form_load_integer = custom_loader
-        form._form_load_float = custom_loader
-        # by name
-        form._form_load_a_many2many = custom_loader
-
-        for fname in ("a_char", "a_number", "a_float", "a_many2many"):
-            self.assertEqual(custom_loader, form.form_get_loader(fname, fields[fname]))
+        with (
+            mock.patch.object(
+                type(form), "_form_load_char", custom_loader, create=True
+            ),
+            mock.patch.object(
+                type(form), "_form_load_integer", custom_loader, create=True
+            ),
+            mock.patch.object(
+                type(form), "_form_load_float", custom_loader, create=True
+            ),
+            mock.patch.object(
+                type(form), "_form_load_a_many2many", custom_loader, create=True
+            ),
+        ):
+            for fname in ("a_char", "a_number", "a_float", "a_many2many"):
+                self.assertEqual(
+                    custom_loader.__name__,
+                    form.form_get_loader(fname, fields[fname]).__name__,
+                )
 
     def test_get_extractor(self):
         form = self.get_form("cms.form.test_fields")
@@ -213,24 +249,35 @@ class TestFormBase(FormTestCase):
             ),
             None,
         )
-        fields = form.form_fields()
+        fields = form.form_fields_get()
         for fname, loader in expected.items():
             self.assertEqual(loader, form.form_get_extractor(fname, fields[fname]))
 
-        def custom_extractor(*pa, **ka):
+        def custom_extractor(self, *pa, **ka):
             return pa, ka
 
-        # by type
-        form._form_extract_char = custom_extractor
-        form._form_extract_integer = custom_extractor
-        form._form_extract_float = custom_extractor
-        # by name
-        form._form_extract_a_many2many = custom_extractor
-
-        for fname in ("a_char", "a_number", "a_float", "a_many2many"):
-            self.assertEqual(
-                custom_extractor, form.form_get_extractor(fname, fields[fname])
-            )
+        with (
+            mock.patch.object(
+                type(form), "_form_extract_char", custom_extractor, create=True
+            ),
+            mock.patch.object(
+                type(form), "_form_extract_integer", custom_extractor, create=True
+            ),
+            mock.patch.object(
+                type(form), "_form_extract_integer", custom_extractor, create=True
+            ),
+            mock.patch.object(
+                type(form), "_form_extract_float", custom_extractor, create=True
+            ),
+            mock.patch.object(
+                type(form), "_form_extract_a_many2many", custom_extractor, create=True
+            ),
+        ):
+            for fname in ("a_char", "a_number", "a_float", "a_many2many"):
+                self.assertEqual(
+                    custom_extractor.__name__,
+                    form.form_get_extractor(fname, fields[fname]).__name__,
+                )
 
     def test_load_defaults(self):
         # create mode, no main_object
@@ -293,7 +340,7 @@ class TestFormBase(FormTestCase):
             self.assertEqual(expected[k], v)
         # read mode
         form = self.get_form(
-            "cms.form.test_fields", req=request, extract_value_mode="read"
+            "cms.form.test_fields", req=request, form_extract_value_mode="read"
         )
         values = form.form_extract_values()
         expected.update({"a_many2many": [1, 2, 3], "a_one2many": [4, 5, 6]})
@@ -342,13 +389,19 @@ class TestFormBase(FormTestCase):
         # write mode
         form = self.get_form("cms.form.test_fields", req=request)
 
-        def custom_extractor(form, fname, value, **request_values):
+        def custom_extractor(self, form, fname, value, **request_values):
             return "custom for: " + fname
 
         # by type
-        form._form_extract_a_char = custom_extractor
-        form._form_extract_a_number = custom_extractor
-        values = form.form_extract_values()
+        with (
+            mock.patch.object(
+                type(form), "_form_extract_a_char", custom_extractor, create=True
+            ),
+            mock.patch.object(
+                type(form), "_form_extract_a_number", custom_extractor, create=True
+            ),
+        ):
+            values = form.form_extract_values()
         expected = {
             "a_char": "custom for: a_char",
             "a_number": "custom for: a_number",
@@ -367,7 +420,6 @@ class TestFormBase(FormTestCase):
             {
                 "main_object": None,
                 "form": form,
-                "form_data": {},
                 "errors": {},
                 "errors_messages": {},
             },
@@ -389,10 +441,10 @@ class TestFormBase(FormTestCase):
                 "a_number": None,
                 "a_one2many": "[]",
             }
+            self.assertEqual(form.form_data, default_form_data)
             expected = {
                 "main_object": None,
                 "form": form,
-                "form_data": default_form_data,
                 "errors": {},
                 "errors_messages": {},
             }
@@ -406,7 +458,6 @@ class TestFormBase(FormTestCase):
                     "extra_key2": "baz",
                     "main_object": None,
                     "form": form,
-                    "form_data": default_form_data,
                     "errors": {},
                     "errors_messages": {},
                 },
@@ -432,10 +483,10 @@ class TestFormBase(FormTestCase):
                 "a_number": None,
                 "a_one2many": "[]",
             }
+            self.assertEqual(form.form_data, default_form_data)
             expected = {
                 "main_object": None,
                 "form": form,
-                "form_data": default_form_data,
                 "errors": {},
                 "errors_messages": {},
             }
@@ -450,14 +501,13 @@ class TestFormBase(FormTestCase):
                     "extra_key4": "baz",
                     "main_object": None,
                     "form": form,
-                    "form_data": default_form_data,
                     "errors": {},
                     "errors_messages": {},
                 },
             )
 
     def test_get_widget(self):
-        form = self.get_form("cms.form.test_fields")
+        form = self.get_form("cms.form.test_fields2")
         expected = {
             "a_char": "cms.form.widget.char",
             "a_number": "cms.form.widget.integer",
@@ -465,12 +515,10 @@ class TestFormBase(FormTestCase):
             "a_many2one": "cms.form.widget.many2one",
             "a_many2many": "cms.form.widget.many2many",
             "a_one2many": "cms.form.widget.one2many",
+            "a_float_with_another_widget": self.FakeFloatWidget._name,
         }
-        fields = form.form_fields()
+        fields = form.form_fields_get()
         for fname, widget_model in expected.items():
-            self.assertEqual(
-                widget_model, form.form_get_widget_model(fname, fields[fname])
-            )
             self.assertEqual(
                 form.form_get_widget(fname, fields[fname]).__class__,
                 self.env[widget_model].__class__,
@@ -480,7 +528,7 @@ class TestFormBase(FormTestCase):
         form = self.get_form("cms.form.res.partner")
         expected = "cms_form_wrapper cms_form_res_partner " "res_partner mode_create"
         self.assertEqual(form.form_wrapper_css_klass, expected)
-        form._form_wrapper_extra_css_klass = "foo"
+        form.form_wrapper_extra_css_klass = "foo"
         expected = (
             "cms_form_wrapper cms_form_res_partner " "res_partner foo mode_create"
         )
@@ -489,37 +537,34 @@ class TestFormBase(FormTestCase):
     def test_css_klass(self):
         form = self.get_form("cms.form.res.partner")
         self.assertEqual(form.form_css_klass, "form-horizontal")
-        form._form_extra_css_klass = "cool"
+        form.form_extra_css_klass = "cool"
         self.assertEqual(form.form_css_klass, "form-horizontal cool")
         form.form_display_mode = "vertical"
         self.assertEqual(form.form_css_klass, "form-vertical cool")
 
     def test_field_wrapper_css_klass(self):
         form = self.get_form("cms.form.res.partner")
+        field = form.form_fields_get()["custom"]
         self.assertEqual(
-            form.form_make_field_wrapper_klass(
-                "foo_field", {"type": "char", "required": False}
-            ),
-            "form-group form-field field-char field-foo_field",
+            form.form_make_field_wrapper_klass("custom", field),
+            "form-group form-field field-char field-custom",
         )
+        field = form.form_fields_get()["country_id"]
+        self.assertEqual(
+            form.form_make_field_wrapper_klass("country_id", field),
+            ("form-group form-field field-many2one " "field-country_id field-required"),
+        )
+        field = form.form_fields_get()["custom"]
+        field["required"] = True
         self.assertEqual(
             form.form_make_field_wrapper_klass(
-                "foo_field_id", {"type": "many2one", "required": True}
+                "custom",
+                field,
+                errors={"custom": "bad_value"},
             ),
             (
-                "form-group form-field field-many2one "
-                "field-foo_field_id field-required"
-            ),
-        )
-        self.assertEqual(
-            form.form_make_field_wrapper_klass(
-                "foo_field",
-                {"type": "float", "required": True},
-                errors={"foo_field": "bad_value"},
-            ),
-            (
-                "form-group form-field field-float "
-                "field-foo_field field-required has-error"
+                "form-group form-field field-char "
+                "field-custom field-required has-error"
             ),
         )
 

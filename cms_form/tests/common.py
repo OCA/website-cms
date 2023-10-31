@@ -4,7 +4,7 @@
 from lxml import html
 from odoo_test_helper import FakeModelLoader
 
-from odoo.tests.common import HttpCase, SavepointCase
+from odoo.tests.common import HttpCase, TransactionCase
 
 from .utils import fake_request, fake_session, session_store
 
@@ -79,7 +79,7 @@ class HTMLRenderMixin(object):
             self.assertEqual(len(self.find_input_name(node, name)), 1)
 
 
-class FormTestCase(SavepointCase, FakeModelMixin):
+class FormTestCase(TransactionCase, FakeModelMixin):
     """Form test cases."""
 
     at_install = False
@@ -118,6 +118,7 @@ class FormRenderTestCase(FormTestCase, HTMLRenderMixin):
 class FormHttpTestCase(HttpCase, FakeModelMixin, HTMLRenderMixin):
     """Form test cases where you test HTML rendering and HTTP requests."""
 
+    # FIXME: use setupClass
     def setUp(self):
         # HttpCase has no ENV on setUpClass we have to setup fake models here
         super().setUp()
@@ -130,7 +131,13 @@ class FormHttpTestCase(HttpCase, FakeModelMixin, HTMLRenderMixin):
 
     def html_get(self, url):
         resp = self.url_open(url, timeout=30)
-        return html.document_fromstring(resp.content)
+        return self.parse_html(resp.content)
+
+    def parse_html(self, content, fragment=False):
+        parser = html.document_fromstring
+        if fragment:
+            parser = html.fragment_fromstring
+        return parser(content)
 
     def get_form(self, form_model, **kw):
         return get_form(self.env, form_model, **kw)

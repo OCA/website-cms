@@ -5,17 +5,36 @@
     "name": "CMS Form",
     "summary": """
         Basic content type form""",
-    "version": "13.0.1.0.1",
+    "version": "16.0.1.0.0",
     "license": "LGPL-3",
     "author": "Camptocamp, Odoo Community Association (OCA)",
-    "mainainers": ["simahawk"],
+    "maintainers": ["simahawk"],
     "website": "https://github.com/OCA/website-cms",
-    "depends": ["website", "cms_info", "cms_status_message"],
+    "depends": [
+        "cms_info",
+        "cms_status_message",
+        # TODO: get rid of portal too
+        "portal",
+        "base_sparse_field",
+    ],
     "data": [
         "security/cms_form.xml",
-        "templates/assets.xml",
         "templates/form.xml",
         "templates/widgets.xml",
+        "templates/portal.xml",
     ],
-    "installable": False,
+    "installable": True,
+    "assets": {
+        "web.assets_frontend": [
+            "cms_form/static/src/scss/cms_form.scss",
+            "cms_form/static/src/scss/progressbar.scss",
+            # TODO: review them all w/ modern JS
+            "cms_form/static/src/js/select2widgets.js",
+            "cms_form/static/src/js/date_widget.js",
+            "cms_form/static/src/js/textarea_widget.js",
+            "cms_form/static/src/js/master_slave.js",
+            "cms_form/static/src/js/lock_copy_paste.js",
+            "cms_form/static/src/js/ajax.js",
+        ],
+    },
 }

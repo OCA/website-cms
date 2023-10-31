@@ -1,13 +1,11 @@
 # Copyright 2017 Simone Orsi
 # License LGPL-3.0 or later (http://www.gnu.org/licenses/lgpl.html).
 
-import base64
 
 import werkzeug
 
-from odoo import models
-from odoo.tools import pycompat
-from odoo.tools.mimetypes import guess_mimetype
+from odoo import fields, models
+from odoo.tools.image import image_data_uri
 
 
 class BinaryWidget(models.AbstractModel):
@@ -15,60 +13,32 @@ class BinaryWidget(models.AbstractModel):
     _inherit = "cms.form.widget.mixin"
     _description = "CMS Form binary widget"
 
-    def w_load(self, **req_values):
-        value = super().w_load(**req_values)
-        return self.binary_to_form(value, **req_values)
-
-    def binary_to_form(self, value, **req_values):
-        _value = {
-            # 'value': '',
-            # 'raw_value': '',
-            # 'mimetype': '',
-        }
-        from_request = False
-        if value:
-            if isinstance(value, werkzeug.datastructures.FileStorage):
-                from_request = True
-                byte_content = value.read()
-                value = base64.b64encode(byte_content)
-                value = pycompat.to_text(value)
-            else:
-                value = pycompat.to_text(value)
-                byte_content = base64.b64decode(value)
-            mimetype = guess_mimetype(byte_content)
-            _value = {
-                "value": value,
-                "raw_value": value,
-                "mimetype": mimetype,
-                "from_request": from_request,
-            }
-            if mimetype.startswith("image/"):
-                _value["value"] = "data:{};base64,{}".format(mimetype, value)
-        return _value
-
     def w_extract(self, **req_values):
         value = super().w_extract(**req_values)
         return self.form_to_binary(value, **req_values)
 
     def form_to_binary(self, value, **req_values):
-        if self.w_fname not in req_values:
+        if self.html_fname not in req_values:
             return None
         _value = False
-        keepcheck_flag = req_values.get(self.w_fname + "_keepcheck")
-        if not keepcheck_flag or keepcheck_flag == "yes":
+        keepcheck_flag_key = self.html_fname + "_keepcheck"
+        keepcheck_flag = req_values.get(keepcheck_flag_key)
+        # If no keepcheck flag is given the file or img is always replaced
+        if keepcheck_flag_key in req_values and keepcheck_flag == "yes":
             # no flag or flag marked as "keep current value"
             # prevent discarding image
-            req_values.pop(self.w_fname, None)
-            req_values.pop(self.w_fname + "_keepcheck", None)
+            req_values.pop(self.html_fname, None)
+            req_values.pop(keepcheck_flag_key, None)
             return None
         if value:
-            if hasattr(value, "read"):
-                file_content = value.read()
-                _value = base64.b64encode(file_content)
-                _value = pycompat.to_text(_value)
-            else:
-                # like 'data:image/jpeg;base64,jRyRuUm2VP...
-                _value = value.split(",")[-1]
+            _value = value
+            # TODO: move this to image widget
+            if isinstance(value, str):
+                if value.startswith("data:"):
+                    # like 'data:image/jpeg;base64,jRyRuUm2VP...
+                    _value = value.split(",")[-1]
+            elif isinstance(value, dict):
+                _value = value.get("value")
         return _value
 
     def w_check_empty_value(self, value, **req_values):
@@ -89,4 +59,44 @@ class ImageWidget(models.AbstractModel):
     _name = "cms.form.widget.image"
     _inherit = "cms.form.widget.binary.mixin"
     _description = "CMS Form image widget"
-    _w_template = "cms_form.field_widget_image"
+
+    w_template = fields.Char(default="cms_form.field_widget_image")
+
+    def w_load(self, **req_values):
+        value = super().w_load(**req_values)
+        # TODO: can we get a dict here? Likely only when loading from request
+        if isinstance(value, dict) and value.get("mimetype", "").startswith("image/"):
+            val = (
+                value["value"].encode()
+                if isinstance(value["value"], str)
+                else value["value"]
+            )
+            value["value"] = image_data_uri(val)
+        elif isinstance(value, (str, bytes)):
+            bvalue = value
+            if isinstance(value, str):
+                bvalue = value.encode()
+            else:
+                value = value.decode()
+            if value.startswith("data:"):
+                raw_value = value.split(",")[-1]
+            else:
+                raw_value = value
+                value = image_data_uri(bvalue)
+            mimetype = value.split(";")[0].replace("data:", "")
+            value = {
+                "value": value,
+                "raw_value": raw_value,
+                "mimetype": mimetype,
+                "content_type": mimetype,
+                "content_lenght": len(raw_value),
+            }
+        return value
+
+
+class FileWidget(models.AbstractModel):
+    _name = "cms.form.widget.binary"
+    _inherit = "cms.form.widget.binary.mixin"
+    _description = "CMS Form file widget"
+
+    w_template = fields.Char(default="cms_form.field_widget_file")

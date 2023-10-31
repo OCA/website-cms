@@ -3,6 +3,8 @@
 
 from odoo import fields, models
 
+from odoo.addons.cms_form.models.fields import Serialized  # pylint: disable=W8150
+
 
 class FakeFieldsFormWithFieldsets(models.AbstractModel):
     """A test model form."""
@@ -10,20 +12,22 @@ class FakeFieldsFormWithFieldsets(models.AbstractModel):
     _name = "cms.form.test_fieldsets"
     _inherit = "cms.form.test_fields"
     _description = "CMS Form test fieldsets form"
-    _form_fieldsets = [
-        {"id": "main", "fields": ["a_char"]},
-        {
-            "id": "numbers",
-            "title": "Number fields",
-            "description": "Only number fields here",
-            "fields": ["a_number", "a_float"],
-            "css_extra_klass": "best_fieldset",
-        },
-        {
-            "id": "relations",
-            "title": "Only relations here",
-            "fields": ["a_many2one", "a_many2many", "a_one2many"],
-        },
-        {"id": "protected", "fields": ["ihaveagroup"]},
-    ]
-    ihaveagroup = fields.Char(groups="website.group_website_designer")
+    form_fieldsets = Serialized(
+        default=[
+            {"id": "main", "fields": ["a_char"]},
+            {
+                "id": "numbers",
+                "title": "Number fields",
+                "description": "Only number fields here",
+                "fields": ["a_number", "a_float"],
+                "css_extra_klass": "best_fieldset",
+            },
+            {
+                "id": "relations",
+                "title": "Only relations here",
+                "fields": ["a_many2one", "a_many2many", "a_one2many"],
+            },
+            {"id": "protected", "fields": ["ihaveagroup"]},
+        ]
+    )
+    ihaveagroup = fields.Char(groups="base.group_system")

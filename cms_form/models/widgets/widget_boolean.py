@@ -1,18 +1,22 @@
 # Copyright 2017 Simone Orsi
 # License LGPL-3.0 or later (http://www.gnu.org/licenses/lgpl.html).
 
-from odoo import models
+from odoo import fields, models
 
 from ... import utils
+from ..fields import Serialized
 
 
 class BooleanWidget(models.AbstractModel):
     _name = "cms.form.widget.boolean"
     _inherit = "cms.form.widget.mixin"
     _description = "CMS Form boolean widget"
-    _w_template = "cms_form.field_widget_boolean"
 
-    w_true_values = utils.TRUE_VALUES
+    w_template = fields.Char(default="cms_form.field_widget_boolean")
+    w_wrapper_template = fields.Char(default="cms_form.form_field_label_after_wrapper")
+    w_wrapper_css_klass = fields.Char(default="form-check")
+    w_true_values = Serialized(default=utils.TRUE_VALUES)
+    w_field_value = fields.Boolean()
 
     def widget_init(self, form, fname, field, **kw):
         widget = super().widget_init(form, fname, field, **kw)

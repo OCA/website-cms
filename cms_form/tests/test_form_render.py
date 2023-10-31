@@ -27,7 +27,7 @@ class TestRender(FormRenderTestCase):
         }
         self.assert_match_attrs(node.attrib, expected_attrs)
 
-    def test_render_form_fields(self):
+    def test_render_form_fields_get(self):
         form = self.get_form("cms.form.test_fields")
         html = form.form_render()
         node = self.to_xml_node(html)[0]
@@ -46,7 +46,7 @@ class TestRender(FormRenderTestCase):
 
     def test_field_wrapper_attrs(self):
         form = self.get_form("cms.form.test_fields")
-        form_fields = form.form_fields()
+        form_fields = form.form_fields_get()
         html = form.form_render()
         node = self.to_xml_node(html)[0]
         expected_fields = (
@@ -66,7 +66,7 @@ class TestRender(FormRenderTestCase):
                 form.form_make_field_wrapper_klass(fname, form_fields[fname]),
             )
 
-    def test_render_form_fieldsets(self):
+    def test_render_form_fieldsets_get(self):
         form = self.get_form("cms.form.test_fieldsets")
         html = form.form_render()
         node = self.to_xml_node(html)[0]
@@ -85,7 +85,7 @@ class TestRender(FormRenderTestCase):
         self.assertEqual(len(node[0].xpath("//input|//select")), len(expected_fields))
         self.assert_match_inputs(node, expected_fields)
         # and they are organized by fieldset
-        for fset in form.form_fieldsets():
+        for fset in form.form_fieldsets_get():
             fset_node = node.xpath('//fieldset[@id="%s"]' % fset["id"])[0]
             if fset.get("title"):
                 legend_node = fset_node.find("legend")

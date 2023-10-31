@@ -12,7 +12,7 @@ from odoo.http import request
 class FormControllerMixin(object):
 
     # default template
-    template = "cms_form.form_wrapper"
+    template = "cms_form.portal_form_wrapper"
 
     def get_template(self, form, **kw):
         """Retrieve rendering template.
@@ -21,10 +21,7 @@ class FormControllerMixin(object):
         Can be overridden straight in the form
         using the attribute `form_wrapper_template`.
         """
-        template = self.template
-
-        if getattr(form, "form_wrapper_template", None):
-            template = form.form_wrapper_template
+        template = form.form_wrapper_template or self.template
 
         if not template:
             raise NotImplementedError("You must provide a template!")
@@ -46,7 +43,7 @@ class FormControllerMixin(object):
         #    w/ a name that overrides a rendering value not related to a form.
         #    Most common example: field named `website` will override
         #    odoo record for current website.
-        vals = {k: v for k, v in kw.items() if k not in form.form_fields()}
+        vals = {k: v for k, v in kw.items() if k not in form.form_fields_get()}
         vals.update({"form": form, "main_object": main_object, "controller": self})
         return vals
 
@@ -136,14 +133,44 @@ class CMSFormController(http.Controller, FormControllerMixin):
         website=True,
     )
     def cms_form(self, model, model_id=None, **kw):
-        """Handle a `form` route.
-        """
+        """Handle a `form` route."""
         return self.make_response(model, model_id=model_id, **kw)
+
+    @http.route(
+        [
+            "/cms/render/form/<string:form_model>",
+            "/cms/render/form/<string:form_model>/<int:model_id>",
+        ],
+        type="json",
+        auth="user",
+        website=True,
+        # FIXME
+        csfr=False,
+    )
+    def cms_form_render(self, form_model, model_id=None, **kw):
+        kw["form_model_key"] = form_model
+        data = request.get_json_data()
+        process_form = data.get("process", kw.pop("process", False))
+        widget_params = data.get("widget_params", kw.pop("widget_params", {}))
+        if widget_params:
+            kw["form_model_fields"] = list(widget_params)
+        form = self.get_form(None, model_id=model_id, **kw)
+        form.form_check_permission()
+        if process_form:
+            form.form_process()
+        by_widget = {}
+        for fname, params in widget_params.items():
+            widget = form.form_get_current_widget(fname)
+            widget.update(params)
+            by_widget[fname] = widget.render()
+        if by_widget:
+            return {"by_widget": by_widget}
+        return {"form": form.form_render()}
 
 
 class WizardFormControllerMixin(FormControllerMixin):
 
-    template = "cms_form.wizard_form_wrapper"
+    template = "cms_form.portal_wizard_form_wrapper"
 
     def make_response(self, wiz_model, model_id=None, page=1, **kw):
         """Custom response.
@@ -156,7 +183,7 @@ class WizardFormControllerMixin(FormControllerMixin):
         step_info = wiz.wiz_get_step_info(page)
         # retrieve form model for current step
         form_model = step_info["form_model"]
-        model = request.env[form_model]._form_model
+        model = request.env[form_model].form_model_name
         kw["form_model_key"] = form_model
         return super().make_response(model, model_id=model_id, page=page, **kw)
 
@@ -171,14 +198,13 @@ class CMSWizardFormController(http.Controller, WizardFormControllerMixin):
         website=True,
     )
     def cms_wiz(self, wiz_model, model_id=None, **kw):
-        """Handle a wizard route.
-        """
+        """Handle a wizard route."""
         return self.make_response(wiz_model, model_id=model_id, **kw)
 
 
 class SearchFormControllerMixin(FormControllerMixin):
 
-    template = "cms_form.search_form_wrapper"
+    template = "cms_form.portal_search_form_wrapper"
 
     def form_model_key(self, model, **kw):
         return "cms.form.search." + model
@@ -199,8 +225,7 @@ class CMSSearchFormController(http.Controller, SearchFormControllerMixin):
         website=True,
     )
     def cms_form(self, model, **kw):
-        """Handle a search `form` route.
-        """
+        """Handle a search `form` route."""
         response = self.make_response(model, **kw)
         return response
 
@@ -218,8 +243,5 @@ class CMSSearchFormController(http.Controller, SearchFormControllerMixin):
         return self.make_response_ajax(model, **kw)
 
     def _make_response_ajax_content(self, response):
-        return (
-            request.env.ref(response.qcontext["form"].form_search_results_template)
-            .render(response.qcontext)
-            .decode("utf8")
-        )
+        template = response.qcontext["form"].form_search_results_template
+        return request.env["ir.qweb"]._render(template, response.qcontext)

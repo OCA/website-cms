@@ -3,25 +3,25 @@
 Copyright 2017 Simone Orsi
 License LGPL-3.0 or later (http://www.gnu.org/licenses/lgpl.html).
 -->
+<!-- TODO: rework w/ latest bootstrap markup and split in more files -->
 <odoo>
     <template id="form_wrapper" name="CMS form wrapper">
-        <t t-call="website.layout">
-            <t t-set="title" t-value="form.form_title" />
-            <div id="wrap" t-att-class="form.form_wrapper_css_klass">
-                <div class="container">
-                    <t t-if="form.form_title">
-                        <h2>
-                            <span class="form_title" t-esc="form.form_title" />
-                        </h2>
-                    </t>
-                    <t t-if="form.form_description">
-                        <p class="form_description" t-esc="form.form_description" />
-                    </t>
-                    <t t-raw="form.form_render()" />
-                </div>
+        <t t-set="title" t-value="form.form_title" />
+        <div t-att-class="form.form_wrapper_css_klass">
+            <div class="container">
+                <t t-if="form.form_title">
+                    <h2>
+                        <span class="form_title" t-esc="form.form_title" />
+                    </h2>
+                </t>
+                <t t-if="form.form_description">
+                    <p class="form_description" t-esc="form.form_description" />
+                </t>
+                <t t-out="form.form_render()" />
             </div>
-        </t>
+        </div>
     </template>
+
     <template
         id="form_horizontal_field_wrapper"
         name="CMS form field wrapper horiz form"
@@ -35,7 +35,7 @@ License LGPL-3.0 or later (http://www.gnu.org/licenses/lgpl.html).
                 t-esc="field['string']"
             >Name</label>
             <div class="col-md-9 col-sm-8">
-                <t t-raw="widget.render()" />
+                <t t-out="widget.render()" />
                 <t t-if="field.get('help')">
                     <t t-call="cms_form.base_form_field_help_block" />
                 </t>
@@ -57,7 +57,28 @@ License LGPL-3.0 or later (http://www.gnu.org/licenses/lgpl.html).
                 t-att-for="fname"
                 t-esc="field['string']"
             >Name</label>
-            <t t-raw="widget.render()" />
+            <t t-out="widget.render()" />
+            <t t-if="field.get('help')">
+                <t t-call="cms_form.base_form_field_help_block" />
+            </t>
+            <t t-if="errors.get(fname)">
+                <t t-call="cms_form.base_form_field_error_block" />
+            </t>
+        </div>
+    </template>
+    <template
+        id="form_field_label_after_wrapper"
+        name="CMS form field wrapper with label after"
+    >
+        <div
+            t-att-class="form.form_make_field_wrapper_klass(fname, field, errors=errors)"
+        >
+            <t t-out="widget.render()" />
+            <label
+                class="control-label"
+                t-att-for="fname"
+                t-esc="field['string']"
+            >Name</label>
             <t t-if="field.get('help')">
                 <t t-call="cms_form.base_form_field_help_block" />
             </t>
@@ -68,8 +89,8 @@ License LGPL-3.0 or later (http://www.gnu.org/licenses/lgpl.html).
     </template>
     <template id="base_form_field_help_block" name="CMS form field help block">
         <div class="help-block">
-            <!-- use `raw` to allow injecting html stuff here -->
-            <t t-raw="field['help']" />
+            <!-- use `out` to allow injecting html stuff here -->
+            <t t-out="field['help']" />
         </div>
     </template>
     <template id="base_form_field_error_block" name="CMS form field error block">
@@ -80,9 +101,9 @@ License LGPL-3.0 or later (http://www.gnu.org/licenses/lgpl.html).
         </t>
     </template>
     <template id="base_form_fields" name="CMS form fields">
-        <div t-attf-class="form-fields #{ form.form_fieldsets_wrapper_klass }">
+        <div t-attf-class="form-fields {{ form.form_fieldsets_wrapper_klass }}">
             <t t-if="form_fieldsets">
-                <t t-if="form._form_fieldsets_display == 'tabs'">
+                <t t-if="form.form_fieldsets_display == 'tabs'">
                     <t t-call="cms_form.fieldsets_as_tabs" />
                 </t>
                 <t t-else="">
@@ -103,7 +124,9 @@ License LGPL-3.0 or later (http://www.gnu.org/licenses/lgpl.html).
             <!-- this template is computed in `form_render`
       based on `form_display_mode`
       -->
-            <t t-call="#{ field_wrapper_template }">
+            <t
+                t-call="{{ form.form_get_field_wrapper_template(fname, form_fields[fname]) }}"
+            >
                 <t t-set="field" t-value="form_fields[fname]" />
                 <t t-set="widget" t-value="field['widget']" />
             </t>
@@ -126,7 +149,8 @@ License LGPL-3.0 or later (http://www.gnu.org/licenses/lgpl.html).
         <ul class="nav nav-tabs" role="tablist">
             <t t-foreach="form_fieldsets" t-as="fset">
                 <li role="presentation">
-                    <a  t-attf-class="nav-link #{'active' if fset_first else ''}"
+                    <a
+                        t-attf-class="nav-link #{'active' if fset_first else ''}"
                         t-attf-href="#tab-#{fset['id']}"
                         t-attf-aria-controls="tab-#{fset['id']}"
                         role="tab"
@@ -157,8 +181,8 @@ License LGPL-3.0 or later (http://www.gnu.org/licenses/lgpl.html).
             t-att-data-form="form.form_json_info()"
             t-att-class="form.form_css_klass"
             enctype="multipart/form-data"
-            t-att-data-ajax="form._form_ajax or None"
-            t-att-data-ajax-onchange="form._form_ajax_onchange or None"
+            t-att-data-ajax="form.form_ajax or None"
+            t-att-data-ajax-onchange="form.form_ajax_onchange or None"
         >
             <t t-if="form.form_method == 'POST'">
                 <input
@@ -167,19 +191,22 @@ License LGPL-3.0 or later (http://www.gnu.org/licenses/lgpl.html).
                     t-att-value="form.o_request.csrf_token()"
                 />
             </t>
-            <t t-set="form_fields" t-value="form.form_fields(hidden=False)" />
-            <t t-set="form_hidden_fields" t-value="form.form_fields(hidden=True)" />
-            <t t-set="form_fieldsets" t-value="form.form_fieldsets()" />
+            <t t-set="form_fields" t-value="form.form_fields_get(hidden=False)" />
+            <t
+                t-set="form_hidden_fields"
+                t-value="form.form_fields_get(hidden=True) or []"
+            />
+            <t t-set="form_fieldsets" t-value="form.form_fieldsets_get()" />
             <t t-foreach="form_hidden_fields" t-as="hidden_fname">
-                <t t-raw="form_hidden_fields[hidden_fname]['widget'].render()" />
+                <t t-out="form_hidden_fields[hidden_fname]['widget'].render()" />
             </t>
-            <t t-call="#{ form.form_fields_template }" />
+            <t t-call="{{ form.form_fields_template }}" />
             <div class="col-sm-9 col-sm-offset-3 above-controls">
                 <!-- you can style required fields like this:
             `form .form-group.field-required label.control-label::after{ content: '*'}`
             You'll get the symbol here, with proper legend
         -->
-                <t t-if="form.form_mode != 'search'">
+                <t t-if="form.form_mode not in ('search', 'readonly')">
                     <div class="form-group field-required">
                         <p class="field-required-legend"><label
                                 class="control-label"
@@ -187,7 +214,7 @@ License LGPL-3.0 or later (http://www.gnu.org/licenses/lgpl.html).
                     </div>
                 </t>
             </div>
-            <t t-call="#{ form.form_buttons_template }" />
+            <t t-call="{{ form.form_buttons_template }}" />
         </form>
     </template>
     <template id="base_form_buttons" name="CMS base form buttons">
@@ -206,21 +233,31 @@ License LGPL-3.0 or later (http://www.gnu.org/licenses/lgpl.html).
         name="CMS search form wrapper"
         inherit_id="cms_form.form_wrapper"
         primary="True"
+        priority="100"
     >
-        <xpath expr="//t[@t-raw]" position="replace">
+        <xpath expr="//t[@t-out]" position="replace">
             <t t-if="form.form_show_search_form">
-                <t t-raw="form.form_render()" />
+                <t t-out="form.form_render()" />
             </t>
             <div class="form_content">
-                <t t-call="#{ form.form_search_results_template }" />
+                <t t-if="not form.form_search_results['count']">
+                    <t t-call="{{ form.form_no_search_results_template  }}" />
+                </t>
+                <t t-call="{{ form.form_search_results_template  }}" />
             </div>
         </xpath>
+    </template>
+    <template id="portal_search_form_wrapper" name="CMS search portal form wrapper">
+        <t t-call="portal.portal_layout">
+            <t t-call="cms_form.search_form_wrapper" />
+        </t>
     </template>
     <template
         id="search_form_buttons"
         name="CMS search form buttons"
         inherit_id="cms_form.base_form_buttons"
         primary="True"
+        priority="100"
     >
         <xpath expr="//div[hasclass('form-controls')]" position="replace">
             <div class="form-group form-controls">
@@ -233,8 +270,9 @@ License LGPL-3.0 or later (http://www.gnu.org/licenses/lgpl.html).
     <template
         id="search_results_pager"
         name="CMS form pager"
-        inherit_id="website.pager"
+        inherit_id="portal.pager"
         primary="True"
+        priority="100"
     >
         <xpath expr="./ul/li[1]/a" position="attributes">
             <attribute name="t-att-data-page">
@@ -258,22 +296,28 @@ License LGPL-3.0 or later (http://www.gnu.org/licenses/lgpl.html).
                 t-attf-data-item='{"id": #{item.id}}'
             >
                 <h3 class="item-name">
-                    <t t-if="'website_url' in item">
-                        <a t-att-href="item.website_url" t-field="item.display_name" />
+                    <t t-if="'url' in item">
+                        <a t-att-href="item.url" t-field="item.display_name" />
                     </t>
-                    <t t-if="'website_url' not in item">
+                    <t t-if="'url' not in item">
                         <span t-field="item.display_name" />
                     </t>
                 </h3>
-                <t t-if="'website_description' in item">
+                <!-- TODO: define glue field `cms_description` -->
+                <!-- <t t-if="'website_description' in item">
                     <p class="item-description" t-field="item.website_description" />
-                </t>
+                </t> -->
             </div>
         </t>
         <div class="text-center mb32">
             <t t-call="cms_form.search_results_pager">
                 <t t-set="pager" t-value="form.form_search_results['pager']" />
             </t>
+        </div>
+    </template>
+    <template id="no_search_results" name="CMS form no search results">
+        <div class="text-center mb32" t-if="form.form_no_result_msg">
+            <p t-out="form.form_no_result_msg" />
         </div>
     </template>
     <template
@@ -283,9 +327,14 @@ License LGPL-3.0 or later (http://www.gnu.org/licenses/lgpl.html).
         primary="True"
     >
         <t t-if="form.form_title" position="before">
-            <t t-if="form.wiz_show_progress_bar">
+            <t t-if="form.form_show_progress_bar">
                 <t t-call="cms_form.wizard_progress_bar" />
             </t>
+        </t>
+    </template>
+    <template id="portal_wizard_form_wrapper" name="CMS wizard portal form wrapper">
+        <t t-call="portal.portal_layout">
+            <t t-call="cms_form.wizard_form_wrapper" />
         </t>
     </template>
     <template id="wizard_progress_bar" name="CMS Wizard progress bar">
@@ -309,6 +358,7 @@ License LGPL-3.0 or later (http://www.gnu.org/licenses/lgpl.html).
         name="CMS wizard form buttons"
         inherit_id="cms_form.base_form_buttons"
         primary="True"
+        priority="100"
     >
         <xpath expr="//div[hasclass('form-controls')]" position="replace">
             <div class="form-group form-controls">
@@ -317,13 +367,15 @@ License LGPL-3.0 or later (http://www.gnu.org/licenses/lgpl.html).
                         type="submit"
                         name="wiz_submit"
                         value="next"
-                        class="btn btn-primary btn-next pull-right"
+                        class="btn btn-primary btn-next float-end"
                     >Next</button>
                 </t>
                 <t t-else="">
                     <button
                         type="submit"
-                        class="btn btn-primary pull-right"
+                        name="wiz_submit"
+                        value="process"
+                        class="btn btn-primary float-end"
                     >Submit</button>
                 </t>
                 <t t-if="form.wiz_prev_step()">
@@ -331,7 +383,7 @@ License LGPL-3.0 or later (http://www.gnu.org/licenses/lgpl.html).
                         type="submit"
                         name="wiz_submit"
                         value="prev"
-                        class="btn btn-primary btn-prev pull-left"
+                        class="btn btn-primary btn-prev float-start"
                     >Prev</button>
                 </t>
             </div>

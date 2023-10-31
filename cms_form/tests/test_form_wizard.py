@@ -4,6 +4,9 @@
 from .common import FormSessionTestCase
 from .utils import fake_request
 
+# TODO: add tests w/ real session
+# to make sure there's no regression between versions
+
 
 class TestCMSFormWizard(FormSessionTestCase):
     @staticmethod
@@ -55,7 +58,7 @@ class TestCMSFormWizard(FormSessionTestCase):
     def test_wiz_use_session_by_default(self):
         req = fake_request(session=self.session)
         form = self.get_form("cms.form.wizard", req=req)
-        self.assertEqual(form._wiz_storage.__class__.__name__, "OpenERPSession")
+        self.assertEqual(form._wiz_storage.__class__.__name__, "Session")
 
     def test_wiz_configure_steps(self):
         form = self.get_form("cms.form.wizard")
@@ -149,7 +152,10 @@ class TestCMSFormWizard(FormSessionTestCase):
             "to_be_stored": "Whatever",
         }
         req = fake_request(form_data=data, method="POST")
-        form = self.get_form(self.FakeWizStep2Partner._name, req=req)
+        form = self.get_form(
+            self.FakeWizStep2Partner._name,
+            req=req,
+        )
         main_object = form.form_create_or_update()
         self.assertEqual(main_object.name, "John Doe")
         step_values = form.wiz_load_step()
@@ -161,8 +167,12 @@ class TestCMSFormWizard(FormSessionTestCase):
             "to_be_stored": "Whatever",
         }
         req = fake_request(form_data=data, method="POST")
-        form = self.get_form(self.FakeWizStep2Partner._name, req=req)
-        form._wiz_step_stored_fields = "all"
+        form = self.get_form(
+            self.FakeWizStep2Partner._name,
+            req=req,
+            form_step_store_all_fields=True,
+            form_step_stored_fields="[]",
+        )
         main_object = form.form_create_or_update()
         self.assertEqual(main_object.name, "John Doe")
         step_values = form.wiz_load_step()

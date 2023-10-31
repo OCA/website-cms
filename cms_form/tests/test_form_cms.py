@@ -1,28 +1,31 @@
 # Copyright 2017 Simone Orsi
 # License LGPL-3.0 or later (http://www.gnu.org/licenses/lgpl.html).
 
-import mock
+from unittest import mock
 
 from odoo import exceptions
 from odoo.tools import mute_logger
 
 from .common import FormTestCase
-from .utils import fake_request
+from .utils import fake_request, mock_request
 
 
 class TestCMSForm(FormTestCase):
     @staticmethod
     def _get_test_models():
         from .fake_models.fake_fields_form import FakeFieldsForm
+        from .fake_models.fake_partner_channel_form import (
+            FakePartnerRelatedForm,
+            FakePartnerRelModel,
+        )
         from .fake_models.fake_partner_form import FakePartnerForm
-        from .fake_models.fake_partner_channel_form import FakePartnerChannelForm
-        from .fake_models.fake_pub_model_form import FakePubModel
-        from .fake_models.fake_pub_model_form import FakePubModelForm
+        from .fake_models.fake_pub_model_form import FakePubModel, FakePubModelForm
 
         return (
             FakePartnerForm,
             FakeFieldsForm,
-            FakePartnerChannelForm,
+            FakePartnerRelatedForm,
+            FakePartnerRelModel,
             FakePubModel,
             FakePubModelForm,
         )
@@ -43,12 +46,10 @@ class TestCMSForm(FormTestCase):
         self.assertEqual(form.form_title, 'Edit "%s"' % partner.name)
         # now edit a record that has a m2o as rec name
         partner.name = "Johnny"
-        partner_channel = self.env["mail.channel.partner"].create(
+        partner_rel = self.env[self.FakePartnerRelModel._name].create(
             {"partner_id": partner.id}
         )
-        form = self.get_form(
-            "cms.form.mail.channel.partner", main_object=partner_channel
-        )
+        form = self.get_form(self.FakePartnerRelatedForm._name, main_object=partner_rel)
         self.assertEqual(form.form_title, 'Edit "Johnny"')
 
     def test_form_special_attrs_getter_setter(self):
@@ -73,11 +74,15 @@ class TestCMSForm(FormTestCase):
         # edit a record: get to its ws URL
         record = self.env["fake.publishable"].create({"name": "Baz"})
         form = self.get_form("cms.form.fake.publishable", main_object=record)
-        self.assertEqual(form.form_next_url(), "/publishable/%d" % record.id)
+        self.assertEqual(
+            form.form_next_url(), "/cms/view/fake.publishable/%d" % record.id
+        )
         # edit a record that has an URL but got redirect in request
         request = fake_request(query_string="redirect=/sorry/go/here")
         form = self.get_form(
-            "cms.form.fake.publishable", req=request, main_object=record,
+            "cms.form.fake.publishable",
+            req=request,
+            main_object=record,
         )
         self.assertEqual(form.form_next_url(), "/sorry/go/here")
 
@@ -92,11 +97,15 @@ class TestCMSForm(FormTestCase):
         # edit a record: get to its ws URL
         record = self.env["fake.publishable"].create({"name": "Baz"})
         form = self.get_form("cms.form.fake.publishable", main_object=record)
-        self.assertEqual(form.form_cancel_url(), "/publishable/%d" % record.id)
+        self.assertEqual(
+            form.form_cancel_url(), "/cms/view/fake.publishable/%d" % record.id
+        )
         # edit a record that has an URL but got redirect in request
         request = fake_request(query_string="redirect=/sorry/go/here")
         form = self.get_form(
-            "cms.form.fake.publishable", req=request, main_object=record,
+            "cms.form.fake.publishable",
+            req=request,
+            main_object=record,
         )
         self.assertEqual(form.form_cancel_url(), "/sorry/go/here")
 
@@ -113,7 +122,7 @@ class TestCMSForm(FormTestCase):
         request = fake_request(form_data=data)
         required = ("a_many2one", "a_many2many")
         form = self.get_form(
-            "cms.form.test_fields", req=request, required_fields=required
+            "cms.form.test_fields", req=request, form_required_fields=required
         )
         errors, errors_message = form.form_validate()
         self.assertEqual(
@@ -140,7 +149,7 @@ class TestCMSForm(FormTestCase):
         }
         request = fake_request(form_data=data, method="POST")
         form = self.get_form(
-            "cms.form.res.partner", req=request, required_fields=("name",)
+            "cms.form.res.partner", req=request, form_required_fields=("name",)
         )
         form.form_process()
         main_object = form.main_object
@@ -157,7 +166,7 @@ class TestCMSForm(FormTestCase):
             "cms.form.res.partner",
             req=request,
             main_object=main_object,
-            required_fields=("name",),
+            form_required_fields=("name",),
         )
         form.form_process()
         self.assertEqual(main_object.name, data["name"])
@@ -166,7 +175,9 @@ class TestCMSForm(FormTestCase):
     def test_create_or_update_with_errors(self):
         request = fake_request(form_data={}, method="POST")
         form = self.get_form("cms.form.res.partner", req=request)
-        with mute_logger("odoo.sql_db"):
+        with mute_logger("odoo.sql_db"), mock_request(
+            self.env, httprequest=request.httprequest
+        ):
             values = form.form_process_POST({})
         self.assertFalse(form.form_success)
         self.assertTrue(
@@ -174,7 +185,9 @@ class TestCMSForm(FormTestCase):
             "_integrity" in values["errors"]
             or "_validation" in values["errors"]
         )
-        with mock.patch.object(type(form), "form_create_or_update") as mocked:
+        with mock.patch.object(
+            type(form), "form_create_or_update"
+        ) as mocked, mock_request(self.env, httprequest=request.httprequest):
             random_msg = (
                 "Error while validating constraint\n"
                 "\nEnd Date cannot be set before Start Date.\nNone"
