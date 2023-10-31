@@ -233,6 +233,7 @@ License LGPL-3.0 or later (http://www.gnu.org/licenses/lgpl.html).
         name="CMS search form wrapper"
         inherit_id="cms_form.form_wrapper"
         primary="True"
+        priority="100"
     >
         <xpath expr="//t[@t-out]" position="replace">
             <t t-if="form.form_show_search_form">
@@ -256,6 +257,7 @@ License LGPL-3.0 or later (http://www.gnu.org/licenses/lgpl.html).
         name="CMS search form buttons"
         inherit_id="cms_form.base_form_buttons"
         primary="True"
+        priority="100"
     >
         <xpath expr="//div[hasclass('form-controls')]" position="replace">
             <div class="form-group form-controls">
@@ -270,6 +272,7 @@ License LGPL-3.0 or later (http://www.gnu.org/licenses/lgpl.html).
         name="CMS form pager"
         inherit_id="portal.pager"
         primary="True"
+        priority="100"
     >
         <xpath expr="./ul/li[1]/a" position="attributes">
             <attribute name="t-att-data-page">
@@ -355,6 +358,7 @@ License LGPL-3.0 or later (http://www.gnu.org/licenses/lgpl.html).
         name="CMS wizard form buttons"
         inherit_id="cms_form.base_form_buttons"
         primary="True"
+        priority="100"
     >
         <xpath expr="//div[hasclass('form-controls')]" position="replace">
             <div class="form-group form-controls">
