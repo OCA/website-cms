@@ -35,11 +35,11 @@ License LGPL-3.0 or later (http://www.gnu.org/licenses/lgpl).
     <template id="message_wrapper" name="CMS status_message single message wrapper">
         <div class="msg-wrapper row">
             <t t-if="msg['title']">
-                <div class="title col-3">
+                <div class="title col">
                     <strong t-esc="msg['title']" />
                 </div>
             </t>
-            <div class="msg col">
+            <div class="msg col-auto">
                 <t t-out="msg['msg']" />
             </div>
         </div>
