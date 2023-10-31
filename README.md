@@ -9,7 +9,7 @@
 
 # website-cms
 
-TODO: add repo description.
+CMS features for Odoo portal and websites. Ease creation of forms, status message, actions and more.
 
 <!-- /!\ do not modify below this line -->
 
