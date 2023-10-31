@@ -161,6 +161,8 @@ class CMSFormMixin(models.AbstractModel):
     form_content_selector = fields.Char(form_tech=True, default=".form_content")
     # used to interpolate widgets' html field name
     form_fname_pattern = fields.Char(form_tech=True, default="")
+    # used enable submit confirmation at last step
+    form_confirm_submit = fields.Boolean(form_tech=True, default="")
 
     def _valid_field_parameter(self, field, name):
         res = super()._valid_field_parameter(field, name)
@@ -738,3 +740,7 @@ class CMSFormMixin(models.AbstractModel):
         you can use this method to merge them properly.
         """
         return utils.data_merge(info, tomerge)
+
+    @property
+    def form_msg_confirm_submit(self):
+        return _("Are you sure want to submit the form as it is?")
