@@ -6,14 +6,16 @@ def safe_to_integer(value, **kw):
     """Convert to integer safely."""
     try:
         return int(value)
-    except (ValueError, TypeError):
+    except (ValueError, TypeError, AttributeError):
         return None
 
 
 def safe_to_float(value, **kw):
+    if value is False:
+        return 0.0
     try:
-        return float(value)
-    except (ValueError, TypeError):
+        return float(value.replace(",", "."))
+    except (ValueError, TypeError, AttributeError):
         return None
 
 
@@ -79,5 +81,5 @@ def data_merge(a, b):
     except TypeError as e:  # pragma: no cover
         raise TypeError(
             '"{}" in key "{}" when merging "{}" into "{}"'.format(e, key, b, a)
-        )
+        ) from e
     return a

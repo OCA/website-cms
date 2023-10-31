@@ -19,7 +19,7 @@ class TestUtils(unittest.TestCase):
         self.assertEqual(utils.safe_to_float(""), None)
         self.assertEqual(utils.safe_to_float(False), 0.0)
         self.assertEqual(utils.safe_to_float("abc"), None)
-        self.assertEqual(utils.safe_to_float("10,0"), None)
+        self.assertEqual(utils.safe_to_float("10,0"), 10.0)
         self.assertEqual(utils.safe_to_float("10.0"), 10.0)
         self.assertEqual(utils.safe_to_float("0"), 0.0)
         self.assertEqual(utils.safe_to_float("10"), 10.0)

@@ -4,13 +4,15 @@ from .common import TestWidgetCase, fake_field, fake_form
 
 
 class TestWidgetFloat(TestWidgetCase):
-    @classmethod
-    def setUpClass(cls):
-        super().setUpClass()
-        form = fake_form(a_float_field=2.0)
-        cls.w_name, cls.w_field = fake_field("a_float_field", type="float")
-        cls.widget = cls.get_widget(
-            cls.w_name, cls.w_field, form=form, widget_model="cms.form.widget.float",
+    def setUp(self):
+        super().setUp()
+        form = fake_form(self.env, a_float_field=2.0)
+        self.w_name, self.w_field = fake_field("a_float_field", type="float")
+        self.widget = self.get_widget(
+            self.w_name,
+            self.w_field,
+            form=form,
+            widget_model="cms.form.widget.float",
         )
 
     def test_widget_float_input(self):
@@ -49,5 +51,5 @@ class TestWidgetFloat(TestWidgetCase):
     def test_widget_float_input_extract(self):
         self.assertEqual(self.widget.w_extract(a_float_field="1"), 1.0)
         self.assertEqual(self.widget.w_extract(a_float_field="2.0"), 2.0)
-        self.assertEqual(self.widget.w_extract(a_float_field="2,0"), None)
+        self.assertEqual(self.widget.w_extract(a_float_field="2,0"), 2.0)
         self.assertEqual(self.widget.w_extract(a_float_field=""), None)

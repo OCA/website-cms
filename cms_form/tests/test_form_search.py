@@ -1,7 +1,7 @@
 # Copyright 2017 Simone Orsi
 # License LGPL-3.0 or later (http://www.gnu.org/licenses/lgpl.html).
 
-import mock
+from unittest import mock
 
 from .common import FormTestCase
 from .utils import fake_request
@@ -27,6 +27,10 @@ class TestCMSSearchForm(FormTestCase):
         super().setUpClass()
         cls._setup_records()
 
+    def tearDown(self):
+        self.FakeSearchPartnerForm._set_test_record_ids([])
+        super().tearDown()
+
     @classmethod
     def _setup_records(cls):
         cls.partner_model = cls.env["res.partner"].with_context(tracking_disable=True)
@@ -34,11 +38,26 @@ class TestCMSSearchForm(FormTestCase):
         cls.expected_partners = []
         cls.expected_partners_ids = []
         cls._expected_partners = (
-            ("Salmo", cls.env.ref("base.it").id,),
-            ("Marracash", cls.env.ref("base.it").id,),
-            ("Notorious BIG", cls.env.ref("base.us").id,),
-            ("Dr. Dre", cls.env.ref("base.us").id,),
-            ("NTM", cls.env.ref("base.fr").id,),
+            (
+                "Salmo",
+                cls.env.ref("base.it").id,
+            ),
+            (
+                "Marracash",
+                cls.env.ref("base.it").id,
+            ),
+            (
+                "Notorious BIG",
+                cls.env.ref("base.us").id,
+            ),
+            (
+                "Dr. Dre",
+                cls.env.ref("base.us").id,
+            ),
+            (
+                "NTM",
+                cls.env.ref("base.fr").id,
+            ),
         )
 
         for name, country_id in cls._expected_partners:
@@ -62,7 +81,7 @@ class TestCMSSearchForm(FormTestCase):
         request = fake_request(form_data=data)
         form = self.get_form(form_model, req=request, **kw)
         # restrict search results to these ids
-        form.test_record_ids = self.expected_partners_ids
+        self.FakeSearchPartnerForm._set_test_record_ids(self.expected_partners_ids)
         return form
 
     def test_form_base_attrs(self):
@@ -72,8 +91,8 @@ class TestCMSSearchForm(FormTestCase):
 
     def test_search_domain(self):
         form = self.get_search_form({})
-        form.test_record_ids = []
-        form._form_search_domain_rules = {
+        self.FakeSearchPartnerForm._set_test_record_ids([])
+        form.form_search_domain_rules = {
             "float_field": lambda field, value, search_values: (
                 "float_field",
                 ">",
@@ -95,7 +114,7 @@ class TestCMSSearchForm(FormTestCase):
                 "m2m_field": {"type": "many2many"},
             }
 
-        with mock.patch.object(type(form), "form_fields", mock_fields):
+        with mock.patch.object(type(form), "form_fields_get", mock_fields):
             search_values = {
                 "char_field": "foo",
                 "text_field": "",
@@ -118,7 +137,8 @@ class TestCMSSearchForm(FormTestCase):
                 ("o2m_field", "in", [1, 2, 3]),
             ]
             self.assertEqual(
-                sorted(form.form_search_domain(search_values)), sorted(expected),
+                sorted(form.form_search_domain(search_values)),
+                sorted(expected),
             )
 
     def test_search(self):
@@ -159,7 +179,7 @@ class TestCMSSearchForm(FormTestCase):
         self.assert_results(form, 1, self.expected_partners[4:])
 
     def test_search_no_result(self):
-        form = self.get_search_form({}, show_results_no_submit=False)
+        form = self.get_search_form({}, form_show_results_no_submit=False)
         form.form_process()
         self.assertEqual(form.form_search_results, {})
 
@@ -230,7 +250,8 @@ class TestCMSSearchForm(FormTestCase):
             "country_id": "Italy",
         }
         form = self.get_search_form(
-            data, search_domain_rules={"country_id": ("country_id.name", "ilike", "")},
+            data,
+            form_search_domain_rules={"country_id": ("country_id.name", "ilike", "")},
         )
         form.form_process()
         self.assert_results(form, 2, self.expected_partners[:2])

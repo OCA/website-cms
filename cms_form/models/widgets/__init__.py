@@ -1,4 +1,5 @@
 from . import widget_mixin
+from . import widget_rel_mixin
 from . import widget_text
 from . import widget_hidden
 from . import widget_numeric

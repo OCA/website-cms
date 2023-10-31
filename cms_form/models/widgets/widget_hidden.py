@@ -1,17 +1,18 @@
 # Copyright 2017 Simone Orsi
 # License LGPL-3.0 or later (http://www.gnu.org/licenses/lgpl.html).
 
-from odoo import models
+from odoo import fields, models
 
 
 class HiddenWidget(models.AbstractModel):
     _name = "cms.form.widget.hidden"
     _inherit = "cms.form.widget.mixin"
     _description = "CMS Form hidden widget"
-    _w_template = "cms_form.field_widget_hidden"
+
+    w_template = fields.Char(default="cms_form.field_widget_hidden")
 
     @property
-    def w_html_fname(self):
+    def html_fname(self):
         """Field name for final HTML markup."""
         # TODO: use this for all fields and get rid of custom w_extract
         # where possible
@@ -27,4 +28,4 @@ class HiddenWidget(models.AbstractModel):
                 marshaller = ":int"
             elif isinstance(first_value, float):
                 marshaller = ":float"
-        return self.w_fname + marshaller
+        return super().html_fname + marshaller

@@ -1,11 +1,11 @@
-odoo.define("cms_form.textarea_widget", function(require) {
+odoo.define("cms_form.textarea_widget", function (require) {
     "use strict";
 
     require("web.dom_ready");
 
-    $(document).ready(function() {
+    $(document).ready(function () {
         $("textarea[maxlength]")
-            .bind("input propertychange", function() {
+            .bind("input propertychange", function () {
                 var $self = $(this),
                     maxlength = parseInt($self.attr("maxlength"), 10),
                     length = $self.val().length,

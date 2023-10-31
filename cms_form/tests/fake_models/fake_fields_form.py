@@ -4,6 +4,12 @@
 from odoo import fields, models
 
 
+class FakeFloatWidget(models.AbstractModel):
+
+    _name = "cms.form.test_fields.widget.float"
+    _inherit = "cms.form.widget.float"
+
+
 class FakeFieldsForm(models.AbstractModel):
     """A test model form."""
 
@@ -19,8 +25,8 @@ class FakeFieldsForm(models.AbstractModel):
     a_one2many = fields.Char()
     a_many2many = fields.Char()
 
-    def _form_fields(self):
-        _fields = super()._form_fields()
+    def _form_fields_get(self):
+        _fields = super()._form_fields_get()
         # fake fields' types
         _fields["a_many2one"]["type"] = "many2one"
         _fields["a_many2one"]["relation"] = "res.partner"
@@ -38,3 +44,14 @@ class FakeFieldsForm(models.AbstractModel):
     def _form_validate_char(self, value, **request_values):
         """Specific validator for all `char` fields."""
         return not len(value) > 8, "Text length must be greater than 8!"
+
+
+class FakeFieldsForm2(models.AbstractModel):
+    """A test model form."""
+
+    _name = "cms.form.test_fields2"
+    _inherit = "cms.form.test_fields"
+
+    a_float_with_another_widget = fields.Float(
+        form_widget={"model": FakeFloatWidget._name}
+    )

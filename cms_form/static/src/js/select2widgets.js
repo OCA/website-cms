@@ -1,4 +1,4 @@
-odoo.define("cms_form.select2widgets", function(require) {
+odoo.define("cms_form.select2widgets", function (require) {
     "use strict";
 
     var ajax = require("web.ajax");
@@ -10,14 +10,14 @@ odoo.define("cms_form.select2widgets", function(require) {
         return $.Deferred().reject("DOM doesn't contain '.js_select2_m2m_widget'");
     }
 
-    $(document).ready(function() {
-        $("input.js_select2_m2m_widget").each(function() {
+    $(document).ready(function () {
+        $("input.js_select2_m2m_widget").each(function () {
             var $input = $(this);
             $input.select2({
                 multiple: true,
                 tags: true,
                 tokenSeparators: [",", " ", "_"],
-                formatResult: function(term) {
+                formatResult: function (term) {
                     var formatted = _.escape(term.text);
                     if (term.isNew) {
                         formatted =
@@ -25,7 +25,7 @@ odoo.define("cms_form.select2widgets", function(require) {
                     }
                     return formatted;
                 },
-                query: function(options) {
+                query: function (options) {
                     var domain = [];
                     if (options.term) {
                         domain.push([
@@ -46,15 +46,15 @@ odoo.define("cms_form.select2widgets", function(require) {
                             fields: $input.data("fields"),
                             context: weContext.get(),
                         },
-                    }).then(function(data) {
+                    }).then(function (data) {
                         var display_name = $input.data("display_name");
-                        data.sort(function(a, b) {
+                        data.sort(function (a, b) {
                             return a[display_name].localeCompare(b[display_name]);
                         });
                         var res = {
                             results: [],
                         };
-                        _.each(data, function(x) {
+                        _.each(data, function (x) {
                             res.results.push({
                                 id: x.id,
                                 text: x[display_name],
@@ -65,9 +65,9 @@ odoo.define("cms_form.select2widgets", function(require) {
                     });
                 },
                 // Default tags from the input value
-                initSelection: function(element, callback) {
+                initSelection: function (element, callback) {
                     var data = [];
-                    _.each(element.data("init-value"), function(x) {
+                    _.each(element.data("init-value"), function (x) {
                         data.push({
                             id: x.id,
                             text: x.name,
