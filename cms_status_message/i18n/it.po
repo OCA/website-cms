@@ -9,7 +9,7 @@ msgstr ""
 "Project-Id-Version: Odoo Server 9.0c\n"
 "Report-Msgid-Bugs-To: \n"
 "POT-Creation-Date: 2017-05-31 03:19+0000\n"
-"PO-Revision-Date: 2023-04-03 19:24+0000\n"
+"PO-Revision-Date: 2023-11-13 09:37+0000\n"
 "Last-Translator: mymage <stefano.consolaro@mymage.it>\n"
 "Language-Team: Italian (https://www.transifex.com/oca/teams/23907/it/)\n"
 "Language: it\n"
@@ -17,7 +17,7 @@ msgstr ""
 "Content-Type: text/plain; charset=UTF-8\n"
 "Content-Transfer-Encoding: \n"
 "Plural-Forms: nplurals=2; plural=n != 1;\n"
-"X-Generator: Weblate 4.14.1\n"
+"X-Generator: Weblate 4.17\n"
 
 #. module: cms_status_message
 #: model_terms:ir.ui.view,arch_db:cms_status_message.display_test
@@ -25,6 +25,8 @@ msgid ""
 "Enter a message and submit the form.<br/>You'll see your message rendered as "
 "a status message."
 msgstr ""
+"Inserire un messaggi e inviare il modulo.<br/>Il messaggio verrà reso come "
+"messaggio di stato."
 
 #. module: cms_status_message
 #. odoo-python
@@ -36,7 +38,7 @@ msgstr "Errore"
 #. module: cms_status_message
 #: model:ir.model,name:cms_status_message.model_ir_http
 msgid "HTTP Routing"
-msgstr ""
+msgstr "Instradamento HTTP"
 
 #. module: cms_status_message
 #. odoo-python
@@ -53,7 +55,7 @@ msgstr "Messaggio"
 #. module: cms_status_message
 #: model_terms:ir.ui.view,arch_db:cms_status_message.display_test
 msgid "Submit"
-msgstr ""
+msgstr "Invia"
 
 #. module: cms_status_message
 #. odoo-python
@@ -72,7 +74,7 @@ msgstr "Attenzione"
 #. module: cms_status_message
 #: model_terms:ir.ui.view,arch_db:cms_status_message.message_listing_wrapper
 msgid "close"
-msgstr ""
+msgstr "chiudi"
 
 #~ msgid "Close"
 #~ msgstr "Chiudi"
