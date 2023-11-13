@@ -6,40 +6,42 @@ msgid ""
 msgstr ""
 "Project-Id-Version: Odoo Server 16.0\n"
 "Report-Msgid-Bugs-To: \n"
-"Last-Translator: Automatically generated\n"
+"PO-Revision-Date: 2023-11-13 09:38+0000\n"
+"Last-Translator: mymage <stefano.consolaro@mymage.it>\n"
 "Language-Team: none\n"
 "Language: it\n"
 "MIME-Version: 1.0\n"
 "Content-Type: text/plain; charset=UTF-8\n"
 "Content-Transfer-Encoding: \n"
 "Plural-Forms: nplurals=2; plural=n != 1;\n"
+"X-Generator: Weblate 4.17\n"
 
 #. module: cms_info
 #: model:ir.model,name:cms_info.model_cms_info_mixin
 msgid "CMS Info mixin"
-msgstr ""
+msgstr "Mixin infrmazioni CMS"
 
 #. module: cms_info
 #: model:ir.model.fields,field_description:cms_info.field_cms_info_mixin__cms_copy_url
 msgid "CMS copy URL"
-msgstr ""
+msgstr "Copia URL CMS"
 
 #. module: cms_info
 #: model:ir.model.fields,field_description:cms_info.field_cms_info_mixin__cms_delete_url
 msgid "CMS delete URL"
-msgstr ""
+msgstr "Cancella URL CMS"
 
 #. module: cms_info
 #: model:ir.model.fields,field_description:cms_info.field_cms_info_mixin__cms_delete_confirm_url
 msgid "CMS delete confirm URL"
-msgstr ""
+msgstr "Conferma cacellazione URL CMS"
 
 #. module: cms_info
 #: model:ir.model.fields,field_description:cms_info.field_cms_info_mixin__cms_edit_url
 msgid "CMS edit URL"
-msgstr ""
+msgstr "Mdifica URL CMS"
 
 #. module: cms_info
 #: model:ir.model.fields,field_description:cms_info.field_cms_info_mixin__url
 msgid "URL"
-msgstr ""
+msgstr "URL"
