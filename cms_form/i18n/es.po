@@ -6,146 +6,148 @@ msgid ""
 msgstr ""
 "Project-Id-Version: Odoo Server 16.0\n"
 "Report-Msgid-Bugs-To: \n"
-"Last-Translator: Automatically generated\n"
+"PO-Revision-Date: 2023-12-13 14:36+0000\n"
+"Last-Translator: Ivorra78 <informatica@totmaterial.es>\n"
 "Language-Team: none\n"
 "Language: es\n"
 "MIME-Version: 1.0\n"
 "Content-Type: text/plain; charset=UTF-8\n"
 "Content-Transfer-Encoding: \n"
 "Plural-Forms: nplurals=2; plural=n != 1;\n"
+"X-Generator: Weblate 4.17\n"
 
 #. module: cms_form
 #. odoo-python
 #: code:addons/cms_form/controllers/main.py:0
 #, python-format
 msgid "%s model has no CMS form registered."
-msgstr ""
+msgstr "%s El modelo no tiene ningún formulario CMS registrado."
 
 #. module: cms_form
 #: model:ir.model,name:cms_form.model_cms_form
 msgid "CMS Form"
-msgstr ""
+msgstr "Form CMS"
 
 #. module: cms_form
 #: model:ir.model,name:cms_form.model_cms_form_widget_many2many
 msgid "CMS Form M2M widget"
-msgstr ""
+msgstr "Formulario CMS Widget M2M"
 
 #. module: cms_form
 #: model:ir.model,name:cms_form.model_cms_form_widget_many2one_multi
 msgid "CMS Form M2O multi widget"
-msgstr ""
+msgstr "Formulario CMS M2O multi widget"
 
 #. module: cms_form
 #: model:ir.model,name:cms_form.model_cms_form_widget_many2one
 msgid "CMS Form M2O widget"
-msgstr ""
+msgstr "Formulario CMS Widget M2O"
 
 #. module: cms_form
 #: model:ir.model,name:cms_form.model_cms_form_widget_one2many
 msgid "CMS Form O2M widget"
-msgstr ""
+msgstr "Formulario CMS O2M widget"
 
 #. module: cms_form
 #: model:ir.model,name:cms_form.model_cms_form_widget_x2m_mixin
 msgid "CMS Form X2M widget"
-msgstr ""
+msgstr "Formulario CMS Widget X2M"
 
 #. module: cms_form
 #: model:ir.model,name:cms_form.model_cms_form_widget_binary_mixin
 msgid "CMS Form binary widget"
-msgstr ""
+msgstr "Widget binario de formulario CMS"
 
 #. module: cms_form
 #: model:ir.model,name:cms_form.model_cms_form_widget_boolean
 msgid "CMS Form boolean widget"
-msgstr ""
+msgstr "Widget booleano de formulario CMS"
 
 #. module: cms_form
 #: model:ir.model,name:cms_form.model_cms_form_widget_char
 #: model:ir.model,name:cms_form.model_cms_form_widget_char_mixin
 msgid "CMS Form char widget"
-msgstr ""
+msgstr "Widget de caracteres de formulario CMS"
 
 #. module: cms_form
 #: model:ir.model,name:cms_form.model_cms_form_widget_date
 msgid "CMS Form date widget"
-msgstr ""
+msgstr "Widget de fecha del formulario CMS"
 
 #. module: cms_form
 #: model:ir.model,name:cms_form.model_cms_form_widget_binary
 msgid "CMS Form file widget"
-msgstr ""
+msgstr "Widget del formulario CMS"
 
 #. module: cms_form
 #: model:ir.model,name:cms_form.model_cms_form_widget_float
 msgid "CMS Form float widget"
-msgstr ""
+msgstr "Widget flotante de formulario CMS"
 
 #. module: cms_form
 #: model:ir.model,name:cms_form.model_cms_form_widget_hidden
 msgid "CMS Form hidden widget"
-msgstr ""
+msgstr "Widget oculto de formulario CMS"
 
 #. module: cms_form
 #: model:ir.model,name:cms_form.model_cms_form_widget_image
 msgid "CMS Form image widget"
-msgstr ""
+msgstr "Widget de imagen de formulario CMS"
 
 #. module: cms_form
 #: model:ir.model,name:cms_form.model_cms_form_widget_integer
 msgid "CMS Form integer widget"
-msgstr ""
+msgstr "Widget de número entero de formulario CMS"
 
 #. module: cms_form
 #: model:ir.model,name:cms_form.model_cms_form_mixin
 msgid "CMS Form mixin"
-msgstr ""
+msgstr "Formulario CMS mezcla"
 
 #. module: cms_form
 #: model:ir.model,name:cms_form.model_cms_form_widget_numeric_mixin
 msgid "CMS Form numeric mixin widget"
-msgstr ""
+msgstr "Widget mixto numérico CMS Form"
 
 #. module: cms_form
 #: model:ir.model,name:cms_form.model_cms_form_widget_radio
 msgid "CMS Form radio widget"
-msgstr ""
+msgstr "Widget de radio Formulario CMS"
 
 #. module: cms_form
 #: model:ir.model,name:cms_form.model_cms_form_widget_rel_mixin
 msgid "CMS Form relation widget mixin"
-msgstr ""
+msgstr "Mezcla de widgets de relación de formulario CMS"
 
 #. module: cms_form
 #: model:ir.model,name:cms_form.model_cms_form_search
 msgid "CMS Form search"
-msgstr ""
+msgstr "Búsqueda de formularios CMS"
 
 #. module: cms_form
 #: model:ir.model,name:cms_form.model_cms_form_widget_selection
 msgid "CMS Form selection widget"
-msgstr ""
+msgstr "Widget de selección de formulario CMS"
 
 #. module: cms_form
 #: model:ir.model,name:cms_form.model_cms_form_widget_text
 msgid "CMS Form text widget"
-msgstr ""
+msgstr "Widget de texto de formulario CMS"
 
 #. module: cms_form
 #: model:ir.model,name:cms_form.model_cms_form_widget_mixin
 msgid "CMS Form widget mixin"
-msgstr ""
+msgstr "Mezcla de widgets de formulario CMS"
 
 #. module: cms_form
 #: model:ir.model,name:cms_form.model_cms_form_wizard
 msgid "CMS Form wizard"
-msgstr ""
+msgstr "Asistente de formularios CMS"
 
 #. module: cms_form
 #: model_terms:ir.ui.view,arch_db:cms_form.base_form_buttons
 msgid "Cancel"
-msgstr ""
+msgstr "Cancelar"
 
 #. module: cms_form
 #. odoo-python
@@ -153,14 +155,14 @@ msgstr ""
 #: code:addons/cms_form/models/cms_form.py:0
 #, python-format
 msgid "Create %s"
-msgstr ""
+msgstr "Crear %s"
 
 #. module: cms_form
 #. odoo-python
 #: code:addons/cms_form/models/cms_form.py:0
 #, python-format
 msgid "Edit \"%s\""
-msgstr ""
+msgstr "Editar \"%s\""
 
 #. module: cms_form
 #: model:ir.model.fields,field_description:cms_form.field_cms_form__form_action
@@ -168,7 +170,7 @@ msgstr ""
 #: model:ir.model.fields,field_description:cms_form.field_cms_form_search__form_action
 #: model:ir.model.fields,field_description:cms_form.field_cms_form_wizard__form_action
 msgid "Form Action"
-msgstr ""
+msgstr "Acción Formulario"
 
 #. module: cms_form
 #: model:ir.model.fields,field_description:cms_form.field_cms_form__form_ajax
@@ -176,7 +178,7 @@ msgstr ""
 #: model:ir.model.fields,field_description:cms_form.field_cms_form_search__form_ajax
 #: model:ir.model.fields,field_description:cms_form.field_cms_form_wizard__form_ajax
 msgid "Form Ajax"
-msgstr ""
+msgstr "Formulario Ajax"
 
 #. module: cms_form
 #: model:ir.model.fields,field_description:cms_form.field_cms_form__form_ajax_onchange
@@ -184,7 +186,7 @@ msgstr ""
 #: model:ir.model.fields,field_description:cms_form.field_cms_form_search__form_ajax_onchange
 #: model:ir.model.fields,field_description:cms_form.field_cms_form_wizard__form_ajax_onchange
 msgid "Form Ajax Onchange"
-msgstr ""
+msgstr "Formulario Ajax Onchange"
 
 #. module: cms_form
 #: model:ir.model.fields,field_description:cms_form.field_cms_form__form_buttons_template
@@ -192,7 +194,7 @@ msgstr ""
 #: model:ir.model.fields,field_description:cms_form.field_cms_form_search__form_buttons_template
 #: model:ir.model.fields,field_description:cms_form.field_cms_form_wizard__form_buttons_template
 msgid "Form Buttons Template"
-msgstr ""
+msgstr "Plantilla de Botones de Formulario"
 
 #. module: cms_form
 #: model:ir.model.fields,field_description:cms_form.field_cms_form__form_content_selector
@@ -200,7 +202,7 @@ msgstr ""
 #: model:ir.model.fields,field_description:cms_form.field_cms_form_search__form_content_selector
 #: model:ir.model.fields,field_description:cms_form.field_cms_form_wizard__form_content_selector
 msgid "Form Content Selector"
-msgstr ""
+msgstr "Selector de Contenido de Formulario"
 
 #. module: cms_form
 #: model:ir.model.fields,field_description:cms_form.field_cms_form__form_data
@@ -208,7 +210,7 @@ msgstr ""
 #: model:ir.model.fields,field_description:cms_form.field_cms_form_search__form_data
 #: model:ir.model.fields,field_description:cms_form.field_cms_form_wizard__form_data
 msgid "Form Data"
-msgstr ""
+msgstr "Datos del Formulario"
 
 #. module: cms_form
 #: model:ir.model.fields,field_description:cms_form.field_cms_form__form_description
@@ -216,7 +218,7 @@ msgstr ""
 #: model:ir.model.fields,field_description:cms_form.field_cms_form_search__form_description
 #: model:ir.model.fields,field_description:cms_form.field_cms_form_wizard__form_description
 msgid "Form Description"
-msgstr ""
+msgstr "Descripción del Formulario"
 
 #. module: cms_form
 #: model:ir.model.fields,field_description:cms_form.field_cms_form__form_display_mode
@@ -224,7 +226,7 @@ msgstr ""
 #: model:ir.model.fields,field_description:cms_form.field_cms_form_search__form_display_mode
 #: model:ir.model.fields,field_description:cms_form.field_cms_form_wizard__form_display_mode
 msgid "Form Display Mode"
-msgstr ""
+msgstr "Modo de Visualización de Formulario"
 
 #. module: cms_form
 #: model:ir.model.fields,field_description:cms_form.field_cms_form__form_extra_css_klass
@@ -232,7 +234,7 @@ msgstr ""
 #: model:ir.model.fields,field_description:cms_form.field_cms_form_search__form_extra_css_klass
 #: model:ir.model.fields,field_description:cms_form.field_cms_form_wizard__form_extra_css_klass
 msgid "Form Extra Css Klass"
-msgstr ""
+msgstr "Formulario Clase Css Extra"
 
 #. module: cms_form
 #: model:ir.model.fields,field_description:cms_form.field_cms_form__form_extract_value_mode
@@ -240,7 +242,7 @@ msgstr ""
 #: model:ir.model.fields,field_description:cms_form.field_cms_form_search__form_extract_value_mode
 #: model:ir.model.fields,field_description:cms_form.field_cms_form_wizard__form_extract_value_mode
 msgid "Form Extract Value Mode"
-msgstr ""
+msgstr "Modo de Valor de Extracción de Formulario"
 
 #. module: cms_form
 #: model:ir.model.fields,field_description:cms_form.field_cms_form__form_fields_attributes
@@ -248,7 +250,7 @@ msgstr ""
 #: model:ir.model.fields,field_description:cms_form.field_cms_form_search__form_fields_attributes
 #: model:ir.model.fields,field_description:cms_form.field_cms_form_wizard__form_fields_attributes
 msgid "Form Fields Attributes"
-msgstr ""
+msgstr "Atributos de los Campos del Formulario"
 
 #. module: cms_form
 #: model:ir.model.fields,field_description:cms_form.field_cms_form__form_fields_blacklist
@@ -256,7 +258,7 @@ msgstr ""
 #: model:ir.model.fields,field_description:cms_form.field_cms_form_search__form_fields_blacklist
 #: model:ir.model.fields,field_description:cms_form.field_cms_form_wizard__form_fields_blacklist
 msgid "Form Fields Blacklist"
-msgstr ""
+msgstr "Lista Negra de Campos de Formulario"
 
 #. module: cms_form
 #: model:ir.model.fields,field_description:cms_form.field_cms_form__form_fields_hidden
@@ -264,7 +266,7 @@ msgstr ""
 #: model:ir.model.fields,field_description:cms_form.field_cms_form_search__form_fields_hidden
 #: model:ir.model.fields,field_description:cms_form.field_cms_form_wizard__form_fields_hidden
 msgid "Form Fields Hidden"
-msgstr ""
+msgstr "Campos de Formulario Ocultos"
 
 #. module: cms_form
 #: model:ir.model.fields,field_description:cms_form.field_cms_form__form_fields_ignore
@@ -272,7 +274,7 @@ msgstr ""
 #: model:ir.model.fields,field_description:cms_form.field_cms_form_search__form_fields_ignore
 #: model:ir.model.fields,field_description:cms_form.field_cms_form_wizard__form_fields_ignore
 msgid "Form Fields Ignore"
-msgstr ""
+msgstr "Ignorar Campos de Formulario"
 
 #. module: cms_form
 #: model:ir.model.fields,field_description:cms_form.field_cms_form__form_fields_order
@@ -280,7 +282,7 @@ msgstr ""
 #: model:ir.model.fields,field_description:cms_form.field_cms_form_search__form_fields_order
 #: model:ir.model.fields,field_description:cms_form.field_cms_form_wizard__form_fields_order
 msgid "Form Fields Order"
-msgstr ""
+msgstr "Orden de los Campos del Formulario"
 
 #. module: cms_form
 #: model:ir.model.fields,field_description:cms_form.field_cms_form__form_fields_template
@@ -288,7 +290,7 @@ msgstr ""
 #: model:ir.model.fields,field_description:cms_form.field_cms_form_search__form_fields_template
 #: model:ir.model.fields,field_description:cms_form.field_cms_form_wizard__form_fields_template
 msgid "Form Fields Template"
-msgstr ""
+msgstr "Plantilla de Campos de Formulario"
 
 #. module: cms_form
 #: model:ir.model.fields,field_description:cms_form.field_cms_form__form_fields_whitelist
@@ -296,7 +298,7 @@ msgstr ""
 #: model:ir.model.fields,field_description:cms_form.field_cms_form_search__form_fields_whitelist
 #: model:ir.model.fields,field_description:cms_form.field_cms_form_wizard__form_fields_whitelist
 msgid "Form Fields Whitelist"
-msgstr ""
+msgstr "Lista Blanca de Campos de Formulario"
 
 #. module: cms_form
 #: model:ir.model.fields,field_description:cms_form.field_cms_form__form_fields_wrapper_template
@@ -304,7 +306,7 @@ msgstr ""
 #: model:ir.model.fields,field_description:cms_form.field_cms_form_search__form_fields_wrapper_template
 #: model:ir.model.fields,field_description:cms_form.field_cms_form_wizard__form_fields_wrapper_template
 msgid "Form Fields Wrapper Template"
-msgstr ""
+msgstr "Plantilla Envolvente de Campos de Formulario"
 
 #. module: cms_form
 #: model:ir.model.fields,field_description:cms_form.field_cms_form__form_fieldsets
@@ -312,7 +314,7 @@ msgstr ""
 #: model:ir.model.fields,field_description:cms_form.field_cms_form_search__form_fieldsets
 #: model:ir.model.fields,field_description:cms_form.field_cms_form_wizard__form_fieldsets
 msgid "Form Fieldsets"
-msgstr ""
+msgstr "Conjuntos de campos de formulario"
 
 #. module: cms_form
 #: model:ir.model.fields,field_description:cms_form.field_cms_form__form_fieldsets_display
@@ -320,7 +322,7 @@ msgstr ""
 #: model:ir.model.fields,field_description:cms_form.field_cms_form_search__form_fieldsets_display
 #: model:ir.model.fields,field_description:cms_form.field_cms_form_wizard__form_fieldsets_display
 msgid "Form Fieldsets Display"
-msgstr ""
+msgstr "Visualización de Conjuntos de Campos de Formulario"
 
 #. module: cms_form
 #: model:ir.model.fields,field_description:cms_form.field_cms_form__form_fname_pattern
@@ -328,7 +330,7 @@ msgstr ""
 #: model:ir.model.fields,field_description:cms_form.field_cms_form_search__form_fname_pattern
 #: model:ir.model.fields,field_description:cms_form.field_cms_form_wizard__form_fname_pattern
 msgid "Form Fname Pattern"
-msgstr ""
+msgstr "Patrón del Formulario Fname"
 
 #. module: cms_form
 #: model:ir.model.fields,field_description:cms_form.field_cms_form__form_method
@@ -336,7 +338,7 @@ msgstr ""
 #: model:ir.model.fields,field_description:cms_form.field_cms_form_search__form_method
 #: model:ir.model.fields,field_description:cms_form.field_cms_form_wizard__form_method
 msgid "Form Method"
-msgstr ""
+msgstr "Método de Formulario"
 
 #. module: cms_form
 #: model:ir.model.fields,field_description:cms_form.field_cms_form__form_mode
@@ -344,7 +346,7 @@ msgstr ""
 #: model:ir.model.fields,field_description:cms_form.field_cms_form_search__form_mode
 #: model:ir.model.fields,field_description:cms_form.field_cms_form_wizard__form_mode
 msgid "Form Mode"
-msgstr ""
+msgstr "Modo Formulario"
 
 #. module: cms_form
 #: model:ir.model.fields,field_description:cms_form.field_cms_form__form_model_fields
@@ -352,7 +354,7 @@ msgstr ""
 #: model:ir.model.fields,field_description:cms_form.field_cms_form_search__form_model_fields
 #: model:ir.model.fields,field_description:cms_form.field_cms_form_wizard__form_model_fields
 msgid "Form Model Fields"
-msgstr ""
+msgstr "Campos del Modelo de Formulario"
 
 #. module: cms_form
 #: model:ir.model.fields,field_description:cms_form.field_cms_form__form_model_name
@@ -360,23 +362,23 @@ msgstr ""
 #: model:ir.model.fields,field_description:cms_form.field_cms_form_search__form_model_name
 #: model:ir.model.fields,field_description:cms_form.field_cms_form_wizard__form_model_name
 msgid "Form Model Name"
-msgstr ""
+msgstr "Nombre del Modelo de Formulario"
 
 #. module: cms_form
 #: model:ir.model.fields,field_description:cms_form.field_cms_form_search__form_no_result_msg
 msgid "Form No Result Msg"
-msgstr ""
+msgstr "No de Form Resultado Msg"
 
 #. module: cms_form
 #: model:ir.model.fields,field_description:cms_form.field_cms_form_search__form_no_search_results_template
 msgid "Form No Search Results Template"
-msgstr ""
+msgstr "Plantilla de Formulario sin Resultados de Búsqueda"
 
 #. module: cms_form
 #: model:ir.model.fields,field_description:cms_form.field_cms_form__form_redirect
 #: model:ir.model.fields,field_description:cms_form.field_cms_form_wizard__form_redirect
 msgid "Form Redirect"
-msgstr ""
+msgstr "Redirección de Formularios"
 
 #. module: cms_form
 #: model:ir.model.fields,field_description:cms_form.field_cms_form__form_render_values
@@ -384,7 +386,7 @@ msgstr ""
 #: model:ir.model.fields,field_description:cms_form.field_cms_form_search__form_render_values
 #: model:ir.model.fields,field_description:cms_form.field_cms_form_wizard__form_render_values
 msgid "Form Render Values"
-msgstr ""
+msgstr "Valores de Renderizado de Formularios"
 
 #. module: cms_form
 #: model:ir.model.fields,field_description:cms_form.field_cms_form__form_required_fields
@@ -392,67 +394,67 @@ msgstr ""
 #: model:ir.model.fields,field_description:cms_form.field_cms_form_search__form_required_fields
 #: model:ir.model.fields,field_description:cms_form.field_cms_form_wizard__form_required_fields
 msgid "Form Required Fields"
-msgstr ""
+msgstr "Campos Obligatorios del Formulario"
 
 #. module: cms_form
 #: model:ir.model.fields,field_description:cms_form.field_cms_form_wizard__form_reset
 msgid "Form Reset"
-msgstr ""
+msgstr "Restablecer Formulario"
 
 #. module: cms_form
 #: model:ir.model.fields,field_description:cms_form.field_cms_form_search__form_results_orderby
 msgid "Form Results Orderby"
-msgstr ""
+msgstr "Resultados del formulario Ordenar por"
 
 #. module: cms_form
 #: model:ir.model.fields,field_description:cms_form.field_cms_form_search__form_results_per_page
 msgid "Form Results Per Page"
-msgstr ""
+msgstr "Resultados de Formularios por Página"
 
 #. module: cms_form
 #: model:ir.model.fields,field_description:cms_form.field_cms_form_search__form_search_domain_rules
 msgid "Form Search Domain Rules"
-msgstr ""
+msgstr "Reglas del Dominio de Búsqueda de Formularios"
 
 #. module: cms_form
 #: model:ir.model.fields,field_description:cms_form.field_cms_form_search__form_search_fields_multi
 msgid "Form Search Fields Multi"
-msgstr ""
+msgstr "Campos de Búsqueda en el Formulario Multi"
 
 #. module: cms_form
 #: model:ir.model.fields,field_description:cms_form.field_cms_form_search__form_search_results
 msgid "Form Search Results"
-msgstr ""
+msgstr "Resultados de la Búsqueda de Formularios"
 
 #. module: cms_form
 #: model:ir.model.fields,field_description:cms_form.field_cms_form_search__form_search_results_template
 msgid "Form Search Results Template"
-msgstr ""
+msgstr "Plantilla de Resultados de Búsqueda de Formularios"
 
 #. module: cms_form
 #: model:ir.model.fields,field_description:cms_form.field_cms_form_wizard__form_show_progress_bar
 msgid "Form Show Progress Bar"
-msgstr ""
+msgstr "Formulario Mostrar barra de Progreso"
 
 #. module: cms_form
 #: model:ir.model.fields,field_description:cms_form.field_cms_form_search__form_show_results_no_submit
 msgid "Form Show Results No Submit"
-msgstr ""
+msgstr "Formulario Mostrar resultados No enviar"
 
 #. module: cms_form
 #: model:ir.model.fields,field_description:cms_form.field_cms_form_search__form_show_search_form
 msgid "Form Show Search Form"
-msgstr ""
+msgstr "Formulario Mostrar Formulario de búsqueda"
 
 #. module: cms_form
 #: model:ir.model.fields,field_description:cms_form.field_cms_form_wizard__form_step_store_all_fields
 msgid "Form Step Store All Fields"
-msgstr ""
+msgstr "Paso de formulario Almacenar todos los Campos"
 
 #. module: cms_form
 #: model:ir.model.fields,field_description:cms_form.field_cms_form_wizard__form_step_stored_fields
 msgid "Form Step Stored Fields"
-msgstr ""
+msgstr "Campos Almacenados en el Paso del Formulario"
 
 #. module: cms_form
 #: model:ir.model.fields,field_description:cms_form.field_cms_form__form_sub_fields
@@ -460,13 +462,13 @@ msgstr ""
 #: model:ir.model.fields,field_description:cms_form.field_cms_form_search__form_sub_fields
 #: model:ir.model.fields,field_description:cms_form.field_cms_form_wizard__form_sub_fields
 msgid "Form Sub Fields"
-msgstr ""
+msgstr "Campos Secundarios del Formulario"
 
 #. module: cms_form
 #: model:ir.model.fields,field_description:cms_form.field_cms_form__form_success
 #: model:ir.model.fields,field_description:cms_form.field_cms_form_wizard__form_success
 msgid "Form Success"
-msgstr ""
+msgstr "Formulario Éxito"
 
 #. module: cms_form
 #: model:ir.model.fields,field_description:cms_form.field_cms_form__form_template
@@ -474,7 +476,7 @@ msgstr ""
 #: model:ir.model.fields,field_description:cms_form.field_cms_form_search__form_template
 #: model:ir.model.fields,field_description:cms_form.field_cms_form_wizard__form_template
 msgid "Form Template"
-msgstr ""
+msgstr "Plantilla de Formulario"
 
 #. module: cms_form
 #: model:ir.model.fields,field_description:cms_form.field_cms_form__form_title
@@ -482,13 +484,13 @@ msgstr ""
 #: model:ir.model.fields,field_description:cms_form.field_cms_form_search__form_title
 #: model:ir.model.fields,field_description:cms_form.field_cms_form_wizard__form_title
 msgid "Form Title"
-msgstr ""
+msgstr "Título del Formulario"
 
 #. module: cms_form
 #: model:ir.model.fields,field_description:cms_form.field_cms_form__form_validators
 #: model:ir.model.fields,field_description:cms_form.field_cms_form_wizard__form_validators
 msgid "Form Validators"
-msgstr ""
+msgstr "Validadores de Formularios"
 
 #. module: cms_form
 #: model:ir.model.fields,field_description:cms_form.field_cms_form__form_wrapper_extra_css_klass
@@ -496,7 +498,7 @@ msgstr ""
 #: model:ir.model.fields,field_description:cms_form.field_cms_form_search__form_wrapper_extra_css_klass
 #: model:ir.model.fields,field_description:cms_form.field_cms_form_wizard__form_wrapper_extra_css_klass
 msgid "Form Wrapper Extra Css Klass"
-msgstr ""
+msgstr "Envoltorio de formulario Extra Css Klass"
 
 #. module: cms_form
 #: model:ir.model.fields,field_description:cms_form.field_cms_form__form_wrapper_template
@@ -504,12 +506,12 @@ msgstr ""
 #: model:ir.model.fields,field_description:cms_form.field_cms_form_search__form_wrapper_template
 #: model:ir.model.fields,field_description:cms_form.field_cms_form_wizard__form_wrapper_template
 msgid "Form Wrapper Template"
-msgstr ""
+msgstr "Plantilla de Contenedor de Formulario"
 
 #. module: cms_form
 #: model_terms:ir.ui.view,arch_db:cms_form.fieldsets_as_tabs
 msgid "Home"
-msgstr ""
+msgstr "Casa"
 
 #. module: cms_form
 #: model:ir.model.fields.selection,name:cms_form.selection__cms_form__form_display_mode__horizontal
@@ -517,7 +519,7 @@ msgstr ""
 #: model:ir.model.fields.selection,name:cms_form.selection__cms_form_search__form_display_mode__horizontal
 #: model:ir.model.fields.selection,name:cms_form.selection__cms_form_wizard__form_display_mode__horizontal
 msgid "Horizontal"
-msgstr ""
+msgstr "Horizontal"
 
 #. module: cms_form
 #: model:ir.model.fields,field_description:cms_form.field_cms_form__id
@@ -546,26 +548,26 @@ msgstr ""
 #: model:ir.model.fields,field_description:cms_form.field_cms_form_widget_x2m_mixin__id
 #: model:ir.model.fields,field_description:cms_form.field_cms_form_wizard__id
 msgid "ID"
-msgstr ""
+msgstr "ID"
 
 #. module: cms_form
 #. odoo-python
 #: code:addons/cms_form/models/cms_form.py:0
 #, python-format
 msgid "Item created."
-msgstr ""
+msgstr "Ítem creado."
 
 #. module: cms_form
 #. odoo-python
 #: code:addons/cms_form/models/cms_form.py:0
 #, python-format
 msgid "Item updated."
-msgstr ""
+msgstr "Ítem actualizado."
 
 #. module: cms_form
 #: model_terms:ir.ui.view,arch_db:cms_form.field_widget_image
 msgid "Keep current image"
-msgstr ""
+msgstr "Dejar imagen actual"
 
 #. module: cms_form
 #: model:ir.model.fields,field_description:cms_form.field_cms_form__main_object
@@ -573,26 +575,26 @@ msgstr ""
 #: model:ir.model.fields,field_description:cms_form.field_cms_form_search__main_object
 #: model:ir.model.fields,field_description:cms_form.field_cms_form_wizard__main_object
 msgid "Main Object"
-msgstr ""
+msgstr "Objeto Principal"
 
 #. module: cms_form
 #: model_terms:ir.ui.view,arch_db:cms_form.form_field_label_after_wrapper
 #: model_terms:ir.ui.view,arch_db:cms_form.form_horizontal_field_wrapper
 #: model_terms:ir.ui.view,arch_db:cms_form.form_vertical_field_wrapper
 msgid "Name"
-msgstr ""
+msgstr "Nombre"
 
 #. module: cms_form
 #: model_terms:ir.ui.view,arch_db:cms_form.wizard_form_buttons
 msgid "Next"
-msgstr ""
+msgstr "Siguiente"
 
 #. module: cms_form
 #. odoo-python
 #: code:addons/cms_form/models/cms_search_form.py:0
 #, python-format
 msgid "No items"
-msgstr ""
+msgstr "No hay artículos"
 
 #. module: cms_form
 #: model:ir.model.fields,field_description:cms_form.field_cms_form__o_request
@@ -600,24 +602,24 @@ msgstr ""
 #: model:ir.model.fields,field_description:cms_form.field_cms_form_search__o_request
 #: model:ir.model.fields,field_description:cms_form.field_cms_form_wizard__o_request
 msgid "O Request"
-msgstr ""
+msgstr "Solicitud O"
 
 #. module: cms_form
 #: model_terms:ir.ui.view,arch_db:cms_form.wizard_form_buttons
 msgid "Prev"
-msgstr ""
+msgstr "Previo"
 
 #. module: cms_form
 #: model:ir.model.fields.selection,name:cms_form.selection__cms_form__form_extract_value_mode__read
 #: model:ir.model.fields.selection,name:cms_form.selection__cms_form_mixin__form_extract_value_mode__read
 #: model:ir.model.fields.selection,name:cms_form.selection__cms_form_wizard__form_extract_value_mode__read
 msgid "Read"
-msgstr ""
+msgstr "Leer"
 
 #. module: cms_form
 #: model_terms:ir.ui.view,arch_db:cms_form.field_widget_image
 msgid "Replace current image"
-msgstr ""
+msgstr "Reemplaza imagen actual"
 
 #. module: cms_form
 #: model:ir.model.fields,field_description:cms_form.field_cms_form__request
@@ -625,12 +627,12 @@ msgstr ""
 #: model:ir.model.fields,field_description:cms_form.field_cms_form_search__request
 #: model:ir.model.fields,field_description:cms_form.field_cms_form_wizard__request
 msgid "Request"
-msgstr ""
+msgstr "Petición"
 
 #. module: cms_form
 #: model_terms:ir.ui.view,arch_db:cms_form.base_form
 msgid "Required fields"
-msgstr ""
+msgstr "Campos requeridos"
 
 #. module: cms_form
 #. odoo-python
@@ -638,27 +640,27 @@ msgstr ""
 #: model_terms:ir.ui.view,arch_db:cms_form.search_form_buttons
 #, python-format
 msgid "Search"
-msgstr ""
+msgstr "Búsqueda"
 
 #. module: cms_form
 #. odoo-python
 #: code:addons/cms_form/models/cms_search_form.py:0
 #, python-format
 msgid "Search %s"
-msgstr ""
+msgstr "Búsqueda %s"
 
 #. module: cms_form
 #. odoo-python
 #: code:addons/cms_form/models/cms_form.py:0
 #, python-format
 msgid "Some required fields are empty."
-msgstr ""
+msgstr "Algunos campos requeridos están vacíos."
 
 #. module: cms_form
 #: model_terms:ir.ui.view,arch_db:cms_form.base_form_buttons
 #: model_terms:ir.ui.view,arch_db:cms_form.wizard_form_buttons
 msgid "Submit"
-msgstr ""
+msgstr "Confirmar"
 
 #. module: cms_form
 #: model:ir.model.fields.selection,name:cms_form.selection__cms_form__form_fieldsets_display__tabs
@@ -666,7 +668,7 @@ msgstr ""
 #: model:ir.model.fields.selection,name:cms_form.selection__cms_form_search__form_fieldsets_display__tabs
 #: model:ir.model.fields.selection,name:cms_form.selection__cms_form_wizard__form_fieldsets_display__tabs
 msgid "Tabs"
-msgstr ""
+msgstr "Pestañas"
 
 #. module: cms_form
 #: model:ir.model.fields,help:cms_form.field_cms_form_widget_char__w_valid_pattern
@@ -676,7 +678,7 @@ msgstr ""
 #: model:ir.model.fields,help:cms_form.field_cms_form_widget_numeric_mixin__w_valid_pattern
 #: model:ir.model.fields,help:cms_form.field_cms_form_widget_text__w_valid_pattern
 msgid "Used to validate inputs with `pattern` attr"
-msgstr ""
+msgstr "Se utiliza para validar entradas con `pattern` attr"
 
 #. module: cms_form
 #: model:ir.model.fields.selection,name:cms_form.selection__cms_form__form_display_mode__vertical
@@ -688,7 +690,7 @@ msgstr ""
 #: model:ir.model.fields.selection,name:cms_form.selection__cms_form_wizard__form_display_mode__vertical
 #: model:ir.model.fields.selection,name:cms_form.selection__cms_form_wizard__form_fieldsets_display__vertical
 msgid "Vertical"
-msgstr ""
+msgstr "Vertical"
 
 #. module: cms_form
 #: model:ir.model.fields,field_description:cms_form.field_cms_form_widget_many2many__w_comodel_name
@@ -698,7 +700,7 @@ msgstr ""
 #: model:ir.model.fields,field_description:cms_form.field_cms_form_widget_rel_mixin__w_comodel_name
 #: model:ir.model.fields,field_description:cms_form.field_cms_form_widget_x2m_mixin__w_comodel_name
 msgid "W Comodel Name"
-msgstr ""
+msgstr "W Nombre del Comodelo"
 
 #. module: cms_form
 #: model:ir.model.fields,field_description:cms_form.field_cms_form_widget_binary__w_css_klass
@@ -723,7 +725,7 @@ msgstr ""
 #: model:ir.model.fields,field_description:cms_form.field_cms_form_widget_text__w_css_klass
 #: model:ir.model.fields,field_description:cms_form.field_cms_form_widget_x2m_mixin__w_css_klass
 msgid "W Css Klass"
-msgstr ""
+msgstr "W Css Klass"
 
 #. module: cms_form
 #: model:ir.model.fields,field_description:cms_form.field_cms_form_widget_binary__w_data
@@ -748,17 +750,17 @@ msgstr ""
 #: model:ir.model.fields,field_description:cms_form.field_cms_form_widget_text__w_data
 #: model:ir.model.fields,field_description:cms_form.field_cms_form_widget_x2m_mixin__w_data
 msgid "W Data"
-msgstr ""
+msgstr "W Datos"
 
 #. module: cms_form
 #: model:ir.model.fields,field_description:cms_form.field_cms_form_widget_date__w_date_format
 msgid "W Date Format"
-msgstr ""
+msgstr "W Formato de Fecha"
 
 #. module: cms_form
 #: model:ir.model.fields,field_description:cms_form.field_cms_form_widget_date__w_default_today
 msgid "W Default Today"
-msgstr ""
+msgstr "W Por Defecto Hoy"
 
 #. module: cms_form
 #: model:ir.model.fields,field_description:cms_form.field_cms_form_widget_many2many__w_display_field
@@ -768,7 +770,7 @@ msgstr ""
 #: model:ir.model.fields,field_description:cms_form.field_cms_form_widget_rel_mixin__w_display_field
 #: model:ir.model.fields,field_description:cms_form.field_cms_form_widget_x2m_mixin__w_display_field
 msgid "W Display Field"
-msgstr ""
+msgstr "W Campo de Visualización"
 
 #. module: cms_form
 #: model:ir.model.fields,field_description:cms_form.field_cms_form_widget_many2many__w_domain
@@ -778,7 +780,7 @@ msgstr ""
 #: model:ir.model.fields,field_description:cms_form.field_cms_form_widget_rel_mixin__w_domain
 #: model:ir.model.fields,field_description:cms_form.field_cms_form_widget_x2m_mixin__w_domain
 msgid "W Domain"
-msgstr ""
+msgstr "W Dominio"
 
 #. module: cms_form
 #: model:ir.model.fields,field_description:cms_form.field_cms_form_widget_binary__w_field
@@ -803,7 +805,7 @@ msgstr ""
 #: model:ir.model.fields,field_description:cms_form.field_cms_form_widget_text__w_field
 #: model:ir.model.fields,field_description:cms_form.field_cms_form_widget_x2m_mixin__w_field
 msgid "W Field"
-msgstr ""
+msgstr "Campo W"
 
 #. module: cms_form
 #: model:ir.model.fields,field_description:cms_form.field_cms_form_widget_binary__w_field_value
@@ -828,7 +830,7 @@ msgstr ""
 #: model:ir.model.fields,field_description:cms_form.field_cms_form_widget_text__w_field_value
 #: model:ir.model.fields,field_description:cms_form.field_cms_form_widget_x2m_mixin__w_field_value
 msgid "W Field Value"
-msgstr ""
+msgstr "W Valor del Campo"
 
 #. module: cms_form
 #: model:ir.model.fields,field_description:cms_form.field_cms_form_widget_binary__w_fname
@@ -853,7 +855,7 @@ msgstr ""
 #: model:ir.model.fields,field_description:cms_form.field_cms_form_widget_text__w_fname
 #: model:ir.model.fields,field_description:cms_form.field_cms_form_widget_x2m_mixin__w_fname
 msgid "W Fname"
-msgstr ""
+msgstr "W Fname"
 
 #. module: cms_form
 #: model:ir.model.fields,field_description:cms_form.field_cms_form_widget_binary__w_form
@@ -878,19 +880,19 @@ msgstr ""
 #: model:ir.model.fields,field_description:cms_form.field_cms_form_widget_text__w_form
 #: model:ir.model.fields,field_description:cms_form.field_cms_form_widget_x2m_mixin__w_form
 msgid "W Form"
-msgstr ""
+msgstr "Formulario W"
 
 #. module: cms_form
 #: model:ir.model.fields,field_description:cms_form.field_cms_form_widget_integer__w_input_max
 #: model:ir.model.fields,field_description:cms_form.field_cms_form_widget_numeric_mixin__w_input_max
 msgid "W Input Max"
-msgstr ""
+msgstr "W Entrada Máx"
 
 #. module: cms_form
 #: model:ir.model.fields,field_description:cms_form.field_cms_form_widget_integer__w_input_min
 #: model:ir.model.fields,field_description:cms_form.field_cms_form_widget_numeric_mixin__w_input_min
 msgid "W Input Min"
-msgstr ""
+msgstr "W Entrada Mín"
 
 #. module: cms_form
 #: model:ir.model.fields,field_description:cms_form.field_cms_form_widget_char__w_input_type
@@ -900,22 +902,22 @@ msgstr ""
 #: model:ir.model.fields,field_description:cms_form.field_cms_form_widget_numeric_mixin__w_input_type
 #: model:ir.model.fields,field_description:cms_form.field_cms_form_widget_text__w_input_type
 msgid "W Input Type"
-msgstr ""
+msgstr "W Tipo de Entrada"
 
 #. module: cms_form
 #: model:ir.model.fields,field_description:cms_form.field_cms_form_widget_text__w_maxlength
 msgid "W Maxlength"
-msgstr ""
+msgstr "W Longitud máx"
 
 #. module: cms_form
 #: model:ir.model.fields,field_description:cms_form.field_cms_form_widget_radio__w_options_help
 msgid "W Options Help"
-msgstr ""
+msgstr "W Opciones Ayuda"
 
 #. module: cms_form
 #: model:ir.model.fields,field_description:cms_form.field_cms_form_widget_date__w_placeholder
 msgid "W Placeholder"
-msgstr ""
+msgstr "W Marcador de posición"
 
 #. module: cms_form
 #: model:ir.model.fields,field_description:cms_form.field_cms_form_widget_binary__w_readonly
@@ -940,7 +942,7 @@ msgstr ""
 #: model:ir.model.fields,field_description:cms_form.field_cms_form_widget_text__w_readonly
 #: model:ir.model.fields,field_description:cms_form.field_cms_form_widget_x2m_mixin__w_readonly
 msgid "W Readonly"
-msgstr ""
+msgstr "Sólo lectura W"
 
 #. module: cms_form
 #: model:ir.model.fields,field_description:cms_form.field_cms_form_widget_binary__w_record
@@ -965,7 +967,7 @@ msgstr ""
 #: model:ir.model.fields,field_description:cms_form.field_cms_form_widget_text__w_record
 #: model:ir.model.fields,field_description:cms_form.field_cms_form_widget_x2m_mixin__w_record
 msgid "W Record"
-msgstr ""
+msgstr "Registro W"
 
 #. module: cms_form
 #: model:ir.model.fields,field_description:cms_form.field_cms_form_widget_binary__w_subfields
@@ -990,7 +992,7 @@ msgstr ""
 #: model:ir.model.fields,field_description:cms_form.field_cms_form_widget_text__w_subfields
 #: model:ir.model.fields,field_description:cms_form.field_cms_form_widget_x2m_mixin__w_subfields
 msgid "W Subfields"
-msgstr ""
+msgstr "W Subcampos"
 
 #. module: cms_form
 #: model:ir.model.fields,field_description:cms_form.field_cms_form_widget_binary__w_template
@@ -1015,12 +1017,12 @@ msgstr ""
 #: model:ir.model.fields,field_description:cms_form.field_cms_form_widget_text__w_template
 #: model:ir.model.fields,field_description:cms_form.field_cms_form_widget_x2m_mixin__w_template
 msgid "W Template"
-msgstr ""
+msgstr "Plantilla W"
 
 #. module: cms_form
 #: model:ir.model.fields,field_description:cms_form.field_cms_form_widget_boolean__w_true_values
 msgid "W True Values"
-msgstr ""
+msgstr "W Valores Verdaderos"
 
 #. module: cms_form
 #: model:ir.model.fields,field_description:cms_form.field_cms_form_widget_char__w_valid_pattern
@@ -1030,7 +1032,7 @@ msgstr ""
 #: model:ir.model.fields,field_description:cms_form.field_cms_form_widget_numeric_mixin__w_valid_pattern
 #: model:ir.model.fields,field_description:cms_form.field_cms_form_widget_text__w_valid_pattern
 msgid "W Valid Pattern"
-msgstr ""
+msgstr "W Patrón Válido"
 
 #. module: cms_form
 #: model:ir.model.fields,field_description:cms_form.field_cms_form_widget_binary__w_wrapper_css_klass
@@ -1055,7 +1057,7 @@ msgstr ""
 #: model:ir.model.fields,field_description:cms_form.field_cms_form_widget_text__w_wrapper_css_klass
 #: model:ir.model.fields,field_description:cms_form.field_cms_form_widget_x2m_mixin__w_wrapper_css_klass
 msgid "W Wrapper Css Klass"
-msgstr ""
+msgstr "Clase W Wrapper Css"
 
 #. module: cms_form
 #: model:ir.model.fields,field_description:cms_form.field_cms_form_widget_binary__w_wrapper_template
@@ -1080,25 +1082,25 @@ msgstr ""
 #: model:ir.model.fields,field_description:cms_form.field_cms_form_widget_text__w_wrapper_template
 #: model:ir.model.fields,field_description:cms_form.field_cms_form_widget_x2m_mixin__w_wrapper_template
 msgid "W Wrapper Template"
-msgstr ""
+msgstr "Plantilla de Envoltura W"
 
 #. module: cms_form
 #: model:ir.model.fields.selection,name:cms_form.selection__cms_form__form_extract_value_mode__write
 #: model:ir.model.fields.selection,name:cms_form.selection__cms_form_mixin__form_extract_value_mode__write
 #: model:ir.model.fields.selection,name:cms_form.selection__cms_form_wizard__form_extract_value_mode__write
 msgid "Write"
-msgstr ""
+msgstr "Escribir"
 
 #. module: cms_form
 #. odoo-python
 #: code:addons/cms_form/models/cms_form_mixin.py:0
 #, python-format
 msgid "You are not allowed to create any record for the model `%s`."
-msgstr ""
+msgstr "No se le permite crear ningún registro para el modelo `%s`."
 
 #. module: cms_form
 #. odoo-python
 #: code:addons/cms_form/models/cms_form_mixin.py:0
 #, python-format
 msgid "You cannot edit this record. Model: %(model)s, ID: %(obj_id)s."
-msgstr ""
+msgstr "No puede editar este registro. Modelo: %(model)s, ID: %(obj_id)s."
