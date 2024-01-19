@@ -30,6 +30,10 @@ class TestMessage(TransactionCase):
         with self.mock_request():
             return self.env["ir.http"].get_status_message(**kw)
 
+    def clear_status_messages(self, **kw):
+        with self.mock_request():
+            return self.env["ir.http"].clear_status_messages(**kw)
+
     @contextmanager
     def mock_request(self):
         request = MockRequest(self.env)
@@ -68,6 +72,14 @@ class TestMessage(TransactionCase):
         msg = self.get_status_message()[0]
         self.assertEqual(msg["dismissible"], False)
         self.assertEqual(msg["msg"], "you cannot remove me!")
+
+    def test_message_clear_messages(self):
+        # Clear all existing messages
+        self.add_status_message("well done!")
+        self.add_status_message("once again!")
+        self.clear_status_messages()
+        msgs = self.get_status_message()
+        self.assertEqual(msgs, [])
 
     def _render(self):
         return self.env["ir.qweb"]._render("cms_status_message.status_message", {})

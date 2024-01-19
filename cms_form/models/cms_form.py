@@ -233,3 +233,6 @@ class CMSForm(models.AbstractModel):
 
     def add_status_message(self, msg, **kw):
         self.env["ir.http"].add_status_message(msg, request=self.o_request, **kw)
+
+    def clear_status_messages(self):
+        self.env["ir.http"].clear_status_messages()
