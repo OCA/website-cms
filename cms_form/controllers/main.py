@@ -8,6 +8,8 @@ import werkzeug
 from odoo import _, http
 from odoo.http import request
 
+from ..exceptions import FormRedirect
+
 
 class FormControllerMixin(object):
 
@@ -96,7 +98,10 @@ class FormControllerMixin(object):
         form = self.get_form(model, model_id=model_id, **kw)
         form.form_check_permission()
         # pass only specific extra args, to not pollute form render values
-        form.form_process(extra_args={"page": kw.get("page")})
+        try:
+            form.form_process(extra_args={"page": kw.get("page")})
+        except FormRedirect as exc:
+            return werkzeug.utils.redirect(exc.next_url, code=303)
         # search forms do not need these attrs
         if getattr(form, "form_success", None) and getattr(form, "form_redirect", None):
             # anything went fine, redirect to next url
