@@ -6,7 +6,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: Odoo Server 16.0\n"
 "Report-Msgid-Bugs-To: \n"
-"PO-Revision-Date: 2023-11-13 09:38+0000\n"
+"PO-Revision-Date: 2024-07-01 10:47+0000\n"
 "Last-Translator: mymage <stefano.consolaro@mymage.it>\n"
 "Language-Team: none\n"
 "Language: it\n"
@@ -602,7 +602,7 @@ msgstr "Nessun elemento"
 #: model:ir.model.fields,field_description:cms_form.field_cms_form_search__o_request
 #: model:ir.model.fields,field_description:cms_form.field_cms_form_wizard__o_request
 msgid "O Request"
-msgstr ""
+msgstr "o_request"
 
 #. module: cms_form
 #: model_terms:ir.ui.view,arch_db:cms_form.wizard_form_buttons
