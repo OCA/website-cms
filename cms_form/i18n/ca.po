@@ -6,15 +6,15 @@ msgid ""
 msgstr ""
 "Project-Id-Version: Odoo Server 13.0\n"
 "Report-Msgid-Bugs-To: \n"
-"PO-Revision-Date: 2022-04-13 10:05+0000\n"
-"Last-Translator: Noel estudillo <noelestudilloviera@gmail.com>\n"
+"PO-Revision-Date: 2024-12-07 11:06+0000\n"
+"Last-Translator: QuiJoQuim <quim.rebull@gmail.com>\n"
 "Language-Team: none\n"
 "Language: ca\n"
 "MIME-Version: 1.0\n"
 "Content-Type: text/plain; charset=UTF-8\n"
 "Content-Transfer-Encoding: \n"
 "Plural-Forms: nplurals=2; plural=n != 1;\n"
-"X-Generator: Weblate 4.3.2\n"
+"X-Generator: Weblate 5.6.2\n"
 
 #. module: cms_form
 #. odoo-python
@@ -77,7 +77,7 @@ msgstr "Widget de data del formulari CMS"
 #. module: cms_form
 #: model:ir.model,name:cms_form.model_cms_form_widget_binary
 msgid "CMS Form file widget"
-msgstr ""
+msgstr "Giny (widget) del formulari CMS"
 
 #. module: cms_form
 #: model:ir.model,name:cms_form.model_cms_form_widget_float
@@ -107,7 +107,7 @@ msgstr "CMS Form mixin"
 #. module: cms_form
 #: model:ir.model,name:cms_form.model_cms_form_widget_numeric_mixin
 msgid "CMS Form numeric mixin widget"
-msgstr ""
+msgstr "Giny (widget) numèric mixt en formulari CMS"
 
 #. module: cms_form
 #: model:ir.model,name:cms_form.model_cms_form_widget_radio
@@ -169,7 +169,7 @@ msgstr "Editar \"%s\""
 #: model:ir.model.fields,field_description:cms_form.field_cms_form_search__form_action
 #: model:ir.model.fields,field_description:cms_form.field_cms_form_wizard__form_action
 msgid "Form Action"
-msgstr ""
+msgstr "Acció Formulari"
 
 #. module: cms_form
 #: model:ir.model.fields,field_description:cms_form.field_cms_form__form_ajax
@@ -177,7 +177,7 @@ msgstr ""
 #: model:ir.model.fields,field_description:cms_form.field_cms_form_search__form_ajax
 #: model:ir.model.fields,field_description:cms_form.field_cms_form_wizard__form_ajax
 msgid "Form Ajax"
-msgstr ""
+msgstr "Formulari Ajax"
 
 #. module: cms_form
 #: model:ir.model.fields,field_description:cms_form.field_cms_form__form_ajax_onchange
@@ -185,7 +185,7 @@ msgstr ""
 #: model:ir.model.fields,field_description:cms_form.field_cms_form_search__form_ajax_onchange
 #: model:ir.model.fields,field_description:cms_form.field_cms_form_wizard__form_ajax_onchange
 msgid "Form Ajax Onchange"
-msgstr ""
+msgstr "Formulari Ajax Onchange"
 
 #. module: cms_form
 #: model:ir.model.fields,field_description:cms_form.field_cms_form__form_buttons_template
