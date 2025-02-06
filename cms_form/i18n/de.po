@@ -66,10 +66,7 @@ msgstr ""
 
 #. module: cms_form
 #: model:ir.model,name:cms_form.model_cms_form_widget_char
-<<<<<<< HEAD
-=======
 #: model:ir.model,name:cms_form.model_cms_form_widget_char_mixin
->>>>>>> 9eac0c1 (Update translation files)
 msgid "CMS Form char widget"
 msgstr ""
 
@@ -79,14 +76,11 @@ msgid "CMS Form date widget"
 msgstr ""
 
 #. module: cms_form
-<<<<<<< HEAD
-=======
 #: model:ir.model,name:cms_form.model_cms_form_widget_binary
 msgid "CMS Form file widget"
 msgstr ""
 
 #. module: cms_form
->>>>>>> 9eac0c1 (Update translation files)
 #: model:ir.model,name:cms_form.model_cms_form_widget_float
 msgid "CMS Form float widget"
 msgstr ""
@@ -112,27 +106,21 @@ msgid "CMS Form mixin"
 msgstr "CMS Form mixin"
 
 #. module: cms_form
-<<<<<<< HEAD
-=======
 #: model:ir.model,name:cms_form.model_cms_form_widget_numeric_mixin
 msgid "CMS Form numeric mixin widget"
 msgstr ""
 
 #. module: cms_form
->>>>>>> 9eac0c1 (Update translation files)
 #: model:ir.model,name:cms_form.model_cms_form_widget_radio
 msgid "CMS Form radio widget"
 msgstr ""
 
 #. module: cms_form
-<<<<<<< HEAD
-=======
 #: model:ir.model,name:cms_form.model_cms_form_widget_rel_mixin
 msgid "CMS Form relation widget mixin"
 msgstr ""
 
 #. module: cms_form
->>>>>>> 9eac0c1 (Update translation files)
 #: model:ir.model,name:cms_form.model_cms_form_search
 msgid "CMS Form search"
 msgstr ""
@@ -163,53 +151,20 @@ msgid "Cancel"
 msgstr "Abbrechen"
 
 #. module: cms_form
-<<<<<<< HEAD
-=======
 #. odoo-python
->>>>>>> 9eac0c1 (Update translation files)
 #: code:addons/cms_form/models/cms_form.py:0
 #, python-format
 msgid "Create %s"
 msgstr "%s anlegen"
 
 #. module: cms_form
-<<<<<<< HEAD
-#: model:ir.model.fields,field_description:cms_form.field_cms_form__display_name
-#: model:ir.model.fields,field_description:cms_form.field_cms_form_mixin__display_name
-#: model:ir.model.fields,field_description:cms_form.field_cms_form_search__display_name
-#: model:ir.model.fields,field_description:cms_form.field_cms_form_widget_binary_mixin__display_name
-#: model:ir.model.fields,field_description:cms_form.field_cms_form_widget_boolean__display_name
-#: model:ir.model.fields,field_description:cms_form.field_cms_form_widget_char__display_name
-#: model:ir.model.fields,field_description:cms_form.field_cms_form_widget_date__display_name
-#: model:ir.model.fields,field_description:cms_form.field_cms_form_widget_float__display_name
-#: model:ir.model.fields,field_description:cms_form.field_cms_form_widget_hidden__display_name
-#: model:ir.model.fields,field_description:cms_form.field_cms_form_widget_image__display_name
-#: model:ir.model.fields,field_description:cms_form.field_cms_form_widget_integer__display_name
-#: model:ir.model.fields,field_description:cms_form.field_cms_form_widget_many2many__display_name
-#: model:ir.model.fields,field_description:cms_form.field_cms_form_widget_many2one__display_name
-#: model:ir.model.fields,field_description:cms_form.field_cms_form_widget_many2one_multi__display_name
-#: model:ir.model.fields,field_description:cms_form.field_cms_form_widget_mixin__display_name
-#: model:ir.model.fields,field_description:cms_form.field_cms_form_widget_one2many__display_name
-#: model:ir.model.fields,field_description:cms_form.field_cms_form_widget_radio__display_name
-#: model:ir.model.fields,field_description:cms_form.field_cms_form_widget_selection__display_name
-#: model:ir.model.fields,field_description:cms_form.field_cms_form_widget_text__display_name
-#: model:ir.model.fields,field_description:cms_form.field_cms_form_widget_x2m_mixin__display_name
-#: model:ir.model.fields,field_description:cms_form.field_cms_form_wizard__display_name
-msgid "Display Name"
-msgstr "Angezeigter Name"
-
-#. module: cms_form
-=======
 #. odoo-python
->>>>>>> 9eac0c1 (Update translation files)
 #: code:addons/cms_form/models/cms_form.py:0
 #, python-format
 msgid "Edit \"%s\""
 msgstr "\"%s\" Bearbeiten"
 
 #. module: cms_form
-<<<<<<< HEAD
-=======
 #: model:ir.model.fields,field_description:cms_form.field_cms_form__form_action
 #: model:ir.model.fields,field_description:cms_form.field_cms_form_mixin__form_action
 #: model:ir.model.fields,field_description:cms_form.field_cms_form_search__form_action
@@ -554,20 +509,11 @@ msgid "Form Wrapper Template"
 msgstr ""
 
 #. module: cms_form
->>>>>>> 9eac0c1 (Update translation files)
 #: model_terms:ir.ui.view,arch_db:cms_form.fieldsets_as_tabs
 msgid "Home"
 msgstr ""
 
 #. module: cms_form
-<<<<<<< HEAD
-#: model:ir.model.fields,field_description:cms_form.field_cms_form__id
-#: model:ir.model.fields,field_description:cms_form.field_cms_form_mixin__id
-#: model:ir.model.fields,field_description:cms_form.field_cms_form_search__id
-#: model:ir.model.fields,field_description:cms_form.field_cms_form_widget_binary_mixin__id
-#: model:ir.model.fields,field_description:cms_form.field_cms_form_widget_boolean__id
-#: model:ir.model.fields,field_description:cms_form.field_cms_form_widget_char__id
-=======
 #: model:ir.model.fields.selection,name:cms_form.selection__cms_form__form_display_mode__horizontal
 #: model:ir.model.fields.selection,name:cms_form.selection__cms_form_mixin__form_display_mode__horizontal
 #: model:ir.model.fields.selection,name:cms_form.selection__cms_form_search__form_display_mode__horizontal
@@ -584,7 +530,6 @@ msgstr ""
 #: model:ir.model.fields,field_description:cms_form.field_cms_form_widget_boolean__id
 #: model:ir.model.fields,field_description:cms_form.field_cms_form_widget_char__id
 #: model:ir.model.fields,field_description:cms_form.field_cms_form_widget_char_mixin__id
->>>>>>> 9eac0c1 (Update translation files)
 #: model:ir.model.fields,field_description:cms_form.field_cms_form_widget_date__id
 #: model:ir.model.fields,field_description:cms_form.field_cms_form_widget_float__id
 #: model:ir.model.fields,field_description:cms_form.field_cms_form_widget_hidden__id
@@ -594,15 +539,10 @@ msgstr ""
 #: model:ir.model.fields,field_description:cms_form.field_cms_form_widget_many2one__id
 #: model:ir.model.fields,field_description:cms_form.field_cms_form_widget_many2one_multi__id
 #: model:ir.model.fields,field_description:cms_form.field_cms_form_widget_mixin__id
-<<<<<<< HEAD
-#: model:ir.model.fields,field_description:cms_form.field_cms_form_widget_one2many__id
-#: model:ir.model.fields,field_description:cms_form.field_cms_form_widget_radio__id
-=======
 #: model:ir.model.fields,field_description:cms_form.field_cms_form_widget_numeric_mixin__id
 #: model:ir.model.fields,field_description:cms_form.field_cms_form_widget_one2many__id
 #: model:ir.model.fields,field_description:cms_form.field_cms_form_widget_radio__id
 #: model:ir.model.fields,field_description:cms_form.field_cms_form_widget_rel_mixin__id
->>>>>>> 9eac0c1 (Update translation files)
 #: model:ir.model.fields,field_description:cms_form.field_cms_form_widget_selection__id
 #: model:ir.model.fields,field_description:cms_form.field_cms_form_widget_text__id
 #: model:ir.model.fields,field_description:cms_form.field_cms_form_widget_x2m_mixin__id
@@ -611,20 +551,14 @@ msgid "ID"
 msgstr "ID"
 
 #. module: cms_form
-<<<<<<< HEAD
-=======
 #. odoo-python
->>>>>>> 9eac0c1 (Update translation files)
 #: code:addons/cms_form/models/cms_form.py:0
 #, python-format
 msgid "Item created."
 msgstr "Objekt wurde erstellt."
 
 #. module: cms_form
-<<<<<<< HEAD
-=======
 #. odoo-python
->>>>>>> 9eac0c1 (Update translation files)
 #: code:addons/cms_form/models/cms_form.py:0
 #, python-format
 msgid "Item updated."
@@ -636,33 +570,6 @@ msgid "Keep current image"
 msgstr "Aktuelles Bild beibehalten"
 
 #. module: cms_form
-<<<<<<< HEAD
-#: model:ir.model.fields,field_description:cms_form.field_cms_form____last_update
-#: model:ir.model.fields,field_description:cms_form.field_cms_form_mixin____last_update
-#: model:ir.model.fields,field_description:cms_form.field_cms_form_search____last_update
-#: model:ir.model.fields,field_description:cms_form.field_cms_form_widget_binary_mixin____last_update
-#: model:ir.model.fields,field_description:cms_form.field_cms_form_widget_boolean____last_update
-#: model:ir.model.fields,field_description:cms_form.field_cms_form_widget_char____last_update
-#: model:ir.model.fields,field_description:cms_form.field_cms_form_widget_date____last_update
-#: model:ir.model.fields,field_description:cms_form.field_cms_form_widget_float____last_update
-#: model:ir.model.fields,field_description:cms_form.field_cms_form_widget_hidden____last_update
-#: model:ir.model.fields,field_description:cms_form.field_cms_form_widget_image____last_update
-#: model:ir.model.fields,field_description:cms_form.field_cms_form_widget_integer____last_update
-#: model:ir.model.fields,field_description:cms_form.field_cms_form_widget_many2many____last_update
-#: model:ir.model.fields,field_description:cms_form.field_cms_form_widget_many2one____last_update
-#: model:ir.model.fields,field_description:cms_form.field_cms_form_widget_many2one_multi____last_update
-#: model:ir.model.fields,field_description:cms_form.field_cms_form_widget_mixin____last_update
-#: model:ir.model.fields,field_description:cms_form.field_cms_form_widget_one2many____last_update
-#: model:ir.model.fields,field_description:cms_form.field_cms_form_widget_radio____last_update
-#: model:ir.model.fields,field_description:cms_form.field_cms_form_widget_selection____last_update
-#: model:ir.model.fields,field_description:cms_form.field_cms_form_widget_text____last_update
-#: model:ir.model.fields,field_description:cms_form.field_cms_form_widget_x2m_mixin____last_update
-#: model:ir.model.fields,field_description:cms_form.field_cms_form_wizard____last_update
-msgid "Last Modified on"
-msgstr "Zuletzt geändert am"
-
-#. module: cms_form
-=======
 #: model:ir.model.fields,field_description:cms_form.field_cms_form__main_object
 #: model:ir.model.fields,field_description:cms_form.field_cms_form_mixin__main_object
 #: model:ir.model.fields,field_description:cms_form.field_cms_form_search__main_object
@@ -672,7 +579,6 @@ msgstr ""
 
 #. module: cms_form
 #: model_terms:ir.ui.view,arch_db:cms_form.form_field_label_after_wrapper
->>>>>>> 9eac0c1 (Update translation files)
 #: model_terms:ir.ui.view,arch_db:cms_form.form_horizontal_field_wrapper
 #: model_terms:ir.ui.view,arch_db:cms_form.form_vertical_field_wrapper
 msgid "Name"
@@ -684,8 +590,6 @@ msgid "Next"
 msgstr ""
 
 #. module: cms_form
-<<<<<<< HEAD
-=======
 #. odoo-python
 #: code:addons/cms_form/models/cms_search_form.py:0
 #, python-format
@@ -701,14 +605,11 @@ msgid "O Request"
 msgstr ""
 
 #. module: cms_form
->>>>>>> 9eac0c1 (Update translation files)
 #: model_terms:ir.ui.view,arch_db:cms_form.wizard_form_buttons
 msgid "Prev"
 msgstr ""
 
 #. module: cms_form
-<<<<<<< HEAD
-=======
 #: model:ir.model.fields.selection,name:cms_form.selection__cms_form__form_extract_value_mode__read
 #: model:ir.model.fields.selection,name:cms_form.selection__cms_form_mixin__form_extract_value_mode__read
 #: model:ir.model.fields.selection,name:cms_form.selection__cms_form_wizard__form_extract_value_mode__read
@@ -716,14 +617,11 @@ msgid "Read"
 msgstr ""
 
 #. module: cms_form
->>>>>>> 9eac0c1 (Update translation files)
 #: model_terms:ir.ui.view,arch_db:cms_form.field_widget_image
 msgid "Replace current image"
 msgstr "Aktuelles Bild ersetzen"
 
 #. module: cms_form
-<<<<<<< HEAD
-=======
 #: model:ir.model.fields,field_description:cms_form.field_cms_form__request
 #: model:ir.model.fields,field_description:cms_form.field_cms_form_mixin__request
 #: model:ir.model.fields,field_description:cms_form.field_cms_form_search__request
@@ -732,16 +630,12 @@ msgid "Request"
 msgstr ""
 
 #. module: cms_form
->>>>>>> 9eac0c1 (Update translation files)
 #: model_terms:ir.ui.view,arch_db:cms_form.base_form
 msgid "Required fields"
 msgstr "Pflichtfelder"
 
 #. module: cms_form
-<<<<<<< HEAD
-=======
 #. odoo-python
->>>>>>> 9eac0c1 (Update translation files)
 #: code:addons/cms_form/models/cms_search_form.py:0
 #: model_terms:ir.ui.view,arch_db:cms_form.search_form_buttons
 #, python-format
@@ -749,20 +643,14 @@ msgid "Search"
 msgstr "Suche"
 
 #. module: cms_form
-<<<<<<< HEAD
-=======
 #. odoo-python
->>>>>>> 9eac0c1 (Update translation files)
 #: code:addons/cms_form/models/cms_search_form.py:0
 #, python-format
 msgid "Search %s"
 msgstr "%s suchen"
 
 #. module: cms_form
-<<<<<<< HEAD
-=======
 #. odoo-python
->>>>>>> 9eac0c1 (Update translation files)
 #: code:addons/cms_form/models/cms_form.py:0
 #, python-format
 msgid "Some required fields are empty."
@@ -775,8 +663,6 @@ msgid "Submit"
 msgstr "Absenden"
 
 #. module: cms_form
-<<<<<<< HEAD
-=======
 #: model:ir.model.fields.selection,name:cms_form.selection__cms_form__form_fieldsets_display__tabs
 #: model:ir.model.fields.selection,name:cms_form.selection__cms_form_mixin__form_fieldsets_display__tabs
 #: model:ir.model.fields.selection,name:cms_form.selection__cms_form_search__form_fieldsets_display__tabs
@@ -1207,31 +1093,24 @@ msgstr ""
 
 #. module: cms_form
 #. odoo-python
->>>>>>> 9eac0c1 (Update translation files)
 #: code:addons/cms_form/models/cms_form_mixin.py:0
 #, python-format
 msgid "You are not allowed to create any record for the model `%s`."
 msgstr ""
 
 #. module: cms_form
-<<<<<<< HEAD
-=======
 #. odoo-python
->>>>>>> 9eac0c1 (Update translation files)
 #: code:addons/cms_form/models/cms_form_mixin.py:0
 #, python-format
 msgid "You cannot edit this record. Model: %(model)s, ID: %(obj_id)s."
 msgstr ""
 
-<<<<<<< HEAD
-=======
 #~ msgid "Display Name"
 #~ msgstr "Angezeigter Name"
 
 #~ msgid "Last Modified on"
 #~ msgstr "Zuletzt geändert am"
 
->>>>>>> 9eac0c1 (Update translation files)
 #~ msgid "YYYY-MM-DD"
 #~ msgstr "JJJJ-MM-TT"
 
