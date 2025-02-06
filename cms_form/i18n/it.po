@@ -24,6 +24,13 @@ msgid "%s model has no CMS form registered."
 msgstr "Il modello %s non ha il modulo CMS registrato."
 
 #. module: cms_form
+#. odoo-python
+#: code:addons/cms_form/models/cms_form_mixin.py:0
+#, python-format
+msgid "Are you sure want to submit the form as it is?"
+msgstr ""
+
+#. module: cms_form
 #: model:ir.model,name:cms_form.model_cms_form
 msgid "CMS Form"
 msgstr "Form CMS"
@@ -150,8 +157,17 @@ msgid "Cancel"
 msgstr "Annulla"
 
 #. module: cms_form
+#: model_terms:ir.ui.view,arch_db:cms_form.wizard_form_confirm_modal
+msgid "Close"
+msgstr ""
+
+#. module: cms_form
+#: model_terms:ir.ui.view,arch_db:cms_form.wizard_form_confirm_modal
+msgid "Confirm submit"
+msgstr ""
+
+#. module: cms_form
 #. odoo-python
-#: code:addons/cms_form/models/cms_form.py:0
 #: code:addons/cms_form/models/cms_form.py:0
 #, python-format
 msgid "Create %s"
@@ -195,6 +211,14 @@ msgstr "Attributo onchange AJAX form"
 #: model:ir.model.fields,field_description:cms_form.field_cms_form_wizard__form_buttons_template
 msgid "Form Buttons Template"
 msgstr "Modello pulsante form"
+
+#. module: cms_form
+#: model:ir.model.fields,field_description:cms_form.field_cms_form__form_confirm_submit
+#: model:ir.model.fields,field_description:cms_form.field_cms_form_mixin__form_confirm_submit
+#: model:ir.model.fields,field_description:cms_form.field_cms_form_search__form_confirm_submit
+#: model:ir.model.fields,field_description:cms_form.field_cms_form_wizard__form_confirm_submit
+msgid "Form Confirm Submit"
+msgstr ""
 
 #. module: cms_form
 #: model:ir.model.fields,field_description:cms_form.field_cms_form__form_content_selector
@@ -659,6 +683,7 @@ msgstr "Alcuni campi richiesti sono vuoti."
 #. module: cms_form
 #: model_terms:ir.ui.view,arch_db:cms_form.base_form_buttons
 #: model_terms:ir.ui.view,arch_db:cms_form.wizard_form_buttons
+#: model_terms:ir.ui.view,arch_db:cms_form.wizard_form_confirm_modal
 msgid "Submit"
 msgstr "Invia"
 
@@ -1103,4 +1128,5 @@ msgstr "Non si è autorizzati a creare nuovi record per il modello `%s`."
 #: code:addons/cms_form/models/cms_form_mixin.py:0
 #, python-format
 msgid "You cannot edit this record. Model: %(model)s, ID: %(obj_id)s."
-msgstr "Non si può modificare questo record. Modell: %(model)s, ID: %(obj_id)s."
+msgstr ""
+"Non si può modificare questo record. Modell: %(model)s, ID: %(obj_id)s."

@@ -25,6 +25,13 @@ msgid "%s model has no CMS form registered."
 msgstr ""
 
 #. module: cms_form
+#. odoo-python
+#: code:addons/cms_form/models/cms_form_mixin.py:0
+#, python-format
+msgid "Are you sure want to submit the form as it is?"
+msgstr ""
+
+#. module: cms_form
 #: model:ir.model,name:cms_form.model_cms_form
 msgid "CMS Form"
 msgstr ""
@@ -151,6 +158,16 @@ msgid "Cancel"
 msgstr "Abbrechen"
 
 #. module: cms_form
+#: model_terms:ir.ui.view,arch_db:cms_form.wizard_form_confirm_modal
+msgid "Close"
+msgstr ""
+
+#. module: cms_form
+#: model_terms:ir.ui.view,arch_db:cms_form.wizard_form_confirm_modal
+msgid "Confirm submit"
+msgstr ""
+
+#. module: cms_form
 #. odoo-python
 #: code:addons/cms_form/models/cms_form.py:0
 #, python-format
@@ -194,6 +211,14 @@ msgstr ""
 #: model:ir.model.fields,field_description:cms_form.field_cms_form_search__form_buttons_template
 #: model:ir.model.fields,field_description:cms_form.field_cms_form_wizard__form_buttons_template
 msgid "Form Buttons Template"
+msgstr ""
+
+#. module: cms_form
+#: model:ir.model.fields,field_description:cms_form.field_cms_form__form_confirm_submit
+#: model:ir.model.fields,field_description:cms_form.field_cms_form_mixin__form_confirm_submit
+#: model:ir.model.fields,field_description:cms_form.field_cms_form_search__form_confirm_submit
+#: model:ir.model.fields,field_description:cms_form.field_cms_form_wizard__form_confirm_submit
+msgid "Form Confirm Submit"
 msgstr ""
 
 #. module: cms_form
@@ -659,6 +684,7 @@ msgstr "Bitte füllen Sie alle Pflichtfelder aus."
 #. module: cms_form
 #: model_terms:ir.ui.view,arch_db:cms_form.base_form_buttons
 #: model_terms:ir.ui.view,arch_db:cms_form.wizard_form_buttons
+#: model_terms:ir.ui.view,arch_db:cms_form.wizard_form_confirm_modal
 msgid "Submit"
 msgstr "Absenden"
 
