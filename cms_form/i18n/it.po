@@ -6,7 +6,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: Odoo Server 16.0\n"
 "Report-Msgid-Bugs-To: \n"
-"PO-Revision-Date: 2024-07-01 10:47+0000\n"
+"PO-Revision-Date: 2025-02-06 23:06+0000\n"
 "Last-Translator: mymage <stefano.consolaro@mymage.it>\n"
 "Language-Team: none\n"
 "Language: it\n"
@@ -14,7 +14,7 @@ msgstr ""
 "Content-Type: text/plain; charset=UTF-8\n"
 "Content-Transfer-Encoding: \n"
 "Plural-Forms: nplurals=2; plural=n != 1;\n"
-"X-Generator: Weblate 4.17\n"
+"X-Generator: Weblate 5.6.2\n"
 
 #. module: cms_form
 #. odoo-python
@@ -28,7 +28,7 @@ msgstr "Il modello %s non ha il modulo CMS registrato."
 #: code:addons/cms_form/models/cms_form_mixin.py:0
 #, python-format
 msgid "Are you sure want to submit the form as it is?"
-msgstr ""
+msgstr "Si è sicuri di voler inviare il modulo così com'è?"
 
 #. module: cms_form
 #: model:ir.model,name:cms_form.model_cms_form
@@ -159,12 +159,12 @@ msgstr "Annulla"
 #. module: cms_form
 #: model_terms:ir.ui.view,arch_db:cms_form.wizard_form_confirm_modal
 msgid "Close"
-msgstr ""
+msgstr "Chiudi"
 
 #. module: cms_form
 #: model_terms:ir.ui.view,arch_db:cms_form.wizard_form_confirm_modal
 msgid "Confirm submit"
-msgstr ""
+msgstr "Invio conferma"
 
 #. module: cms_form
 #. odoo-python
@@ -218,7 +218,7 @@ msgstr "Modello pulsante form"
 #: model:ir.model.fields,field_description:cms_form.field_cms_form_search__form_confirm_submit
 #: model:ir.model.fields,field_description:cms_form.field_cms_form_wizard__form_confirm_submit
 msgid "Form Confirm Submit"
-msgstr ""
+msgstr "Invio conferma modulo"
 
 #. module: cms_form
 #: model:ir.model.fields,field_description:cms_form.field_cms_form__form_content_selector
