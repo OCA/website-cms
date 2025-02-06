@@ -372,10 +372,12 @@ License LGPL-3.0 or later (http://www.gnu.org/licenses/lgpl.html).
                 </t>
                 <t t-else="">
                     <button
-                        type="submit"
+                        t-att-type="'button' if form.form_confirm_submit else 'submit'"
                         name="wiz_submit"
                         value="process"
                         class="btn btn-primary float-end"
+                        t-att-data-bs-toggle="'modal' if form.form_confirm_submit else None"
+                        t-att-data-bs-target="'#process-confirm-modal' if form.form_confirm_submit else None"
                     >Submit</button>
                 </t>
                 <t t-if="form.wiz_prev_step()">
@@ -387,6 +389,53 @@ License LGPL-3.0 or later (http://www.gnu.org/licenses/lgpl.html).
                     >Prev</button>
                 </t>
             </div>
+            <t
+                t-if="form.form_confirm_submit"
+                t-call="cms_form.wizard_form_confirm_modal"
+            />
         </xpath>
     </template>
+
+
+    <template id="wizard_form_confirm_modal" name="CMS wizard form confirm modal">
+      <!-- Modal -->
+      <div
+            class="modal fade"
+            id="process-confirm-modal"
+            tabindex="-1"
+            aria-labelledby="process-confirm-modal"
+            aria-hidden="true"
+        >
+        <div class="modal-dialog">
+          <div class="modal-content">
+            <div class="modal-header">
+              <h5 class="modal-title" id="exampleModalLabel">Confirm submit</h5>
+              <button
+                            type="button"
+                            class="btn-close"
+                            data-bs-dismiss="modal"
+                            aria-label="Close"
+                        />
+            </div>
+            <div class="modal-body">
+              <p t-esc="form.form_msg_confirm_submit" />
+            </div>
+            <div class="modal-footer">
+              <button
+                            type="button"
+                            class="btn btn-default"
+                            data-bs-dismiss="modal"
+                        >Close</button>
+              <button
+                            type="submit"
+                            name="wiz_submit"
+                            value="process"
+                            class="btn btn-primary"
+                        >Submit</button>
+            </div>
+          </div>
+        </div>
+      </div>
+    </template>
+
 </odoo>
