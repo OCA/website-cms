@@ -17,7 +17,7 @@ License LGPL-3.0 or later (http://www.gnu.org/licenses/lgpl.html).
                 <t t-if="form.form_description">
                     <p class="form_description" t-esc="form.form_description" />
                 </t>
-                <t t-out="form.form_render()" />
+                <t t-raw="form.form_render()" />
             </div>
         </div>
     </template>
@@ -35,7 +35,7 @@ License LGPL-3.0 or later (http://www.gnu.org/licenses/lgpl.html).
                 t-esc="field['string']"
             >Name</label>
             <div class="col-md-9 col-sm-8">
-                <t t-out="widget.render()" />
+                <t t-raw="widget.render()" />
                 <t t-if="field.get('help')">
                     <t t-call="cms_form.base_form_field_help_block" />
                 </t>
@@ -57,7 +57,7 @@ License LGPL-3.0 or later (http://www.gnu.org/licenses/lgpl.html).
                 t-att-for="fname"
                 t-esc="field['string']"
             >Name</label>
-            <t t-out="widget.render()" />
+            <t t-raw="widget.render()" />
             <t t-if="field.get('help')">
                 <t t-call="cms_form.base_form_field_help_block" />
             </t>
@@ -73,7 +73,7 @@ License LGPL-3.0 or later (http://www.gnu.org/licenses/lgpl.html).
         <div
             t-att-class="form.form_make_field_wrapper_klass(fname, field, errors=errors)"
         >
-            <t t-out="widget.render()" />
+            <t t-raw="widget.render()" />
             <label
                 class="control-label"
                 t-att-for="fname"
@@ -90,7 +90,7 @@ License LGPL-3.0 or later (http://www.gnu.org/licenses/lgpl.html).
     <template id="base_form_field_help_block" name="CMS form field help block">
         <div class="help-block">
             <!-- use `out` to allow injecting html stuff here -->
-            <t t-out="field['help']" />
+            <t t-raw="field['help']" />
         </div>
     </template>
     <template id="base_form_field_error_block" name="CMS form field error block">
@@ -198,7 +198,7 @@ License LGPL-3.0 or later (http://www.gnu.org/licenses/lgpl.html).
             />
             <t t-set="form_fieldsets" t-value="form.form_fieldsets_get()" />
             <t t-foreach="form_hidden_fields" t-as="hidden_fname">
-                <t t-out="form_hidden_fields[hidden_fname]['widget'].render()" />
+                <t t-raw="form_hidden_fields[hidden_fname]['widget'].render()" />
             </t>
             <t t-call="{{ form.form_fields_template }}" />
             <div class="col-sm-9 col-sm-offset-3 above-controls">
@@ -235,9 +235,9 @@ License LGPL-3.0 or later (http://www.gnu.org/licenses/lgpl.html).
         primary="True"
         priority="100"
     >
-        <xpath expr="//t[@t-out]" position="replace">
+        <xpath expr="//t[@t-raw]" position="replace">
             <t t-if="form.form_show_search_form">
-                <t t-out="form.form_render()" />
+                <t t-raw="form.form_render()" />
             </t>
             <div class="form_content">
                 <t t-if="not form.form_search_results['count']">
@@ -317,7 +317,7 @@ License LGPL-3.0 or later (http://www.gnu.org/licenses/lgpl.html).
     </template>
     <template id="no_search_results" name="CMS form no search results">
         <div class="text-center mb32" t-if="form.form_no_result_msg">
-            <p t-out="form.form_no_result_msg" />
+            <p t-raw="form.form_no_result_msg" />
         </div>
     </template>
     <template
