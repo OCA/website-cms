@@ -4,7 +4,12 @@
 import base64
 import html
 from collections.abc import Callable
-from dataclasses import dataclass
+try:
+    from dataclasses import dataclass
+    HAS_DATACLASS = True
+except ImportError:
+    HAS_DATACLASS = False
+
 from typing import Any
 
 import werkzeug
@@ -23,12 +28,19 @@ def marshal_request_values(values):
     return Marshaller(values).marshall()
 
 
-@dataclass
-class Todo:
-    okey: str
-    oval: Any
-    handlers: list[Callable]
-
+# py < 3.10
+if HAS_DATACLASS:
+    @dataclass
+    class Todo:
+        okey: str
+        oval: Any
+        handlers: list[Callable]
+else:
+    class Todo:
+        def __init__(self, okey, oval, handlers):
+            self.okey = okey
+            self.oval = oval
+            self.handlers = handlers
 
 class Marshaller:
     def __init__(self, req_values):
