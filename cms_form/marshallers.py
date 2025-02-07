@@ -10,7 +10,7 @@ try:
 except ImportError:
     HAS_DATACLASS = False
 
-from typing import Any
+from typing import Any, List
 
 import werkzeug
 
@@ -34,7 +34,7 @@ if HAS_DATACLASS:
     class Todo:
         okey: str
         oval: Any
-        handlers: list[Callable]
+        handlers: List[Callable]
 else:
     class Todo:
         def __init__(self, okey, oval, handlers):
