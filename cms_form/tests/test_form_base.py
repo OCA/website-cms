@@ -35,7 +35,7 @@ class TestFormBase(FormTestCase):
     def test_form_init(self):
         form = self.get_form("cms.form.mixin")
         self.assertTrue(isinstance(form.request, Request))
-        self.assertTrue(isinstance(form.o_request, http.Request))
+        self.assertTrue(isinstance(form.o_request, http.HttpRequest))
 
     def test_form_init_overrides(self):
         overrides = dict(

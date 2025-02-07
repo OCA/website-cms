@@ -4,7 +4,8 @@
 from lxml import html
 from odoo_test_helper import FakeModelLoader
 
-from odoo.tests.common import HttpCase, TransactionCase
+# v14/16 trick to avoid import error
+from odoo.tests.common import HttpCase, SavepointCase as TransactionCase
 
 from .utils import fake_request, fake_session, session_store
 

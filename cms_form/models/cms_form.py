@@ -7,6 +7,7 @@ import psycopg2 as pg
 from odoo import _, exceptions, fields, models
 
 from .fields import Serialized
+from ..utils import Savepoint
 
 
 class CMSForm(models.AbstractModel):
@@ -180,7 +181,7 @@ class CMSForm(models.AbstractModel):
         """Process POST requests."""
         errors, errors_message = self.form_validate()
         # Do not flush to keep the caches of current in memory objects
-        savepoint = self.env.cr.savepoint(flush=False)
+        savepoint = Savepoint(self.env.cr, flush=False)
         if not errors:
             try:
                 self.form_create_or_update()

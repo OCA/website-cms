@@ -11,8 +11,18 @@ from .utils import fake_request, mock_request
 
 IMPORT = "odoo.addons.cms_form.controllers.main"
 
+from odoo.tests.common import HOST
+from odoo import tools
 
+
+@unittest.skipIf(os.getenv("SKIP_HTTP_CASE"), "TestControllersAPI skipped")
 class TestControllersAPI(FormTestCase):
+
+    # v14 compat (available in v16)
+    @classmethod
+    def base_url(cls):
+        return f"http://{HOST}:{tools.config['http_port']}"
+
     @staticmethod
     def _get_test_models():
         from .fake_models.fake_partner_form import FakePartnerForm
@@ -141,8 +151,14 @@ class TestControllersAPI(FormTestCase):
                 self.assertEqual(response.location, "/")
 
 
-@unittest.skipIf(os.getenv("SKIP_HTTP_CASE"), "HTTP case disabled.")
+@unittest.skipIf(os.getenv("SKIP_HTTP_CASE"), "TestControllersRender case disabled.")
 class TestControllersRender(FormHttpTestCase):
+
+    # v14 compat (available in v16)
+    @classmethod
+    def base_url(cls):
+        return f"http://{HOST}:{tools.config['http_port']}"
+
     def setUp(self):
         super().setUp()
         self.authenticate("admin", "admin")

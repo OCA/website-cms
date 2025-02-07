@@ -121,6 +121,9 @@ class FormControllerMixin(object):
         data = {
             "content": self._make_response_ajax_content(response),
         }
+        # v14 compat
+        if isinstance(data["content"], bytes):
+            data["content"] = data["content"].decode()
         return json.dumps(data)
 
     def _make_response_ajax_content(self, response):
@@ -154,7 +157,11 @@ class CMSFormController(http.Controller, FormControllerMixin):
     )
     def cms_form_render(self, form_model, model_id=None, **kw):
         kw["form_model_key"] = form_model
-        data = request.get_json_data()
+        if hasattr(request, "jsonrequest"):
+            # v14 compat
+            data = request.jsonrequest
+        else:
+            data = request.get_json_data()
         process_form = data.get("process", kw.pop("process", False))
         widget_params = data.get("widget_params", kw.pop("widget_params", {}))
         if widget_params:

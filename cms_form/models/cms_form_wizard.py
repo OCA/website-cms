@@ -74,8 +74,10 @@ class CMSFormWizard(models.AbstractModel):
     def wiz_storage_set(self, storage):
         self.o_request.session.update({self._wiz_storage_key: storage})
         # Important: ensure the session is stored (will be flagged as dirty)
-        # Mandatory since v16 when storing nested objs.
-        self.o_request.session.touch()
+        # Versions prior to v16 did not require this.
+        if hasattr(self.o_request.session, "touch") and callable(self.o_request.session.touch):
+            # Mandatory since v16 when storing nested objs.
+            self.o_request.session.touch()
 
     DEFAULT_STORAGE_KEYS = {
         "steps": {},

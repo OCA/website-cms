@@ -1,7 +1,8 @@
 # Copyright 2018 Simone Orsi
 # License LGPL-3.0 or later (http://www.gnu.org/licenses/lgpl.html).
 
-from odoo.tests.common import TransactionCase
+# v14/16 trick to avoid import error
+from odoo.tests.common import SavepointCase as TransactionCase
 
 from ..common import HTMLRenderMixin
 from ..utils import fake_request

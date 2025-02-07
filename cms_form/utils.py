@@ -1,5 +1,10 @@
 # Copyright 2017 Simone Orsi
 # License LGPL-3.0 or later (http://www.gnu.org/licenses/lgpl.html).
+import uuid
+
+from psycopg2 import sql
+
+from odoo.sql_db import clear_env, flush_env
 
 
 def safe_to_integer(value, **kw):
@@ -83,3 +88,35 @@ def data_merge(a, b):
             '"{}" in key "{}" when merging "{}" into "{}"'.format(e, key, b, a)
         ) from e
     return a
+
+
+# Almost barely copied from shopfloor actions.
+# Mostly needed on v14 as we cannot init a savepoint here as we can do in v16.
+class Savepoint:
+    """Wrapper for SQL Savepoint
+
+    Close to "cr.savepoint()" context manager but this class gives more control
+    over when the release/rollback are called.
+    """
+
+    def __init__(self, cr, flush=False):
+        self._cr = cr
+        self.name = uuid.uuid1().hex
+        self.flush = flush
+        if self.flush:
+            flush_env(self._cr, clear=False)
+        self._execute("SAVEPOINT {}")
+
+    def rollback(self):
+        if self.flush:
+            clear_env(self._cr)
+        self._execute("ROLLBACK TO SAVEPOINT {}")
+
+    def release(self):
+        if self.flush:
+            flush_env(self._cr, clear=False)
+        self._execute("RELEASE SAVEPOINT {}")
+
+    def _execute(self, query):
+        # pylint: disable=sql-injection
+        self._cr.execute(sql.SQL(query).format(sql.Identifier(self.name)))

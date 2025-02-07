@@ -37,8 +37,9 @@ def fake_request(
         content_type=content_type,
         method=method,
     )
+    w_req.session = session if session is not None else mock.MagicMock()
     # odoo request
-    o_req = http.Request(w_req)
+    o_req = http.HttpRequest(w_req)
     o_req.csrf_token = mock.MagicMock()
     o_req.httprequest = w_req
     o_req.session = session if session is not None else mock.MagicMock()
@@ -88,7 +89,7 @@ class FakeSessionStore(SessionStore):
         del session
 
 
-session_store = FakeSessionStore(session_class=http.Session)
+session_store = FakeSessionStore(session_class=http.OpenERPSession)
 
 
 def fake_session(env, **kw):

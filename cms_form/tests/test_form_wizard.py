@@ -58,7 +58,7 @@ class TestCMSFormWizard(FormSessionTestCase):
     def test_wiz_use_session_by_default(self):
         req = fake_request(session=self.session)
         form = self.get_form("cms.form.wizard", req=req)
-        self.assertEqual(form._wiz_storage.__class__.__name__, "Session")
+        self.assertEqual(form._wiz_storage.__class__.__name__, "OpenERPSession")
 
     def test_wiz_configure_steps(self):
         form = self.get_form("cms.form.wizard")
