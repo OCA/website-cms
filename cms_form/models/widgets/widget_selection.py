@@ -13,7 +13,7 @@ class SelectionWidget(models.AbstractModel):
 
     w_template = fields.Char(default="cms_form.field_widget_selection")
     w_multiple = fields.Boolean()
-
+    w_field_value = fields.Binary()  # preserve value as is (eg: list)
 
     @property
     def html_fname(self):
@@ -31,7 +31,7 @@ class SelectionWidget(models.AbstractModel):
         value = super().w_extract(**req_values)
         if self.w_multiple and value:
             # convert to list
-            return [self.cast_field_value(x) for x in value]
+            return self.cast_field_value_multi(value)
         return self.cast_field_value(value)
 
     def cast_field_value(self, value):
@@ -48,6 +48,9 @@ class SelectionWidget(models.AbstractModel):
             value = type(first_value)(value)
         return value
 
+    def cast_field_value_multi(self, value):
+        return [self.cast_field_value(x) for x in value]
+
     @property
     def w_option_items(self):
         return [
@@ -55,6 +58,12 @@ class SelectionWidget(models.AbstractModel):
         ]
 
     def is_option_selected(self, opt_item):
+        if self.w_multiple:
+            return (
+                "selected"
+                if opt_item["value"] in self.cast_field_value_multi(self.w_field_value)
+                else None
+            )
         return (
             "selected"
             if opt_item["value"] == self.cast_field_value(self.w_field_value)
