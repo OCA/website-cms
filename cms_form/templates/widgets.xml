@@ -71,6 +71,9 @@ License LGPL-3.0 or later (http://www.gnu.org/licenses/lgpl.html).
         primary="True"
         priority="100"
     >
+        <xpath expr="//select" position="attributes">
+            <attribute name="t-att-multiple">widget.w_multiple</attribute>
+        </xpath>
         <xpath expr="//t[@t-foreach]/option" position="replace">
             <option
                 t-att-value="opt_item['value']"

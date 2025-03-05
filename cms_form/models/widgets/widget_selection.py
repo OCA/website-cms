@@ -12,6 +12,15 @@ class SelectionWidget(models.AbstractModel):
     _description = "CMS Form selection widget"
 
     w_template = fields.Char(default="cms_form.field_widget_selection")
+    w_multiple = fields.Boolean()
+
+
+    @property
+    def html_fname(self):
+        default = super().html_fname
+        if self.w_multiple:
+            return f"{default}:list"
+        return default
 
     def w_extract(self, **req_values):
         # Handle case where sel options are integers.
@@ -20,6 +29,9 @@ class SelectionWidget(models.AbstractModel):
         # and a widget field name. In any case we should be careful
         # and not brake existing forms/widgets.
         value = super().w_extract(**req_values)
+        if self.w_multiple and value:
+            # convert to list
+            return [self.cast_field_value(x) for x in value]
         return self.cast_field_value(value)
 
     def cast_field_value(self, value):

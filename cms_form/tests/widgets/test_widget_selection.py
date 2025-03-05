@@ -170,3 +170,42 @@ class TestWidgetSelection(TestWidgetCase):
         )
         # no selection found: should not fail and give back an empty list
         self.assertEqual(widget.w_option_items, [])
+
+    def test_widget_selection_integer_multiple(self):
+        select_options = [
+            (1, "Option 1"),
+            (2, "Option 2"),
+            (3, "Option 3"),
+        ]
+        w_name, w_field = fake_field(
+            "selection_integer_field",
+            type="selection",
+            selection=select_options,
+        )
+        widget = self.get_widget(
+            w_name,
+            w_field,
+            form=self.form,
+            widget_model="cms.form.widget.selection",
+            w_multiple=True,
+        )
+        expected_attrs = {
+            "id": "selection_integer_field",
+            "name": "selection_integer_field:list",
+        }
+        node = self._test_widget_attributes(widget, "select", expected_attrs)
+        node_children = node.getchildren()
+        self.assertEqual(len(node_children), 4)
+        self.assertEqual(node_children[0].attrib, {"value": "", "class": "empty_item"})
+        self.assertEqual(node_children[0].text.strip(), "Selection integer field...")
+        for i in range(1, 4):
+            expected_attrs = {"value": str(i)}
+            if i == 2:
+                expected_attrs["selected"] = "selected"
+            self.assertEqual(node_children[i].attrib, expected_attrs)
+            self.assertEqual(node_children[i].text.strip(), "Option %s" % i)
+
+        # test conversion
+        # NOTE: the marshaller will convert the value to a list
+        extracted = widget.w_extract(selection_integer_field=[1, 2])
+        self.assertEqual(extracted, [1, 2])
