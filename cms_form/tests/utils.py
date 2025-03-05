@@ -26,7 +26,16 @@ def fake_request(
     content_type=None,
     session=None,
 ):
-    data = urllib.parse.urlencode(form_data or {})
+    form_data = form_data or {}
+    data = []
+    # urlencode does not preserve duplicated keys (eg: foo:list)
+    for k, v in form_data.items():
+        if k.endswith(":list"):
+            for vv in form_data.getlist(k):
+                data.append(urllib.parse.urlencode({k: vv}))
+        else:
+            data.append(urllib.parse.urlencode({k: v}))
+    data = "&".join(data)
     content_type = content_type or "application/x-www-form-urlencoded"
     # werkzeug request
     w_req = Request.from_values(
