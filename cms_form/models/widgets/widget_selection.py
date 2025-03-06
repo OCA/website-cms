@@ -60,11 +60,10 @@ class SelectionWidget(models.AbstractModel):
 
     def is_option_selected(self, opt_item):
         value = self.w_field_value
-        if value:
-            value = pycompat.to_text(value)
         if self.w_multiple and value:
             selected = opt_item["value"] in self.cast_field_value_multi(value)
         else:
+            value = pycompat.to_text(value)  # we could get bytes...
             selected = opt_item["value"] == self.cast_field_value(value)
         return "selected" if selected else None
 
