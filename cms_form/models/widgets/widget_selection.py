@@ -63,16 +63,10 @@ class SelectionWidget(models.AbstractModel):
         if value:
             value = pycompat.to_text(value)
         if self.w_multiple and value:
-            return (
-                "selected"
-                if opt_item["value"] in self.cast_field_value_multi(value)
-                else None
-            )
-        return (
-            "selected"
-            if opt_item["value"] == self.cast_field_value(value)
-            else None
-        )
+            selected = opt_item["value"] in self.cast_field_value_multi(value)
+        else:
+            selected = opt_item["value"] == self.cast_field_value(value)
+        return "selected" if selected else None
 
 
 class RadioSelectionWidget(models.AbstractModel):
