@@ -2,6 +2,7 @@
 # License LGPL-3.0 or later (http://www.gnu.org/licenses/lgpl.html).
 
 from odoo import fields, models
+from odoo.tools import pycompat
 
 from ..fields import Serialized
 
@@ -58,15 +59,18 @@ class SelectionWidget(models.AbstractModel):
         ]
 
     def is_option_selected(self, opt_item):
-        if self.w_multiple:
+        value = self.w_field_value
+        if value:
+            value = pycompat.to_text(value)
+        if self.w_multiple and value:
             return (
                 "selected"
-                if opt_item["value"] in self.cast_field_value_multi(self.w_field_value)
+                if opt_item["value"] in self.cast_field_value_multi(value)
                 else None
             )
         return (
             "selected"
-            if opt_item["value"] == self.cast_field_value(self.w_field_value)
+            if opt_item["value"] == self.cast_field_value(value)
             else None
         )
 
