@@ -75,6 +75,12 @@ License LGPL-3.0 or later (http://www.gnu.org/licenses/lgpl.html).
             <attribute name="t-att-multiple">widget.w_multiple</attribute>
             <attribute name="autocomplete">off</attribute>
         </xpath>
+        <xpath expr="//select" position="after">
+            <a t-if="widget.w_multiple" href="#" class="float-right p-2"
+               t-att-onclick="'javascript: document.getElementById(\'{}\').selectedIndex = -1;'.format(widget.w_fname)">Clear</a>
+        </xpath>
+
+        
         <xpath expr="//t[@t-foreach]/option" position="replace">
             <option
                 t-att-value="opt_item['value']"
