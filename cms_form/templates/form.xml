@@ -262,7 +262,7 @@ License LGPL-3.0 or later (http://www.gnu.org/licenses/lgpl.html).
         <xpath expr="//div[hasclass('form-controls')]" position="replace">
             <div class="form-group form-controls">
                 <div class="col-sm-9 col-sm-offset-3">
-                    <button type="submit" class="btn btn-primary">Search</button>
+                    <button type="submit" class="btn btn-primary" name="search_submit" value="1">Search</button>
                 </div>
             </div>
         </xpath>

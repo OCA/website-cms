@@ -97,6 +97,12 @@ class CMSFormSearch(models.AbstractModel):
         self.form_search(render_values)
         return render_values
 
+    def form_is_submitted(self):
+        # Helper method to determine if the submit button has been pressed
+        return self.form_data.get(self._form_search_submit_key)
+
+    _form_search_submit_key = "search_submit"
+
     def form_search(self, render_values):
         """Produce search results."""
         search_values = self.form_extract_values()
