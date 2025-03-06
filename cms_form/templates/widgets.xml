@@ -73,6 +73,7 @@ License LGPL-3.0 or later (http://www.gnu.org/licenses/lgpl.html).
     >
         <xpath expr="//select" position="attributes">
             <attribute name="t-att-multiple">widget.w_multiple</attribute>
+            <attribute name="autocomplete">off</attribute>
         </xpath>
         <xpath expr="//t[@t-foreach]/option" position="replace">
             <option
