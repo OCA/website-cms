@@ -1,0 +1,1141 @@
+# Translation of Odoo Server.
+# This file contains the translation of the following modules:
+# 	* cms_form
+#
+msgid ""
+msgstr ""
+"Project-Id-Version: Odoo Server 13.0\n"
+"Report-Msgid-Bugs-To: \n"
+"PO-Revision-Date: 2024-12-07 11:06+0000\n"
+"Last-Translator: QuiJoQuim <quim.rebull@gmail.com>\n"
+"Language-Team: none\n"
+"Language: ca\n"
+"MIME-Version: 1.0\n"
+"Content-Type: text/plain; charset=UTF-8\n"
+"Content-Transfer-Encoding: \n"
+"Plural-Forms: nplurals=2; plural=n != 1;\n"
+"X-Generator: Weblate 5.6.2\n"
+
+#. module: cms_form
+#. odoo-python
+#: code:addons/cms_form/controllers/main.py:0
+#, python-format
+msgid "%s model has no CMS form registered."
+msgstr "%s el model no té cap formulari CMS registrat."
+
+#. module: cms_form
+#. odoo-python
+#: code:addons/cms_form/models/cms_form_mixin.py:0
+#, python-format
+msgid "Are you sure want to submit the form as it is?"
+msgstr ""
+
+#. module: cms_form
+#: model:ir.model,name:cms_form.model_cms_form
+msgid "CMS Form"
+msgstr "Formulari CMS"
+
+#. module: cms_form
+#: model:ir.model,name:cms_form.model_cms_form_widget_many2many
+msgid "CMS Form M2M widget"
+msgstr "widget del formulari CMS M2M"
+
+#. module: cms_form
+#: model:ir.model,name:cms_form.model_cms_form_widget_many2one_multi
+msgid "CMS Form M2O multi widget"
+msgstr "Multi widget del formulari CMS M20"
+
+#. module: cms_form
+#: model:ir.model,name:cms_form.model_cms_form_widget_many2one
+msgid "CMS Form M2O widget"
+msgstr "Widget del formulari CMS M2O"
+
+#. module: cms_form
+#: model:ir.model,name:cms_form.model_cms_form_widget_one2many
+msgid "CMS Form O2M widget"
+msgstr "Widget del formulari CMS O2M"
+
+#. module: cms_form
+#: model:ir.model,name:cms_form.model_cms_form_widget_x2m_mixin
+msgid "CMS Form X2M widget"
+msgstr "Widget del formulatri CMS X2M"
+
+#. module: cms_form
+#: model:ir.model,name:cms_form.model_cms_form_widget_binary_mixin
+msgid "CMS Form binary widget"
+msgstr "Widget binari del formulari CMS"
+
+#. module: cms_form
+#: model:ir.model,name:cms_form.model_cms_form_widget_boolean
+msgid "CMS Form boolean widget"
+msgstr "Widget booleà del formulari CMs"
+
+#. module: cms_form
+#: model:ir.model,name:cms_form.model_cms_form_widget_char
+#: model:ir.model,name:cms_form.model_cms_form_widget_char_mixin
+msgid "CMS Form char widget"
+msgstr "Widget de caracters del formulari CMS"
+
+#. module: cms_form
+#: model:ir.model,name:cms_form.model_cms_form_widget_date
+msgid "CMS Form date widget"
+msgstr "Widget de data del formulari CMS"
+
+#. module: cms_form
+#: model:ir.model,name:cms_form.model_cms_form_widget_binary
+msgid "CMS Form file widget"
+msgstr "Giny (widget) del formulari CMS"
+
+#. module: cms_form
+#: model:ir.model,name:cms_form.model_cms_form_widget_float
+msgid "CMS Form float widget"
+msgstr "Widget flotant del formulario CMS"
+
+#. module: cms_form
+#: model:ir.model,name:cms_form.model_cms_form_widget_hidden
+msgid "CMS Form hidden widget"
+msgstr "Widget ocult del formulari CMS"
+
+#. module: cms_form
+#: model:ir.model,name:cms_form.model_cms_form_widget_image
+msgid "CMS Form image widget"
+msgstr "Widget d'imatge del formulari CMS"
+
+#. module: cms_form
+#: model:ir.model,name:cms_form.model_cms_form_widget_integer
+msgid "CMS Form integer widget"
+msgstr "Widget enter del formulari CMS"
+
+#. module: cms_form
+#: model:ir.model,name:cms_form.model_cms_form_mixin
+msgid "CMS Form mixin"
+msgstr "CMS Form mixin"
+
+#. module: cms_form
+#: model:ir.model,name:cms_form.model_cms_form_widget_numeric_mixin
+msgid "CMS Form numeric mixin widget"
+msgstr "Giny (widget) numèric mixt en formulari CMS"
+
+#. module: cms_form
+#: model:ir.model,name:cms_form.model_cms_form_widget_radio
+msgid "CMS Form radio widget"
+msgstr "Widget de ràdio del formulari CMS"
+
+#. module: cms_form
+#: model:ir.model,name:cms_form.model_cms_form_widget_rel_mixin
+msgid "CMS Form relation widget mixin"
+msgstr ""
+
+#. module: cms_form
+#: model:ir.model,name:cms_form.model_cms_form_search
+msgid "CMS Form search"
+msgstr "Cerca de formularis CMS"
+
+#. module: cms_form
+#: model:ir.model,name:cms_form.model_cms_form_widget_selection
+msgid "CMS Form selection widget"
+msgstr "Widget de selecció de formularis CMS"
+
+#. module: cms_form
+#: model:ir.model,name:cms_form.model_cms_form_widget_text
+msgid "CMS Form text widget"
+msgstr "Widget de text del formulari CMS"
+
+#. module: cms_form
+#: model:ir.model,name:cms_form.model_cms_form_widget_mixin
+msgid "CMS Form widget mixin"
+msgstr "Combinació de widgets de formulari CMS"
+
+#. module: cms_form
+#: model:ir.model,name:cms_form.model_cms_form_wizard
+msgid "CMS Form wizard"
+msgstr "Assistent de formularis CMS"
+
+#. module: cms_form
+#: model_terms:ir.ui.view,arch_db:cms_form.base_form_buttons
+msgid "Cancel"
+msgstr "Cancel·lar"
+
+#. module: cms_form
+#: model_terms:ir.ui.view,arch_db:cms_form.wizard_form_confirm_modal
+msgid "Close"
+msgstr ""
+
+#. module: cms_form
+#: model_terms:ir.ui.view,arch_db:cms_form.wizard_form_confirm_modal
+msgid "Confirm submit"
+msgstr ""
+
+#. module: cms_form
+#. odoo-python
+#: code:addons/cms_form/models/cms_form.py:0
+#, python-format
+msgid "Create %s"
+msgstr "Crear %s"
+
+#. module: cms_form
+#. odoo-python
+#: code:addons/cms_form/models/cms_form.py:0
+#, python-format
+msgid "Edit \"%s\""
+msgstr "Editar \"%s\""
+
+#. module: cms_form
+#: model:ir.model.fields,field_description:cms_form.field_cms_form__form_action
+#: model:ir.model.fields,field_description:cms_form.field_cms_form_mixin__form_action
+#: model:ir.model.fields,field_description:cms_form.field_cms_form_search__form_action
+#: model:ir.model.fields,field_description:cms_form.field_cms_form_wizard__form_action
+msgid "Form Action"
+msgstr "Acció Formulari"
+
+#. module: cms_form
+#: model:ir.model.fields,field_description:cms_form.field_cms_form__form_ajax
+#: model:ir.model.fields,field_description:cms_form.field_cms_form_mixin__form_ajax
+#: model:ir.model.fields,field_description:cms_form.field_cms_form_search__form_ajax
+#: model:ir.model.fields,field_description:cms_form.field_cms_form_wizard__form_ajax
+msgid "Form Ajax"
+msgstr "Formulari Ajax"
+
+#. module: cms_form
+#: model:ir.model.fields,field_description:cms_form.field_cms_form__form_ajax_onchange
+#: model:ir.model.fields,field_description:cms_form.field_cms_form_mixin__form_ajax_onchange
+#: model:ir.model.fields,field_description:cms_form.field_cms_form_search__form_ajax_onchange
+#: model:ir.model.fields,field_description:cms_form.field_cms_form_wizard__form_ajax_onchange
+msgid "Form Ajax Onchange"
+msgstr "Formulari Ajax Onchange"
+
+#. module: cms_form
+#: model:ir.model.fields,field_description:cms_form.field_cms_form__form_buttons_template
+#: model:ir.model.fields,field_description:cms_form.field_cms_form_mixin__form_buttons_template
+#: model:ir.model.fields,field_description:cms_form.field_cms_form_search__form_buttons_template
+#: model:ir.model.fields,field_description:cms_form.field_cms_form_wizard__form_buttons_template
+msgid "Form Buttons Template"
+msgstr ""
+
+#. module: cms_form
+#: model:ir.model.fields,field_description:cms_form.field_cms_form__form_confirm_submit
+#: model:ir.model.fields,field_description:cms_form.field_cms_form_mixin__form_confirm_submit
+#: model:ir.model.fields,field_description:cms_form.field_cms_form_search__form_confirm_submit
+#: model:ir.model.fields,field_description:cms_form.field_cms_form_wizard__form_confirm_submit
+msgid "Form Confirm Submit"
+msgstr ""
+
+#. module: cms_form
+#: model:ir.model.fields,field_description:cms_form.field_cms_form__form_content_selector
+#: model:ir.model.fields,field_description:cms_form.field_cms_form_mixin__form_content_selector
+#: model:ir.model.fields,field_description:cms_form.field_cms_form_search__form_content_selector
+#: model:ir.model.fields,field_description:cms_form.field_cms_form_wizard__form_content_selector
+msgid "Form Content Selector"
+msgstr ""
+
+#. module: cms_form
+#: model:ir.model.fields,field_description:cms_form.field_cms_form__form_data
+#: model:ir.model.fields,field_description:cms_form.field_cms_form_mixin__form_data
+#: model:ir.model.fields,field_description:cms_form.field_cms_form_search__form_data
+#: model:ir.model.fields,field_description:cms_form.field_cms_form_wizard__form_data
+msgid "Form Data"
+msgstr ""
+
+#. module: cms_form
+#: model:ir.model.fields,field_description:cms_form.field_cms_form__form_description
+#: model:ir.model.fields,field_description:cms_form.field_cms_form_mixin__form_description
+#: model:ir.model.fields,field_description:cms_form.field_cms_form_search__form_description
+#: model:ir.model.fields,field_description:cms_form.field_cms_form_wizard__form_description
+msgid "Form Description"
+msgstr ""
+
+#. module: cms_form
+#: model:ir.model.fields,field_description:cms_form.field_cms_form__form_display_mode
+#: model:ir.model.fields,field_description:cms_form.field_cms_form_mixin__form_display_mode
+#: model:ir.model.fields,field_description:cms_form.field_cms_form_search__form_display_mode
+#: model:ir.model.fields,field_description:cms_form.field_cms_form_wizard__form_display_mode
+msgid "Form Display Mode"
+msgstr ""
+
+#. module: cms_form
+#: model:ir.model.fields,field_description:cms_form.field_cms_form__form_extra_css_klass
+#: model:ir.model.fields,field_description:cms_form.field_cms_form_mixin__form_extra_css_klass
+#: model:ir.model.fields,field_description:cms_form.field_cms_form_search__form_extra_css_klass
+#: model:ir.model.fields,field_description:cms_form.field_cms_form_wizard__form_extra_css_klass
+msgid "Form Extra Css Klass"
+msgstr ""
+
+#. module: cms_form
+#: model:ir.model.fields,field_description:cms_form.field_cms_form__form_extract_value_mode
+#: model:ir.model.fields,field_description:cms_form.field_cms_form_mixin__form_extract_value_mode
+#: model:ir.model.fields,field_description:cms_form.field_cms_form_search__form_extract_value_mode
+#: model:ir.model.fields,field_description:cms_form.field_cms_form_wizard__form_extract_value_mode
+msgid "Form Extract Value Mode"
+msgstr ""
+
+#. module: cms_form
+#: model:ir.model.fields,field_description:cms_form.field_cms_form__form_fields_attributes
+#: model:ir.model.fields,field_description:cms_form.field_cms_form_mixin__form_fields_attributes
+#: model:ir.model.fields,field_description:cms_form.field_cms_form_search__form_fields_attributes
+#: model:ir.model.fields,field_description:cms_form.field_cms_form_wizard__form_fields_attributes
+msgid "Form Fields Attributes"
+msgstr ""
+
+#. module: cms_form
+#: model:ir.model.fields,field_description:cms_form.field_cms_form__form_fields_blacklist
+#: model:ir.model.fields,field_description:cms_form.field_cms_form_mixin__form_fields_blacklist
+#: model:ir.model.fields,field_description:cms_form.field_cms_form_search__form_fields_blacklist
+#: model:ir.model.fields,field_description:cms_form.field_cms_form_wizard__form_fields_blacklist
+msgid "Form Fields Blacklist"
+msgstr ""
+
+#. module: cms_form
+#: model:ir.model.fields,field_description:cms_form.field_cms_form__form_fields_hidden
+#: model:ir.model.fields,field_description:cms_form.field_cms_form_mixin__form_fields_hidden
+#: model:ir.model.fields,field_description:cms_form.field_cms_form_search__form_fields_hidden
+#: model:ir.model.fields,field_description:cms_form.field_cms_form_wizard__form_fields_hidden
+msgid "Form Fields Hidden"
+msgstr ""
+
+#. module: cms_form
+#: model:ir.model.fields,field_description:cms_form.field_cms_form__form_fields_ignore
+#: model:ir.model.fields,field_description:cms_form.field_cms_form_mixin__form_fields_ignore
+#: model:ir.model.fields,field_description:cms_form.field_cms_form_search__form_fields_ignore
+#: model:ir.model.fields,field_description:cms_form.field_cms_form_wizard__form_fields_ignore
+msgid "Form Fields Ignore"
+msgstr ""
+
+#. module: cms_form
+#: model:ir.model.fields,field_description:cms_form.field_cms_form__form_fields_order
+#: model:ir.model.fields,field_description:cms_form.field_cms_form_mixin__form_fields_order
+#: model:ir.model.fields,field_description:cms_form.field_cms_form_search__form_fields_order
+#: model:ir.model.fields,field_description:cms_form.field_cms_form_wizard__form_fields_order
+msgid "Form Fields Order"
+msgstr ""
+
+#. module: cms_form
+#: model:ir.model.fields,field_description:cms_form.field_cms_form__form_fields_template
+#: model:ir.model.fields,field_description:cms_form.field_cms_form_mixin__form_fields_template
+#: model:ir.model.fields,field_description:cms_form.field_cms_form_search__form_fields_template
+#: model:ir.model.fields,field_description:cms_form.field_cms_form_wizard__form_fields_template
+msgid "Form Fields Template"
+msgstr ""
+
+#. module: cms_form
+#: model:ir.model.fields,field_description:cms_form.field_cms_form__form_fields_whitelist
+#: model:ir.model.fields,field_description:cms_form.field_cms_form_mixin__form_fields_whitelist
+#: model:ir.model.fields,field_description:cms_form.field_cms_form_search__form_fields_whitelist
+#: model:ir.model.fields,field_description:cms_form.field_cms_form_wizard__form_fields_whitelist
+msgid "Form Fields Whitelist"
+msgstr ""
+
+#. module: cms_form
+#: model:ir.model.fields,field_description:cms_form.field_cms_form__form_fields_wrapper_template
+#: model:ir.model.fields,field_description:cms_form.field_cms_form_mixin__form_fields_wrapper_template
+#: model:ir.model.fields,field_description:cms_form.field_cms_form_search__form_fields_wrapper_template
+#: model:ir.model.fields,field_description:cms_form.field_cms_form_wizard__form_fields_wrapper_template
+msgid "Form Fields Wrapper Template"
+msgstr ""
+
+#. module: cms_form
+#: model:ir.model.fields,field_description:cms_form.field_cms_form__form_fieldsets
+#: model:ir.model.fields,field_description:cms_form.field_cms_form_mixin__form_fieldsets
+#: model:ir.model.fields,field_description:cms_form.field_cms_form_search__form_fieldsets
+#: model:ir.model.fields,field_description:cms_form.field_cms_form_wizard__form_fieldsets
+msgid "Form Fieldsets"
+msgstr ""
+
+#. module: cms_form
+#: model:ir.model.fields,field_description:cms_form.field_cms_form__form_fieldsets_display
+#: model:ir.model.fields,field_description:cms_form.field_cms_form_mixin__form_fieldsets_display
+#: model:ir.model.fields,field_description:cms_form.field_cms_form_search__form_fieldsets_display
+#: model:ir.model.fields,field_description:cms_form.field_cms_form_wizard__form_fieldsets_display
+msgid "Form Fieldsets Display"
+msgstr ""
+
+#. module: cms_form
+#: model:ir.model.fields,field_description:cms_form.field_cms_form__form_fname_pattern
+#: model:ir.model.fields,field_description:cms_form.field_cms_form_mixin__form_fname_pattern
+#: model:ir.model.fields,field_description:cms_form.field_cms_form_search__form_fname_pattern
+#: model:ir.model.fields,field_description:cms_form.field_cms_form_wizard__form_fname_pattern
+msgid "Form Fname Pattern"
+msgstr ""
+
+#. module: cms_form
+#: model:ir.model.fields,field_description:cms_form.field_cms_form__form_method
+#: model:ir.model.fields,field_description:cms_form.field_cms_form_mixin__form_method
+#: model:ir.model.fields,field_description:cms_form.field_cms_form_search__form_method
+#: model:ir.model.fields,field_description:cms_form.field_cms_form_wizard__form_method
+msgid "Form Method"
+msgstr ""
+
+#. module: cms_form
+#: model:ir.model.fields,field_description:cms_form.field_cms_form__form_mode
+#: model:ir.model.fields,field_description:cms_form.field_cms_form_mixin__form_mode
+#: model:ir.model.fields,field_description:cms_form.field_cms_form_search__form_mode
+#: model:ir.model.fields,field_description:cms_form.field_cms_form_wizard__form_mode
+msgid "Form Mode"
+msgstr ""
+
+#. module: cms_form
+#: model:ir.model.fields,field_description:cms_form.field_cms_form__form_model_fields
+#: model:ir.model.fields,field_description:cms_form.field_cms_form_mixin__form_model_fields
+#: model:ir.model.fields,field_description:cms_form.field_cms_form_search__form_model_fields
+#: model:ir.model.fields,field_description:cms_form.field_cms_form_wizard__form_model_fields
+msgid "Form Model Fields"
+msgstr ""
+
+#. module: cms_form
+#: model:ir.model.fields,field_description:cms_form.field_cms_form__form_model_name
+#: model:ir.model.fields,field_description:cms_form.field_cms_form_mixin__form_model_name
+#: model:ir.model.fields,field_description:cms_form.field_cms_form_search__form_model_name
+#: model:ir.model.fields,field_description:cms_form.field_cms_form_wizard__form_model_name
+msgid "Form Model Name"
+msgstr ""
+
+#. module: cms_form
+#: model:ir.model.fields,field_description:cms_form.field_cms_form_search__form_no_result_msg
+msgid "Form No Result Msg"
+msgstr ""
+
+#. module: cms_form
+#: model:ir.model.fields,field_description:cms_form.field_cms_form_search__form_no_search_results_template
+msgid "Form No Search Results Template"
+msgstr ""
+
+#. module: cms_form
+#: model:ir.model.fields,field_description:cms_form.field_cms_form__form_redirect
+#: model:ir.model.fields,field_description:cms_form.field_cms_form_wizard__form_redirect
+msgid "Form Redirect"
+msgstr ""
+
+#. module: cms_form
+#: model:ir.model.fields,field_description:cms_form.field_cms_form__form_render_values
+#: model:ir.model.fields,field_description:cms_form.field_cms_form_mixin__form_render_values
+#: model:ir.model.fields,field_description:cms_form.field_cms_form_search__form_render_values
+#: model:ir.model.fields,field_description:cms_form.field_cms_form_wizard__form_render_values
+msgid "Form Render Values"
+msgstr ""
+
+#. module: cms_form
+#: model:ir.model.fields,field_description:cms_form.field_cms_form__form_required_fields
+#: model:ir.model.fields,field_description:cms_form.field_cms_form_mixin__form_required_fields
+#: model:ir.model.fields,field_description:cms_form.field_cms_form_search__form_required_fields
+#: model:ir.model.fields,field_description:cms_form.field_cms_form_wizard__form_required_fields
+msgid "Form Required Fields"
+msgstr ""
+
+#. module: cms_form
+#: model:ir.model.fields,field_description:cms_form.field_cms_form_wizard__form_reset
+msgid "Form Reset"
+msgstr ""
+
+#. module: cms_form
+#: model:ir.model.fields,field_description:cms_form.field_cms_form_search__form_results_orderby
+msgid "Form Results Orderby"
+msgstr ""
+
+#. module: cms_form
+#: model:ir.model.fields,field_description:cms_form.field_cms_form_search__form_results_per_page
+msgid "Form Results Per Page"
+msgstr ""
+
+#. module: cms_form
+#: model:ir.model.fields,field_description:cms_form.field_cms_form_search__form_search_domain_rules
+msgid "Form Search Domain Rules"
+msgstr ""
+
+#. module: cms_form
+#: model:ir.model.fields,field_description:cms_form.field_cms_form_search__form_search_fields_multi
+msgid "Form Search Fields Multi"
+msgstr ""
+
+#. module: cms_form
+#: model:ir.model.fields,field_description:cms_form.field_cms_form_search__form_search_results
+msgid "Form Search Results"
+msgstr ""
+
+#. module: cms_form
+#: model:ir.model.fields,field_description:cms_form.field_cms_form_search__form_search_results_template
+msgid "Form Search Results Template"
+msgstr ""
+
+#. module: cms_form
+#: model:ir.model.fields,field_description:cms_form.field_cms_form_wizard__form_show_progress_bar
+msgid "Form Show Progress Bar"
+msgstr ""
+
+#. module: cms_form
+#: model:ir.model.fields,field_description:cms_form.field_cms_form_search__form_show_results_no_submit
+msgid "Form Show Results No Submit"
+msgstr ""
+
+#. module: cms_form
+#: model:ir.model.fields,field_description:cms_form.field_cms_form_search__form_show_search_form
+msgid "Form Show Search Form"
+msgstr ""
+
+#. module: cms_form
+#: model:ir.model.fields,field_description:cms_form.field_cms_form_wizard__form_step_store_all_fields
+msgid "Form Step Store All Fields"
+msgstr ""
+
+#. module: cms_form
+#: model:ir.model.fields,field_description:cms_form.field_cms_form_wizard__form_step_stored_fields
+msgid "Form Step Stored Fields"
+msgstr ""
+
+#. module: cms_form
+#: model:ir.model.fields,field_description:cms_form.field_cms_form__form_sub_fields
+#: model:ir.model.fields,field_description:cms_form.field_cms_form_mixin__form_sub_fields
+#: model:ir.model.fields,field_description:cms_form.field_cms_form_search__form_sub_fields
+#: model:ir.model.fields,field_description:cms_form.field_cms_form_wizard__form_sub_fields
+msgid "Form Sub Fields"
+msgstr ""
+
+#. module: cms_form
+#: model:ir.model.fields,field_description:cms_form.field_cms_form__form_success
+#: model:ir.model.fields,field_description:cms_form.field_cms_form_wizard__form_success
+msgid "Form Success"
+msgstr ""
+
+#. module: cms_form
+#: model:ir.model.fields,field_description:cms_form.field_cms_form__form_template
+#: model:ir.model.fields,field_description:cms_form.field_cms_form_mixin__form_template
+#: model:ir.model.fields,field_description:cms_form.field_cms_form_search__form_template
+#: model:ir.model.fields,field_description:cms_form.field_cms_form_wizard__form_template
+msgid "Form Template"
+msgstr ""
+
+#. module: cms_form
+#: model:ir.model.fields,field_description:cms_form.field_cms_form__form_title
+#: model:ir.model.fields,field_description:cms_form.field_cms_form_mixin__form_title
+#: model:ir.model.fields,field_description:cms_form.field_cms_form_search__form_title
+#: model:ir.model.fields,field_description:cms_form.field_cms_form_wizard__form_title
+msgid "Form Title"
+msgstr ""
+
+#. module: cms_form
+#: model:ir.model.fields,field_description:cms_form.field_cms_form__form_validators
+#: model:ir.model.fields,field_description:cms_form.field_cms_form_wizard__form_validators
+msgid "Form Validators"
+msgstr ""
+
+#. module: cms_form
+#: model:ir.model.fields,field_description:cms_form.field_cms_form__form_wrapper_extra_css_klass
+#: model:ir.model.fields,field_description:cms_form.field_cms_form_mixin__form_wrapper_extra_css_klass
+#: model:ir.model.fields,field_description:cms_form.field_cms_form_search__form_wrapper_extra_css_klass
+#: model:ir.model.fields,field_description:cms_form.field_cms_form_wizard__form_wrapper_extra_css_klass
+msgid "Form Wrapper Extra Css Klass"
+msgstr ""
+
+#. module: cms_form
+#: model:ir.model.fields,field_description:cms_form.field_cms_form__form_wrapper_template
+#: model:ir.model.fields,field_description:cms_form.field_cms_form_mixin__form_wrapper_template
+#: model:ir.model.fields,field_description:cms_form.field_cms_form_search__form_wrapper_template
+#: model:ir.model.fields,field_description:cms_form.field_cms_form_wizard__form_wrapper_template
+msgid "Form Wrapper Template"
+msgstr ""
+
+#. module: cms_form
+#: model_terms:ir.ui.view,arch_db:cms_form.fieldsets_as_tabs
+msgid "Home"
+msgstr "Inici"
+
+#. module: cms_form
+#: model:ir.model.fields.selection,name:cms_form.selection__cms_form__form_display_mode__horizontal
+#: model:ir.model.fields.selection,name:cms_form.selection__cms_form_mixin__form_display_mode__horizontal
+#: model:ir.model.fields.selection,name:cms_form.selection__cms_form_search__form_display_mode__horizontal
+#: model:ir.model.fields.selection,name:cms_form.selection__cms_form_wizard__form_display_mode__horizontal
+msgid "Horizontal"
+msgstr ""
+
+#. module: cms_form
+#: model:ir.model.fields,field_description:cms_form.field_cms_form__id
+#: model:ir.model.fields,field_description:cms_form.field_cms_form_mixin__id
+#: model:ir.model.fields,field_description:cms_form.field_cms_form_search__id
+#: model:ir.model.fields,field_description:cms_form.field_cms_form_widget_binary__id
+#: model:ir.model.fields,field_description:cms_form.field_cms_form_widget_binary_mixin__id
+#: model:ir.model.fields,field_description:cms_form.field_cms_form_widget_boolean__id
+#: model:ir.model.fields,field_description:cms_form.field_cms_form_widget_char__id
+#: model:ir.model.fields,field_description:cms_form.field_cms_form_widget_char_mixin__id
+#: model:ir.model.fields,field_description:cms_form.field_cms_form_widget_date__id
+#: model:ir.model.fields,field_description:cms_form.field_cms_form_widget_float__id
+#: model:ir.model.fields,field_description:cms_form.field_cms_form_widget_hidden__id
+#: model:ir.model.fields,field_description:cms_form.field_cms_form_widget_image__id
+#: model:ir.model.fields,field_description:cms_form.field_cms_form_widget_integer__id
+#: model:ir.model.fields,field_description:cms_form.field_cms_form_widget_many2many__id
+#: model:ir.model.fields,field_description:cms_form.field_cms_form_widget_many2one__id
+#: model:ir.model.fields,field_description:cms_form.field_cms_form_widget_many2one_multi__id
+#: model:ir.model.fields,field_description:cms_form.field_cms_form_widget_mixin__id
+#: model:ir.model.fields,field_description:cms_form.field_cms_form_widget_numeric_mixin__id
+#: model:ir.model.fields,field_description:cms_form.field_cms_form_widget_one2many__id
+#: model:ir.model.fields,field_description:cms_form.field_cms_form_widget_radio__id
+#: model:ir.model.fields,field_description:cms_form.field_cms_form_widget_rel_mixin__id
+#: model:ir.model.fields,field_description:cms_form.field_cms_form_widget_selection__id
+#: model:ir.model.fields,field_description:cms_form.field_cms_form_widget_text__id
+#: model:ir.model.fields,field_description:cms_form.field_cms_form_widget_x2m_mixin__id
+#: model:ir.model.fields,field_description:cms_form.field_cms_form_wizard__id
+msgid "ID"
+msgstr "ID"
+
+#. module: cms_form
+#. odoo-python
+#: code:addons/cms_form/models/cms_form.py:0
+#, python-format
+msgid "Item created."
+msgstr "Element creat."
+
+#. module: cms_form
+#. odoo-python
+#: code:addons/cms_form/models/cms_form.py:0
+#, python-format
+msgid "Item updated."
+msgstr "Element actualitzat."
+
+#. module: cms_form
+#: model_terms:ir.ui.view,arch_db:cms_form.field_widget_image
+msgid "Keep current image"
+msgstr "Mantenir la imatge actual"
+
+#. module: cms_form
+#: model:ir.model.fields,field_description:cms_form.field_cms_form__main_object
+#: model:ir.model.fields,field_description:cms_form.field_cms_form_mixin__main_object
+#: model:ir.model.fields,field_description:cms_form.field_cms_form_search__main_object
+#: model:ir.model.fields,field_description:cms_form.field_cms_form_wizard__main_object
+msgid "Main Object"
+msgstr ""
+
+#. module: cms_form
+#: model_terms:ir.ui.view,arch_db:cms_form.form_field_label_after_wrapper
+#: model_terms:ir.ui.view,arch_db:cms_form.form_horizontal_field_wrapper
+#: model_terms:ir.ui.view,arch_db:cms_form.form_vertical_field_wrapper
+msgid "Name"
+msgstr "Nom"
+
+#. module: cms_form
+#: model_terms:ir.ui.view,arch_db:cms_form.wizard_form_buttons
+msgid "Next"
+msgstr "Següent"
+
+#. module: cms_form
+#. odoo-python
+#: code:addons/cms_form/models/cms_search_form.py:0
+#, python-format
+msgid "No items"
+msgstr ""
+
+#. module: cms_form
+#: model:ir.model.fields,field_description:cms_form.field_cms_form__o_request
+#: model:ir.model.fields,field_description:cms_form.field_cms_form_mixin__o_request
+#: model:ir.model.fields,field_description:cms_form.field_cms_form_search__o_request
+#: model:ir.model.fields,field_description:cms_form.field_cms_form_wizard__o_request
+msgid "O Request"
+msgstr ""
+
+#. module: cms_form
+#: model_terms:ir.ui.view,arch_db:cms_form.wizard_form_buttons
+msgid "Prev"
+msgstr "Anterior"
+
+#. module: cms_form
+#: model:ir.model.fields.selection,name:cms_form.selection__cms_form__form_extract_value_mode__read
+#: model:ir.model.fields.selection,name:cms_form.selection__cms_form_mixin__form_extract_value_mode__read
+#: model:ir.model.fields.selection,name:cms_form.selection__cms_form_wizard__form_extract_value_mode__read
+msgid "Read"
+msgstr ""
+
+#. module: cms_form
+#: model_terms:ir.ui.view,arch_db:cms_form.field_widget_image
+msgid "Replace current image"
+msgstr "Substitueix la imatge actual"
+
+#. module: cms_form
+#: model:ir.model.fields,field_description:cms_form.field_cms_form__request
+#: model:ir.model.fields,field_description:cms_form.field_cms_form_mixin__request
+#: model:ir.model.fields,field_description:cms_form.field_cms_form_search__request
+#: model:ir.model.fields,field_description:cms_form.field_cms_form_wizard__request
+msgid "Request"
+msgstr ""
+
+#. module: cms_form
+#: model_terms:ir.ui.view,arch_db:cms_form.base_form
+msgid "Required fields"
+msgstr "Els camps obligatoris"
+
+#. module: cms_form
+#. odoo-python
+#: code:addons/cms_form/models/cms_search_form.py:0
+#: model_terms:ir.ui.view,arch_db:cms_form.search_form_buttons
+#, python-format
+msgid "Search"
+msgstr "Cerca"
+
+#. module: cms_form
+#. odoo-python
+#: code:addons/cms_form/models/cms_search_form.py:0
+#, python-format
+msgid "Search %s"
+msgstr "Cerca %s"
+
+#. module: cms_form
+#. odoo-python
+#: code:addons/cms_form/models/cms_form.py:0
+#, python-format
+msgid "Some required fields are empty."
+msgstr "Alguns camps obligatoris estan buits."
+
+#. module: cms_form
+#: model_terms:ir.ui.view,arch_db:cms_form.base_form_buttons
+#: model_terms:ir.ui.view,arch_db:cms_form.wizard_form_buttons
+#: model_terms:ir.ui.view,arch_db:cms_form.wizard_form_confirm_modal
+msgid "Submit"
+msgstr "Enviar"
+
+#. module: cms_form
+#: model:ir.model.fields.selection,name:cms_form.selection__cms_form__form_fieldsets_display__tabs
+#: model:ir.model.fields.selection,name:cms_form.selection__cms_form_mixin__form_fieldsets_display__tabs
+#: model:ir.model.fields.selection,name:cms_form.selection__cms_form_search__form_fieldsets_display__tabs
+#: model:ir.model.fields.selection,name:cms_form.selection__cms_form_wizard__form_fieldsets_display__tabs
+msgid "Tabs"
+msgstr ""
+
+#. module: cms_form
+#: model:ir.model.fields,help:cms_form.field_cms_form_widget_char__w_valid_pattern
+#: model:ir.model.fields,help:cms_form.field_cms_form_widget_char_mixin__w_valid_pattern
+#: model:ir.model.fields,help:cms_form.field_cms_form_widget_float__w_valid_pattern
+#: model:ir.model.fields,help:cms_form.field_cms_form_widget_integer__w_valid_pattern
+#: model:ir.model.fields,help:cms_form.field_cms_form_widget_numeric_mixin__w_valid_pattern
+#: model:ir.model.fields,help:cms_form.field_cms_form_widget_text__w_valid_pattern
+msgid "Used to validate inputs with `pattern` attr"
+msgstr ""
+
+#. module: cms_form
+#: model:ir.model.fields.selection,name:cms_form.selection__cms_form__form_display_mode__vertical
+#: model:ir.model.fields.selection,name:cms_form.selection__cms_form__form_fieldsets_display__vertical
+#: model:ir.model.fields.selection,name:cms_form.selection__cms_form_mixin__form_display_mode__vertical
+#: model:ir.model.fields.selection,name:cms_form.selection__cms_form_mixin__form_fieldsets_display__vertical
+#: model:ir.model.fields.selection,name:cms_form.selection__cms_form_search__form_display_mode__vertical
+#: model:ir.model.fields.selection,name:cms_form.selection__cms_form_search__form_fieldsets_display__vertical
+#: model:ir.model.fields.selection,name:cms_form.selection__cms_form_wizard__form_display_mode__vertical
+#: model:ir.model.fields.selection,name:cms_form.selection__cms_form_wizard__form_fieldsets_display__vertical
+msgid "Vertical"
+msgstr ""
+
+#. module: cms_form
+#: model:ir.model.fields,field_description:cms_form.field_cms_form_widget_many2many__w_comodel_name
+#: model:ir.model.fields,field_description:cms_form.field_cms_form_widget_many2one__w_comodel_name
+#: model:ir.model.fields,field_description:cms_form.field_cms_form_widget_many2one_multi__w_comodel_name
+#: model:ir.model.fields,field_description:cms_form.field_cms_form_widget_one2many__w_comodel_name
+#: model:ir.model.fields,field_description:cms_form.field_cms_form_widget_rel_mixin__w_comodel_name
+#: model:ir.model.fields,field_description:cms_form.field_cms_form_widget_x2m_mixin__w_comodel_name
+msgid "W Comodel Name"
+msgstr ""
+
+#. module: cms_form
+#: model:ir.model.fields,field_description:cms_form.field_cms_form_widget_binary__w_css_klass
+#: model:ir.model.fields,field_description:cms_form.field_cms_form_widget_binary_mixin__w_css_klass
+#: model:ir.model.fields,field_description:cms_form.field_cms_form_widget_boolean__w_css_klass
+#: model:ir.model.fields,field_description:cms_form.field_cms_form_widget_char__w_css_klass
+#: model:ir.model.fields,field_description:cms_form.field_cms_form_widget_char_mixin__w_css_klass
+#: model:ir.model.fields,field_description:cms_form.field_cms_form_widget_date__w_css_klass
+#: model:ir.model.fields,field_description:cms_form.field_cms_form_widget_float__w_css_klass
+#: model:ir.model.fields,field_description:cms_form.field_cms_form_widget_hidden__w_css_klass
+#: model:ir.model.fields,field_description:cms_form.field_cms_form_widget_image__w_css_klass
+#: model:ir.model.fields,field_description:cms_form.field_cms_form_widget_integer__w_css_klass
+#: model:ir.model.fields,field_description:cms_form.field_cms_form_widget_many2many__w_css_klass
+#: model:ir.model.fields,field_description:cms_form.field_cms_form_widget_many2one__w_css_klass
+#: model:ir.model.fields,field_description:cms_form.field_cms_form_widget_many2one_multi__w_css_klass
+#: model:ir.model.fields,field_description:cms_form.field_cms_form_widget_mixin__w_css_klass
+#: model:ir.model.fields,field_description:cms_form.field_cms_form_widget_numeric_mixin__w_css_klass
+#: model:ir.model.fields,field_description:cms_form.field_cms_form_widget_one2many__w_css_klass
+#: model:ir.model.fields,field_description:cms_form.field_cms_form_widget_radio__w_css_klass
+#: model:ir.model.fields,field_description:cms_form.field_cms_form_widget_rel_mixin__w_css_klass
+#: model:ir.model.fields,field_description:cms_form.field_cms_form_widget_selection__w_css_klass
+#: model:ir.model.fields,field_description:cms_form.field_cms_form_widget_text__w_css_klass
+#: model:ir.model.fields,field_description:cms_form.field_cms_form_widget_x2m_mixin__w_css_klass
+msgid "W Css Klass"
+msgstr ""
+
+#. module: cms_form
+#: model:ir.model.fields,field_description:cms_form.field_cms_form_widget_binary__w_data
+#: model:ir.model.fields,field_description:cms_form.field_cms_form_widget_binary_mixin__w_data
+#: model:ir.model.fields,field_description:cms_form.field_cms_form_widget_boolean__w_data
+#: model:ir.model.fields,field_description:cms_form.field_cms_form_widget_char__w_data
+#: model:ir.model.fields,field_description:cms_form.field_cms_form_widget_char_mixin__w_data
+#: model:ir.model.fields,field_description:cms_form.field_cms_form_widget_date__w_data
+#: model:ir.model.fields,field_description:cms_form.field_cms_form_widget_float__w_data
+#: model:ir.model.fields,field_description:cms_form.field_cms_form_widget_hidden__w_data
+#: model:ir.model.fields,field_description:cms_form.field_cms_form_widget_image__w_data
+#: model:ir.model.fields,field_description:cms_form.field_cms_form_widget_integer__w_data
+#: model:ir.model.fields,field_description:cms_form.field_cms_form_widget_many2many__w_data
+#: model:ir.model.fields,field_description:cms_form.field_cms_form_widget_many2one__w_data
+#: model:ir.model.fields,field_description:cms_form.field_cms_form_widget_many2one_multi__w_data
+#: model:ir.model.fields,field_description:cms_form.field_cms_form_widget_mixin__w_data
+#: model:ir.model.fields,field_description:cms_form.field_cms_form_widget_numeric_mixin__w_data
+#: model:ir.model.fields,field_description:cms_form.field_cms_form_widget_one2many__w_data
+#: model:ir.model.fields,field_description:cms_form.field_cms_form_widget_radio__w_data
+#: model:ir.model.fields,field_description:cms_form.field_cms_form_widget_rel_mixin__w_data
+#: model:ir.model.fields,field_description:cms_form.field_cms_form_widget_selection__w_data
+#: model:ir.model.fields,field_description:cms_form.field_cms_form_widget_text__w_data
+#: model:ir.model.fields,field_description:cms_form.field_cms_form_widget_x2m_mixin__w_data
+msgid "W Data"
+msgstr ""
+
+#. module: cms_form
+#: model:ir.model.fields,field_description:cms_form.field_cms_form_widget_date__w_date_format
+msgid "W Date Format"
+msgstr ""
+
+#. module: cms_form
+#: model:ir.model.fields,field_description:cms_form.field_cms_form_widget_date__w_default_today
+msgid "W Default Today"
+msgstr ""
+
+#. module: cms_form
+#: model:ir.model.fields,field_description:cms_form.field_cms_form_widget_many2many__w_display_field
+#: model:ir.model.fields,field_description:cms_form.field_cms_form_widget_many2one__w_display_field
+#: model:ir.model.fields,field_description:cms_form.field_cms_form_widget_many2one_multi__w_display_field
+#: model:ir.model.fields,field_description:cms_form.field_cms_form_widget_one2many__w_display_field
+#: model:ir.model.fields,field_description:cms_form.field_cms_form_widget_rel_mixin__w_display_field
+#: model:ir.model.fields,field_description:cms_form.field_cms_form_widget_x2m_mixin__w_display_field
+msgid "W Display Field"
+msgstr ""
+
+#. module: cms_form
+#: model:ir.model.fields,field_description:cms_form.field_cms_form_widget_many2many__w_domain
+#: model:ir.model.fields,field_description:cms_form.field_cms_form_widget_many2one__w_domain
+#: model:ir.model.fields,field_description:cms_form.field_cms_form_widget_many2one_multi__w_domain
+#: model:ir.model.fields,field_description:cms_form.field_cms_form_widget_one2many__w_domain
+#: model:ir.model.fields,field_description:cms_form.field_cms_form_widget_rel_mixin__w_domain
+#: model:ir.model.fields,field_description:cms_form.field_cms_form_widget_x2m_mixin__w_domain
+msgid "W Domain"
+msgstr ""
+
+#. module: cms_form
+#: model:ir.model.fields,field_description:cms_form.field_cms_form_widget_binary__w_field
+#: model:ir.model.fields,field_description:cms_form.field_cms_form_widget_binary_mixin__w_field
+#: model:ir.model.fields,field_description:cms_form.field_cms_form_widget_boolean__w_field
+#: model:ir.model.fields,field_description:cms_form.field_cms_form_widget_char__w_field
+#: model:ir.model.fields,field_description:cms_form.field_cms_form_widget_char_mixin__w_field
+#: model:ir.model.fields,field_description:cms_form.field_cms_form_widget_date__w_field
+#: model:ir.model.fields,field_description:cms_form.field_cms_form_widget_float__w_field
+#: model:ir.model.fields,field_description:cms_form.field_cms_form_widget_hidden__w_field
+#: model:ir.model.fields,field_description:cms_form.field_cms_form_widget_image__w_field
+#: model:ir.model.fields,field_description:cms_form.field_cms_form_widget_integer__w_field
+#: model:ir.model.fields,field_description:cms_form.field_cms_form_widget_many2many__w_field
+#: model:ir.model.fields,field_description:cms_form.field_cms_form_widget_many2one__w_field
+#: model:ir.model.fields,field_description:cms_form.field_cms_form_widget_many2one_multi__w_field
+#: model:ir.model.fields,field_description:cms_form.field_cms_form_widget_mixin__w_field
+#: model:ir.model.fields,field_description:cms_form.field_cms_form_widget_numeric_mixin__w_field
+#: model:ir.model.fields,field_description:cms_form.field_cms_form_widget_one2many__w_field
+#: model:ir.model.fields,field_description:cms_form.field_cms_form_widget_radio__w_field
+#: model:ir.model.fields,field_description:cms_form.field_cms_form_widget_rel_mixin__w_field
+#: model:ir.model.fields,field_description:cms_form.field_cms_form_widget_selection__w_field
+#: model:ir.model.fields,field_description:cms_form.field_cms_form_widget_text__w_field
+#: model:ir.model.fields,field_description:cms_form.field_cms_form_widget_x2m_mixin__w_field
+msgid "W Field"
+msgstr ""
+
+#. module: cms_form
+#: model:ir.model.fields,field_description:cms_form.field_cms_form_widget_binary__w_field_value
+#: model:ir.model.fields,field_description:cms_form.field_cms_form_widget_binary_mixin__w_field_value
+#: model:ir.model.fields,field_description:cms_form.field_cms_form_widget_boolean__w_field_value
+#: model:ir.model.fields,field_description:cms_form.field_cms_form_widget_char__w_field_value
+#: model:ir.model.fields,field_description:cms_form.field_cms_form_widget_char_mixin__w_field_value
+#: model:ir.model.fields,field_description:cms_form.field_cms_form_widget_date__w_field_value
+#: model:ir.model.fields,field_description:cms_form.field_cms_form_widget_float__w_field_value
+#: model:ir.model.fields,field_description:cms_form.field_cms_form_widget_hidden__w_field_value
+#: model:ir.model.fields,field_description:cms_form.field_cms_form_widget_image__w_field_value
+#: model:ir.model.fields,field_description:cms_form.field_cms_form_widget_integer__w_field_value
+#: model:ir.model.fields,field_description:cms_form.field_cms_form_widget_many2many__w_field_value
+#: model:ir.model.fields,field_description:cms_form.field_cms_form_widget_many2one__w_field_value
+#: model:ir.model.fields,field_description:cms_form.field_cms_form_widget_many2one_multi__w_field_value
+#: model:ir.model.fields,field_description:cms_form.field_cms_form_widget_mixin__w_field_value
+#: model:ir.model.fields,field_description:cms_form.field_cms_form_widget_numeric_mixin__w_field_value
+#: model:ir.model.fields,field_description:cms_form.field_cms_form_widget_one2many__w_field_value
+#: model:ir.model.fields,field_description:cms_form.field_cms_form_widget_radio__w_field_value
+#: model:ir.model.fields,field_description:cms_form.field_cms_form_widget_rel_mixin__w_field_value
+#: model:ir.model.fields,field_description:cms_form.field_cms_form_widget_selection__w_field_value
+#: model:ir.model.fields,field_description:cms_form.field_cms_form_widget_text__w_field_value
+#: model:ir.model.fields,field_description:cms_form.field_cms_form_widget_x2m_mixin__w_field_value
+msgid "W Field Value"
+msgstr ""
+
+#. module: cms_form
+#: model:ir.model.fields,field_description:cms_form.field_cms_form_widget_binary__w_fname
+#: model:ir.model.fields,field_description:cms_form.field_cms_form_widget_binary_mixin__w_fname
+#: model:ir.model.fields,field_description:cms_form.field_cms_form_widget_boolean__w_fname
+#: model:ir.model.fields,field_description:cms_form.field_cms_form_widget_char__w_fname
+#: model:ir.model.fields,field_description:cms_form.field_cms_form_widget_char_mixin__w_fname
+#: model:ir.model.fields,field_description:cms_form.field_cms_form_widget_date__w_fname
+#: model:ir.model.fields,field_description:cms_form.field_cms_form_widget_float__w_fname
+#: model:ir.model.fields,field_description:cms_form.field_cms_form_widget_hidden__w_fname
+#: model:ir.model.fields,field_description:cms_form.field_cms_form_widget_image__w_fname
+#: model:ir.model.fields,field_description:cms_form.field_cms_form_widget_integer__w_fname
+#: model:ir.model.fields,field_description:cms_form.field_cms_form_widget_many2many__w_fname
+#: model:ir.model.fields,field_description:cms_form.field_cms_form_widget_many2one__w_fname
+#: model:ir.model.fields,field_description:cms_form.field_cms_form_widget_many2one_multi__w_fname
+#: model:ir.model.fields,field_description:cms_form.field_cms_form_widget_mixin__w_fname
+#: model:ir.model.fields,field_description:cms_form.field_cms_form_widget_numeric_mixin__w_fname
+#: model:ir.model.fields,field_description:cms_form.field_cms_form_widget_one2many__w_fname
+#: model:ir.model.fields,field_description:cms_form.field_cms_form_widget_radio__w_fname
+#: model:ir.model.fields,field_description:cms_form.field_cms_form_widget_rel_mixin__w_fname
+#: model:ir.model.fields,field_description:cms_form.field_cms_form_widget_selection__w_fname
+#: model:ir.model.fields,field_description:cms_form.field_cms_form_widget_text__w_fname
+#: model:ir.model.fields,field_description:cms_form.field_cms_form_widget_x2m_mixin__w_fname
+msgid "W Fname"
+msgstr ""
+
+#. module: cms_form
+#: model:ir.model.fields,field_description:cms_form.field_cms_form_widget_binary__w_form
+#: model:ir.model.fields,field_description:cms_form.field_cms_form_widget_binary_mixin__w_form
+#: model:ir.model.fields,field_description:cms_form.field_cms_form_widget_boolean__w_form
+#: model:ir.model.fields,field_description:cms_form.field_cms_form_widget_char__w_form
+#: model:ir.model.fields,field_description:cms_form.field_cms_form_widget_char_mixin__w_form
+#: model:ir.model.fields,field_description:cms_form.field_cms_form_widget_date__w_form
+#: model:ir.model.fields,field_description:cms_form.field_cms_form_widget_float__w_form
+#: model:ir.model.fields,field_description:cms_form.field_cms_form_widget_hidden__w_form
+#: model:ir.model.fields,field_description:cms_form.field_cms_form_widget_image__w_form
+#: model:ir.model.fields,field_description:cms_form.field_cms_form_widget_integer__w_form
+#: model:ir.model.fields,field_description:cms_form.field_cms_form_widget_many2many__w_form
+#: model:ir.model.fields,field_description:cms_form.field_cms_form_widget_many2one__w_form
+#: model:ir.model.fields,field_description:cms_form.field_cms_form_widget_many2one_multi__w_form
+#: model:ir.model.fields,field_description:cms_form.field_cms_form_widget_mixin__w_form
+#: model:ir.model.fields,field_description:cms_form.field_cms_form_widget_numeric_mixin__w_form
+#: model:ir.model.fields,field_description:cms_form.field_cms_form_widget_one2many__w_form
+#: model:ir.model.fields,field_description:cms_form.field_cms_form_widget_radio__w_form
+#: model:ir.model.fields,field_description:cms_form.field_cms_form_widget_rel_mixin__w_form
+#: model:ir.model.fields,field_description:cms_form.field_cms_form_widget_selection__w_form
+#: model:ir.model.fields,field_description:cms_form.field_cms_form_widget_text__w_form
+#: model:ir.model.fields,field_description:cms_form.field_cms_form_widget_x2m_mixin__w_form
+msgid "W Form"
+msgstr ""
+
+#. module: cms_form
+#: model:ir.model.fields,field_description:cms_form.field_cms_form_widget_integer__w_input_max
+#: model:ir.model.fields,field_description:cms_form.field_cms_form_widget_numeric_mixin__w_input_max
+msgid "W Input Max"
+msgstr ""
+
+#. module: cms_form
+#: model:ir.model.fields,field_description:cms_form.field_cms_form_widget_integer__w_input_min
+#: model:ir.model.fields,field_description:cms_form.field_cms_form_widget_numeric_mixin__w_input_min
+msgid "W Input Min"
+msgstr ""
+
+#. module: cms_form
+#: model:ir.model.fields,field_description:cms_form.field_cms_form_widget_char__w_input_type
+#: model:ir.model.fields,field_description:cms_form.field_cms_form_widget_char_mixin__w_input_type
+#: model:ir.model.fields,field_description:cms_form.field_cms_form_widget_float__w_input_type
+#: model:ir.model.fields,field_description:cms_form.field_cms_form_widget_integer__w_input_type
+#: model:ir.model.fields,field_description:cms_form.field_cms_form_widget_numeric_mixin__w_input_type
+#: model:ir.model.fields,field_description:cms_form.field_cms_form_widget_text__w_input_type
+msgid "W Input Type"
+msgstr ""
+
+#. module: cms_form
+#: model:ir.model.fields,field_description:cms_form.field_cms_form_widget_text__w_maxlength
+msgid "W Maxlength"
+msgstr ""
+
+#. module: cms_form
+#: model:ir.model.fields,field_description:cms_form.field_cms_form_widget_radio__w_options_help
+msgid "W Options Help"
+msgstr ""
+
+#. module: cms_form
+#: model:ir.model.fields,field_description:cms_form.field_cms_form_widget_date__w_placeholder
+msgid "W Placeholder"
+msgstr ""
+
+#. module: cms_form
+#: model:ir.model.fields,field_description:cms_form.field_cms_form_widget_binary__w_readonly
+#: model:ir.model.fields,field_description:cms_form.field_cms_form_widget_binary_mixin__w_readonly
+#: model:ir.model.fields,field_description:cms_form.field_cms_form_widget_boolean__w_readonly
+#: model:ir.model.fields,field_description:cms_form.field_cms_form_widget_char__w_readonly
+#: model:ir.model.fields,field_description:cms_form.field_cms_form_widget_char_mixin__w_readonly
+#: model:ir.model.fields,field_description:cms_form.field_cms_form_widget_date__w_readonly
+#: model:ir.model.fields,field_description:cms_form.field_cms_form_widget_float__w_readonly
+#: model:ir.model.fields,field_description:cms_form.field_cms_form_widget_hidden__w_readonly
+#: model:ir.model.fields,field_description:cms_form.field_cms_form_widget_image__w_readonly
+#: model:ir.model.fields,field_description:cms_form.field_cms_form_widget_integer__w_readonly
+#: model:ir.model.fields,field_description:cms_form.field_cms_form_widget_many2many__w_readonly
+#: model:ir.model.fields,field_description:cms_form.field_cms_form_widget_many2one__w_readonly
+#: model:ir.model.fields,field_description:cms_form.field_cms_form_widget_many2one_multi__w_readonly
+#: model:ir.model.fields,field_description:cms_form.field_cms_form_widget_mixin__w_readonly
+#: model:ir.model.fields,field_description:cms_form.field_cms_form_widget_numeric_mixin__w_readonly
+#: model:ir.model.fields,field_description:cms_form.field_cms_form_widget_one2many__w_readonly
+#: model:ir.model.fields,field_description:cms_form.field_cms_form_widget_radio__w_readonly
+#: model:ir.model.fields,field_description:cms_form.field_cms_form_widget_rel_mixin__w_readonly
+#: model:ir.model.fields,field_description:cms_form.field_cms_form_widget_selection__w_readonly
+#: model:ir.model.fields,field_description:cms_form.field_cms_form_widget_text__w_readonly
+#: model:ir.model.fields,field_description:cms_form.field_cms_form_widget_x2m_mixin__w_readonly
+msgid "W Readonly"
+msgstr ""
+
+#. module: cms_form
+#: model:ir.model.fields,field_description:cms_form.field_cms_form_widget_binary__w_record
+#: model:ir.model.fields,field_description:cms_form.field_cms_form_widget_binary_mixin__w_record
+#: model:ir.model.fields,field_description:cms_form.field_cms_form_widget_boolean__w_record
+#: model:ir.model.fields,field_description:cms_form.field_cms_form_widget_char__w_record
+#: model:ir.model.fields,field_description:cms_form.field_cms_form_widget_char_mixin__w_record
+#: model:ir.model.fields,field_description:cms_form.field_cms_form_widget_date__w_record
+#: model:ir.model.fields,field_description:cms_form.field_cms_form_widget_float__w_record
+#: model:ir.model.fields,field_description:cms_form.field_cms_form_widget_hidden__w_record
+#: model:ir.model.fields,field_description:cms_form.field_cms_form_widget_image__w_record
+#: model:ir.model.fields,field_description:cms_form.field_cms_form_widget_integer__w_record
+#: model:ir.model.fields,field_description:cms_form.field_cms_form_widget_many2many__w_record
+#: model:ir.model.fields,field_description:cms_form.field_cms_form_widget_many2one__w_record
+#: model:ir.model.fields,field_description:cms_form.field_cms_form_widget_many2one_multi__w_record
+#: model:ir.model.fields,field_description:cms_form.field_cms_form_widget_mixin__w_record
+#: model:ir.model.fields,field_description:cms_form.field_cms_form_widget_numeric_mixin__w_record
+#: model:ir.model.fields,field_description:cms_form.field_cms_form_widget_one2many__w_record
+#: model:ir.model.fields,field_description:cms_form.field_cms_form_widget_radio__w_record
+#: model:ir.model.fields,field_description:cms_form.field_cms_form_widget_rel_mixin__w_record
+#: model:ir.model.fields,field_description:cms_form.field_cms_form_widget_selection__w_record
+#: model:ir.model.fields,field_description:cms_form.field_cms_form_widget_text__w_record
+#: model:ir.model.fields,field_description:cms_form.field_cms_form_widget_x2m_mixin__w_record
+msgid "W Record"
+msgstr ""
+
+#. module: cms_form
+#: model:ir.model.fields,field_description:cms_form.field_cms_form_widget_binary__w_subfields
+#: model:ir.model.fields,field_description:cms_form.field_cms_form_widget_binary_mixin__w_subfields
+#: model:ir.model.fields,field_description:cms_form.field_cms_form_widget_boolean__w_subfields
+#: model:ir.model.fields,field_description:cms_form.field_cms_form_widget_char__w_subfields
+#: model:ir.model.fields,field_description:cms_form.field_cms_form_widget_char_mixin__w_subfields
+#: model:ir.model.fields,field_description:cms_form.field_cms_form_widget_date__w_subfields
+#: model:ir.model.fields,field_description:cms_form.field_cms_form_widget_float__w_subfields
+#: model:ir.model.fields,field_description:cms_form.field_cms_form_widget_hidden__w_subfields
+#: model:ir.model.fields,field_description:cms_form.field_cms_form_widget_image__w_subfields
+#: model:ir.model.fields,field_description:cms_form.field_cms_form_widget_integer__w_subfields
+#: model:ir.model.fields,field_description:cms_form.field_cms_form_widget_many2many__w_subfields
+#: model:ir.model.fields,field_description:cms_form.field_cms_form_widget_many2one__w_subfields
+#: model:ir.model.fields,field_description:cms_form.field_cms_form_widget_many2one_multi__w_subfields
+#: model:ir.model.fields,field_description:cms_form.field_cms_form_widget_mixin__w_subfields
+#: model:ir.model.fields,field_description:cms_form.field_cms_form_widget_numeric_mixin__w_subfields
+#: model:ir.model.fields,field_description:cms_form.field_cms_form_widget_one2many__w_subfields
+#: model:ir.model.fields,field_description:cms_form.field_cms_form_widget_radio__w_subfields
+#: model:ir.model.fields,field_description:cms_form.field_cms_form_widget_rel_mixin__w_subfields
+#: model:ir.model.fields,field_description:cms_form.field_cms_form_widget_selection__w_subfields
+#: model:ir.model.fields,field_description:cms_form.field_cms_form_widget_text__w_subfields
+#: model:ir.model.fields,field_description:cms_form.field_cms_form_widget_x2m_mixin__w_subfields
+msgid "W Subfields"
+msgstr ""
+
+#. module: cms_form
+#: model:ir.model.fields,field_description:cms_form.field_cms_form_widget_binary__w_template
+#: model:ir.model.fields,field_description:cms_form.field_cms_form_widget_binary_mixin__w_template
+#: model:ir.model.fields,field_description:cms_form.field_cms_form_widget_boolean__w_template
+#: model:ir.model.fields,field_description:cms_form.field_cms_form_widget_char__w_template
+#: model:ir.model.fields,field_description:cms_form.field_cms_form_widget_char_mixin__w_template
+#: model:ir.model.fields,field_description:cms_form.field_cms_form_widget_date__w_template
+#: model:ir.model.fields,field_description:cms_form.field_cms_form_widget_float__w_template
+#: model:ir.model.fields,field_description:cms_form.field_cms_form_widget_hidden__w_template
+#: model:ir.model.fields,field_description:cms_form.field_cms_form_widget_image__w_template
+#: model:ir.model.fields,field_description:cms_form.field_cms_form_widget_integer__w_template
+#: model:ir.model.fields,field_description:cms_form.field_cms_form_widget_many2many__w_template
+#: model:ir.model.fields,field_description:cms_form.field_cms_form_widget_many2one__w_template
+#: model:ir.model.fields,field_description:cms_form.field_cms_form_widget_many2one_multi__w_template
+#: model:ir.model.fields,field_description:cms_form.field_cms_form_widget_mixin__w_template
+#: model:ir.model.fields,field_description:cms_form.field_cms_form_widget_numeric_mixin__w_template
+#: model:ir.model.fields,field_description:cms_form.field_cms_form_widget_one2many__w_template
+#: model:ir.model.fields,field_description:cms_form.field_cms_form_widget_radio__w_template
+#: model:ir.model.fields,field_description:cms_form.field_cms_form_widget_rel_mixin__w_template
+#: model:ir.model.fields,field_description:cms_form.field_cms_form_widget_selection__w_template
+#: model:ir.model.fields,field_description:cms_form.field_cms_form_widget_text__w_template
+#: model:ir.model.fields,field_description:cms_form.field_cms_form_widget_x2m_mixin__w_template
+msgid "W Template"
+msgstr ""
+
+#. module: cms_form
+#: model:ir.model.fields,field_description:cms_form.field_cms_form_widget_boolean__w_true_values
+msgid "W True Values"
+msgstr ""
+
+#. module: cms_form
+#: model:ir.model.fields,field_description:cms_form.field_cms_form_widget_char__w_valid_pattern
+#: model:ir.model.fields,field_description:cms_form.field_cms_form_widget_char_mixin__w_valid_pattern
+#: model:ir.model.fields,field_description:cms_form.field_cms_form_widget_float__w_valid_pattern
+#: model:ir.model.fields,field_description:cms_form.field_cms_form_widget_integer__w_valid_pattern
+#: model:ir.model.fields,field_description:cms_form.field_cms_form_widget_numeric_mixin__w_valid_pattern
+#: model:ir.model.fields,field_description:cms_form.field_cms_form_widget_text__w_valid_pattern
+msgid "W Valid Pattern"
+msgstr ""
+
+#. module: cms_form
+#: model:ir.model.fields,field_description:cms_form.field_cms_form_widget_binary__w_wrapper_css_klass
+#: model:ir.model.fields,field_description:cms_form.field_cms_form_widget_binary_mixin__w_wrapper_css_klass
+#: model:ir.model.fields,field_description:cms_form.field_cms_form_widget_boolean__w_wrapper_css_klass
+#: model:ir.model.fields,field_description:cms_form.field_cms_form_widget_char__w_wrapper_css_klass
+#: model:ir.model.fields,field_description:cms_form.field_cms_form_widget_char_mixin__w_wrapper_css_klass
+#: model:ir.model.fields,field_description:cms_form.field_cms_form_widget_date__w_wrapper_css_klass
+#: model:ir.model.fields,field_description:cms_form.field_cms_form_widget_float__w_wrapper_css_klass
+#: model:ir.model.fields,field_description:cms_form.field_cms_form_widget_hidden__w_wrapper_css_klass
+#: model:ir.model.fields,field_description:cms_form.field_cms_form_widget_image__w_wrapper_css_klass
+#: model:ir.model.fields,field_description:cms_form.field_cms_form_widget_integer__w_wrapper_css_klass
+#: model:ir.model.fields,field_description:cms_form.field_cms_form_widget_many2many__w_wrapper_css_klass
+#: model:ir.model.fields,field_description:cms_form.field_cms_form_widget_many2one__w_wrapper_css_klass
+#: model:ir.model.fields,field_description:cms_form.field_cms_form_widget_many2one_multi__w_wrapper_css_klass
+#: model:ir.model.fields,field_description:cms_form.field_cms_form_widget_mixin__w_wrapper_css_klass
+#: model:ir.model.fields,field_description:cms_form.field_cms_form_widget_numeric_mixin__w_wrapper_css_klass
+#: model:ir.model.fields,field_description:cms_form.field_cms_form_widget_one2many__w_wrapper_css_klass
+#: model:ir.model.fields,field_description:cms_form.field_cms_form_widget_radio__w_wrapper_css_klass
+#: model:ir.model.fields,field_description:cms_form.field_cms_form_widget_rel_mixin__w_wrapper_css_klass
+#: model:ir.model.fields,field_description:cms_form.field_cms_form_widget_selection__w_wrapper_css_klass
+#: model:ir.model.fields,field_description:cms_form.field_cms_form_widget_text__w_wrapper_css_klass
+#: model:ir.model.fields,field_description:cms_form.field_cms_form_widget_x2m_mixin__w_wrapper_css_klass
+msgid "W Wrapper Css Klass"
+msgstr ""
+
+#. module: cms_form
+#: model:ir.model.fields,field_description:cms_form.field_cms_form_widget_binary__w_wrapper_template
+#: model:ir.model.fields,field_description:cms_form.field_cms_form_widget_binary_mixin__w_wrapper_template
+#: model:ir.model.fields,field_description:cms_form.field_cms_form_widget_boolean__w_wrapper_template
+#: model:ir.model.fields,field_description:cms_form.field_cms_form_widget_char__w_wrapper_template
+#: model:ir.model.fields,field_description:cms_form.field_cms_form_widget_char_mixin__w_wrapper_template
+#: model:ir.model.fields,field_description:cms_form.field_cms_form_widget_date__w_wrapper_template
+#: model:ir.model.fields,field_description:cms_form.field_cms_form_widget_float__w_wrapper_template
+#: model:ir.model.fields,field_description:cms_form.field_cms_form_widget_hidden__w_wrapper_template
+#: model:ir.model.fields,field_description:cms_form.field_cms_form_widget_image__w_wrapper_template
+#: model:ir.model.fields,field_description:cms_form.field_cms_form_widget_integer__w_wrapper_template
+#: model:ir.model.fields,field_description:cms_form.field_cms_form_widget_many2many__w_wrapper_template
+#: model:ir.model.fields,field_description:cms_form.field_cms_form_widget_many2one__w_wrapper_template
+#: model:ir.model.fields,field_description:cms_form.field_cms_form_widget_many2one_multi__w_wrapper_template
+#: model:ir.model.fields,field_description:cms_form.field_cms_form_widget_mixin__w_wrapper_template
+#: model:ir.model.fields,field_description:cms_form.field_cms_form_widget_numeric_mixin__w_wrapper_template
+#: model:ir.model.fields,field_description:cms_form.field_cms_form_widget_one2many__w_wrapper_template
+#: model:ir.model.fields,field_description:cms_form.field_cms_form_widget_radio__w_wrapper_template
+#: model:ir.model.fields,field_description:cms_form.field_cms_form_widget_rel_mixin__w_wrapper_template
+#: model:ir.model.fields,field_description:cms_form.field_cms_form_widget_selection__w_wrapper_template
+#: model:ir.model.fields,field_description:cms_form.field_cms_form_widget_text__w_wrapper_template
+#: model:ir.model.fields,field_description:cms_form.field_cms_form_widget_x2m_mixin__w_wrapper_template
+msgid "W Wrapper Template"
+msgstr ""
+
+#. module: cms_form
+#: model:ir.model.fields.selection,name:cms_form.selection__cms_form__form_extract_value_mode__write
+#: model:ir.model.fields.selection,name:cms_form.selection__cms_form_mixin__form_extract_value_mode__write
+#: model:ir.model.fields.selection,name:cms_form.selection__cms_form_wizard__form_extract_value_mode__write
+msgid "Write"
+msgstr ""
+
+#. module: cms_form
+#. odoo-python
+#: code:addons/cms_form/models/cms_form_mixin.py:0
+#, python-format
+msgid "You are not allowed to create any record for the model `%s`."
+msgstr "No teniu permís per crear cap registre per al model `%s`."
+
+#. module: cms_form
+#. odoo-python
+#: code:addons/cms_form/models/cms_form_mixin.py:0
+#, python-format
+msgid "You cannot edit this record. Model: %(model)s, ID: %(obj_id)s."
+msgstr ""
+
+#~ msgid "Display Name"
+#~ msgstr "Nom de visualització"
+
+#~ msgid "Last Modified on"
+#~ msgstr "Última modificació el"
+
+#, python-format
+#~ msgid "You cannot edit this record. Model: %s, ID: %s."
+#~ msgstr "No podeu editar aquest registre. Model: %s, ID: %s."
