@@ -107,6 +107,13 @@ class FormControllerMixin(object):
             # anything went fine, redirect to next url
             # https://developer.mozilla.org/en-US/docs/Web/HTTP/Status/303
             return werkzeug.utils.redirect(form.form_next_url(), code=303)
+
+        if form.form_render_values.get("errors"):
+            # transient model fields on cms.form are reset after savepoint rollback
+            # so in case of errors, the form needs to be re-initialized
+            # otherwise, the template won't be able to render
+            form = self.get_form(model, model_id=model_id, form_data=None)
+
         # render form wrapper
         values = self.get_render_values(form, **kw)
         return request.render(

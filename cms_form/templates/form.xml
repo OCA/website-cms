@@ -184,7 +184,7 @@ License LGPL-3.0 or later (http://www.gnu.org/licenses/lgpl.html).
             t-att-data-ajax="form.form_ajax or None"
             t-att-data-ajax-onchange="form.form_ajax_onchange or None"
         >
-            <t t-if="form.form_method == 'POST'">
+            <t t-if="form.form_method == 'POST' and form.o_request">
                 <input
                     type="hidden"
                     name="csrf_token"

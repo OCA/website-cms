@@ -141,29 +141,19 @@ License LGPL-3.0 or later (http://www.gnu.org/licenses/lgpl.html).
             <attribute name="t-attf-class" add="m2o" separator=" " />
         </xpath>
     </template>
-    <template id="field_widget_date" name="CMS form date field widget">
+    <template id="field_widget_date" name="CMS form date field widget (HTML5 native)">
         <div class="input-group">
-            <!-- This will hold the value displayed to users -->
             <input
-                type="text"
-                t-attf-name="#{widget.w_fname}_display"
-                t-attf-id="#{widget.w_fname}_display"
-                t-attf-class="form-control js_datepicker #{widget.w_css_klass}"
-                t-att-placeholder="widget.w_placeholder"
-                t-att-data-params='widget.w_data_json()'
-                t-att-required="widget.w_field['required'] and '1' or None"
-                t-att-readonly="widget.html_readonly or None"
-            />
-            <!-- This will hold server-side value -->
-            <input
-                type="hidden"
+                type="date"
                 t-att-name="widget.html_fname"
                 t-att-id="widget.w_fname"
-                t-att-value="widget.w_field_value"
+                class="form-control"
+                t-att-required="widget.w_field.get('required') and 'required' or None"
+                t-att-readonly="widget.html_readonly and 'readonly' or None"
+                t-att-value="widget.w_field_value or ''"
+                t-att-min="widget.w_field.get('min')"
+                t-att-max="widget.w_field.get('max')"
             />
-            <span class="input-group-addon js_datepicker_trigger">
-                <span class="fa fa-calendar" />
-            </span>
         </div>
     </template>
     <template id="field_widget_text" name="CMS form text field widget">

@@ -5,7 +5,7 @@
     "name": "CMS Form",
     "summary": """
         Basic content type form""",
-    "version": "16.0.1.3.0",
+    "version": "15.0.1.0.0",
     "license": "LGPL-3",
     "author": "Camptocamp, Odoo Community Association (OCA)",
     "maintainers": ["simahawk"],
@@ -16,6 +16,8 @@
         # TODO: get rid of portal too
         "portal",
         "base_sparse_field",
+        "website",
+        "web",
     ],
     "data": [
         "security/cms_form.xml",
@@ -30,7 +32,6 @@
             "cms_form/static/src/scss/progressbar.scss",
             # TODO: review them all w/ modern JS
             "cms_form/static/src/js/select2widgets.js",
-            "cms_form/static/src/js/date_widget.js",
             "cms_form/static/src/js/textarea_widget.js",
             "cms_form/static/src/js/master_slave.js",
             "cms_form/static/src/js/lock_copy_paste.js",

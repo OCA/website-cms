@@ -156,7 +156,7 @@ class CMSForm(models.AbstractModel):
     def _form_create(self, values):
         """Just create the main object."""
         # pass a copy to avoid pollution of initial values by odoo
-        self.main_object = self.form_model.create(values.copy())
+        self.main_object = self.env[self.form_model].create(values.copy())
 
     def form_create_or_update(self):
         """Prepare values and create or update main_object."""
@@ -180,13 +180,13 @@ class CMSForm(models.AbstractModel):
         """Process POST requests."""
         errors, errors_message = self.form_validate()
         # Do not flush to keep the caches of current in memory objects
-        savepoint = self.env.cr.savepoint(flush=False)
         if not errors:
             try:
-                self.form_create_or_update()
-                self.form_success = True
-                self.form_redirect = True
-                return render_values
+                with self.env.cr.savepoint():
+                    self.form_create_or_update()
+                    self.form_success = True
+                    self.form_redirect = True
+                    return render_values
             except exceptions.ValidationError as err:
                 # sounds like there's no way to validate fields
                 # before calling write or create,
@@ -195,7 +195,7 @@ class CMSForm(models.AbstractModel):
                 # err message can be something like
                 # u'Error while validating constraint\n
                 #    \nEnd Date cannot be set before Start Date.\nNone'
-                errors_message["_validation"] = "<br />".join(
+                errors_message["_validation"] = "\n".join(
                     [
                         x
                         for x in err.args[0].replace("None", "").split("\n")
@@ -207,7 +207,6 @@ class CMSForm(models.AbstractModel):
                 errors_message["_integrity"] = "<br />".join(
                     [x for x in str(err).split("\n") if x.strip()]
                 )
-        savepoint.rollback()
         # TODO: how to handle validation error on create?
         # If you use @api.constrains to validate fields' value
         # the check happens only AFTER the record has been created.
