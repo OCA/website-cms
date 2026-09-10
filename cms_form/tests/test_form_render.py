@@ -1,6 +1,8 @@
 # Copyright 2017 Simone Orsi
 # License LGPL-3.0 or later (http://www.gnu.org/licenses/lgpl.html).
 
+from odoo.tests.common import new_test_user
+
 from .common import FormRenderTestCase
 
 
@@ -100,7 +102,8 @@ class TestRender(FormRenderTestCase):
 
     def test_render_form_fieldsets_protected_field(self):
         """No field, no fieldset."""
-        user = self.env.ref("base.user_demo")
+        # plain internal user, not relying on demo data being loaded
+        user = new_test_user(self.env, login="test_render_fieldsets_protected_user")
         form = self.get_form("cms.form.test_fieldsets", sudo_uid=user.id)
         html = form.form_render()
         node = self.to_xml_node(html)[0]

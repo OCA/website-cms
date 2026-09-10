@@ -5,6 +5,8 @@ import json
 import os
 import unittest
 
+from odoo.addons.website.tools import MockRequest
+
 from ..controllers import main
 from .common import FormHttpTestCase, FormTestCase
 from .utils import fake_request, mock_request
@@ -26,6 +28,8 @@ class TestControllersAPI(FormTestCase):
         self.form_controller = main.CMSFormController()
         self.form_search_controller = main.CMSSearchFormController()
         self.form_wiz_controller = main.CMSWizardFormController()
+        # do not rely on demo data (eg: `base.res_partner_12`) being loaded
+        self.test_partner = self.env["res.partner"].create({"name": "Test Partner"})
 
     def test_get_template(self):
         with mock_request(self.env):
@@ -56,7 +60,7 @@ class TestControllersAPI(FormTestCase):
                 },
             )
             # get a main obj
-            partner = self.env.ref("base.res_partner_12")
+            partner = self.test_partner
             form = self.form_controller.get_form("res.partner", model_id=partner.id)
             self.assertEqual(
                 self.form_controller.get_render_values(form),
@@ -129,7 +133,7 @@ class TestControllersAPI(FormTestCase):
             method="POST",
         )
         with mock_request(self.env, httprequest=req.httprequest):
-            partner = self.env.ref("base.res_partner_12")
+            partner = self.test_partner
             response = self.form_controller.make_response(
                 "res.partner", model_id=partner.id
             )
@@ -143,6 +147,25 @@ class TestControllersAPI(FormTestCase):
 
 @unittest.skipIf(os.getenv("SKIP_HTTP_CASE"), "HTTP case disabled.")
 class TestControllersRender(FormHttpTestCase):
+    @classmethod
+    def setUpClass(cls):
+        super().setUpClass()
+        # Warm up frontend QWeb rendering (`web.frontend_layout` /
+        # `portal.portal_layout`, which pulls in `portal.language_selector`)
+        # once here, before any real HTTP request is made.
+        # Compiling/preparing the frontend qweb env for the very first time
+        # races with `ir.qweb._prepare_frontend_environment`: `languages` can
+        # end up unset, causing a sporadic 500 on the first HTTP request
+        # (confirmed on real OCA CI, not just locally).
+        # We use `website`'s bare `MockRequest` here rather than our own
+        # `mock_request` helper: the latter deliberately empties
+        # `registry._init_modules` for its own purposes, which breaks asset
+        # bundle lookups needed to actually render this template.
+        with MockRequest(cls.env):
+            cls.env["ir.qweb"].with_context(lang="en_US")._render(
+                "portal.portal_layout", {}
+            )
+
     def setUp(self):
         super().setUp()
         self.authenticate("admin", "admin")
@@ -193,7 +216,8 @@ class TestControllersRender(FormHttpTestCase):
         self._check_rendering(dom, "cms.form.res.partner", "res.partner", "create")
 
     def test_default_edit_rendering(self):
-        partner = self.env.ref("base.res_partner_1")
+        # do not rely on demo data (eg: `base.res_partner_1`) being loaded
+        partner = self.env["res.partner"].create({"name": "Test Partner"})
         dom = self.html_get("/cms/edit/res.partner/{}".format(partner.id))
         self._check_rendering(dom, "cms.form.res.partner", "res.partner", "edit")
 

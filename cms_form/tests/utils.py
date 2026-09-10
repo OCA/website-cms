@@ -77,9 +77,17 @@ def mock_request(
         for k, v in httprequest_attrs.items():
             setattr(mocked_request.httprequest, k, v)
         mocked_request.make_response = lambda data, **kw: data
+        # `MockRequest` exposes the real (shared, process-wide) registry, not a copy.
+        # Mutating `_init_modules` here used to leak into every other test running
+        # afterwards (breaking asset bundling and HTTP routing map generation for
+        # the rest of the test run), so make sure to restore it once done.
+        original_init_modules = mocked_request.registry._init_modules
         mocked_request.registry._init_modules = set()
         mocked_request.session.touch = lambda: True
-        yield mocked_request
+        try:
+            yield mocked_request
+        finally:
+            mocked_request.registry._init_modules = original_init_modules
 
 
 class FakeSessionStore(SessionStore):

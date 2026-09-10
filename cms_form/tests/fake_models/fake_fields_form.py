@@ -8,6 +8,7 @@ class FakeFloatWidget(models.AbstractModel):
 
     _name = "cms.form.test_fields.widget.float"
     _inherit = "cms.form.widget.float"
+    _description = _name
 
 
 class FakeFieldsForm(models.AbstractModel):
@@ -51,6 +52,7 @@ class FakeFieldsForm2(models.AbstractModel):
 
     _name = "cms.form.test_fields2"
     _inherit = "cms.form.test_fields"
+    _description = _name
 
     a_float_with_another_widget = fields.Float(
         form_widget={"model": FakeFloatWidget._name}
