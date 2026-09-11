@@ -4,7 +4,7 @@
 from lxml import html
 from odoo_test_helper import FakeModelLoader
 
-from odoo.tests.common import HttpCase, TransactionCase
+from odoo.tests.common import HttpCase, TransactionCase, tagged
 
 from .utils import fake_request, fake_session, session_store
 
@@ -79,11 +79,9 @@ class HTMLRenderMixin(object):
             self.assertEqual(len(self.find_input_name(node, name)), 1)
 
 
+@tagged("post_install", "-at_install")
 class FormTestCase(TransactionCase, FakeModelMixin):
     """Form test cases."""
-
-    at_install = False
-    post_install = True
 
     @classmethod
     def setUpClass(cls):
@@ -115,6 +113,7 @@ class FormRenderTestCase(FormTestCase, HTMLRenderMixin):
     """Form test cases where you test HTML rendering."""
 
 
+@tagged("post_install", "-at_install")
 class FormHttpTestCase(HttpCase, FakeModelMixin, HTMLRenderMixin):
     """Form test cases where you test HTML rendering and HTTP requests."""
 

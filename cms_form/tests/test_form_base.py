@@ -6,6 +6,7 @@ from unittest import mock
 from werkzeug.wrappers import Request
 
 from odoo import http
+from odoo.tests.common import new_test_user
 
 from .common import FormTestCase
 from .utils import fake_request
@@ -183,7 +184,8 @@ class TestFormBase(FormTestCase):
 
     def test_fields_protected(self):
         group = self.env.ref("base.group_system")
-        user = self.env.ref("base.user_demo")
+        # plain internal user, not relying on demo data being loaded
+        user = new_test_user(self.env, login="test_fields_protected_user")
         # user does not have the group
         self.assertNotIn(group, user.groups_id)
         form = self.get_form("cms.form.protected.fields", sudo_uid=user.id)

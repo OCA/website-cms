@@ -80,7 +80,11 @@ class TestWidgetX2M(TestWidgetCase):
         )
 
     def test_widget_x2many_base_load_from_record(self):
-        categs = self.env["res.partner.category"].search([], limit=3)
+        # Do not rely on demo data or other modules' data being present:
+        # create dedicated categories so the test is self-contained.
+        categs = self.env["res.partner.category"].create(
+            [{"name": f"Fake category {i}"} for i in range(3)]
+        )
         partner = self.partners[0]
         form = fake_form(
             self.env,
