@@ -42,3 +42,8 @@ class FakeTourPartnerForm(models.AbstractModel):
                 "show": {"company_name": ("company",)},
             }
         }
+
+    def _can_create(self, raise_exception=True):
+        # Fake models are not in ir.model (no ACL can be set up for them):
+        # the create check would always fail for the tour user.
+        return True
