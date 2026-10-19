@@ -1,69 +1,68 @@
-odoo.define("cms_form.ajax", function (require) {
-    "use strict";
+import { Interaction } from "@web/public/interaction";
+import { registry } from "@web/core/registry";
 
-    // FIXME: website dep
-    var core = require("web.core"),
-        animation = require("website.content.snippets.animation");
+import { readData } from "./utils";
 
-    animation.registry.CMSFormAjax = animation.Class.extend({
-        selector: ".cms_form_wrapper form[data-ajax]",
-        events: {
-            submit: "submit_form",
-        },
-        start: function () {
-            this.data = this.$el.data("form");
-            if (this.$el.data("ajax-onchange")) {
-                this.$el.on("change", this.proxy("submit_form"));
-            }
-            this.$el
-                .parents(".cms_form_wrapper")
-                .find(this.data.form_content_selector)
-                .find(".pagination a[href]")
-                .on("click", this.proxy("pager"));
-        },
-        ajax_submit: function (additional_data) {
-            return jQuery.ajax(_.str.sprintf("/cms/ajax/search/%s", this.data.model), {
-                data:
-                    this.$el.serialize() +
-                    "&csrf_token=" +
-                    core.csrf_token +
-                    (additional_data || ""),
-                dataType: "json",
-                success: this.proxy("success"),
-                error: this.proxy("error"),
-            });
-        },
-        submit_form: function (ev) {
-            var $container = this.$container();
+export class CMSFormAjax extends Interaction {
+    static selector = ".cms_form_wrapper form[data-ajax]";
 
-            jQuery.blockUI();
-            ev.preventDefault();
-            $container.empty();
+    setup() {
+        this.data = readData(this.el, "form", {});
+        this.container = this.el
+            .closest(".cms_form_wrapper")
+            ?.querySelector(this.data.form_content_selector);
+    }
 
-            return this.ajax_submit();
-        },
-        success: function (data) {
-            jQuery.unblockUI();
-            var $container = this.$container();
+    start() {
+        this.addListener(this.el, "submit", (ev) => this.submitForm(ev));
+        if (readData(this.el, "ajaxOnchange")) {
+            this.addListener(this.el, "change", (ev) => this.submitForm(ev));
+        }
+        if (this.container) {
+            // Pager links live in the container, which is re-rendered on every
+            // response: delegate the click instead of binding each link.
+            this.addListener(this.container, "click", (ev) => this.onPagerClick(ev));
+        }
+    }
 
-            $container.html(data.content);
-            $container.find(".pagination a[href]").on("click", this.proxy("pager"));
-        },
-        error: function () {
-            jQuery.unblockUI();
-        },
-        pager: function (ev) {
-            var $a = jQuery(ev.currentTarget);
+    submitForm(ev) {
+        ev.preventDefault();
+        this.container?.replaceChildren();
+        return this.ajaxSubmit();
+    }
 
-            jQuery.blockUI();
-            ev.preventDefault();
+    onPagerClick(ev) {
+        const link = ev.target.closest(".pagination a[href]");
+        if (!link) {
+            return;
+        }
+        ev.preventDefault();
+        return this.ajaxSubmit({ page: readData(link, "page") });
+    }
 
-            return this.ajax_submit("&page=" + $a.data("page"));
-        },
-        $container: function () {
-            return this.$el
-                .parents(".cms_form_wrapper")
-                .find(this.data.form_content_selector);
-        },
-    });
-});
+    async ajaxSubmit(extra = {}) {
+        const params = new URLSearchParams(new FormData(this.el));
+        params.set("csrf_token", odoo.csrf_token);
+        for (const [key, value] of Object.entries(extra)) {
+            params.set(key, value);
+        }
+        try {
+            const response = await fetch(
+                `/cms/ajax/search/${this.data.model}?${params.toString()}`
+            );
+            const data = await response.json();
+            this.render(data.content);
+        } catch {
+            // Mirror the legacy behaviour: failures are silent, the form stays usable.
+        }
+    }
+
+    render(content) {
+        if (!this.container) {
+            return;
+        }
+        this.container.innerHTML = content;
+    }
+}
+
+registry.category("public.interactions").add("cms_form.ajax", CMSFormAjax);
