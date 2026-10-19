@@ -5,7 +5,7 @@ import json
 import os
 import unittest
 
-from odoo.addons.website.tools import MockRequest
+from odoo.addons.http_routing.tests.common import MockRequest
 
 from ..controllers import main
 from .common import FormHttpTestCase, FormTestCase

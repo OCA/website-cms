@@ -15,7 +15,7 @@ from odoo.tests.common import get_db_name
 from odoo.tools import DotDict
 from odoo.tools._vendor.sessions import SessionStore
 
-from odoo.addons.website.tools import MockRequest
+from odoo.addons.http_routing.tests.common import MockRequest
 
 
 def fake_request(
