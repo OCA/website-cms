@@ -39,6 +39,11 @@ registry.category("web_tour.tours").add("cms_form_create_form", {
             run: "edit 02/01/2000",
         },
         {
+            // commit the typed date (change fires on blur); Enter would submit the form
+            trigger: "input[name=birthdate_display]",
+            run: "press Tab",
+        },
+        {
             trigger: "input[name=birthdate_display]",
             run: () => assertValue("input[name=birthdate]", "2000-02-01"),
         },
