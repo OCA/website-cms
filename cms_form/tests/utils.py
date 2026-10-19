@@ -106,12 +106,14 @@ def fake_session(env, **kw):
     session.db = db
     session.uid = env.uid
     session.login = env.user.login
-    session.password = ""
-    session.context = dict(env.context)
-    session.context["uid"] = env.uid
+    # Odoo 19 Session is a mapping with __slots__: plain keys go through item access.
+    session["context"] = dict(env.context)
+    session["context"]["uid"] = env.uid
     for k, v in kw.items():
         if hasattr(session, k):
             setattr(session, k, v)
+        else:
+            session[k] = v
     session.__testing__ = True
     return session
 

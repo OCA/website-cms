@@ -187,13 +187,13 @@ class TestFormBase(FormTestCase):
         # plain internal user, not relying on demo data being loaded
         user = new_test_user(self.env, login="test_fields_protected_user")
         # user does not have the group
-        self.assertNotIn(group, user.groups_id)
+        self.assertNotIn(group, user.group_ids)
         form = self.get_form("cms.form.protected.fields", sudo_uid=user.id)
         fields = form.form_fields_get()
         # field is skipped
         self.assertEqual(list(fields.keys()), ["nogroup"])
         # now add the group
-        user.write({"groups_id": [(4, group.id)]})
+        user.write({"group_ids": [(4, group.id)]})
         fields = form.form_fields_get()
         # now we get protected field too
         self.assertEqual(sorted(fields.keys()), sorted(["ihaveagroup", "nogroup"]))
