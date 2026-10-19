@@ -25,6 +25,9 @@
     ],
     "installable": False,
     "assets": {
+        "web.assets_tests": [
+            "cms_form/static/tests/tours/**/*",
+        ],
         "web.assets_frontend": [
             "cms_form/static/src/scss/cms_form.scss",
             "cms_form/static/src/scss/progressbar.scss",
