@@ -305,7 +305,7 @@ class CMSFormMixin(models.AbstractModel):
     def _form_fields_attributes_get(self):
         return self.form_fields_attributes or []
 
-    @tools.cache("self")
+    @tools.ormcache("self")
     def _form_fields_get(self):
         """Retrieve form fields ready to be used.
 
