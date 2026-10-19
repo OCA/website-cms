@@ -26,14 +26,14 @@ def fake_request(
     content_type=None,
     session=None,
 ):
-    data = urllib.parse.urlencode(form_data or {})
+    data = urllib.parse.urlencode(form_data or {}).encode()
     content_type = content_type or "application/x-www-form-urlencoded"
-    # werkzeug request
+    # werkzeug request (input stream must be bytes)
     w_req = Request.from_values(
         url,
         query_string=query_string,
         content_length=len(data),
-        input_stream=io.StringIO(data),
+        input_stream=io.BytesIO(data),
         content_type=content_type,
         method=method,
     )
