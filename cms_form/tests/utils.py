@@ -114,7 +114,7 @@ def fake_session(env, **kw):
             setattr(session, k, v)
         else:
             session[k] = v
-    session.__testing__ = True
+    session["__testing__"] = True
     return session
 
 
