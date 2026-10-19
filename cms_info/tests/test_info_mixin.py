@@ -2,9 +2,8 @@
 # License AGPL-3.0 or later (http://www.gnu.org/licenses/agpl)
 from unittest import mock
 
-from odoo_test_helper import FakeModelLoader
-
 from odoo import exceptions
+from odoo.orm.model_classes import add_to_registry
 from odoo.tests.common import TransactionCase
 
 
@@ -12,11 +11,14 @@ class TestInfoMixin(TransactionCase):
     @classmethod
     def setUpClass(cls):
         super().setUpClass()
-        cls.loader = FakeModelLoader(cls.env, cls.__module__)
-        cls.loader.backup_registry()
         from .fake_models import FakeModel
 
-        cls.loader.update_registry((FakeModel,))
+        add_to_registry(cls.registry, FakeModel)
+        cls.registry._setup_models__(cls.env.cr, [FakeModel._name])
+        cls.registry.init_models(
+            cls.env.cr, [FakeModel._name], {"models_to_check": True}
+        )
+        cls.addClassCleanup(cls.registry.__delitem__, FakeModel._name)
         cls.model = cls.env[FakeModel._name]
         cls.record = cls.model.create({"name": "Foo"})
         user_model = cls.env["res.users"].with_context(
@@ -29,11 +31,6 @@ class TestInfoMixin(TransactionCase):
                 "email": "user1@email.com",
             }
         )
-
-    @classmethod
-    def tearDownClass(cls):
-        cls.loader.restore_registry()
-        super().tearDownClass()
 
     def test_create_url(self):
         self.assertEqual(self.record.cms_create_url, "/cms/create/fake.model")
