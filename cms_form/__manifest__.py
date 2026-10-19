@@ -23,7 +23,7 @@
         "templates/widgets.xml",
         "templates/portal.xml",
     ],
-    "installable": False,
+    "installable": True,
     "assets": {
         "web.assets_tests": [
             "cms_form/static/tests/tours/**/*",
