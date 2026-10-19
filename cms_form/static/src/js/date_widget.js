@@ -1,97 +1,64 @@
-odoo.define("cms_form.date_widget", function (require) {
-    "use strict";
+import { Interaction } from "@web/public/interaction";
+import { registry } from "@web/core/registry";
+import { localization } from "@web/core/l10n/localization";
+import { parseDate, serializeDate, today } from "@web/core/l10n/dates";
 
-    // FIXME: website dep
-    var sAnimation = require("website.content.snippets.animation");
-    var time_utils = require("web.time");
+import { readData } from "./utils";
 
-    sAnimation.registry.CMSDateWidget = sAnimation.Class.extend({
-        selector: ".cms_form_wrapper form input.js_datepicker",
-        start: function () {
-            // The datepicker is attached to $fname_display field.
-            // The real value is held by the real field input (hidden).
-            this.$realField = this.$el.next(
-                "#" + this.$el.attr("name").replace("_display", "")
-            );
-            this.load_options();
-            this.setup_datepicker();
-        },
-        load_options: function () {
-            // global options
-            this.options = _.omit(this.$el.data("params"), "dp");
-            // Datepicker specific ones
-            this.picker_options = _.defaults(
-                // You can pass datepicker specific options via `dp` attr in params.
-                // We don't pass them via `params` otherwise the picker
-                // will fail on it if non recognized params are there.
-                this.$el.data("params").dp || {},
-                {
-                    icons: {
-                        time: "fa fa-clock-o",
-                        date: "fa fa-calendar",
-                        up: "fa fa-chevron-up",
-                        down: "fa fa-chevron-down",
-                    },
-                    locale: moment.locale(),
-                    format: time_utils.getLangDateFormat(),
-                    useCurrent: false,
-                }
-            );
-        },
-        setup_datepicker: function () {
-            var self = this;
-            var placeholder = this.$el.attr("placeholder");
-            // Placeholder empty: set default via lang format
-            // plahoholder not defined: leave it not set
-            if (!placeholder && !_.isUndefined(placeholder)) {
-                /* TODO: we should make this translatable. Example:
+/*
+The date picker is attached to the `$fname_display` field.
+The real value is held by the hidden field right after it (`fname`), in server format.
+*/
+export class CMSDateWidget extends Interaction {
+    static selector = ".cms_form_wrapper form input.js_datepicker";
 
-        lang format in French is `DD.MM.YYYY`
-        what the user wants to see is `JJ.MM.AAAA`
+    setup() {
+        this.options = readData(this.el, "params", {});
+        this.realField = this.el.nextElementSibling;
+        this.trigger = this.el.closest(".input-group")?.querySelector(".js_datepicker_trigger");
+    }
 
-        As workaround you can define the placeholder as widget attribute
-        and translate it.
-        */
-                this.$el.attr("placeholder", time_utils.getLangDateFormat());
-            }
-            // Init bootstrap-datetimepicker
-            this.$el.datetimepicker(this.picker_options);
-            this.picker = this.$el.data("DateTimePicker");
-            this.$el.on("dp.change", function (e) {
-                // Update real value field.
-                // WARNING: this format should not be touched, it matches server side.
-                var real_val = "";
-                // E.date is false when no value is set
-                if (e.date) {
-                    real_val = e.date.format("YYYY-MM-DD");
-                }
-                self.$realField.val(real_val);
-            });
-            this._init_date();
-            // Enable calendar icon trigger
-            this.$el
-                .closest(".input-group")
-                .find(".js_datepicker_trigger")
-                .click(function () {
-                    self.picker.show();
-                });
-        },
-        _init_date: function () {
-            var self = this;
-            // Retrieve current date from real field
-            var defaultDate = self.$realField.val();
-            if (defaultDate) {
-                defaultDate = new Date(defaultDate);
-            } else if (self.options.defaultToday) {
-                defaultDate = new Date();
-            }
-            if (defaultDate && !self.$el.val()) {
-                this.picker.date(defaultDate);
-            }
-        },
-        destroy: function () {
-            this.picker.destroy();
-            this._super.apply(this, arguments);
-        },
-    });
-});
+    start() {
+        const placeholder = this.el.getAttribute("placeholder");
+        // Placeholder empty: set default via lang format.
+        // Placeholder not defined: leave it not set.
+        if (placeholder === "") {
+            this.el.setAttribute("placeholder", localization.dateFormat);
+        }
+        const initial = this.initialValue();
+        this.syncRealField(initial);
+        this.registerCleanup(
+            this.services.datetime_picker
+                .create({
+                    target: this.el,
+                    onApply: (value) => this.syncRealField(value),
+                    pickerProps: { type: "date", value: initial },
+                })
+                .enable()
+        );
+        if (this.trigger) {
+            this.addListener(this.trigger, "click", () => this.el.focus());
+        }
+    }
+
+    initialValue() {
+        // Display value first, then the server value, then today if asked to.
+        let value = parseDate(this.el.value) || false;
+        if (!value && this.realField?.value) {
+            value = parseDate(this.realField.value, { format: "yyyy-MM-dd" }) || false;
+        }
+        if (!value && this.options.defaultToday) {
+            value = today();
+        }
+        return value;
+    }
+
+    syncRealField(value) {
+        if (this.realField) {
+            // WARNING: this format matches server side, do not touch it.
+            this.realField.value = value ? serializeDate(value) : "";
+        }
+    }
+}
+
+registry.category("public.interactions").add("cms_form.date_widget", CMSDateWidget);
