@@ -4,7 +4,7 @@
 {
     "name": "CMS status message",
     "summary": """Basic status messages for your CMS system""",
-    "version": "16.0.1.1.0",
+    "version": "19.0.1.0.0",
     "maintainers": ["simahawk"],
     "license": "LGPL-3",
     "author": "Camptocamp, Odoo Community Association (OCA)",
@@ -18,7 +18,8 @@
         "web.assets_frontend": [
             "cms_status_message/static/src/js/tool.esm.js",
             "cms_status_message/static/src/js/autodismiss.esm.js",
+            "cms_status_message/static/src/xml/status_message.xml",
         ],
     },
-    "installable": False,
+    "installable": True,
 }

@@ -8,7 +8,7 @@ from lxml import html
 
 from odoo.tests.common import TransactionCase
 
-from odoo.addons.website.tools import MockRequest
+from odoo.addons.http_routing.tests.common import MockRequest
 
 REQ_PATH = "odoo.addons.cms_status_message.models.ir_http.http.request"
 

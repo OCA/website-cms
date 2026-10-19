@@ -1,0 +1,41 @@
+<?xml version="1.0" encoding="utf-8" ?>
+<!--
+Copyright 2017 Camptocamp - Simone Orsi
+License LGPL-3.0 or later (http://www.gnu.org/licenses/lgpl).
+
+Client-side copy of the server templates in templates/status_message.xml,
+used by MessageTool.render_messages. Keep both in sync.
+-->
+<templates xml:space="preserve">
+    <t t-name="cms_status_message.message_listing_wrapper">
+        <div class="container status_message">
+            <t t-foreach="status_message" t-as="msg" t-key="msg_index">
+                <div
+                    t-attf-class="alert alert-{{msg.type}} {{msg.dismissible ? 'alert-dismissible' : ''}}"
+                    t-att-data-autodismiss="msg.dismiss_options?.autodismiss"
+                    t-att-data-autodismiss-timeout="msg.dismiss_options?.autodismissTimeout"
+                    role="alert"
+                >
+                    <t t-if="msg.dismissible">
+                        <button
+                            type="button"
+                            class="btn-close"
+                            data-bs-dismiss="alert"
+                            aria-label="close"
+                        />
+                    </t>
+                    <div class="msg-wrapper row">
+                        <t t-if="msg.title">
+                            <div class="title col">
+                                <strong t-esc="msg.title"/>
+                            </div>
+                        </t>
+                        <div class="msg col-auto">
+                            <t t-out="msg.msg"/>
+                        </div>
+                    </div>
+                </div>
+            </t>
+        </div>
+    </t>
+</templates>
