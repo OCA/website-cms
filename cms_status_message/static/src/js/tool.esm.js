@@ -1,5 +1,5 @@
-import { rpc } from "@web/core/network/rpc";
-import { renderToElement } from "@web/core/utils/render";
+import {rpc} from "@web/core/network/rpc";
+import {renderToElement} from "@web/core/utils/render";
 
 export class MessageTool {
     add_message(msg, options) {

@@ -27,11 +27,11 @@ used by MessageTool.render_messages. Keep both in sync.
                     <div class="msg-wrapper row">
                         <t t-if="msg.title">
                             <div class="title col">
-                                <strong t-esc="msg.title"/>
+                                <strong t-esc="msg.title" />
                             </div>
                         </t>
                         <div class="msg col-auto">
-                            <t t-out="msg.msg"/>
+                            <t t-out="msg.msg" />
                         </div>
                     </div>
                 </div>

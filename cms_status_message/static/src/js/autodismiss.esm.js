@@ -1,5 +1,5 @@
-import { Interaction } from "@web/public/interaction";
-import { registry } from "@web/core/registry";
+import {Interaction} from "@web/public/interaction";
+import {registry} from "@web/core/registry";
 
 export class StatusMessageAutodismiss extends Interaction {
     static selector = ".status_message [data-autodismiss]";
@@ -9,7 +9,7 @@ export class StatusMessageAutodismiss extends Interaction {
     }
 
     start() {
-        this.animation = this.el.animate([{ opacity: 1 }, { opacity: 0 }], {
+        this.animation = this.el.animate([{opacity: 1}, {opacity: 0}], {
             duration: this.timeout,
             fill: "forwards",
         });
