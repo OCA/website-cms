@@ -1,7 +1,6 @@
 exclude: |
   (?x)
   # NOT INSTALLABLE ADDONS
-  ^cms_form/|
   ^cms_form_example/|
   ^cms_info/|
   ^cms_status_message/|
