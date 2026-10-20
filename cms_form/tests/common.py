@@ -30,7 +30,7 @@ def get_form(env, form_model, req=None, session=None, ctx=None, sudo_uid=None, *
     return model.form_init(request, **kw)
 
 
-class FakeModelMixin(object):
+class FakeModelMixin:
     """Mixin to setup fake models just for testing."""
 
     @staticmethod
@@ -61,14 +61,14 @@ class FakeModelMixin(object):
             class_or_instance.loader.restore_registry()
 
 
-class HTMLRenderMixin(object):
+class HTMLRenderMixin:
     """Mixin with helpers to test HTML rendering."""
 
     def to_xml_node(self, html_):
         return html.fragments_fromstring(html_)
 
     def find_input_name(self, node, name):
-        return node.xpath('(//input|//select|//textarea)[@name="{}"]'.format(name))
+        return node.xpath(f'(//input|//select|//textarea)[@name="{name}"]')
 
     def assert_match_attrs(self, value, expected):
         for k, v in expected.items():

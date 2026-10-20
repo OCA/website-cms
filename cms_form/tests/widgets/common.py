@@ -52,7 +52,6 @@ def get_widget(env, fname, field, form=None, widget_model=None, **kw):
 
 
 class TestWidgetCase(TransactionCase, HTMLRenderMixin):
-
     at_install = False
     post_install = True
 

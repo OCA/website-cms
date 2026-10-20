@@ -174,10 +174,10 @@ class CMSFormWizard(models.AbstractModel):
         return self._wiz_url_for_step(step, main_object=main_object)
 
     def _wiz_url_for_step(self, step, main_object=None):
-        return "{}/page/{}".format(self._wiz_base_url(), step)
+        return f"{self._wiz_base_url()}/page/{step}"
 
     def _wiz_base_url(self):
-        return "/cms/wiz/{}".format(self._wiz_name)
+        return f"/cms/wiz/{self._wiz_name}"
 
     def wiz_save_step(self, values, step=None):
         step = step or self.wiz_current_step()

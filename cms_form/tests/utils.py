@@ -54,7 +54,7 @@ def mock_request(
     extra_headers=None,
     request_attrs=None,
     httprequest_attrs=None,
-    **kw
+    **kw,
 ):
     # TODO: refactor this ctx mngr from website to:
     # - make it independent

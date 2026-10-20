@@ -167,7 +167,7 @@ class CMSFormSearch(models.AbstractModel):
                 if not value:
                     continue
                 operator = "ilike"
-                value = "%{}%".format(value)
+                value = f"%{value}%"
             elif field["type"] in ("integer", "float", "many2one"):
                 operator = "="
             elif field["type"] in ("one2many", "many2many"):

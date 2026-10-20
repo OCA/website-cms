@@ -33,7 +33,6 @@ class FakeWiz(models.AbstractModel):
 
 
 class FakeWizStep1Country(models.AbstractModel):
-
     _name = "fake.wiz.step1.country"
     _inherit = "fake.wiz"
     _description = "CMS Form test wizard form step 1"
@@ -42,7 +41,6 @@ class FakeWizStep1Country(models.AbstractModel):
 
 
 class FakeWizStep2Partner(models.AbstractModel):
-
     _name = "fake.wiz.step2.partner"
     _inherit = "fake.wiz"
     _description = "CMS Form test wizard form step 2"
@@ -58,7 +56,6 @@ class FakeWizStep2Partner(models.AbstractModel):
 
 
 class FakeWizStep3Partner(models.AbstractModel):
-
     _name = "fake.wiz.step3.partner"
     _inherit = "fake.wiz"
     _description = "CMS Form test wizard form step 3"

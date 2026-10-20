@@ -4,7 +4,6 @@ from .common import TestWidgetCase, fake_field, fake_form
 
 
 class TestWidgetInteger(TestWidgetCase):
-
     # TODO: test extraction and conversion to proper field value
     # on EVERY widget and not just rely on the marshallers.
     # Of course we have to switch to `html_fname` approach as hidden widget.
