@@ -1,7 +1,7 @@
-import { Interaction } from "@web/public/interaction";
-import { registry } from "@web/core/registry";
+import {Interaction} from "@web/public/interaction";
+import {registry} from "@web/core/registry";
 
-import { readData } from "./utils";
+import {readData} from "./utils";
 
 /*
 Handle master / slave fields automatically.

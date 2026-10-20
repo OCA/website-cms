@@ -1,4 +1,4 @@
-import { registry } from "@web/core/registry";
+import {registry} from "@web/core/registry";
 
 function assertHidden(selector, hidden) {
     const el = document.querySelector(selector);

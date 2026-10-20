@@ -1,8 +1,8 @@
-import { Interaction } from "@web/public/interaction";
-import { registry } from "@web/core/registry";
-import { rpc } from "@web/core/network/rpc";
+import {Interaction} from "@web/public/interaction";
+import {registry} from "@web/core/registry";
+import {rpc} from "@web/core/network/rpc";
 
-import { readData } from "./utils";
+import {readData} from "./utils";
 
 /*
 Many2many tags input, replacing the select2 widget (select2 is not shipped with Odoo 19 web).
@@ -25,7 +25,11 @@ export class CMSFormTagsWidget extends Interaction {
         this.el.type = "hidden";
         this.buildUI();
         this.renderTags();
-        this.addListener(this.textInput, "input", this.debounced(() => this.search(), 250));
+        this.addListener(
+            this.textInput,
+            "input",
+            this.debounced(() => this.search(), 250)
+        );
         this.addListener(this.list, "click", (ev) => this.onPick(ev));
         this.addListener(this.wrapper, "click", (ev) => this.onRemove(ev));
         this.registerCleanup(() => {
@@ -37,7 +41,8 @@ export class CMSFormTagsWidget extends Interaction {
 
     buildUI() {
         this.wrapper = document.createElement("div");
-        this.wrapper.className = "form-control d-flex flex-wrap gap-1 align-items-center";
+        this.wrapper.className =
+            "form-control d-flex flex-wrap gap-1 align-items-center";
         this.textInput = document.createElement("input");
         this.textInput.type = "text";
         this.textInput.className = "border-0 flex-grow-1 p-0";
@@ -52,7 +57,8 @@ export class CMSFormTagsWidget extends Interaction {
         this.wrapper.querySelectorAll(".o_tag").forEach((el) => el.remove());
         for (const rec of this.selected) {
             const tag = document.createElement("span");
-            tag.className = "o_tag badge text-bg-primary d-inline-flex align-items-center gap-1";
+            tag.className =
+                "o_tag badge text-bg-primary d-inline-flex align-items-center gap-1";
             tag.dataset.id = rec.id;
             tag.textContent = rec.name;
             const remove = document.createElement("button");
@@ -63,7 +69,7 @@ export class CMSFormTagsWidget extends Interaction {
             this.wrapper.insertBefore(tag, this.textInput);
         }
         this.el.value = this.selected.map((rec) => rec.id).join(",");
-        this.el.dispatchEvent(new Event("change", { bubbles: true }));
+        this.el.dispatchEvent(new Event("change", {bubbles: true}));
     }
 
     async search() {
@@ -77,12 +83,14 @@ export class CMSFormTagsWidget extends Interaction {
             model: this.model,
             method: "search_read",
             args: [domain],
-            kwargs: { fields: this.fields, context: {} },
+            kwargs: {fields: this.fields, context: {}},
         });
         const known = new Set(this.selected.map((rec) => rec.id));
         records
             .filter((rec) => !known.has(rec.id))
-            .sort((a, b) => String(a[this.displayName]).localeCompare(String(b[this.displayName])))
+            .sort((a, b) =>
+                String(a[this.displayName]).localeCompare(String(b[this.displayName]))
+            )
             .forEach((rec) => {
                 const item = document.createElement("li");
                 item.className = "list-group-item list-group-item-action";
@@ -98,7 +106,7 @@ export class CMSFormTagsWidget extends Interaction {
         if (!item) {
             return;
         }
-        this.selected.push({ id: Number(item.dataset.id), name: item.dataset.name });
+        this.selected.push({id: Number(item.dataset.id), name: item.dataset.name});
         this.textInput.value = "";
         this.list.replaceChildren();
         this.renderTags();

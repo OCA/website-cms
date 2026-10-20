@@ -1,7 +1,7 @@
-import { Interaction } from "@web/public/interaction";
-import { registry } from "@web/core/registry";
+import {Interaction} from "@web/public/interaction";
+import {registry} from "@web/core/registry";
 
-import { readData } from "./utils";
+import {readData} from "./utils";
 
 export class CMSFormAjax extends Interaction {
     static selector = ".cms_form_wrapper form[data-ajax]";
@@ -37,7 +37,7 @@ export class CMSFormAjax extends Interaction {
             return;
         }
         ev.preventDefault();
-        return this.ajaxSubmit({ page: readData(link, "page") });
+        return this.ajaxSubmit({page: readData(link, "page")});
     }
 
     async ajaxSubmit(extra = {}) {

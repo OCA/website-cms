@@ -1,9 +1,9 @@
-import { Interaction } from "@web/public/interaction";
-import { registry } from "@web/core/registry";
-import { localization } from "@web/core/l10n/localization";
-import { parseDate, serializeDate, today } from "@web/core/l10n/dates";
+import {Interaction} from "@web/public/interaction";
+import {registry} from "@web/core/registry";
+import {localization} from "@web/core/l10n/localization";
+import {parseDate, serializeDate, today} from "@web/core/l10n/dates";
 
-import { readData } from "./utils";
+import {readData} from "./utils";
 
 /*
 The date picker is attached to the `$fname_display` field.
@@ -15,7 +15,9 @@ export class CMSDateWidget extends Interaction {
     setup() {
         this.options = readData(this.el, "params", {});
         this.realField = this.el.nextElementSibling;
-        this.trigger = this.el.closest(".input-group")?.querySelector(".js_datepicker_trigger");
+        this.trigger = this.el
+            .closest(".input-group")
+            ?.querySelector(".js_datepicker_trigger");
     }
 
     start() {
@@ -32,7 +34,7 @@ export class CMSDateWidget extends Interaction {
                 .create({
                     target: this.el,
                     onApply: (value) => this.syncRealField(value),
-                    pickerProps: { type: "date", value: initial },
+                    pickerProps: {type: "date", value: initial},
                 })
                 .enable()
         );
@@ -45,7 +47,7 @@ export class CMSDateWidget extends Interaction {
         // Display value first, then the server value, then today if asked to.
         let value = parseDate(this.el.value) || false;
         if (!value && this.realField?.value) {
-            value = parseDate(this.realField.value, { format: "yyyy-MM-dd" }) || false;
+            value = parseDate(this.realField.value, {format: "yyyy-MM-dd"}) || false;
         }
         if (!value && this.options.defaultToday) {
             value = today();
