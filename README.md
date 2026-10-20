@@ -18,7 +18,14 @@ CMS features for Odoo portal and websites. Ease creation of forms, status messag
 
 [//]: # (addons)
 
-This part will be replaced when running the oca-gen-addons-table script from OCA/maintainer-tools.
+Unported addons
+---------------
+addon | version | maintainers | summary
+--- | --- | --- | ---
+[cms_form](cms_form/) | 16.0.1.4.0 (unported) | <a href='https://github.com/simahawk'><img src='https://github.com/simahawk.png' width='32' height='32' style='border-radius:50%;' alt='simahawk'/></a> | Basic content type form
+[cms_form_example](cms_form_example/) | 13.0.1.0.1 (unported) |  | Basic content type form example
+[cms_info](cms_info/) | 16.0.1.2.0 (unported) |  | A set of basic information needed to expose any kind of record in your CMS.
+[cms_status_message](cms_status_message/) | 16.0.1.1.0 (unported) | <a href='https://github.com/simahawk'><img src='https://github.com/simahawk.png' width='32' height='32' style='border-radius:50%;' alt='simahawk'/></a> | Basic status messages for your CMS system
 
 [//]: # (end addons)
 
