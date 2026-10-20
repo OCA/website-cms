@@ -2,9 +2,8 @@
 # License AGPL-3.0 or later (http://www.gnu.org/licenses/agpl)
 from unittest import mock
 
-from odoo_test_helper import FakeModelLoader
-
 from odoo import exceptions
+from odoo.orm.model_classes import add_to_registry
 from odoo.tests.common import TransactionCase
 
 
@@ -12,11 +11,14 @@ class TestInfoMixin(TransactionCase):
     @classmethod
     def setUpClass(cls):
         super().setUpClass()
-        cls.loader = FakeModelLoader(cls.env, cls.__module__)
-        cls.loader.backup_registry()
         from .fake_models import FakeModel
 
-        cls.loader.update_registry((FakeModel,))
+        add_to_registry(cls.registry, FakeModel)
+        cls.registry._setup_models__(cls.env.cr, [FakeModel._name])
+        cls.registry.init_models(
+            cls.env.cr, [FakeModel._name], {"models_to_check": True}
+        )
+        cls.addClassCleanup(cls.registry.__delitem__, FakeModel._name)
         cls.model = cls.env[FakeModel._name]
         cls.record = cls.model.create({"name": "Foo"})
         user_model = cls.env["res.users"].with_context(
@@ -29,11 +31,6 @@ class TestInfoMixin(TransactionCase):
                 "email": "user1@email.com",
             }
         )
-
-    @classmethod
-    def tearDownClass(cls):
-        cls.loader.restore_registry()
-        super().tearDownClass()
 
     def test_create_url(self):
         self.assertEqual(self.record.cms_create_url, "/cms/create/fake.model")
@@ -87,9 +84,10 @@ class TestInfoMixin(TransactionCase):
     def _test_can(self, record, mode, handler):
         path_rights = "odoo.models.Model.check_access_rights"
         path_rule = "odoo.models.Model.check_access_rule"
-        with mock.patch(path_rights) as mocked_rights, mock.patch(
-            path_rule
-        ) as mocked_rule:
+        with (
+            mock.patch(path_rights) as mocked_rights,
+            mock.patch(path_rule) as mocked_rule,
+        ):
             # test false
             mocked_rights.side_effect = exceptions.AccessError("BAM!")
             mocked_rule.side_effect = exceptions.AccessError("BAM!")
@@ -98,9 +96,10 @@ class TestInfoMixin(TransactionCase):
             # failed on ACL check, no call here
             mocked_rule.assert_not_called()
 
-        with mock.patch(path_rights) as mocked_rights, mock.patch(
-            path_rule
-        ) as mocked_rule:
+        with (
+            mock.patch(path_rights) as mocked_rights,
+            mock.patch(path_rule) as mocked_rule,
+        ):
             # test true only rights
             mocked_rights.return_value = True
             mocked_rule.side_effect = exceptions.AccessError("BAM!")
@@ -108,9 +107,10 @@ class TestInfoMixin(TransactionCase):
             mocked_rights.assert_called_with(mode)
             mocked_rule.assert_called_with(mode)
 
-        with mock.patch(path_rights) as mocked_rights, mock.patch(
-            path_rule
-        ) as mocked_rule:
+        with (
+            mock.patch(path_rights) as mocked_rights,
+            mock.patch(path_rule) as mocked_rule,
+        ):
             # test true
             mocked_rights.return_value = True
             mocked_rule.return_value = True

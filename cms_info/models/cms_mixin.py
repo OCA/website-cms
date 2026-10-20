@@ -10,7 +10,7 @@ class CMSInfoMixin(models.AbstractModel):
     _description = "CMS Info mixin"
 
     def _cms_make_url(self, action):
-        return "/cms/{}/{}".format(action, self._name)
+        return f"/cms/{action}/{self._name}"
 
     @property
     def cms_create_url(self):
@@ -82,8 +82,8 @@ class CMSInfoMixin(models.AbstractModel):
     def _get_cms_delete_urls(self):
         base_url = self.cms_delete_url_base
         return {
-            "cms_delete_url": "{}/{}".format(base_url, self.id),
-            "cms_delete_confirm_url": "{}/{}/confirm".format(base_url, self.id),
+            "cms_delete_url": f"{base_url}/{self.id}",
+            "cms_delete_confirm_url": f"{base_url}/{self.id}/confirm",
         }
 
     def cms_is_owner(self, uid=None):

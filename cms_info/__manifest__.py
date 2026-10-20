@@ -6,12 +6,12 @@
     "summary": """
     A set of basic information needed to expose any kind of record in your CMS.
     """,
-    "version": "16.0.1.2.0",
+    "version": "19.0.1.0.0",
     "category": "CMS",
     "website": "https://github.com/OCA/website-cms",
     "author": "Camptocamp, Odoo Community Association (OCA)",
-    "mainainers": ["simahawk"],
+    "maintainers": ["simahawk"],
     "license": "LGPL-3",
-    "installable": False,
+    "installable": True,
     "depends": ["base"],
 }
