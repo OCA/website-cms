@@ -16,7 +16,7 @@
                     <div class="mb-3">
                         <div class="form-text">
                             Enter a message and submit the form.<br
-                            />You'll see your message rendered as a status message.
+                        />You'll see your message rendered as a status message.
                         </div>
                     </div>
                     <button type="submit" class="btn btn-primary">Submit</button>

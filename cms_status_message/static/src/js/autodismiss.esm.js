@@ -1,24 +1,30 @@
-/** @odoo-module **/
+import {Interaction} from "@web/public/interaction";
+import {registry} from "@web/core/registry";
 
-import "web.dom_ready";
+export class StatusMessageAutodismiss extends Interaction {
+    static selector = ".status_message [data-autodismiss]";
 
-export class Autodismiss {
-    constructor(element) {
-        this.$el = $(element);
-        this.dimissTimeout = this.$el.data("autodismissTimeout") || 8000;
+    setup() {
+        this.timeout = parseInt(this.el.dataset.autodismissTimeout, 10) || 8000;
     }
-    handle_autodimiss() {
-        const self = this;
-        this.$el
-            .fadeOut(this.dimissTimeout, function () {
-                self.$el.remove();
-            })
-            .on("mouseover", function () {
-                $(this).stop(true).fadeIn(0);
-            });
+
+    start() {
+        this.animation = this.el.animate([{opacity: 1}, {opacity: 0}], {
+            duration: this.timeout,
+            fill: "forwards",
+        });
+        this.animation.onfinish = () => this.el.remove();
+        this.addListener(this.el, "mouseover", () => this.keepVisible());
+        this.registerCleanup(() => this.animation.cancel());
+    }
+
+    keepVisible() {
+        // Mirror the legacy behaviour: stop fading and show the message again.
+        this.animation.cancel();
+        this.el.style.opacity = 1;
     }
 }
 
-$(".status_message [data-autodismiss]").each(function () {
-    new Autodismiss(this).handle_autodimiss();
-});
+registry
+    .category("public.interactions")
+    .add("cms_status_message.autodismiss", StatusMessageAutodismiss);

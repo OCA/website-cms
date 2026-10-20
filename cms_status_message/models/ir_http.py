@@ -1,7 +1,7 @@
 # Copyright 2017 Camptocamp - Simone Orsi
 # License LGPL-3.0 or later (http://www.gnu.org/licenses/lgpl).
 
-from odoo import _, api, http, models
+from odoo import api, http, models
 
 
 class IrHttp(models.AbstractModel):
@@ -11,10 +11,10 @@ class IrHttp(models.AbstractModel):
     def default_status_msg_title(self):
         """Some default msg titles."""
         return {
-            "info": _("Info"),
-            "success": _("Success"),
-            "danger": _("Error"),
-            "warning": _("Warning"),
+            "info": self.env._("Info"),
+            "success": self.env._("Success"),
+            "danger": self.env._("Error"),
+            "warning": self.env._("Warning"),
         }
 
     @api.model
