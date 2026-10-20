@@ -87,9 +87,10 @@ class TestInfoMixin(TransactionCase):
     def _test_can(self, record, mode, handler):
         path_rights = "odoo.models.Model.check_access_rights"
         path_rule = "odoo.models.Model.check_access_rule"
-        with mock.patch(path_rights) as mocked_rights, mock.patch(
-            path_rule
-        ) as mocked_rule:
+        with (
+            mock.patch(path_rights) as mocked_rights,
+            mock.patch(path_rule) as mocked_rule,
+        ):
             # test false
             mocked_rights.side_effect = exceptions.AccessError("BAM!")
             mocked_rule.side_effect = exceptions.AccessError("BAM!")
@@ -98,9 +99,10 @@ class TestInfoMixin(TransactionCase):
             # failed on ACL check, no call here
             mocked_rule.assert_not_called()
 
-        with mock.patch(path_rights) as mocked_rights, mock.patch(
-            path_rule
-        ) as mocked_rule:
+        with (
+            mock.patch(path_rights) as mocked_rights,
+            mock.patch(path_rule) as mocked_rule,
+        ):
             # test true only rights
             mocked_rights.return_value = True
             mocked_rule.side_effect = exceptions.AccessError("BAM!")
@@ -108,9 +110,10 @@ class TestInfoMixin(TransactionCase):
             mocked_rights.assert_called_with(mode)
             mocked_rule.assert_called_with(mode)
 
-        with mock.patch(path_rights) as mocked_rights, mock.patch(
-            path_rule
-        ) as mocked_rule:
+        with (
+            mock.patch(path_rights) as mocked_rights,
+            mock.patch(path_rule) as mocked_rule,
+        ):
             # test true
             mocked_rights.return_value = True
             mocked_rule.return_value = True
