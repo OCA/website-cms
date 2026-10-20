@@ -15,7 +15,7 @@ from odoo.tests.common import get_db_name
 from odoo.tools import DotDict
 from odoo.tools._vendor.sessions import SessionStore
 
-from odoo.addons.website.tools import MockRequest
+from odoo.addons.http_routing.tests.common import MockRequest
 
 
 def fake_request(
@@ -26,14 +26,14 @@ def fake_request(
     content_type=None,
     session=None,
 ):
-    data = urllib.parse.urlencode(form_data or {})
+    data = urllib.parse.urlencode(form_data or {}).encode()
     content_type = content_type or "application/x-www-form-urlencoded"
-    # werkzeug request
+    # werkzeug request (input stream must be bytes)
     w_req = Request.from_values(
         url,
         query_string=query_string,
         content_length=len(data),
-        input_stream=io.StringIO(data),
+        input_stream=io.BytesIO(data),
         content_type=content_type,
         method=method,
     )
@@ -54,7 +54,7 @@ def mock_request(
     extra_headers=None,
     request_attrs=None,
     httprequest_attrs=None,
-    **kw
+    **kw,
 ):
     # TODO: refactor this ctx mngr from website to:
     # - make it independent
@@ -106,13 +106,15 @@ def fake_session(env, **kw):
     session.db = db
     session.uid = env.uid
     session.login = env.user.login
-    session.password = ""
-    session.context = dict(env.context)
-    session.context["uid"] = env.uid
+    # Odoo 19 Session is a mapping with __slots__: plain keys go through item access.
+    session["context"] = dict(env.context)
+    session["context"]["uid"] = env.uid
     for k, v in kw.items():
         if hasattr(session, k):
             setattr(session, k, v)
-    session.__testing__ = True
+        else:
+            session[k] = v
+    session["__testing__"] = True
     return session
 
 

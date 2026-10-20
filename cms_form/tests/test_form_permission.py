@@ -54,7 +54,7 @@ class TestFormPermCheck(FormTestCase):
             except exceptions.AccessError as err:
                 patched.assert_called()
                 msg = (
-                    "You are not allowed to create any record " "for the model `%s`."
+                    "You are not allowed to create any record for the model `%s`."
                 ) % self.FakePubModel._name
                 self.assertEqual(err.args[0], msg)
 

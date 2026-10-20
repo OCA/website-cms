@@ -2,8 +2,8 @@
 # License LGPL-3.0 or later (http://www.gnu.org/licenses/lgpl.html).
 
 from lxml import html
-from odoo_test_helper import FakeModelLoader
 
+from odoo.orm.model_classes import add_to_registry
 from odoo.tests.common import HttpCase, TransactionCase, tagged
 
 from .utils import fake_request, fake_session, session_store
@@ -30,7 +30,7 @@ def get_form(env, form_model, req=None, session=None, ctx=None, sudo_uid=None, *
     return model.form_init(request, **kw)
 
 
-class FakeModelMixin(object):
+class FakeModelMixin:
     """Mixin to setup fake models just for testing."""
 
     @staticmethod
@@ -39,36 +39,44 @@ class FakeModelMixin(object):
 
     @staticmethod
     def _setup_models(class_or_instance):
-        """Setup new fake models for testing."""
-        if hasattr(class_or_instance, "loader"):
+        """Setup new fake models for testing.
+
+        Odoo 19 registers test models natively, no odoo_test_helper needed.
+        """
+        if hasattr(class_or_instance, "_fake_model_names"):
             # Especially for HttpCase: try to setup models only once
             return
-        class_or_instance.loader = FakeModelLoader(
-            class_or_instance.env, class_or_instance.__module__
-        )
-        class_or_instance.loader.backup_registry()
         test_models = class_or_instance._get_test_models()
-        if test_models:
-            class_or_instance.loader.update_registry(test_models)
-            for klass in test_models:
-                # Make them available on the test class
-                setattr(class_or_instance, klass.__name__, klass)
+        class_or_instance._fake_model_names = []
+        if not test_models:
+            return
+        registry = class_or_instance.registry
+        for klass in test_models:
+            add_to_registry(registry, klass)
+            class_or_instance._fake_model_names.append(klass._name)
+            # Make them available on the test class
+            setattr(class_or_instance, klass.__name__, klass)
+        names = class_or_instance._fake_model_names
+        registry._setup_models__(class_or_instance.env.cr, names)
+        registry.init_models(class_or_instance.env.cr, names, {"models_to_check": True})
 
     @staticmethod
     def _teardown_models(class_or_instance):
         """Wipe fake models once tests have finished."""
-        if hasattr(class_or_instance, "loader"):
-            class_or_instance.loader.restore_registry()
+        registry = class_or_instance.registry
+        for name in getattr(class_or_instance, "_fake_model_names", []):
+            registry.__delitem__(name)
+        class_or_instance._fake_model_names = []
 
 
-class HTMLRenderMixin(object):
+class HTMLRenderMixin:
     """Mixin with helpers to test HTML rendering."""
 
     def to_xml_node(self, html_):
         return html.fragments_fromstring(html_)
 
     def find_input_name(self, node, name):
-        return node.xpath('(//input|//select|//textarea)[@name="{}"]'.format(name))
+        return node.xpath(f'(//input|//select|//textarea)[@name="{name}"]')
 
     def assert_match_attrs(self, value, expected):
         for k, v in expected.items():

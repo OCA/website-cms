@@ -5,7 +5,6 @@ from odoo import fields, models
 
 
 class FakeFloatWidget(models.AbstractModel):
-
     _name = "cms.form.test_fields.widget.float"
     _inherit = "cms.form.widget.float"
     _description = _name

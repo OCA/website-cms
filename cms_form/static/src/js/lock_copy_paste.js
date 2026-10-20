@@ -1,21 +1,19 @@
-odoo.define("cms_form.lock_copy_paste", function (require) {
-    "use strict";
+import {Interaction} from "@web/public/interaction";
+import {registry} from "@web/core/registry";
 
-    // FIXME: website dep
-    var sAnimation = require("website.content.snippets.animation");
+export class CMSFormLockCopyPaste extends Interaction {
+    static selector = ".cms_form_wrapper form .lock_copy_paste";
 
-    sAnimation.registry.CMSFormLockCopyPaste = sAnimation.Class.extend({
-        selector: ".cms_form_wrapper form .lock_copy_paste",
-        start: function () {
-            this.setup_handlers();
+    dynamicContent = {
+        _root: {
+            "t-on-cut": (ev) => ev.preventDefault(),
+            "t-on-copy": (ev) => ev.preventDefault(),
+            "t-on-paste": (ev) => ev.preventDefault(),
+            "t-on-contextmenu": (ev) => ev.preventDefault(),
         },
-        setup_handlers: function () {
-            this.$el.bind("cut copy paste", function (e) {
-                e.preventDefault();
-            });
-            this.$el.on("contextmenu", function () {
-                return false;
-            });
-        },
-    });
-});
+    };
+}
+
+registry
+    .category("public.interactions")
+    .add("cms_form.lock_copy_paste", CMSFormLockCopyPaste);

@@ -209,8 +209,8 @@ License LGPL-3.0 or later (http://www.gnu.org/licenses/lgpl.html).
                 <t t-if="form.form_mode not in ('search', 'readonly')">
                     <div class="form-group field-required">
                         <p class="field-required-legend"><label
-                                class="control-label"
-                            /> Required fields</p>
+                            class="control-label"
+                        /> Required fields</p>
                     </div>
                 </t>
             </div>
@@ -396,46 +396,47 @@ License LGPL-3.0 or later (http://www.gnu.org/licenses/lgpl.html).
         </xpath>
     </template>
 
-
     <template id="wizard_form_confirm_modal" name="CMS wizard form confirm modal">
-      <!-- Modal -->
-      <div
+        <!-- Modal -->
+        <div
             class="modal fade"
             id="process-confirm-modal"
             tabindex="-1"
             aria-labelledby="process-confirm-modal"
             aria-hidden="true"
         >
-        <div class="modal-dialog">
-          <div class="modal-content">
-            <div class="modal-header">
-              <h5 class="modal-title" id="exampleModalLabel">Confirm submit</h5>
-              <button
+            <div class="modal-dialog">
+                <div class="modal-content">
+                    <div class="modal-header">
+                        <h5
+                            class="modal-title"
+                            id="exampleModalLabel"
+                        >Confirm submit</h5>
+                        <button
                             type="button"
                             class="btn-close"
                             data-bs-dismiss="modal"
                             aria-label="Close"
                         />
-            </div>
-            <div class="modal-body">
-              <p t-esc="form.form_msg_confirm_submit" />
-            </div>
-            <div class="modal-footer">
-              <button
+                    </div>
+                    <div class="modal-body">
+                        <p t-esc="form.form_msg_confirm_submit" />
+                    </div>
+                    <div class="modal-footer">
+                        <button
                             type="button"
                             class="btn btn-default"
                             data-bs-dismiss="modal"
                         >Close</button>
-              <button
+                        <button
                             type="submit"
                             name="wiz_submit"
                             value="process"
                             class="btn btn-primary"
                         >Submit</button>
+                    </div>
+                </div>
             </div>
-          </div>
         </div>
-      </div>
     </template>
-
 </odoo>

@@ -11,8 +11,7 @@ from odoo.http import request
 from ..exceptions import FormRedirect
 
 
-class FormControllerMixin(object):
-
+class FormControllerMixin:
     # default template
     template = "cms_form.portal_form_wrapper"
 
@@ -174,7 +173,6 @@ class CMSFormController(http.Controller, FormControllerMixin):
 
 
 class WizardFormControllerMixin(FormControllerMixin):
-
     template = "cms_form.portal_wizard_form_wrapper"
 
     def make_response(self, wiz_model, model_id=None, page=1, **kw):
@@ -208,7 +206,6 @@ class CMSWizardFormController(http.Controller, WizardFormControllerMixin):
 
 
 class SearchFormControllerMixin(FormControllerMixin):
-
     template = "cms_form.portal_search_form_wrapper"
 
     def form_model_key(self, model, **kw):

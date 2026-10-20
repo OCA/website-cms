@@ -61,6 +61,6 @@ class RadioSelectionWidget(models.AbstractModel):
     w_options_help = Serialized(default={})
 
     def widget_init(self, form, fname, field, **kw):
-        widget = super(RadioSelectionWidget, self).widget_init(form, fname, field, **kw)
+        widget = super().widget_init(form, fname, field, **kw)
         widget.w_options_help = kw.get("options_help") or {}
         return widget

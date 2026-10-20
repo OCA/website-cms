@@ -187,13 +187,13 @@ class TestFormBase(FormTestCase):
         # plain internal user, not relying on demo data being loaded
         user = new_test_user(self.env, login="test_fields_protected_user")
         # user does not have the group
-        self.assertNotIn(group, user.groups_id)
+        self.assertNotIn(group, user.group_ids)
         form = self.get_form("cms.form.protected.fields", sudo_uid=user.id)
         fields = form.form_fields_get()
         # field is skipped
         self.assertEqual(list(fields.keys()), ["nogroup"])
         # now add the group
-        user.write({"groups_id": [(4, group.id)]})
+        user.write({"group_ids": [(4, group.id)]})
         fields = form.form_fields_get()
         # now we get protected field too
         self.assertEqual(sorted(fields.keys()), sorted(["ihaveagroup", "nogroup"]))
@@ -528,12 +528,10 @@ class TestFormBase(FormTestCase):
 
     def test_wrapper_css_klass(self):
         form = self.get_form("cms.form.res.partner")
-        expected = "cms_form_wrapper cms_form_res_partner " "res_partner mode_create"
+        expected = "cms_form_wrapper cms_form_res_partner res_partner mode_create"
         self.assertEqual(form.form_wrapper_css_klass, expected)
         form.form_wrapper_extra_css_klass = "foo"
-        expected = (
-            "cms_form_wrapper cms_form_res_partner " "res_partner foo mode_create"
-        )
+        expected = "cms_form_wrapper cms_form_res_partner res_partner foo mode_create"
         self.assertEqual(form.form_wrapper_css_klass, expected)
 
     def test_css_klass(self):
@@ -554,7 +552,7 @@ class TestFormBase(FormTestCase):
         field = form.form_fields_get()["country_id"]
         self.assertEqual(
             form.form_make_field_wrapper_klass("country_id", field),
-            ("form-group form-field field-many2one " "field-country_id field-required"),
+            ("form-group form-field field-many2one field-country_id field-required"),
         )
         field = form.form_fields_get()["custom"]
         field["required"] = True
@@ -564,16 +562,13 @@ class TestFormBase(FormTestCase):
                 field,
                 errors={"custom": "bad_value"},
             ),
-            (
-                "form-group form-field field-char "
-                "field-custom field-required has-error"
-            ),
+            ("form-group form-field field-char field-custom field-required has-error"),
         )
 
     def test_info_merge_call(self):
         form = self.get_form("cms.form.res.partner")
         with mock.patch(
-            "odoo.addons.cms_form" ".models.cms_form_mixin.utils.data_merge"
+            "odoo.addons.cms_form.models.cms_form_mixin.utils.data_merge"
         ) as mocked:
             form._form_info_merge({"a": "1"}, {"b": "2"})
             mocked.assert_called_with({"a": "1"}, {"b": "2"})

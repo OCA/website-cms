@@ -4,6 +4,7 @@ from . import test_form_cms
 from . import test_form_permission
 from . import test_form_render
 from . import test_form_search
+from . import test_form_tour
 from . import test_form_wizard
 from . import test_loaders
 from . import test_marshallers

@@ -5,7 +5,7 @@ import json
 import os
 import unittest
 
-from odoo.addons.website.tools import MockRequest
+from odoo.addons.http_routing.tests.common import MockRequest
 
 from ..controllers import main
 from .common import FormHttpTestCase, FormTestCase
@@ -218,7 +218,7 @@ class TestControllersRender(FormHttpTestCase):
     def test_default_edit_rendering(self):
         # do not rely on demo data (eg: `base.res_partner_1`) being loaded
         partner = self.env["res.partner"].create({"name": "Test Partner"})
-        dom = self.html_get("/cms/edit/res.partner/{}".format(partner.id))
+        dom = self.html_get(f"/cms/edit/res.partner/{partner.id}")
         self._check_rendering(dom, "cms.form.res.partner", "res.partner", "edit")
 
     def _check_wiz_rendering(self, dom, form_model, model, mode, extra_klass=""):

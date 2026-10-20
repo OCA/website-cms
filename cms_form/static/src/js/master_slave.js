@@ -1,91 +1,108 @@
-odoo.define("cms_form.master_slave", function (require) {
-    "use strict";
-    /*
-    Handle master / slave fields automatically.
-    TODO: explain behavior.
-    */
+import {Interaction} from "@web/public/interaction";
+import {registry} from "@web/core/registry";
 
-    // TODO: this does not work ATM :(
-    // var pyeval = require('web.pyeval');
-    // FIXME: website dep
-    var sAnimation = require("website.content.snippets.animation");
+import {readData} from "./utils";
 
-    sAnimation.registry.CMSFormMasterSlave = sAnimation.Class.extend({
-        selector: ".cms_form_wrapper form",
-        start: function () {
-            this.data = this.$el.data("form");
-            this.setup_handlers();
-            this.load_master_slave();
-        },
-        setup_handlers: function () {
-            this.handlers = {
-                hide: $.proxy(this.handle_hide, this),
-                show: $.proxy(this.handle_show, this),
-                readonly: $.proxy(this.handle_readonly, this),
-                no_readonly: $.proxy(this.handle_no_readonly, this),
-                required: $.proxy(this.handle_required, this),
-                no_required: $.proxy(this.handle_no_required, this),
-            };
-        },
-        load_master_slave: function () {
-            var self = this;
-            $.each(this.data.master_slave, function (master, slaves) {
-                var $master_input = $('[name="' + master + '"]');
-                $.each(slaves, function (action, mapping) {
-                    var handler = self.handlers[action];
-                    if (handler) {
-                        $master_input
-                            .on("change", function () {
-                                var $input = $(this),
-                                    val = $input.val();
-                                if ($input.is(":checkbox")) {
-                                    // Value == 'on' => true/false
-                                    val = $input.is(":checked");
-                                }
-                                $.each(mapping, function (slave_fname, values) {
-                                    if (_.contains(values, val)) {
-                                        handler(slave_fname);
-                                    }
-                                });
-                            })
-                            .filter(
-                                "select,[type=checkbox],[type=radio]:checked,[type=text]"
-                            )
-                            .trigger("change");
-                        // Trigger change to apply maste/slave rules at load
-                    }
-                });
-            });
-        },
-        handle_hide: function (slave_fname) {
-            $(".field-" + slave_fname).hide();
-        },
-        handle_show: function (slave_fname) {
-            $(".field-" + slave_fname).show();
-        },
-        handle_readonly: function (slave_fname) {
-            $('[name="' + slave_fname + '"]')
-                .attr("disabled", "disabled")
-                .closest(".form-group")
-                .addClass("disabled");
-        },
-        handle_no_readonly: function (slave_fname) {
-            $('[name="' + slave_fname + '"]')
-                .attr("disabled", null)
-                .closest(".form-group")
-                .removeClass("disabled");
-        },
-        handle_required: function (slave_fname) {
-            $('[name="' + slave_fname + '"]')
-                .attr("required", "required")
-                .closest(".form-group")
-                .addClass("field-required");
-        },
-        handle_no_required: function (slave_fname) {
-            $('[name="' + slave_fname + '"]')
-                .attr("required", null)
-                .closest(".form-group")
-                .removeClass("field-required");
-        },
-    });
-});
+/*
+Handle master / slave fields automatically.
+TODO: explain behavior.
+*/
+
+// TODO: support pyeval expressions in JS (see `_form_master_slave_info`).
+
+function inputValue(input) {
+    if (input.type === "checkbox") {
+        // Value == 'on' => true/false
+        return input.checked;
+    }
+    return input.value;
+}
+
+function isPreset(input) {
+    return (
+        input.tagName === "SELECT" ||
+        input.type === "checkbox" ||
+        (input.type === "radio" && input.checked) ||
+        input.type === "text"
+    );
+}
+
+export class CMSFormMasterSlave extends Interaction {
+    static selector = ".cms_form_wrapper form";
+
+    setup() {
+        this.data = readData(this.el, "form", {});
+        this.handlers = {
+            hide: (slave) => this.setHidden(slave, true),
+            show: (slave) => this.setHidden(slave, false),
+            readonly: (slave) => this.setReadonly(slave, true),
+            no_readonly: (slave) => this.setReadonly(slave, false),
+            required: (slave) => this.setRequired(slave, true),
+            no_required: (slave) => this.setRequired(slave, false),
+        };
+    }
+
+    start() {
+        for (const [master, actions] of Object.entries(this.data.master_slave || {})) {
+            const masterInputs = this.el.querySelectorAll(`[name="${master}"]`);
+            for (const [action, mapping] of Object.entries(actions)) {
+                const handler = this.handlers[action];
+                if (!handler) {
+                    continue;
+                }
+                for (const input of masterInputs) {
+                    this.addListener(input, "change", () => {
+                        const val = inputValue(input);
+                        for (const [slave, values] of Object.entries(mapping)) {
+                            if (values.includes(val)) {
+                                handler(slave);
+                            }
+                        }
+                    });
+                }
+            }
+            // Apply master/slave rules at load for pre-filled inputs.
+            for (const input of masterInputs) {
+                if (isPreset(input)) {
+                    input.dispatchEvent(new Event("change"));
+                }
+            }
+        }
+    }
+
+    slaveInputs(slave) {
+        return this.el.querySelectorAll(`[name="${slave}"]`);
+    }
+
+    setHidden(slave, hidden) {
+        for (const el of this.el.querySelectorAll(`.field-${slave}`)) {
+            el.hidden = hidden;
+        }
+    }
+
+    setReadonly(slave, readonly) {
+        for (const input of this.slaveInputs(slave)) {
+            if (readonly) {
+                input.setAttribute("disabled", "disabled");
+            } else {
+                input.removeAttribute("disabled");
+            }
+            input.closest(".form-group")?.classList.toggle("disabled", readonly);
+        }
+    }
+
+    setRequired(slave, required) {
+        for (const input of this.slaveInputs(slave)) {
+            if (required) {
+                input.setAttribute("required", "required");
+            } else {
+                input.removeAttribute("required");
+            }
+            input.closest(".form-group")?.classList.toggle("field-required", required);
+        }
+    }
+}
+
+registry
+    .category("public.interactions")
+    .add("cms_form.master_slave", CMSFormMasterSlave);

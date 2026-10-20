@@ -73,13 +73,9 @@ def data_merge(a, b):
                     else:
                         a[key] = b[key]
             else:
-                raise ValueError(
-                    'Cannot merge non-dict "{}" into dict "{}"'.format(b, a)
-                )
+                raise ValueError(f'Cannot merge non-dict "{b}" into dict "{a}"')
         else:
-            raise NotImplementedError('NOT IMPLEMENTED "{}" into "{}"'.format(b, a))
+            raise NotImplementedError(f'NOT IMPLEMENTED "{b}" into "{a}"')
     except TypeError as e:  # pragma: no cover
-        raise TypeError(
-            '"{}" in key "{}" when merging "{}" into "{}"'.format(e, key, b, a)
-        ) from e
+        raise TypeError(f'"{e}" in key "{key}" when merging "{b}" into "{a}"') from e
     return a

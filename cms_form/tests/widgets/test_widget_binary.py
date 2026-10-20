@@ -110,7 +110,7 @@ class TestWidgetBinary(TestWidgetCase):
         self.assertEqual(
             widget.w_load(),
             {
-                "value": "data:image/png;base64,{}".format(TEST_IMAGE_GIF),
+                "value": f"data:image/png;base64,{TEST_IMAGE_GIF}",
                 "raw_value": TEST_IMAGE_GIF,
                 "mimetype": "image/png",
                 "content_type": "image/png",
@@ -142,9 +142,7 @@ class TestWidgetBinary(TestWidgetCase):
                 )
             )
             res = widget.w_load(image_1024=req_image)
-            expected = dict(
-                req_image, value="data:image/jpg;base64,{}".format(TEST_IMAGE_JPG)
-            )
+            expected = dict(req_image, value=f"data:image/jpg;base64,{TEST_IMAGE_JPG}")
             for k, v in res.items():
                 self.assertEqual(v, expected[k], f"{k} not matching")
 
@@ -163,7 +161,7 @@ class TestWidgetBinary(TestWidgetCase):
         # no value in request -> None
         self.assertEqual(widget.w_extract(), None)
         # req value can come as string
-        req_val = "data:image/jpeg;base64,{}".format(TEST_IMAGE_JPG)
+        req_val = f"data:image/jpeg;base64,{TEST_IMAGE_JPG}"
         # value in request but no check flag -> None
         self.assertEqual(widget.w_extract(image=req_val), TEST_IMAGE_JPG)
         # value in request but keep flag is ON -> None
