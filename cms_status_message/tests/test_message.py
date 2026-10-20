@@ -118,7 +118,7 @@ class TestMessage(TransactionCase):
             for i, (msg, kind, title) in enumerate(expected):
                 el = msgs[i]
                 self.assertEqual(el.attrib["role"], "alert")
-                klass = "alert alert-{} alert-dismissible".format(kind)
+                klass = f"alert alert-{kind} alert-dismissible"
                 self.assertEqual(el.attrib["class"], klass)
                 self.assertEqual(el.find_class("msg")[0].text.strip(), msg)
                 self.assertEqual(
