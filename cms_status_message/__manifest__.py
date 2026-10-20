@@ -20,5 +20,5 @@
             "cms_status_message/static/src/js/autodismiss.esm.js",
         ],
     },
-    "installable": True,
+    "installable": False,
 }

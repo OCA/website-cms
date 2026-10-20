@@ -23,7 +23,7 @@
         "templates/widgets.xml",
         "templates/portal.xml",
     ],
-    "installable": True,
+    "installable": False,
     "assets": {
         "web.assets_frontend": [
             "cms_form/static/src/scss/cms_form.scss",

@@ -12,6 +12,6 @@
     "author": "Camptocamp, Odoo Community Association (OCA)",
     "mainainers": ["simahawk"],
     "license": "LGPL-3",
-    "installable": True,
+    "installable": False,
     "depends": ["base"],
 }

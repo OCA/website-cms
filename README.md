@@ -2,11 +2,11 @@
 [![Support the OCA](https://odoo-community.org/readme-banner-image)](https://odoo-community.org/get-involved?utm_source=repo-readme)
 
 # website-cms
-[![Runboat](https://img.shields.io/badge/runboat-Try%20me-875A7B.png)](https://runboat.odoo-community.org/builds?repo=OCA/website-cms&target_branch=16.0)
-[![Pre-commit Status](https://github.com/OCA/website-cms/actions/workflows/pre-commit.yml/badge.svg?branch=16.0)](https://github.com/OCA/website-cms/actions/workflows/pre-commit.yml?query=branch%3A16.0)
-[![Build Status](https://github.com/OCA/website-cms/actions/workflows/test.yml/badge.svg?branch=16.0)](https://github.com/OCA/website-cms/actions/workflows/test.yml?query=branch%3A16.0)
-[![codecov](https://codecov.io/gh/OCA/website-cms/branch/16.0/graph/badge.svg)](https://codecov.io/gh/OCA/website-cms)
-[![Translation Status](https://translation.odoo-community.org/widgets/website-cms-16-0/-/svg-badge.svg)](https://translation.odoo-community.org/engage/website-cms-16-0/?utm_source=widget)
+[![Runboat](https://img.shields.io/badge/runboat-Try%20me-875A7B.png)](https://runboat.odoo-community.org/builds?repo=OCA/website-cms&target_branch=19.0)
+[![Pre-commit Status](https://github.com/OCA/website-cms/actions/workflows/pre-commit.yml/badge.svg?branch=19.0)](https://github.com/OCA/website-cms/actions/workflows/pre-commit.yml?query=branch%3A19.0)
+[![Build Status](https://github.com/OCA/website-cms/actions/workflows/test.yml/badge.svg?branch=19.0)](https://github.com/OCA/website-cms/actions/workflows/test.yml?query=branch%3A19.0)
+[![codecov](https://codecov.io/gh/OCA/website-cms/branch/19.0/graph/badge.svg)](https://codecov.io/gh/OCA/website-cms)
+[![Translation Status](https://translation.odoo-community.org/widgets/website-cms-19-0/-/svg-badge.svg)](https://translation.odoo-community.org/engage/website-cms-19-0/?utm_source=widget)
 
 <!-- /!\ do not modify above this line -->
 
@@ -18,20 +18,7 @@ CMS features for Odoo portal and websites. Ease creation of forms, status messag
 
 [//]: # (addons)
 
-Available addons
-----------------
-addon | version | maintainers | summary
---- | --- | --- | ---
-[cms_form](cms_form/) | 16.0.1.4.0 | <a href='https://github.com/simahawk'><img src='https://github.com/simahawk.png' width='32' height='32' style='border-radius:50%;' alt='simahawk'/></a> | Basic content type form
-[cms_info](cms_info/) | 16.0.1.2.0 |  | A set of basic information needed to expose any kind of record in your CMS.
-[cms_status_message](cms_status_message/) | 16.0.1.1.0 | <a href='https://github.com/simahawk'><img src='https://github.com/simahawk.png' width='32' height='32' style='border-radius:50%;' alt='simahawk'/></a> | Basic status messages for your CMS system
-
-
-Unported addons
----------------
-addon | version | maintainers | summary
---- | --- | --- | ---
-[cms_form_example](cms_form_example/) | 13.0.1.0.1 (unported) |  | Basic content type form example
+This part will be replaced when running the oca-gen-addons-table script from OCA/maintainer-tools.
 
 [//]: # (end addons)
 
