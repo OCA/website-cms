@@ -47,6 +47,10 @@ repos:
         entry: found obsolete files; remove them
         files: '^(\.travis\.yml|\.t2d\.yml|CONTRIBUTING\.md|\.prettierrc\.yml|\.eslintrc\.yml)$'
         language: fail
+  - repo: https://github.com/sbidoul/whool
+    rev: v1.3
+    hooks:
+      - id: whool-init
   - repo: https://github.com/oca/maintainer-tools
     rev: b8311a95009805a6e5593f0390f52c0fa350117f
     hooks:
@@ -62,6 +66,8 @@ repos:
           - --repo-name=website-cms
           - --if-source-changed
           - --keep-source-digest
+          - --convert-fragments-to-markdown
+      - id: oca-gen-external-dependencies
   - repo: https://github.com/OCA/odoo-pre-commit-hooks
     rev: v0.1.7
     hooks:
@@ -71,21 +77,6 @@ repos:
       - id: oca-checks-po
         args:
           - --disable=po-pretty-format
-  - repo: https://github.com/myint/autoflake
-    rev: v2.3.1
-    hooks:
-      - id: autoflake
-        args:
-          - --expand-star-imports
-          - --ignore-init-module-imports
-          - --in-place
-          - --remove-all-unused-imports
-          - --remove-duplicate-keys
-          - --remove-unused-variables
-  - repo: https://github.com/psf/black
-    rev: 25.1.0
-    hooks:
-      - id: black
   - repo: local
     hooks:
       - id: prettier
@@ -136,35 +127,12 @@ repos:
       - id: check-xml
       - id: mixed-line-ending
         args: ["--fix=lf"]
-  - repo: https://github.com/asottile/pyupgrade
-    rev: v3.20.0
+  - repo: https://github.com/astral-sh/ruff-pre-commit
+    rev: v0.13.0
     hooks:
-      - id: pyupgrade
-        args: ["--keep-percent-format"]
-  - repo: https://github.com/PyCQA/isort
-    rev: 6.0.1
-    hooks:
-      - id: isort
-        name: isort except __init__.py
-        args:
-          - --settings=.
-        exclude: /__init__\.py$
-  - repo: https://github.com/acsone/setuptools-odoo
-    rev: 3.3.2
-    hooks:
-      - id: setuptools-odoo-make-default
-      - id: setuptools-odoo-get-requirements
-        args:
-          - --output
-          - requirements.txt
-          - --header
-          - "# generated from manifests external_dependencies"
-  - repo: https://github.com/PyCQA/flake8
-    rev: 3.9.2
-    hooks:
-      - id: flake8
-        name: flake8
-        additional_dependencies: ["flake8-bugbear==21.9.2"]
+      - id: ruff
+        args: [--fix, --exit-non-zero-on-fix]
+      - id: ruff-format
   - repo: https://github.com/OCA/pylint-odoo
     rev: v10.0.8
     hooks:

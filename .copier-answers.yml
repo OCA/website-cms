@@ -1,8 +1,9 @@
 # Do NOT update manually; changes here will be overwritten by Copier
 _commit: v1.45
 _src_path: gh:oca/oca-addons-repo-template
-convert_readme_fragments_to_markdown: false
-enable_checklog_odoo: false
+additional_ruff_rules: []
+convert_readme_fragments_to_markdown: true
+enable_checklog_odoo: true
 generate_requirements_txt: true
 github_check_license: true
 github_ci_extra_env: {}
@@ -22,6 +23,6 @@ repo_description: CMS features for Odoo portal and websites. Ease creation of fo
 repo_name: website-cms
 repo_slug: website-cms
 repo_website: https://github.com/OCA/website-cms
-use_pyproject_toml: false
-use_ruff: false
+use_pyproject_toml: true
+use_ruff: true
 
